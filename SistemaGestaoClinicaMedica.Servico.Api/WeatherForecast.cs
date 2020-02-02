@@ -1,6 +1,6 @@
 using System;
 
-namespace SistemaGestaoClinicaMedica
+namespace SistemaGestaoClinicaMedica.Servico.Api
 {
     public class WeatherForecast
     {
