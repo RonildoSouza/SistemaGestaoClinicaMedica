@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class HorarioDeTrabalho
+    public class HorarioDeTrabalho : IEntidade<Guid>
     {
         public Guid Id { get; set; }
         public DayOfWeek DiaDaSemana { get; set; }

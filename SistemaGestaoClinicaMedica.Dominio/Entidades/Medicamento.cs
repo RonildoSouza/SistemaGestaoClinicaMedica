@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Medicamento
+    public class Medicamento : IEntidade<Guid>
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }

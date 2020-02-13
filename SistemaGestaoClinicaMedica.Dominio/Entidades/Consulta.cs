@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Consulta
+    public class Consulta : IEntidade<Guid>
     {
         public Guid Id { get; set; }
         public DateTime Data { get; set; }

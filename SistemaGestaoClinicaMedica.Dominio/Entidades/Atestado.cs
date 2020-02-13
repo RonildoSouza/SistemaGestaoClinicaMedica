@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Atestado
+    public class Atestado : IEntidade<Guid>
     {
         public Guid Id { get; set; }
         public string Observacao { get; set; }

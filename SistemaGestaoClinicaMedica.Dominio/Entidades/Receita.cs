@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Receita
+    public class Receita : IEntidade<Guid>
     {
         public Guid Id { get; set; }
         public string Observacao { get; set; }

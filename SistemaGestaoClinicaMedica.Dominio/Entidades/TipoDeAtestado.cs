@@ -1,8 +1,10 @@
-﻿namespace SistemaGestaoClinicaMedica.Dominio.Entidades
+﻿using System;
+
+namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class TipoDeAtestado
+    public class TipoDeAtestado : IEntidade<Guid>
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Nome { get; set; }
     }
 }
