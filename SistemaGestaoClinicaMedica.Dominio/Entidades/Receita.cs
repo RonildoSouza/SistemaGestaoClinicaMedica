@@ -7,7 +7,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Guid Id { get; set; }
         public string Observacao { get; set; }
-        public DateTime CriadoEm { get; set; }
+        public DateTime CriadoEm { get; set; } = DateTime.Now;
         public List<Medicamento> Medicamentos { get; set; }
     }
 }

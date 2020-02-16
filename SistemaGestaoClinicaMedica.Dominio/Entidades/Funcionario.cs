@@ -10,5 +10,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public string Telefone { get; set; }
         public string Senha { get; set; }
         public Cargo Cargo { get; set; }
+        public bool Ativo { get; set; }
     }
 }
