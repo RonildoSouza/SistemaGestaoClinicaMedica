@@ -2,13 +2,13 @@
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.Data.Servicos;
 
-namespace SistemaGestaoClinicaMedica.Infra.IoC
+namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
 {
     public class DominioServicoDI
     {
         public static void Registrar(IServiceCollection services)
         {
-            services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
+            //services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
 
             //services.AddScoped<IAdministradorServico, AdministradorServico>();
             //services.AddScoped<IAtestadoServico, AtestadoServico>();

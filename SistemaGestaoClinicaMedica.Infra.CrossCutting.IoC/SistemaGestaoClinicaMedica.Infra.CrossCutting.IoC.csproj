@@ -11,8 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao\SistemaGestaoClinicaMedica.Aplicacao.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.Data\SistemaGestaoClinicaMedica.Infra.Data.csproj" />
-    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Servico.Api\SistemaGestaoClinicaMedica.Servico.Api.csproj" />
   </ItemGroup>
 
 </Project>
