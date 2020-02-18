@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
-    public abstract class ServicoBase<TId, TEntidade> : IServicoBase<TId, TEntidade> where TEntidade : class, IEntidade<TId>
+    public class ServicoBase<TId, TEntidade> : IServicoBase<TId, TEntidade> where TEntidade : class, IEntidade<TId>
     {
         public ContextoBancoDados ContextoBancoDados { get; }
 

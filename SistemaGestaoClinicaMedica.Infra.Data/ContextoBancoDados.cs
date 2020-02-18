@@ -1,16 +1,27 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data
 {
     public class ContextoBancoDados : DbContext
     {
-        public ContextoBancoDados(DbContextOptions<ContextoBancoDados> options) : base(options)
+        public ContextoBancoDados(
+            DbContextOptions<ContextoBancoDados> options,
+            IFuncionarioQueries funcionarioQueries) : base(options)
         {
+            funcionarioQueries.SetaContextoBD(this);
         }
 
+        #region DbSets
+        public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Receita> Receitas { get; set; }
+        #endregion
+
+        #region Queries
+        public IFuncionarioQueries FuncionarioQueries { get; set; }
+        #endregion
 
         public override int SaveChanges()
         {

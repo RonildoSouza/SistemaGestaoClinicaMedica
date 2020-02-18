@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao\SistemaGestaoClinicaMedica.Aplicacao.csproj" />
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.csproj" />
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.csproj" />
   </ItemGroup>
 
 

@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
@@ -18,12 +19,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IAutenticacaoServico autenticacaoServico)
         {
             _logger = logger;
         }
 
         [HttpGet]
+        [Authorize("Bearer", Roles = "Administrador")]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();
@@ -35,5 +37,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             })
             .ToArray();
         }
+    }
+
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+        public string Summary { get; set; }
     }
 }

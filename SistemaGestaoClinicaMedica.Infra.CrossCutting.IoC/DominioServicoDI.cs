@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using SistemaGestaoClinicaMedica.Infra.Data.Servicos;
 
 namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
@@ -8,7 +9,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
     {
         public static void Registrar(IServiceCollection services)
         {
-            //services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
+            services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
 
             //services.AddScoped<IAdministradorServico, AdministradorServico>();
             //services.AddScoped<IAtestadoServico, AtestadoServico>();
@@ -17,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             //services.AddScoped<IEspecialidadeServico, EspecialidadeServico>();
             //services.AddScoped<IExameServico, ExameServico>();
             //services.AddScoped<IFabricanteServico, FabricanteServico>();
-            //services.AddScoped<IFuncionarioServico, FuncionarioServico>();
+            services.AddScoped<IFuncionarioServico, FuncionarioServico>();
             //services.AddScoped<IHoraioDeTrabalhoServico, HoraioDeTrabalhoServico>();
             //services.AddScoped<IMedicamentoServico, MedicamentoServico>();
             //services.AddScoped<IMedicoServico, MedicoServico>();
@@ -27,6 +28,8 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             //services.AddScoped<IStatusExameServico, StatusExameServico>();
             //services.AddScoped<ITipoDeAtestadoServico, TipoDeAtestadoServico>();
             //services.AddScoped<ITipoDeExameServico, TipoDeExameServico>();
+
+            services.AddScoped<IFuncionarioQueries, FuncionarioQueries>();
         }
     }
 }
