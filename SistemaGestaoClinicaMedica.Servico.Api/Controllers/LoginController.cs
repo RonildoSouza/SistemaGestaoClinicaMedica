@@ -11,12 +11,12 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IFuncionarioServicoAplicacao _funcionarioServicoAplicacao;
+        private readonly ILoginServicoAplicacao _loginServicoAplicacao;
         private readonly IAutenticacaoServico _autenticacaoServico;
 
-        public LoginController(IFuncionarioServicoAplicacao funcionarioServicoAplicacao, IAutenticacaoServico autenticacaoServico)
+        public LoginController(ILoginServicoAplicacao funcionarioServicoAplicacao, IAutenticacaoServico autenticacaoServico)
         {
-            _funcionarioServicoAplicacao = funcionarioServicoAplicacao;
+            _loginServicoAplicacao = funcionarioServicoAplicacao;
             _autenticacaoServico = autenticacaoServico;
         }
 
@@ -24,7 +24,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpPost]
         public IActionResult PostAsync([FromBody] LoginEntradaDTO loginEntradaDTO)
         {
-            var autorizacao = _funcionarioServicoAplicacao.Autorizar(loginEntradaDTO);
+            var autorizacao = _loginServicoAplicacao.Autorizar(loginEntradaDTO);
             if (autorizacao == null)
                 return Unauthorized();
 

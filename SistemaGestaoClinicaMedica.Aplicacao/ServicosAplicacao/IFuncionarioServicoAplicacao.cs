@@ -1,4 +1,4 @@
-﻿using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using System;
 using System.Collections.Generic;
 
@@ -6,9 +6,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface IFuncionarioServicoAplicacao
     {
-        LoginSaidaDTO Autorizar(LoginEntradaDTO loginEntradaDTO);
-        //void Criar();
-        //void Atualizar();
+        void Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO);
         dynamic Obter(Guid id);
         IList<dynamic> ObterTodos(bool ativos = true);
         void Deletar(Guid id);

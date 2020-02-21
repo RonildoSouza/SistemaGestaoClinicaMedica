@@ -11,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
         {
             services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
 
-            //services.AddScoped<IAdministradorServico, AdministradorServico>();
+            services.AddScoped<IAdministradorServico, AdministradorServico>();
             //services.AddScoped<IAtestadoServico, AtestadoServico>();
             //services.AddScoped<ICargoServico, CargoServico>();
             //services.AddScoped<IConsultaServico, ConsultaServico>();
@@ -21,9 +21,9 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             services.AddScoped<IFuncionarioServico, FuncionarioServico>();
             //services.AddScoped<IHoraioDeTrabalhoServico, HoraioDeTrabalhoServico>();
             //services.AddScoped<IMedicamentoServico, MedicamentoServico>();
-            //services.AddScoped<IMedicoServico, MedicoServico>();
+            services.AddScoped<IMedicoServico, MedicoServico>();
             //services.AddScoped<IReceitaServico, ReceitaServico>();
-            //services.AddScoped<IRecepcionistaServico, RecepcionistaServico>();
+            services.AddScoped<IRecepcionistaServico, RecepcionistaServico>();
             //services.AddScoped<IStatusConsultaServico, StatusConsultaServico>();
             //services.AddScoped<IStatusExameServico, StatusExameServico>();
             //services.AddScoped<ITipoDeAtestadoServico, TipoDeAtestadoServico>();

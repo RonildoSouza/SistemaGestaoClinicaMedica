@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 
@@ -16,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _funcionarioServicoAplicacao = funcionarioServicoAplicacao;
         }
 
-        [Authorize("Bearer")]
+        [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet]
         public IActionResult Get(bool ativo = true)
         {
@@ -24,9 +25,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(funcionarios);
         }
 
-        [Authorize("Bearer")]
+        [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet, Route("{id}")]
-        public IActionResult GetById(Guid id)
+        public IActionResult GetPorId(Guid id)
         {
             var funcionario = _funcionarioServicoAplicacao.Obter(id);
             return Ok(funcionario);
@@ -38,6 +39,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         {
             _funcionarioServicoAplicacao.Deletar(id);
             return Ok(id);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpPost, Route("{id}")]
+        public IActionResult Post([FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
+        {
+            _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
+            return Ok();
         }
     }
 }
