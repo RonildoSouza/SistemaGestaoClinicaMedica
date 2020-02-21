@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using System;
 using System.Collections.Generic;
@@ -20,17 +19,17 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
             _jwtAutenticacaoConfig = jwtAutenticacaoConfig;
         }
 
-        public AutenticacaoResultado Autenticar(Funcionario funcionario)
+        public AutenticacaoSaida Autenticar(AutenticacaoEntrada entrada)
         {
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                new Claim(JwtRegisteredClaimNames.UniqueName, funcionario.Id.ToString()),
-                new Claim("Data", ToJson(funcionario)),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, funcionario.Cargo.Id),
+                //new Claim(JwtRegisteredClaimNames.UniqueName, entrada.Id.ToString()),
+                new Claim("Data", ToJson(entrada)),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, entrada.CargoId),
             };
 
-            var claimsIdentity = new ClaimsIdentity(new GenericIdentity(funcionario.Id.ToString(), "Login"), claims);
+            var claimsIdentity = new ClaimsIdentity(new GenericIdentity(entrada.Id.ToString(), "Login"), claims);
 
             var criadoEm = DateTime.UtcNow;
             var expiracao = criadoEm.AddHours(_jwtAutenticacaoConfig.Value.ExpirationInHours);
@@ -47,7 +46,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
             });
 
             var dateFormat = "yyyy-MM-dd HH:mm:ss";
-            var result = new AutenticacaoResultado
+            var result = new AutenticacaoSaida
             {
                 Sucesso = true,
                 Autenticado = true,

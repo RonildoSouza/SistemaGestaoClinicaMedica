@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOS\Funcionario\" />
+  </ItemGroup>
+
 </Project>

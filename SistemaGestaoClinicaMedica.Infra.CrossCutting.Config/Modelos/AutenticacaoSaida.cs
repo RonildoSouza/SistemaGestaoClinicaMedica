@@ -1,6 +1,6 @@
 ﻿namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos
 {
-    public class AutenticacaoResultado
+    public class AutenticacaoSaida
     {
         public bool Sucesso { get; set; }
         public bool Autenticado { get; set; }

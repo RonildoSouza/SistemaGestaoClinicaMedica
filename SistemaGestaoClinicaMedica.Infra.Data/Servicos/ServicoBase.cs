@@ -23,31 +23,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return ContextoBancoDados.Set<TEntidade>().AsQueryable();
         }
 
-        /*public void Deletar(TId id)
-        {
-            var entidade = ContextoBancoDados.Set<TEntidade>().Find(id);
-            DelecaoLogica(ref entidade);
-
-            ContextoBancoDados.SaveChangesAsync();
-
-            void DelecaoLogica(ref TEntidade entity)
-            {
-                try
-                {
-                    var propertyDel = typeof(TEntidade).GetProperty("Del", BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-                    if (propertyDel == null)
-                        return;
-
-                    propertyDel.SetValue(entity, DateTime.Now);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception(ex.Message, ex.InnerException);
-                }
-            }
-        }*/
-
         public virtual void Salvar(TEntidade entidade)
         {
             if (entidade.Id.Equals(default(TId)))

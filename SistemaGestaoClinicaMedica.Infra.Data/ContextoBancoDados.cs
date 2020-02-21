@@ -2,6 +2,7 @@
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data
 {
@@ -11,12 +12,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
             DbContextOptions<ContextoBancoDados> options,
             IFuncionarioQueries funcionarioQueries) : base(options)
         {
+            FuncionarioQueries = funcionarioQueries;
             funcionarioQueries.SetaContextoBD(this);
         }
 
+        #region FAKE DBSET
+        public IEnumerable<Funcionario> Funcionarios => DadosFake.Funcionarios();
+        public IEnumerable<Cargo> Cargos => DadosFake.Cargos();
+        #endregion
+
         #region DbSets
-        public DbSet<Funcionario> Funcionarios { get; set; }
-        public DbSet<Receita> Receitas { get; set; }
+        //public DbSet<Funcionario> Funcionarios { get; set; }
+        //public DbSet<Cargo> Cargos { get; set; }
+        //public DbSet<Receita> Receitas { get; set; }
         #endregion
 
         #region Queries

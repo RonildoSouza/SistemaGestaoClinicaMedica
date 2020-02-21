@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
-using System;
 
 namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
@@ -28,20 +28,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             if (autorizacao == null)
                 return Unauthorized();
 
-            var autenticacao = _autenticacaoServico.Autenticar(new Dominio.Entidades.Administrador
-            {
-                Ativo = true,
-                Id = Guid.NewGuid(),
-                Nome = "Administrador",
-                Email = "email@email.com",
-                Senha = "123",
-                Telefone = "(31) 99999-8888",
-                Cargo = new Dominio.Entidades.Cargo
+            var autenticacao = _autenticacaoServico.Autenticar(
+                new AutenticacaoEntrada
                 {
-                    Id = "Administrador",
-                    Nome = "Administrador"
-                }
-            });
+                    Id = autorizacao.Id,
+                    Nome = autorizacao.Nome,
+                    Email = autorizacao.Email,
+                    CargoId = autorizacao.CargoId
+                });
 
             if (autenticacao == null)
                 return Unauthorized();

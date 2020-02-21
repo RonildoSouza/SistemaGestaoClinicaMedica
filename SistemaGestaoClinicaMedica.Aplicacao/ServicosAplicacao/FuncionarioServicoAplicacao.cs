@@ -1,5 +1,8 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
@@ -16,7 +19,31 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
         {
             var entidade = _funcionarioServico.Autorizar(loginEntradaDTO.Email, loginEntradaDTO.Senha);
 
-            return new LoginSaidaDTO { Email = entidade.Email, Senha = entidade.Senha };
+            if (entidade == null)
+                return null;
+
+            return new LoginSaidaDTO
+            {
+                Id = entidade.Id,
+                Nome = entidade.Nome,
+                CargoId = entidade.Cargo.Id,
+                Email = entidade.Email
+            };
+        }
+
+        public void Deletar(Guid id)
+        {
+            _funcionarioServico.Deletar(id);
+        }
+
+        public dynamic Obter(Guid id)
+        {
+            return _funcionarioServico.Obter(id);
+        }
+
+        public IList<dynamic> ObterTodos(bool ativo = true)
+        {
+            return _funcionarioServico.ObterTudoAtivoOuInativo(ativo).Cast<dynamic>().ToList();
         }
     }
 }
