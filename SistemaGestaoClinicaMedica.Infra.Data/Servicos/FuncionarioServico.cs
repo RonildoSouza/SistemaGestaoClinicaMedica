@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 
         public void Deletar(Guid id)
         {
-            var funcionario = ContextoBancoDados.Funcionarios.FirstOrDefault(_ => _.Id == id);//.Find(id);
+            var funcionario = ContextoBancoDados.Funcionarios.Find(id);
 
             if (funcionario == null)
                 return;
@@ -31,5 +31,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return ContextoBancoDados.FuncionarioQueries.ObterTudoAtivoOuInativo(ativo);
         }
+
+        //public Guid SalvarRetornaId(Funcionario funcionario)
+        //{
+        //    base.Salvar(funcionario);
+        //    var entidadeId = ContextoBancoDados.Funcionarios.OrderBy(_ => _.CriadoEm)
+        //                                                    .Select(_ => _.Id)
+        //                                                    .First();
+        //    return entidadeId;
+        //}
     }
 }

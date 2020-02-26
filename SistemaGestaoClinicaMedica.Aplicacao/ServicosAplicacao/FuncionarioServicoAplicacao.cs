@@ -19,7 +19,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             IFuncionarioServico funcionarioServico,
             IAdministradorServico administradorServico,
             IMedicoServico medicoServico,
-            IRecepcionistaServico recepcionistaServico, 
+            IRecepcionistaServico recepcionistaServico,
             ICargoServico cargoServico)
         {
             _funcionarioServico = funcionarioServico;
@@ -46,20 +46,31 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public void Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO)
         {
-            var cargo = _cargoServico.Obter(funcionarioEntradaDTO.CargoId);
+            var cargoEntidade = _cargoServico.Obter(funcionarioEntradaDTO.CargoId);
 
-            switch (cargo.Id)
+            var funcionarioEntidade = new Funcionario(
+                funcionarioEntradaDTO.Nome,
+                funcionarioEntradaDTO.Email,
+                funcionarioEntradaDTO.Telefone,
+                funcionarioEntradaDTO.Senha,
+                cargoEntidade);
+
+            switch (cargoEntidade.Id)
             {
                 case "Administrador":
-                    var admin = new Administrador();
+                    var admin = new Administrador(funcionarioEntidade);
                     _administradorServico.Salvar(admin);
                     break;
                 case "Medico":
-                    var medico = new Medico();
+                    var medico = new Medico(
+                        $"CRM {Guid.NewGuid().ToString("N").Substring(0, 6)}",
+                        funcionarioEntidade,
+                        new List<HorarioDeTrabalho>(),
+                        new List<MedicoEspecialidade>());
                     _medicoServico.Salvar(medico);
                     break;
                 case "Recepcionista":
-                    var recepcionista = new Recepcionista();
+                    var recepcionista = new Recepcionista(funcionarioEntidade);
                     _recepcionistaServico.Salvar(recepcionista);
                     break;
             }

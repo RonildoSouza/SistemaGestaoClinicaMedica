@@ -1,29 +1,30 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data
 {
     public class ContextoBancoDados : DbContext
     {
-        public ContextoBancoDados(
-            DbContextOptions<ContextoBancoDados> options,
-            IFuncionarioQueries funcionarioQueries) : base(options)
+        public ContextoBancoDados() { }
+
+        public ContextoBancoDados(IFuncionarioQueries funcionarioQueries)
         {
             FuncionarioQueries = funcionarioQueries;
             funcionarioQueries.SetaContextoBD(this);
         }
 
-        #region FAKE DBSET
-        public IEnumerable<Funcionario> Funcionarios => DadosFake.Funcionarios();
-        public IEnumerable<Cargo> Cargos => DadosFake.Cargos();
-        #endregion
-
         #region DbSets
-        //public DbSet<Funcionario> Funcionarios { get; set; }
-        //public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Medico> Medicos { get; set; }
+        public DbSet<Especialidade> Especialidades { get; set; }
+        public DbSet<HorarioDeTrabalho> HorariosDeTrabalho { get; set; }
+        public DbSet<Administrador> Administradores { get; set; }
+        public DbSet<Recepcionista> Recepcionistas { get; set; }
         //public DbSet<Receita> Receitas { get; set; }
         #endregion
 
@@ -55,12 +56,30 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlite("Data Source=BancoDados.db");
+
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new FuncionarioMap());
+            modelBuilder.ApplyConfiguration(new CargoMap());
+            modelBuilder.ApplyConfiguration(new MedicoMap());
+            modelBuilder.ApplyConfiguration(new EspecialidadeMap());
+            modelBuilder.ApplyConfiguration(new MedicoEspecialidadeMap());
+            modelBuilder.ApplyConfiguration(new AdministradorMap());
+            modelBuilder.ApplyConfiguration(new RecepcionistaMap());
+
+            RemovePluralizingTableNameConvention(ref modelBuilder);
+
             base.OnModelCreating(modelBuilder);
+        }
+
+        private void RemovePluralizingTableNameConvention(ref ModelBuilder modelBuilder)
+        {
+            foreach (IMutableEntityType entity in modelBuilder.Model.GetEntityTypes())
+                entity.SetTableName(entity.DisplayName());
         }
     }
 }

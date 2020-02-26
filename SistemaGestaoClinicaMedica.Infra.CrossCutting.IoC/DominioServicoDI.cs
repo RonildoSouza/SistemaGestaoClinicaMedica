@@ -13,7 +13,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
 
             services.AddScoped<IAdministradorServico, AdministradorServico>();
             //services.AddScoped<IAtestadoServico, AtestadoServico>();
-            //services.AddScoped<ICargoServico, CargoServico>();
+            services.AddScoped<ICargoServico, CargoServico>();
             //services.AddScoped<IConsultaServico, ConsultaServico>();
             //services.AddScoped<IEspecialidadeServico, EspecialidadeServico>();
             //services.AddScoped<IExameServico, ExameServico>();

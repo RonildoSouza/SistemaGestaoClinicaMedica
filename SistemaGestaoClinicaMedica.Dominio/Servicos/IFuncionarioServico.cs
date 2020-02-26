@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
         Funcionario Autorizar(string email, string senha);
         IQueryable<Funcionario> ObterTudoAtivoOuInativo(bool ativo = true);
         void Deletar(Guid id);
+        //Guid SalvarRetornaId(Funcionario funcionario);
     }
 }
