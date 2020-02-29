@@ -31,14 +31,5 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return ContextoBancoDados.FuncionarioQueries.ObterTudoAtivoOuInativo(ativo);
         }
-
-        //public Guid SalvarRetornaId(Funcionario funcionario)
-        //{
-        //    base.Salvar(funcionario);
-        //    var entidadeId = ContextoBancoDados.Funcionarios.OrderBy(_ => _.CriadoEm)
-        //                                                    .Select(_ => _.Id)
-        //                                                    .First();
-        //    return entidadeId;
-        //}
     }
 }

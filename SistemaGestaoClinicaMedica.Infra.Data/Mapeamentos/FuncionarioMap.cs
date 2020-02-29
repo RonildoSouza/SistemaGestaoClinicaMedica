@@ -18,6 +18,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
             builder.Property(_ => _.Telefone).HasMaxLength(100);
             builder.Property(_ => _.CriadoEm).HasDefaultValue(DateTime.Now);
 
+            builder.HasIndex(_ => new { _.Email }).IsUnique();
+
             builder.HasOne(_ => _.Cargo);
         }
     }

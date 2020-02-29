@@ -38,15 +38,19 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         public IActionResult Delete(Guid id)
         {
             _funcionarioServicoAplicacao.Deletar(id);
-            return Ok(id);
+            return Ok();
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
-        [HttpPost, Route("{id}")]
+        [HttpPost]
         public IActionResult Post([FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
         {
-            _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
-            return Ok();
+            var funcionarioSaidaDTO = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
+
+            if (funcionarioSaidaDTO == null)
+                return BadRequest();
+
+            return Created($"api/funcionarios/{funcionarioSaidaDTO.Id}", funcionarioSaidaDTO);
         }
     }
 }

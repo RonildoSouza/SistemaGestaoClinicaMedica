@@ -9,9 +9,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 
         public Funcionario(string nome, string email, string telefone, string senha, Cargo cargo)
         {
-            //Id = Guid.NewGuid();
-            //CriadoEm = DateTime.Now;
-
             Nome = nome;
             Email = email;
             Telefone = telefone;

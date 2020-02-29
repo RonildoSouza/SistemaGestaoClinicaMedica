@@ -2,11 +2,11 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Administrador : IEntidade<Guid>
+    public class Laboratorio : IEntidade<Guid>
     {
-        public Administrador() { }
+        public Laboratorio() { }
 
-        public Administrador(Funcionario funcionario)
+        public Laboratorio(Funcionario funcionario)
         {
             Funcionario = funcionario;
         }

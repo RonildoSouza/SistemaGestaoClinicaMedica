@@ -4,6 +4,7 @@ using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
+using System.IO;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data
 {
@@ -25,6 +26,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
         public DbSet<HorarioDeTrabalho> HorariosDeTrabalho { get; set; }
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Recepcionista> Recepcionistas { get; set; }
+        public DbSet<Laboratorio> Laboratorios { get; set; }
         //public DbSet<Receita> Receitas { get; set; }
         #endregion
 
@@ -56,20 +58,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=BancoDados.db");
-
+            optionsBuilder.UseSqlite(@"Data Source=BancoDados.db");
             optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new FuncionarioMap());
-            modelBuilder.ApplyConfiguration(new CargoMap());
-            modelBuilder.ApplyConfiguration(new MedicoMap());
-            modelBuilder.ApplyConfiguration(new EspecialidadeMap());
-            modelBuilder.ApplyConfiguration(new MedicoEspecialidadeMap());
-            modelBuilder.ApplyConfiguration(new AdministradorMap());
-            modelBuilder.ApplyConfiguration(new RecepcionistaMap());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(MapeamentoBase<,>).Assembly);
 
             RemovePluralizingTableNameConvention(ref modelBuilder);
 

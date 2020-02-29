@@ -1,6 +1,6 @@
 ﻿namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public abstract class QueriesBase : IQueriesBase
+    public abstract class QueryBase : IQueryBase
     {
         public ContextoBancoDados ContextoBancoDados { get; private set; }
 

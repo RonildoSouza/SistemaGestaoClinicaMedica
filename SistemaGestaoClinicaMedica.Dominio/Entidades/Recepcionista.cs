@@ -8,7 +8,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 
         public Recepcionista(Funcionario funcionario)
         {
-            //Id = Guid.NewGuid();
             Funcionario = funcionario;
         }
 

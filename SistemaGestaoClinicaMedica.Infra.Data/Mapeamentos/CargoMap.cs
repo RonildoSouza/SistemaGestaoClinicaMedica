@@ -11,10 +11,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.Property(_ => _.Nome).HasMaxLength(500);
 
+            builder.HasIndex(_ => new { _.Id, _.Nome }).IsUnique();
+
             builder.HasData(new Cargo[] {
                 new Cargo("Administrador", "Administrador"),
                 new Cargo("Medico", "Médico"),
                 new Cargo("Recepcionista", "Recepcionista"),
+                new Cargo("Laboratorio", "Laboratório"),
             });
         }
     }

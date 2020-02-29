@@ -11,7 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="BancoDados.db" />
+    <None Remove="BancoDados.db-shm" />
+    <None Remove="BancoDados.db-wal" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,12 +25,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="BancoDados.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

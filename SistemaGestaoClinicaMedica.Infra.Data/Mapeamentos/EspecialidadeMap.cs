@@ -12,6 +12,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.Property(_ => _.Nome).HasMaxLength(500);
 
+            builder.HasIndex(_ => new { _.Id, _.Nome }).IsUnique();
+
             builder.HasData(new Especialidade[]
             {
                 new Especialidade("Clínica Médica"),

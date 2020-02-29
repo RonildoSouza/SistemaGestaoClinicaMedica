@@ -2,10 +2,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC;
 using SistemaGestaoClinicaMedica.Infra.Data;
@@ -66,8 +66,8 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
             });
             #endregion
 
-            #region Conexão com Banco de Dados
-            //services.AddDbContext<ContextoBancoDados>();
+            #region Registra AutoMapper
+            AutoMapperConfig.Registrar(services);
             #endregion
         }
 

@@ -20,8 +20,10 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             //services.AddScoped<IFabricanteServico, FabricanteServico>();
             services.AddScoped<IFuncionarioServico, FuncionarioServico>();
             //services.AddScoped<IHoraioDeTrabalhoServico, HoraioDeTrabalhoServico>();
+            services.AddScoped<ILaboratorioServico, LaboratorioServico>();
             //services.AddScoped<IMedicamentoServico, MedicamentoServico>();
             services.AddScoped<IMedicoServico, MedicoServico>();
+            services.AddScoped<IMedicoEspecialidadeServico, MedicoEspecialidadeServico>();
             //services.AddScoped<IReceitaServico, ReceitaServico>();
             services.AddScoped<IRecepcionistaServico, RecepcionistaServico>();
             //services.AddScoped<IStatusConsultaServico, StatusConsultaServico>();

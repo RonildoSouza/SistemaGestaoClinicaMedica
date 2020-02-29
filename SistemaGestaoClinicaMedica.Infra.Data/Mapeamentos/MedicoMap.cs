@@ -10,7 +10,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
-            builder.Property(_ => _.CRM).HasMaxLength(50).IsRequired();
+            builder.Property(_ => _.CRM)
+                   .HasMaxLength(50)
+                   .IsRequired();
+
+            builder.HasIndex(_ => new { _.CRM }).IsUnique();
 
             builder.HasOne(_ => _.Funcionario);
             builder.HasMany(_ => _.HorariosDeTrabalho);

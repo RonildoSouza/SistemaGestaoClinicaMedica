@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/SistemaGestaoClinicaMedica.Infra.Data/BancoDados.db
+/SistemaGestaoClinicaMedica.Infra.Data/BancoDados.db-shm
+/SistemaGestaoClinicaMedica.Infra.Data/BancoDados.db-wal
+/SistemaGestaoClinicaMedica.Servico.Api/BancoDados.db-shm
+/SistemaGestaoClinicaMedica.Servico.Api/BancoDados.db-wal

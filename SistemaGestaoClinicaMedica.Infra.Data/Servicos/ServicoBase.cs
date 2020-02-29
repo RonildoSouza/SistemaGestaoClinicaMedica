@@ -23,7 +23,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return ContextoBancoDados.Set<TEntidade>().AsQueryable();
         }
 
-        public virtual void Salvar(TEntidade entidade)
+        public virtual TEntidade Salvar(TEntidade entidade)
         {
             if (entidade.Id.Equals(default(TId)))
                 ContextoBancoDados.Set<TEntidade>().Add(entidade);
@@ -31,6 +31,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
                 ContextoBancoDados.Set<TEntidade>().Update(entidade);
 
             ContextoBancoDados.SaveChanges();
+
+            return Obter(entidade.Id);
         }
     }
 }

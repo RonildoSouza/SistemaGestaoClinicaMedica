@@ -1,6 +1,6 @@
 ﻿namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IQueriesBase
+    public interface IQueryBase
     {
         ContextoBancoDados ContextoBancoDados { get; }
 

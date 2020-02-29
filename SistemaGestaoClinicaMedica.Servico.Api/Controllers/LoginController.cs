@@ -28,14 +28,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             if (autorizacao == null)
                 return Unauthorized();
 
-            var autenticacao = _autenticacaoServico.Autenticar(
-                new AutenticacaoEntrada
-                {
-                    Id = autorizacao.Id,
-                    Nome = autorizacao.Nome,
-                    Email = autorizacao.Email,
-                    CargoId = autorizacao.CargoId
-                });
+            var autenticacao = _autenticacaoServico.Autenticar(new AutenticacaoEntrada(autorizacao.Id, autorizacao.Nome, autorizacao.Email, autorizacao.CargoId));
 
             if (autenticacao == null)
                 return Unauthorized();

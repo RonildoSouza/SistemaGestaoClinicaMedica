@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
@@ -12,21 +13,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.HasOne(_ => _.Medico)
                 .WithMany(_ => _.Especialidades)
-                .HasForeignKey(_ => _.EspecialidadeId);
+                .HasForeignKey(_ => _.EspecialidadeId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(_ => _.Especialidade)
                 .WithMany(_ => _.Medicos)
-                .HasForeignKey(_ => _.MedicoId);
-
-            //modelBuilder.Entity<PostTag>()
-            //.HasOne(pt => pt.Post)
-            //.WithMany(p => p.PostTags)
-            //.HasForeignKey(pt => pt.PostId);
-
-            //modelBuilder.Entity<PostTag>()
-            //    .HasOne(pt => pt.Tag)
-            //    .WithMany(t => t.PostTags)
-            //    .HasForeignKey(pt => pt.TagId);
+                .HasForeignKey(_ => _.MedicoId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

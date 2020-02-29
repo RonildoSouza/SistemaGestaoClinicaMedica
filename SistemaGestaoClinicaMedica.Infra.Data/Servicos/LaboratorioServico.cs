@@ -4,9 +4,9 @@ using System;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
-    public sealed class MedicoServico : ServicoBase<Guid, Medico>, IMedicoServico
+    public sealed class LaboratorioServico : ServicoBase<Guid, Laboratorio>, ILaboratorioServico
     {
-        public MedicoServico(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
+        public LaboratorioServico(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
         {
         }
     }

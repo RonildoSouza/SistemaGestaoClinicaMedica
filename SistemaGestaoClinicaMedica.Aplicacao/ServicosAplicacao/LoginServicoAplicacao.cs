@@ -1,14 +1,17 @@
-﻿using SistemaGestaoClinicaMedica.Dominio.Servicos;
+﻿using AutoMapper;
+using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public sealed class LoginServicoAplicacao : ILoginServicoAplicacao
     {
+        private readonly IMapper _mapper;
         private readonly IFuncionarioServico _funcionarioServico;
 
-        public LoginServicoAplicacao(IFuncionarioServico funcionarioServico)
+        public LoginServicoAplicacao(IMapper mapper, IFuncionarioServico funcionarioServico)
         {
+            _mapper = mapper;
             _funcionarioServico = funcionarioServico;
         }
 
@@ -19,13 +22,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             if (entidade == null)
                 return null;
 
-            return new LoginSaidaDTO
-            {
-                Id = entidade.Id,
-                Nome = entidade.Nome,
-                CargoId = entidade.Cargo.Id,
-                Email = entidade.Email
-            };
+            return _mapper.Map<LoginSaidaDTO>(entidade);
         }
     }
 }
