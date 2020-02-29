@@ -24,7 +24,6 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                //new Claim(JwtRegisteredClaimNames.UniqueName, entrada.Id.ToString()),
                 new Claim("Data", ToJson(entrada)),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, entrada.CargoId),
             };
@@ -45,17 +44,13 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
                 Expires = expiracao
             });
 
-            var dateFormat = "yyyy-MM-dd HH:mm:ss";
-            var result = new AutenticacaoSaida
-            {
-                Sucesso = true,
-                Autenticado = true,
-                CriadoEm = criadoEm.ToString(dateFormat),
-                Expiracao = expiracao.ToString(dateFormat),
-                TokenDeAcesso = jwtSecurityTokenHandler.WriteToken(securityToken)
-            };
+            var formatacaoData = "yyyy-MM-dd HH:mm:ss";
 
-            return result;
+            return new AutenticacaoSaida(
+                true,
+                criadoEm.ToString(formatacaoData),
+                expiracao.ToString(formatacaoData),
+                jwtSecurityTokenHandler.WriteToken(securityToken));
         }
 
         private string ToJson<T>(T obj)
