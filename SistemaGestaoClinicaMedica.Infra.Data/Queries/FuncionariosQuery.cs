@@ -16,6 +16,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
             return ContextoBancoDados.Funcionarios.Include(_ => _.Cargo)
                                                   .Where(_ => _.Ativo == ativo)
+                                                  .OrderBy(_ => _.Nome)
                                                   .AsQueryable();
         }
     }

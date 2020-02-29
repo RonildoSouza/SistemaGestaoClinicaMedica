@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
@@ -22,6 +23,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<MedicoEspecialidade, MedicoEspecialidadeSaidaDTO>()
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Medico.Funcionario.Nome))
                 .ForMember(dest => dest.CRM, opt => opt.MapFrom(src => src.Medico.CRM));
+
+            CreateMap<Cargo, CargoSaidaDTO>();
         }
     }
 }

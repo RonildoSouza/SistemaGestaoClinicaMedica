@@ -30,7 +30,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
 
             var claimsIdentity = new ClaimsIdentity(new GenericIdentity(entrada.Id.ToString(), "Login"), claims);
 
-            var criadoEm = DateTime.UtcNow;
+            var criadoEm = DateTime.Now;
             var expiracao = criadoEm.AddHours(_jwtAutenticacaoConfig.Value.ExpirationInHours);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
 
