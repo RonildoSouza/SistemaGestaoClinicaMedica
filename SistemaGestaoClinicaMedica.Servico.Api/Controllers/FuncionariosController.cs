@@ -21,16 +21,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet]
         public IActionResult Get(bool ativo = true)
         {
-            var funcionarios = _funcionarioServicoAplicacao.ObterTodos(ativo);
-            return Ok(funcionarios);
+            var dtos = _funcionarioServicoAplicacao.ObterTudo(ativo);
+            return Ok(dtos);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {
-            var funcionario = _funcionarioServicoAplicacao.Obter(id);
-            return Ok(funcionario);
+            var dto = _funcionarioServicoAplicacao.Obter(id);
+            return Ok(dto);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
@@ -45,12 +45,12 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
         {
-            var funcionarioSaidaDTO = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
+            var dto = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
 
-            if (funcionarioSaidaDTO == null)
+            if (dto == null)
                 return BadRequest();
 
-            return Created($"api/funcionarios/{funcionarioSaidaDTO.Id}", funcionarioSaidaDTO);
+            return Created($"api/funcionarios/{dto.Id}", dto);
         }
     }
 }

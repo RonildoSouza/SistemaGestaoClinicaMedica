@@ -1,10 +1,9 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
-using System;
 using System.Linq;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IEspecialidadeServico : IServicoBase<Guid, Especialidade>
+    public interface IEspecialidadesQuery : IQueryBase
     {
         IQueryable<Especialidade> ObterTudo(bool comMedicos = false);
     }

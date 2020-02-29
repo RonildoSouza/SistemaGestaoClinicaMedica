@@ -8,7 +8,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
     {
         FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO);
         FuncionarioSaidaDTO Obter(Guid id);
-        IList<FuncionarioSaidaDTO> ObterTodos(bool ativos = true);
+        IList<FuncionarioSaidaDTO> ObterTudo(bool ativos = true);
         void Deletar(Guid id);
     }
 }

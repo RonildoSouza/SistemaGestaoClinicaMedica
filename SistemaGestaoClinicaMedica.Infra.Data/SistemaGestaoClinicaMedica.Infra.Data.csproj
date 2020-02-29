@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="BancoDados.db" />
     <None Remove="BancoDados.db-shm" />
     <None Remove="BancoDados.db-wal" />
   </ItemGroup>

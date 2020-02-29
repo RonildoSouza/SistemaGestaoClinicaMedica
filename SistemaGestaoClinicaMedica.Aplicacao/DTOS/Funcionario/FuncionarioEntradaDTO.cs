@@ -1,4 +1,4 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.HorarioDeTrabalho;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario
@@ -12,6 +12,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario
         public string CargoId { get; set; }
         public string CRM { get; set; }
         public List<HorarioDeTrabalhoEntradaDTO> HorariosDeTrabalho { get; set; }
-        //public List<HorarioDeTrabalhoEntradaDTO> HorariosDeTrabalho { get; set; }
+        public List<MedicoEspecialidadeEntradaDTO> MedicoEspecialidades { get; set; }
     }
 }

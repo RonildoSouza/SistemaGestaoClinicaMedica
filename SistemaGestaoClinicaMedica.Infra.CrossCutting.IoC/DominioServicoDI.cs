@@ -15,7 +15,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             //services.AddScoped<IAtestadoServico, AtestadoServico>();
             services.AddScoped<ICargoServico, CargoServico>();
             //services.AddScoped<IConsultaServico, ConsultaServico>();
-            //services.AddScoped<IEspecialidadeServico, EspecialidadeServico>();
+            services.AddScoped<IEspecialidadeServico, EspecialidadeServico>();
             //services.AddScoped<IExameServico, ExameServico>();
             //services.AddScoped<IFabricanteServico, FabricanteServico>();
             services.AddScoped<IFuncionarioServico, FuncionarioServico>();
@@ -23,7 +23,6 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             services.AddScoped<ILaboratorioServico, LaboratorioServico>();
             //services.AddScoped<IMedicamentoServico, MedicamentoServico>();
             services.AddScoped<IMedicoServico, MedicoServico>();
-            services.AddScoped<IMedicoEspecialidadeServico, MedicoEspecialidadeServico>();
             //services.AddScoped<IReceitaServico, ReceitaServico>();
             services.AddScoped<IRecepcionistaServico, RecepcionistaServico>();
             //services.AddScoped<IStatusConsultaServico, StatusConsultaServico>();
@@ -31,7 +30,8 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             //services.AddScoped<ITipoDeAtestadoServico, TipoDeAtestadoServico>();
             //services.AddScoped<ITipoDeExameServico, TipoDeExameServico>();
 
-            services.AddScoped<IFuncionarioQueries, FuncionarioQueries>();
+            services.AddScoped<IFuncionariosQuery, FuncionariosQuery>();
+            services.AddScoped<IEspecialidadesQuery, EspecialidadesQuery>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.HorarioDeTrabalho;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
@@ -15,6 +15,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<FuncionarioEntradaDTO, Administrador>().ConvertUsing<FuncionarioEntradaDTOParaAdministrador>();
             CreateMap<FuncionarioEntradaDTO, Medico>().ConvertUsing<FuncionarioEntradaDTOParaMedico>();
             CreateMap<FuncionarioEntradaDTO, Recepcionista>().ConvertUsing<FuncionarioEntradaDTOParaRecepcionista>();
+            CreateMap<FuncionarioEntradaDTO, Laboratorio>().ConvertUsing<FuncionarioEntradaDTOParaLaboratorio>();
 
             CreateMap<HorarioDeTrabalhoEntradaDTO, HorarioDeTrabalho>()
                 .ForMember(dest => dest.DiaDaSemana, opt => opt.MapFrom(src => (DayOfWeek)src.DiaDaSemana))
@@ -22,6 +23,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.InicioAlmoco, opt => opt.MapFrom(src => TryParse(src.InicioAlmoco)))
                 .ForMember(dest => dest.FimAlmoco, opt => opt.MapFrom(src => TryParse(src.FimAlmoco)))
                 .ForMember(dest => dest.Fim, opt => opt.MapFrom(src => TryParse(src.Fim)));
+
+            CreateMap<MedicoEspecialidadeEntradaDTO, MedicoEspecialidade>()
+                .ForMember(dest => dest.EspecialidadeId, opt => opt.MapFrom(src => Guid.Parse(src.EspecialidadeId)));
         }
 
         private TimeSpan? TryParse(string time)

@@ -16,7 +16,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
         private readonly IMedicoServico _medicoServico;
         private readonly IRecepcionistaServico _recepcionistaServico;
         private readonly ILaboratorioServico _laboratorioServico;
-        private readonly IMedicoEspecialidadeServico _medicoEspecialidadeServico;
 
         public FuncionarioServicoAplicacao(
             IMapper mapper,
@@ -24,8 +23,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             IAdministradorServico administradorServico,
             IMedicoServico medicoServico,
             IRecepcionistaServico recepcionistaServico,
-            ILaboratorioServico laboratorioServico,
-            IMedicoEspecialidadeServico medicoEspecialidadeServico)
+            ILaboratorioServico laboratorioServico)
         {
             _mapper = mapper;
             _funcionarioServico = funcionarioServico;
@@ -33,7 +31,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _medicoServico = medicoServico;
             _recepcionistaServico = recepcionistaServico;
             _laboratorioServico = laboratorioServico;
-            _medicoEspecialidadeServico = medicoEspecialidadeServico;
         }
 
         public void Deletar(Guid id)
@@ -43,55 +40,39 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public FuncionarioSaidaDTO Obter(Guid id)
         {
-            var funcionarioEntidade = _funcionarioServico.Obter(id);
-
-            return _mapper.Map<FuncionarioSaidaDTO>(funcionarioEntidade);
+            var entidade = _funcionarioServico.Obter(id);
+            return _mapper.Map<FuncionarioSaidaDTO>(entidade);
         }
 
-        public IList<FuncionarioSaidaDTO> ObterTodos(bool ativo = true)
+        public IList<FuncionarioSaidaDTO> ObterTudo(bool ativo = true)
         {
-            var listaFuncionarioEntidade = _funcionarioServico.ObterTudoAtivoOuInativo(ativo).ToList();
-
-            return _mapper.Map<List<FuncionarioSaidaDTO>>(listaFuncionarioEntidade);
+            var entidades = _funcionarioServico.ObterTudo(ativo).ToList();
+            return _mapper.Map<List<FuncionarioSaidaDTO>>(entidades);
         }
 
         public FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO)
         {
-            FuncionarioSaidaDTO funcionarioSaidaDTO = null;
-
             switch (funcionarioEntradaDTO.CargoId)
             {
                 case "Administrador":
                     var admin = _mapper.Map<Administrador>(funcionarioEntradaDTO);
                     admin = _administradorServico.Salvar(admin);
-                    funcionarioSaidaDTO = _mapper.Map<FuncionarioSaidaDTO>(admin.Funcionario);
-                    break;
+                    return _mapper.Map<FuncionarioSaidaDTO>(admin.Funcionario);
                 case "Medico":
                     var medico = _mapper.Map<Medico>(funcionarioEntradaDTO);
                     medico = _medicoServico.Salvar(medico);
-
-                    _medicoEspecialidadeServico.Salvar(
-                        new MedicoEspecialidade
-                        {
-                            MedicoId = medico.Id,
-                            EspecialidadeId = Guid.Parse("6F3BF373-F184-4641-9CA1-8500CBB27B7E")
-                        });
-
-                    funcionarioSaidaDTO = _mapper.Map<FuncionarioSaidaDTO>(medico.Funcionario);
-                    break;
+                    return _mapper.Map<FuncionarioSaidaDTO>(medico.Funcionario);
                 case "Recepcionista":
                     var recepcionista = _mapper.Map<Recepcionista>(funcionarioEntradaDTO);
                     recepcionista = _recepcionistaServico.Salvar(recepcionista);
-                    funcionarioSaidaDTO = _mapper.Map<FuncionarioSaidaDTO>(recepcionista.Funcionario);
-                    break;
+                    return _mapper.Map<FuncionarioSaidaDTO>(recepcionista.Funcionario);
                 case "Laboratorio":
                     var lab = _mapper.Map<Laboratorio>(funcionarioEntradaDTO);
                     lab = _laboratorioServico.Salvar(lab);
-                    funcionarioSaidaDTO = _mapper.Map<FuncionarioSaidaDTO>(lab.Funcionario);
-                    break;
+                    return _mapper.Map<FuncionarioSaidaDTO>(lab.Funcionario);
+                default:
+                    return null;
             }
-
-            return funcionarioSaidaDTO;
         }
     }
 }

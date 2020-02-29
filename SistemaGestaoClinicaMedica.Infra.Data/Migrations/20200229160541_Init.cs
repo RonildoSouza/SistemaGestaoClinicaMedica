@@ -42,7 +42,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Senha = table.Column<string>(maxLength: 100, nullable: false),
                     CargoId = table.Column<string>(nullable: true),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 2, 29, 1, 12, 53, 403, DateTimeKind.Local).AddTicks(161))
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 2, 29, 13, 5, 40, 980, DateTimeKind.Local).AddTicks(9599))
                 },
                 constraints: table =>
                 {
@@ -163,15 +163,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     table.PrimaryKey("PK_MedicoEspecialidade", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicoEspecialidade_Medico_EspecialidadeId",
+                        name: "FK_MedicoEspecialidade_Especialidade_EspecialidadeId",
                         column: x => x.EspecialidadeId,
-                        principalTable: "Medico",
+                        principalTable: "Especialidade",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicoEspecialidade_Especialidade_MedicoId",
+                        name: "FK_MedicoEspecialidade_Medico_MedicoId",
                         column: x => x.MedicoId,
-                        principalTable: "Especialidade",
+                        principalTable: "Medico",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -199,107 +199,107 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("5c66a70c-0977-4117-a4e3-24a1d258fea5"), "Cancerologia" });
+                values: new object[] { new Guid("a852a1ed-7c4a-4e52-87ca-0acb3c1de0f0"), "Cancerologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("343ab7dc-2ec0-41e6-b332-fa6b0d61e51b"), "Urologia" });
+                values: new object[] { new Guid("62b562bf-29ae-4755-903f-2f8f040d575a"), "Urologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("9c95aece-c4a7-4444-9c1b-0ccd22a5a422"), "Cirurgia Vascular" });
+                values: new object[] { new Guid("a87a00fa-89ba-41fa-b4e2-1d3a504c362c"), "Cirurgia Vascular" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("8b4184e9-1615-47ad-bf48-fea9ccd141da"), "Infectologia" });
+                values: new object[] { new Guid("453ae4e7-1995-4423-ada1-ace0c77353d9"), "Infectologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("37a176d0-e8a1-4985-857f-bcff3de0d0d1"), "Cirurgia Plástica" });
+                values: new object[] { new Guid("7849ad8f-f695-4c3e-8b8c-2a1b2460f52a"), "Cirurgia Plástica" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("35c83d9c-4dd5-40d4-a0e7-172b5f5c81e3"), "Endocrinologia e Metabologia" });
+                values: new object[] { new Guid("15aff430-aed9-484a-b455-1490aca10b42"), "Endocrinologia e Metabologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("c140277b-4a84-4bd1-9ecc-50d9184879e4"), "Medicina de Família e Comunidade" });
+                values: new object[] { new Guid("52bbbef5-306b-4165-a147-5190a019950c"), "Medicina de Família e Comunidade" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("b633bb60-d194-4f76-ab91-c01da6e10145"), "Otorrinolaringologia" });
+                values: new object[] { new Guid("ee0229f2-0a5b-4b47-8c6c-9cd32344f62b"), "Otorrinolaringologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("e929046a-55d9-41eb-a5c5-76c753557767"), "Dermatologia" });
+                values: new object[] { new Guid("7c48680d-86a0-403f-a8c8-99a90dcf6e97"), "Dermatologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("d3662bee-ca6c-475e-b1ef-949fa795c5c9"), "Radiologia e Diagnóstico por Imagem" });
+                values: new object[] { new Guid("958c7eaa-5985-4e45-8915-53f54273a899"), "Radiologia e Diagnóstico por Imagem" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("04c3ae7d-ad74-44ca-ab79-9c5c2790a7ea"), "Nefrologia" });
+                values: new object[] { new Guid("67340135-df5b-4eee-9942-917f9176bcac"), "Nefrologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("7f8f18e0-b970-4943-92ce-07e3e03dc715"), "Cardiologia" });
+                values: new object[] { new Guid("56ebc620-2aa3-48f0-a5e8-7d6b9b1447b4"), "Cardiologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("38b22d9b-9829-4ab9-adf3-0aef7168fea7"), "Oftalmologia" });
+                values: new object[] { new Guid("e8bbb4d2-8974-4fb0-b526-0d74af3be217"), "Oftalmologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("c0e064b6-aca9-420f-a90c-73a2e0c684c6"), "Ortopedia e Traumatologia" });
+                values: new object[] { new Guid("26dec9b3-03a0-49c4-b0c2-b47ca4b662fc"), "Ortopedia e Traumatologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("d37de9e5-2688-4d13-a08d-376a19f54a9e"), "Anestesiologia" });
+                values: new object[] { new Guid("ae28a7d7-96de-44ef-a79c-581486474d55"), "Anestesiologia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("c8becf9e-c068-47a1-937f-caa0c30f1a18"), "Ginecologia e Obstetrícia" });
+                values: new object[] { new Guid("a65be58d-ea82-4a33-b0c3-7f12ca35aa65"), "Ginecologia e Obstetrícia" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("10dd8bb8-66c8-406b-b5e5-ee4cbd8bff54"), "Pediatria" });
+                values: new object[] { new Guid("0ab92166-2992-4f4e-b0a8-8a2df7c48016"), "Pediatria" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("1fce2684-7655-4792-b97c-f0eccf906186"), "Cirurgia Geral" });
+                values: new object[] { new Guid("2a52d623-2296-493e-8e9f-d0cd69781f47"), "Cirurgia Geral" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("bc2175bb-ddb0-4adb-ab10-d833fe4dd3e3"), "Clínica Médica" });
+                values: new object[] { new Guid("7dfed23b-9a30-401b-8b3b-8c93718b8429"), "Clínica Médica" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("bbdb70af-606e-464b-8374-eb1eb0fd7ed5"), "Psiquiatria" });
+                values: new object[] { new Guid("4394c11a-d312-4a66-b723-ca2af507d66c"), "Psiquiatria" });
 
             migrationBuilder.InsertData(
                 table: "Especialidade",
                 columns: new[] { "Id", "Nome" },
-                values: new object[] { new Guid("a2a7c7d3-982d-4880-8f39-bd4739744e53"), "Nutrologia" });
+                values: new object[] { new Guid("6fdeef11-6736-4163-81dc-1f97f1d59098"), "Nutrologia" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Administrador_FuncionarioId",
@@ -384,10 +384,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "Recepcionista");
 
             migrationBuilder.DropTable(
-                name: "Medico");
+                name: "Especialidade");
 
             migrationBuilder.DropTable(
-                name: "Especialidade");
+                name: "Medico");
 
             migrationBuilder.DropTable(
                 name: "Funcionario");

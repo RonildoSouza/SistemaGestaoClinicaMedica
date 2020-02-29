@@ -4,7 +4,6 @@ using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.IO;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data
 {
@@ -12,10 +11,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
     {
         public ContextoBancoDados() { }
 
-        public ContextoBancoDados(IFuncionarioQueries funcionarioQueries)
+        public ContextoBancoDados(
+            IFuncionariosQuery funcionariosQuery,
+            IEspecialidadesQuery especialidadesQuery)
         {
-            FuncionarioQueries = funcionarioQueries;
-            funcionarioQueries.SetaContextoBD(this);
+            funcionariosQuery.SetaContextoBD(this);
+            FuncionariosQuery = funcionariosQuery;
+
+            especialidadesQuery.SetaContextoBD(this);
+            EspecialidadesQuery = especialidadesQuery;
         }
 
         #region DbSets
@@ -31,7 +35,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
         #endregion
 
         #region Queries
-        public IFuncionarioQueries FuncionarioQueries { get; set; }
+        public IFuncionariosQuery FuncionariosQuery { get; set; }
+        public IEspecialidadesQuery EspecialidadesQuery { get; set; }
         #endregion
 
         public override int SaveChanges()

@@ -1,4 +1,4 @@
-﻿namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.HorarioDeTrabalho
+﻿namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico
 {
     public class HorarioDeTrabalhoEntradaDTO
     {

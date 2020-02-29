@@ -13,12 +13,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.HasOne(_ => _.Medico)
                 .WithMany(_ => _.Especialidades)
-                .HasForeignKey(_ => _.EspecialidadeId)
+                .HasForeignKey(_ => _.MedicoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(_ => _.Especialidade)
                 .WithMany(_ => _.Medicos)
-                .HasForeignKey(_ => _.MedicoId)
+                .HasForeignKey(_ => _.EspecialidadeId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

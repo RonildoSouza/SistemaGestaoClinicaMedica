@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public class FuncionarioQueries : QueryBase, IFuncionarioQueries
+    public class FuncionariosQuery : QueryBase, IFuncionariosQuery
     {
         public Funcionario Autorizar(string email, string senha)
         {
@@ -12,7 +12,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                                   .FirstOrDefault(_ => _.Email == email.ToLower() && _.Senha == senha && _.Ativo);
         }
 
-        public IQueryable<Funcionario> ObterTudoAtivoOuInativo(bool ativo = true)
+        public IQueryable<Funcionario> ObterTudo(bool ativo = true)
         {
             return ContextoBancoDados.Funcionarios.Include(_ => _.Cargo)
                                                   .Where(_ => _.Ativo == ativo)

@@ -13,7 +13,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 
         public Funcionario Autorizar(string email, string senha)
         {
-            return ContextoBancoDados.FuncionarioQueries.Autorizar(email, senha);
+            return ContextoBancoDados.FuncionariosQuery.Autorizar(email, senha);
         }
 
         public void Deletar(Guid id)
@@ -27,9 +27,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public IQueryable<Funcionario> ObterTudoAtivoOuInativo(bool ativo = true)
+        public IQueryable<Funcionario> ObterTudo(bool ativo = true)
         {
-            return ContextoBancoDados.FuncionarioQueries.ObterTudoAtivoOuInativo(ativo);
+            return ContextoBancoDados.FuncionariosQuery.ObterTudo(ativo);
         }
     }
 }
