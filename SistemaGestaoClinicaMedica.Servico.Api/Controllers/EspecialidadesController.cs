@@ -20,8 +20,8 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet]
         public IActionResult Get(bool comMedicos = false)
         {
-            var dtos = _especialidadeServicoAplicacao.ObterTudo(comMedicos);
-            return Ok(dtos);
+            var saidaDTOs = _especialidadeServicoAplicacao.ObterTudo(comMedicos);
+            return Ok(saidaDTOs);
         }
 
         [Authorize("Bearer")]

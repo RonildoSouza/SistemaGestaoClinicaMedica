@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using System;
 using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class FabricanteServicoAplicacao : IFabricanteServicoAplicacao
+    public class FabricanteServicoAplicacao : ServicoAplicacaoLeitura<Fabricante, FabricanteSaidaDTO, Guid>, IFabricanteServicoAplicacao
     {
-        private readonly IMapper _mapper;
         private readonly IFabricanteServico _fabricanteServico;
 
-        public FabricanteServicoAplicacao(IMapper mapper, IFabricanteServico fabricanteServico)
+        public FabricanteServicoAplicacao(IMapper mapper, IFabricanteServico fabricanteServico) : base(mapper, fabricanteServico)
         {
-            _mapper = mapper;
             _fabricanteServico = fabricanteServico;
         }
 

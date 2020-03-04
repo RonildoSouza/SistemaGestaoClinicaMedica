@@ -8,6 +8,5 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     {
         Funcionario Autorizar(string email, string senha);
         IQueryable<Funcionario> ObterTudo(bool ativo = true);
-        void Deletar(Guid id);
     }
 }

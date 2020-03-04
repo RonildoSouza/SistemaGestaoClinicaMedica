@@ -22,9 +22,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult PostAsync([FromBody] LoginEntradaDTO loginEntradaDTO)
+        public IActionResult PostAsync([FromBody] LoginEntradaDTO entradaDTO)
         {
-            var autorizacao = _loginServicoAplicacao.Autorizar(loginEntradaDTO);
+            var autorizacao = _loginServicoAplicacao.Autorizar(entradaDTO);
             if (autorizacao == null)
                 return Unauthorized();
 

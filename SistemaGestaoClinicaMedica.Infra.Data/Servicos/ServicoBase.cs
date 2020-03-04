@@ -34,5 +34,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 
             return Obter(entidade.Id);
         }
+
+        public virtual void Deletar(TId id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

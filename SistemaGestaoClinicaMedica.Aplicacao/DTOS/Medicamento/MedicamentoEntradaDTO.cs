@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento
 {
-    public class MedicamentoEntradaDTO
+    public class MedicamentoEntradaDTO : IEntradaDTO<Guid>
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }

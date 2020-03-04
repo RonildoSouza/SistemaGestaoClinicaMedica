@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
         TEntidade Obter(TId id);
         IQueryable<TEntidade> ObterTudo();
         TEntidade Salvar(TEntidade entidade);
+        void Deletar(TId id);
     }
 }

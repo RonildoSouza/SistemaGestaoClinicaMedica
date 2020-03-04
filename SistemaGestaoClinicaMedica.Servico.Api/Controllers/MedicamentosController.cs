@@ -21,16 +21,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet]
         public IActionResult Get(string nome, bool ativo = true)
         {
-            var dtos = _medicamentoServicoAplicacao.ObterTudo(nome, ativo);
-            return Ok(dtos);
+            var saidaDTOs = _medicamentoServicoAplicacao.ObterTudo(nome, ativo);
+            return Ok(saidaDTOs);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {
-            var dto = _medicamentoServicoAplicacao.Obter(id);
-            return Ok(dto);
+            var saidaDTO = _medicamentoServicoAplicacao.Obter(id);
+            return Ok(saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
@@ -43,26 +43,26 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Post([FromBody]MedicamentoEntradaDTO medicamentoEntradaDTO)
+        public IActionResult Post([FromBody]MedicamentoEntradaDTO entradaDTO)
         {
-            var dto = _medicamentoServicoAplicacao.Salvar(medicamentoEntradaDTO);
+            var saidaDTO = _medicamentoServicoAplicacao.Salvar(entradaDTO);
 
-            if (dto == null)
+            if (saidaDTO == null)
                 return BadRequest();
 
-            return Created($"/{dto.Id}", dto);
+            return Created($"/{saidaDTO.Id}", saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]MedicamentoEntradaDTO medicamentoEntradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]MedicamentoEntradaDTO entradaDTO)
         {
-            var dto = _medicamentoServicoAplicacao.Salvar(medicamentoEntradaDTO, id);
+            var saidaDTO = _medicamentoServicoAplicacao.Salvar(entradaDTO, id);
 
-            if (dto == null)
+            if (saidaDTO == null)
                 return BadRequest();
 
-            return Created($"api/funcionarios/{dto.Id}", dto);
+            return Created($"/{saidaDTO.Id}", saidaDTO);
         }
     }
 }

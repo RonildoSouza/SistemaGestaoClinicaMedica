@@ -21,16 +21,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet]
         public IActionResult Get(bool ativo = true)
         {
-            var dtos = _funcionarioServicoAplicacao.ObterTudo(ativo);
-            return Ok(dtos);
+            var saidaDTOs = _funcionarioServicoAplicacao.ObterTudo(ativo);
+            return Ok(saidaDTOs);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {
-            var dto = _funcionarioServicoAplicacao.Obter(id);
-            return Ok(dto);
+            var saidaDTO = _funcionarioServicoAplicacao.Obter(id);
+            return Ok(saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
@@ -43,26 +43,26 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Post([FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
+        public IActionResult Post([FromBody]FuncionarioEntradaDTO entradaDTO)
         {
-            var dto = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
+            var saidaDTO = _funcionarioServicoAplicacao.Salvar(entradaDTO);
 
-            if (dto == null)
+            if (saidaDTO == null)
                 return BadRequest();
 
-            return Created($"/{dto.Id}", dto);
+            return Created($"/{saidaDTO.Id}", saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]FuncionarioEntradaDTO entradaDTO)
         {
-            var dto = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO, id);
+            var saidaDTO = _funcionarioServicoAplicacao.Salvar(entradaDTO, id);
 
-            if (dto == null)
+            if (saidaDTO == null)
                 return BadRequest();
 
-            return Ok(dto);
+            return Ok(saidaDTO);
         }
     }
 }

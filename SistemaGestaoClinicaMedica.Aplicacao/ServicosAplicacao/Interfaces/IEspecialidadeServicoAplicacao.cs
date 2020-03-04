@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IEspecialidadeServicoAplicacao
+    public interface IEspecialidadeServicoAplicacao : IServicoAplicacaoLeitura<EspecialidadeSaidaDTO, Guid>
     {
-        EspecialidadeSaidaDTO Obter(Guid id);
         IList<EspecialidadeSaidaDTO> ObterTudo(bool comMedicos = false);
     }
 }

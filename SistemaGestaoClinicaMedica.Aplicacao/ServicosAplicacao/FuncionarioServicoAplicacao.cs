@@ -8,9 +8,8 @@ using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public sealed class FuncionarioServicoAplicacao : IFuncionarioServicoAplicacao
+    public sealed class FuncionarioServicoAplicacao : ServicoAplicacaoBase<Funcionario, FuncionarioSaidaDTO, FuncionarioEntradaDTO, Guid>, IFuncionarioServicoAplicacao
     {
-        private readonly IMapper _mapper;
         private readonly IFuncionarioServico _funcionarioServico;
         private readonly IAdministradorServico _administradorServico;
         private readonly IMedicoServico _medicoServico;
@@ -23,25 +22,13 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             IAdministradorServico administradorServico,
             IMedicoServico medicoServico,
             IRecepcionistaServico recepcionistaServico,
-            ILaboratorioServico laboratorioServico)
+            ILaboratorioServico laboratorioServico) : base(mapper, funcionarioServico)
         {
-            _mapper = mapper;
             _funcionarioServico = funcionarioServico;
             _administradorServico = administradorServico;
             _medicoServico = medicoServico;
             _recepcionistaServico = recepcionistaServico;
             _laboratorioServico = laboratorioServico;
-        }
-
-        public void Deletar(Guid id)
-        {
-            _funcionarioServico.Deletar(id);
-        }
-
-        public FuncionarioSaidaDTO Obter(Guid id)
-        {
-            var entidade = _funcionarioServico.Obter(id);
-            return _mapper.Map<FuncionarioSaidaDTO>(entidade);
         }
 
         public IList<FuncionarioSaidaDTO> ObterTudo(bool ativo = true)
@@ -50,7 +37,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<List<FuncionarioSaidaDTO>>(entidades);
         }
 
-        public FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO, Guid id = default)
+        public override FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO, Guid id = default)
         {
             funcionarioEntradaDTO.Id = id;
 

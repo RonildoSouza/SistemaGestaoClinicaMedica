@@ -19,8 +19,8 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var dtos = _cargoServicoAplicacao.ObterTudo();
-            return Ok(dtos);
+            var saidaDTOs = _cargoServicoAplicacao.ObterTudo();
+            return Ok(saidaDTOs);
         }
     }
 }

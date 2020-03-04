@@ -4,11 +4,8 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IFuncionarioServicoAplicacao
+    public interface IFuncionarioServicoAplicacao : IServicoAplicacaoBase<FuncionarioSaidaDTO, FuncionarioEntradaDTO, Guid>
     {
-        FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO, Guid id = default);
-        FuncionarioSaidaDTO Obter(Guid id);
         IList<FuncionarioSaidaDTO> ObterTudo(bool ativo = true);
-        void Deletar(Guid id);
     }
 }
