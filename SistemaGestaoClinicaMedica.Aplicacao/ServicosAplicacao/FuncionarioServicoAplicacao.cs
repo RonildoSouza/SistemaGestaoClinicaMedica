@@ -50,8 +50,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<List<FuncionarioSaidaDTO>>(entidades);
         }
 
-        public FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO)
+        public FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO, Guid id = default)
         {
+            funcionarioEntradaDTO.Id = id;
+
             switch (funcionarioEntradaDTO.CargoId)
             {
                 case "Administrador":

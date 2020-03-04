@@ -19,6 +19,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
             var cargoEntidade = _cargoServico.Obter(source.CargoId);
 
             var funcionarioEntidade = new Funcionario(
+                source.Id,
                 source.Nome,
                 source.Email,
                 source.Telefone,

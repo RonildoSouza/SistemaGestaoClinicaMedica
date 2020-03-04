@@ -32,17 +32,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
             var jwtConfigurationSection = Configuration.GetSection(nameof(JwtAutenticacaoConfig));
 
             #region Injeção de Dependência
-            AplicacaoServicoDI.Registrar(services);
-
-            DominioServicoDI.Registrar(services);
-
-            ConfiguracaoDI.Registrar(services);
+            IoC.Registrar(services);
 
             services.Configure<JwtAutenticacaoConfig>(jwtConfigurationSection);
             #endregion
 
             #region Configuração de Autenticação JWT
-            var jwtConfig = jwtConfigurationSection.Get<JwtAutenticacaoConfig>();
+            var jwtAutenticacaoConfig = jwtConfigurationSection.Get<JwtAutenticacaoConfig>();
 
             services.AddAuthentication(opt =>
             {
@@ -50,9 +46,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(opt =>
             {
-                opt.TokenValidationParameters.IssuerSigningKey = jwtConfig.SymmetricSecurityKey;
-                opt.TokenValidationParameters.ValidAudience = jwtConfig.Audience;
-                opt.TokenValidationParameters.ValidIssuer = jwtConfig.Issuer;
+                opt.TokenValidationParameters.IssuerSigningKey = jwtAutenticacaoConfig.SymmetricSecurityKey;
+                opt.TokenValidationParameters.ValidAudience = jwtAutenticacaoConfig.Audience;
+                opt.TokenValidationParameters.ValidIssuer = jwtAutenticacaoConfig.Issuer;
                 opt.TokenValidationParameters.ValidateIssuerSigningKey = true;
                 opt.TokenValidationParameters.ValidateLifetime = true;
                 opt.TokenValidationParameters.ClockSkew = TimeSpan.Zero;

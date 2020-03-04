@@ -13,13 +13,21 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
 
         public ContextoBancoDados(
             IFuncionariosQuery funcionariosQuery,
-            IEspecialidadesQuery especialidadesQuery)
+            IEspecialidadesQuery especialidadesQuery,
+            IMedicamentosQuery medicamentosQuery,
+            IFabricantesQuery fabricantesQuery)
         {
             funcionariosQuery.SetaContextoBD(this);
             FuncionariosQuery = funcionariosQuery;
 
             especialidadesQuery.SetaContextoBD(this);
             EspecialidadesQuery = especialidadesQuery;
+
+            medicamentosQuery.SetaContextoBD(this);
+            MedicamentosQuery = medicamentosQuery;
+
+            fabricantesQuery.SetaContextoBD(this);
+            FabricantesQuery = fabricantesQuery;
         }
 
         #region DbSets
@@ -31,12 +39,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data
         public DbSet<Administrador> Administradores { get; set; }
         public DbSet<Recepcionista> Recepcionistas { get; set; }
         public DbSet<Laboratorio> Laboratorios { get; set; }
+        public DbSet<Medicamento> Medicamentos { get; set; }
+        public DbSet<Fabricante> Fabricantes { get; set; }
         //public DbSet<Receita> Receitas { get; set; }
         #endregion
 
         #region Queries
         public IFuncionariosQuery FuncionariosQuery { get; set; }
         public IEspecialidadesQuery EspecialidadesQuery { get; set; }
+        public IMedicamentosQuery MedicamentosQuery { get; set; }
+        public IFabricantesQuery FabricantesQuery { get; set; }
         #endregion
 
         public override int SaveChanges()

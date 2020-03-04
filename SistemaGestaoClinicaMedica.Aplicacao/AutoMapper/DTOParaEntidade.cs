@@ -2,6 +2,7 @@
 using SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
@@ -26,6 +27,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
 
             CreateMap<MedicoEspecialidadeEntradaDTO, MedicoEspecialidade>()
                 .ForMember(dest => dest.EspecialidadeId, opt => opt.MapFrom(src => Guid.Parse(src.EspecialidadeId)));
+
+            CreateMap<MedicamentoEntradaDTO, Medicamento>().ConvertUsing<MedicamentoEntradaDTOParaMedicamento>();
         }
 
         private TimeSpan? TryParse(string time)

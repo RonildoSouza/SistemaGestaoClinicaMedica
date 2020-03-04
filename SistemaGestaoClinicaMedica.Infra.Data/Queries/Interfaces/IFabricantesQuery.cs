@@ -1,10 +1,9 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
-using System;
 using System.Linq;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IFabricanteServico : IServicoBase<Guid, Fabricante>
+    public interface IFabricantesQuery : IQueryBase
     {
         IQueryable<Fabricante> ObterTudo(string nome);
     }

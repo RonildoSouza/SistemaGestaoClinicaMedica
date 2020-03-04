@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 
@@ -8,20 +8,20 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FuncionariosController : ControllerBase
+    public class MedicamentosController : ControllerBase
     {
-        private readonly IFuncionarioServicoAplicacao _funcionarioServicoAplicacao;
+        private readonly IMedicamentoServicoAplicacao _medicamentoServicoAplicacao;
 
-        public FuncionariosController(IFuncionarioServicoAplicacao funcionarioServicoAplicacao)
+        public MedicamentosController(IMedicamentoServicoAplicacao medicamentoServicoAplicacao)
         {
-            _funcionarioServicoAplicacao = funcionarioServicoAplicacao;
+            _medicamentoServicoAplicacao = medicamentoServicoAplicacao;
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet]
-        public IActionResult Get(bool ativo = true)
+        public IActionResult Get(string nome, bool ativo = true)
         {
-            var dtos = _funcionarioServicoAplicacao.ObterTudo(ativo);
+            var dtos = _medicamentoServicoAplicacao.ObterTudo(nome, ativo);
             return Ok(dtos);
         }
 
@@ -29,7 +29,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {
-            var dto = _funcionarioServicoAplicacao.Obter(id);
+            var dto = _medicamentoServicoAplicacao.Obter(id);
             return Ok(dto);
         }
 
@@ -37,15 +37,15 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         [HttpDelete, Route("{id}")]
         public IActionResult Delete(Guid id)
         {
-            _funcionarioServicoAplicacao.Deletar(id);
+            _medicamentoServicoAplicacao.Deletar(id);
             return Ok();
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Post([FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
+        public IActionResult Post([FromBody]MedicamentoEntradaDTO medicamentoEntradaDTO)
         {
-            var dto = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO);
+            var dto = _medicamentoServicoAplicacao.Salvar(medicamentoEntradaDTO);
 
             if (dto == null)
                 return BadRequest();
@@ -55,14 +55,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]FuncionarioEntradaDTO funcionarioEntradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]MedicamentoEntradaDTO medicamentoEntradaDTO)
         {
-            var dto = _funcionarioServicoAplicacao.Salvar(funcionarioEntradaDTO, id);
+            var dto = _medicamentoServicoAplicacao.Salvar(medicamentoEntradaDTO, id);
 
             if (dto == null)
                 return BadRequest();
 
-            return Ok(dto);
+            return Created($"api/funcionarios/{dto.Id}", dto);
         }
     }
 }

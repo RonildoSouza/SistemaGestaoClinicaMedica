@@ -3,6 +3,7 @@ using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
@@ -25,6 +26,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.CRM, opt => opt.MapFrom(src => src.Medico.CRM));
 
             CreateMap<Cargo, CargoSaidaDTO>();
+
+            CreateMap<Medicamento, MedicamentoSaidaDTO>()
+                .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => $"{src.Nome} - {src.NomeFabrica}"))
+                .ForMember(dest => dest.FabricanteNome, opt => opt.MapFrom(src => src.Fabricante.Nome));
+
+            CreateMap<Fabricante, FabricanteSaidaDTO>();
         }
     }
 }

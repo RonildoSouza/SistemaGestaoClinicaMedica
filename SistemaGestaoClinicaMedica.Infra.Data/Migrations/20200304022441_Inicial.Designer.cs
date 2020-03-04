@@ -9,8 +9,8 @@ using SistemaGestaoClinicaMedica.Infra.Data;
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
     [DbContext(typeof(ContextoBancoDados))]
-    [Migration("20200229160541_Init")]
-    partial class Init
+    [Migration("20200304022441_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,28 +49,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Cargo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "Administrador",
-                            Nome = "Administrador"
-                        },
-                        new
-                        {
-                            Id = "Medico",
-                            Nome = "Médico"
-                        },
-                        new
-                        {
-                            Id = "Recepcionista",
-                            Nome = "Recepcionista"
-                        },
-                        new
-                        {
-                            Id = "Laboratorio",
-                            Nome = "Laboratório"
-                        });
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Especialidade", b =>
@@ -89,113 +67,25 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Especialidade");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7dfed23b-9a30-401b-8b3b-8c93718b8429"),
-                            Nome = "Clínica Médica"
-                        },
-                        new
-                        {
-                            Id = new Guid("2a52d623-2296-493e-8e9f-d0cd69781f47"),
-                            Nome = "Cirurgia Geral"
-                        },
-                        new
-                        {
-                            Id = new Guid("0ab92166-2992-4f4e-b0a8-8a2df7c48016"),
-                            Nome = "Pediatria"
-                        },
-                        new
-                        {
-                            Id = new Guid("a65be58d-ea82-4a33-b0c3-7f12ca35aa65"),
-                            Nome = "Ginecologia e Obstetrícia"
-                        },
-                        new
-                        {
-                            Id = new Guid("ae28a7d7-96de-44ef-a79c-581486474d55"),
-                            Nome = "Anestesiologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("26dec9b3-03a0-49c4-b0c2-b47ca4b662fc"),
-                            Nome = "Ortopedia e Traumatologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("e8bbb4d2-8974-4fb0-b526-0d74af3be217"),
-                            Nome = "Oftalmologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("56ebc620-2aa3-48f0-a5e8-7d6b9b1447b4"),
-                            Nome = "Cardiologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("958c7eaa-5985-4e45-8915-53f54273a899"),
-                            Nome = "Radiologia e Diagnóstico por Imagem"
-                        },
-                        new
-                        {
-                            Id = new Guid("4394c11a-d312-4a66-b723-ca2af507d66c"),
-                            Nome = "Psiquiatria"
-                        },
-                        new
-                        {
-                            Id = new Guid("7c48680d-86a0-403f-a8c8-99a90dcf6e97"),
-                            Nome = "Dermatologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("ee0229f2-0a5b-4b47-8c6c-9cd32344f62b"),
-                            Nome = "Otorrinolaringologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("52bbbef5-306b-4165-a147-5190a019950c"),
-                            Nome = "Medicina de Família e Comunidade"
-                        },
-                        new
-                        {
-                            Id = new Guid("15aff430-aed9-484a-b455-1490aca10b42"),
-                            Nome = "Endocrinologia e Metabologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("7849ad8f-f695-4c3e-8b8c-2a1b2460f52a"),
-                            Nome = "Cirurgia Plástica"
-                        },
-                        new
-                        {
-                            Id = new Guid("453ae4e7-1995-4423-ada1-ace0c77353d9"),
-                            Nome = "Infectologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("a87a00fa-89ba-41fa-b4e2-1d3a504c362c"),
-                            Nome = "Cirurgia Vascular"
-                        },
-                        new
-                        {
-                            Id = new Guid("62b562bf-29ae-4755-903f-2f8f040d575a"),
-                            Nome = "Urologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("a852a1ed-7c4a-4e52-87ca-0acb3c1de0f0"),
-                            Nome = "Cancerologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("67340135-df5b-4eee-9942-917f9176bcac"),
-                            Nome = "Nefrologia"
-                        },
-                        new
-                        {
-                            Id = new Guid("6fdeef11-6736-4163-81dc-1f97f1d59098"),
-                            Nome = "Nutrologia"
-                        });
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Fabricante", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
+
+                    b.ToTable("Fabricante");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", b =>
@@ -215,7 +105,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2020, 2, 29, 13, 5, 40, 980, DateTimeKind.Local).AddTicks(9599));
+                        .HasDefaultValue(new DateTime(2020, 3, 3, 23, 24, 41, 352, DateTimeKind.Local).AddTicks(6114));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -291,6 +181,45 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasIndex("FuncionarioId");
 
                     b.ToTable("Laboratorio");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medicamento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
+
+                    b.Property<Guid?>("FabricanteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("NomeFabrica")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Tarja")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FabricanteId");
+
+                    b.HasIndex("Nome", "NomeFabrica")
+                        .IsUnique();
+
+                    b.ToTable("Medicamento");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", b =>
@@ -380,6 +309,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
                         .HasForeignKey("FuncionarioId");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medicamento", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Fabricante", "Fabricante")
+                        .WithMany()
+                        .HasForeignKey("FabricanteId");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", b =>
