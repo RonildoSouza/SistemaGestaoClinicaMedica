@@ -1,20 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Dominio.Extensions;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public class MedicamentosQuery : QueryBase, IMedicamentosQuery
+    public class MedicamentosQuery : QueryBase<Medicamento>, IMedicamentosQuery
     {
-        public IQueryable<Medicamento> ObterTudo(string nome, bool ativo = true)
+        public MedicamentosQuery(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
         {
-            var medicamentos = ContextoBancoDados.Medicamentos.Include(_ => _.Fabricante)
-                                                  .Where(_ => _.Ativo == ativo)
-                                                  .OrderBy(_ => _.Nome)
-                                                  .AsQueryable();
+        }
 
-            if (!string.IsNullOrEmpty(nome))
-                medicamentos = medicamentos.Where(_ => _.Nome.Contains(nome) || _.NomeFabrica.Contains(nome));
+        public IList<Medicamento> ObterTudo(string busca, bool ativo = true)
+        {
+            var medicamentos = Entidades.Include(_ => _.Fabricante)
+                                        .Where(_ => _.Ativo == ativo)
+                                        .OrderBy(_ => _.Nome)
+                                        .ToList();
+
+            if (!string.IsNullOrEmpty(busca))
+                medicamentos = medicamentos.Where(_ => _.Nome.ToLowerContains(busca)
+                                                       || _.NomeFabrica.ToLowerContains(busca)
+                                                       || _.Tarja.ToLowerContains(busca)
+                                                       || _.Fabricante.Nome.ToLowerContains(busca)).ToList();
 
             return medicamentos;
         }

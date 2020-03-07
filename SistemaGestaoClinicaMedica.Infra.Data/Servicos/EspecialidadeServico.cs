@@ -1,19 +1,23 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
     public sealed class EspecialidadeServico : ServicoBase<Guid, Especialidade>, IEspecialidadeServico
     {
-        public EspecialidadeServico(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
+        private readonly IEspecialidadesQuery _especialidadesQuery;
+
+        public EspecialidadeServico(ContextoBancoDados contextoBancoDados, IEspecialidadesQuery especialidadesQuery) : base(contextoBancoDados)
         {
+            _especialidadesQuery = especialidadesQuery;
         }
 
-        public IQueryable<Especialidade> ObterTudo(bool comMedicos = false)
+        public IList<Especialidade> ObterTudo(bool comMedicos)
         {
-            return ContextoBancoDados.EspecialidadesQuery.ObterTudo(comMedicos);
+            return _especialidadesQuery.ObterTudo(comMedicos);
         }
     }
 }

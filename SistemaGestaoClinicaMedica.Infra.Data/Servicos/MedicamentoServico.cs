@@ -1,19 +1,23 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
     public sealed class MedicamentoServico : ServicoBase<Guid, Medicamento>, IMedicamentoServico
     {
-        public MedicamentoServico(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
+        private readonly IMedicamentosQuery _medicamentosQuery;
+
+        public MedicamentoServico(ContextoBancoDados contextoBancoDados, IMedicamentosQuery medicamentosQuery) : base(contextoBancoDados)
         {
+            _medicamentosQuery = medicamentosQuery;
         }
 
-        public void Deletar(Guid id)
+        public override void Deletar(Guid id)
         {
-            var medicamento = ContextoBancoDados.Medicamentos.Find(id);
+            var medicamento = Entidades.Find(id);
 
             if (medicamento == null)
                 return;
@@ -22,9 +26,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public IQueryable<Medicamento> ObterTudo(string nome, bool ativo = true)
+        public IList<Medicamento> ObterTudo(string busca, bool ativo)
         {
-            return ContextoBancoDados.MedicamentosQuery.ObterTudo(nome, ativo);
+            return _medicamentosQuery.ObterTudo(busca, ativo);
         }
     }
 }

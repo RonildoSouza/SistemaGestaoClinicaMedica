@@ -19,9 +19,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpGet]
-        public IActionResult Get(string nome, bool ativo = true)
+        public IActionResult Get(string busca, bool ativo = true)
         {
-            var saidaDTOs = _medicamentoServicoAplicacao.ObterTudo(nome, ativo);
+            var saidaDTOs = _medicamentoServicoAplicacao.ObterTudo(busca, ativo);
             return Ok(saidaDTOs);
         }
 

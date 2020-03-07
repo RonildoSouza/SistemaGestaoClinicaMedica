@@ -1,24 +1,28 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
     public sealed class FuncionarioServico : ServicoBase<Guid, Funcionario>, IFuncionarioServico
     {
-        public FuncionarioServico(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
+        private readonly IFuncionariosQuery _funcionariosQuery;
+
+        public FuncionarioServico(ContextoBancoDados contextoBancoDados, IFuncionariosQuery funcionariosQuery) : base(contextoBancoDados)
         {
+            _funcionariosQuery = funcionariosQuery;
         }
 
         public Funcionario Autorizar(string email, string senha)
         {
-            return ContextoBancoDados.FuncionariosQuery.Autorizar(email, senha);
+            return _funcionariosQuery.Autorizar(email, senha);
         }
 
-        public void Deletar(Guid id)
+        public override void Deletar(Guid id)
         {
-            var funcionario = ContextoBancoDados.Funcionarios.Find(id);
+            var funcionario = Entidades.Find(id);
 
             if (funcionario == null)
                 return;
@@ -27,9 +31,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public IQueryable<Funcionario> ObterTudo(bool ativo = true)
+        public IList<Funcionario> ObterTudo(bool ativo)
         {
-            return ContextoBancoDados.FuncionariosQuery.ObterTudo(ativo);
+            return _funcionariosQuery.ObterTudo(ativo);
         }
     }
 }

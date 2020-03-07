@@ -4,6 +4,7 @@ using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
@@ -16,9 +17,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _pacienteServico = pacienteServico;
         }
 
-        public IList<PacienteSaidaDTO> ObterTudo(string nome)
+        public IList<PacienteSaidaDTO> ObterTudo(string busca, bool ativo)
         {
-            var entidades = _pacienteServico.ObterTudo();
+            var entidades = _pacienteServico.ObterTudo(busca, ativo);
             return _mapper.Map<List<PacienteSaidaDTO>>(entidades);
         }
     }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
-using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
@@ -14,13 +13,11 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
         {
             services.AddSingleton<IAutenticacaoServico, JwtAutenticacaoServico>();
 
-            //services.AddScoped(typeof(IServicoBase<,>), typeof(ServicoBase<,>));
-
-            services.RegistrarTudoPorAssembly(typeof(ILoginServicoAplicacao).Assembly, "ServicoAplicacao");
+            services.RegistrarTudoPorAssembly(typeof(IServicoAplicacaoBase<,,>).Assembly, "ServicoAplicacao");
 
             services.RegistrarTudoPorAssembly(typeof(ServicoBase<,>).Assembly, "Servico");
 
-            services.RegistrarTudoPorAssembly(typeof(QueryBase).Assembly, "Query");
+            services.RegistrarTudoPorAssembly(typeof(IQueryBase<>).Assembly, "Query");
         }
     }
 }

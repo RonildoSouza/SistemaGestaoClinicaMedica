@@ -1,12 +1,14 @@
-﻿namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
-{
-    public abstract class QueryBase : IQueryBase
-    {
-        public ContextoBancoDados ContextoBancoDados { get; private set; }
+﻿using Microsoft.EntityFrameworkCore;
 
-        public void SetaContextoBD(ContextoBancoDados contextoBancoDados)
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
+{
+    public abstract class QueryBase<TEntidade> : IQueryBase<TEntidade> where TEntidade : class
+    {
+        protected DbSet<TEntidade> Entidades { get; }
+
+        protected QueryBase(ContextoBancoDados contextoBancoDados)
         {
-            ContextoBancoDados = contextoBancoDados;
+            Entidades = contextoBancoDados.Set<TEntidade>();
         }
     }
 }

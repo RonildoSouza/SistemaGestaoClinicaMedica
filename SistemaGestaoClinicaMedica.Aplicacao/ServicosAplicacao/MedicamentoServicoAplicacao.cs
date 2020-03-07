@@ -16,9 +16,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _medicamentoServico = medicamentoServico;
         }
 
-        public IList<MedicamentoSaidaDTO> ObterTudo(string nome, bool ativo = true)
+        public IList<MedicamentoSaidaDTO> ObterTudo(string busca, bool ativo)
         {
-            var entidades = _medicamentoServico.ObterTudo(nome?.ToUpper(), ativo);
+            var entidades = _medicamentoServico.ObterTudo(busca, ativo);
             return _mapper.Map<List<MedicamentoSaidaDTO>>(entidades);
         }
     }

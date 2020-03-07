@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface IFuncionarioServicoAplicacao : IServicoAplicacaoBase<FuncionarioSaidaDTO, FuncionarioEntradaDTO, Guid>
     {
-        IList<FuncionarioSaidaDTO> ObterTudo(bool ativo = true);
+        IList<FuncionarioSaidaDTO> ObterTudo(bool ativo);
     }
 }

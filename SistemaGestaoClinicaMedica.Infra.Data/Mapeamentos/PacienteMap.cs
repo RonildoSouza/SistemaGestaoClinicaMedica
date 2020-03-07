@@ -28,8 +28,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
             builder.Property(_ => _.Estado)
                     .HasMaxLength(50)
                    .IsRequired();
+            builder.Property(_ => _.Ativo).HasDefaultValue(true);
             builder.Property(_ => _.CriadoEm)
-                   .HasDefaultValue(DateTime.Now)
+                   .HasDefaultValueSql("date('now')")
                    .IsRequired();
         }
     }

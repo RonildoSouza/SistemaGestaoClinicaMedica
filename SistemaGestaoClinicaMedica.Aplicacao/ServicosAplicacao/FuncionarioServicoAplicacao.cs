@@ -31,9 +31,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _laboratorioServico = laboratorioServico;
         }
 
-        public IList<FuncionarioSaidaDTO> ObterTudo(bool ativo = true)
+        public IList<FuncionarioSaidaDTO> ObterTudo(bool ativo)
         {
-            var entidades = _funcionarioServico.ObterTudo(ativo).ToList();
+            var entidades = _funcionarioServico.ObterTudo(ativo);
             return _mapper.Map<List<FuncionarioSaidaDTO>>(entidades);
         }
 

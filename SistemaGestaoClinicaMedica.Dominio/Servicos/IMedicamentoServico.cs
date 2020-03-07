@@ -1,11 +1,11 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IMedicamentoServico : IServicoBase<Guid, Medicamento>
     {
-        IQueryable<Medicamento> ObterTudo(string nome, bool ativo = true);
+        IList<Medicamento> ObterTudo(string busca, bool ativo);
     }
 }

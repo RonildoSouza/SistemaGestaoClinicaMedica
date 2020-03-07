@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public IList<FabricanteSaidaDTO> ObterTudo(string nome)
         {
-            var entidades = _fabricanteServico.ObterTudo(nome?.ToUpper());
+            var entidades = _fabricanteServico.ObterTudo(nome);
             return _mapper.Map<List<FabricanteSaidaDTO>>(entidades);
         }
     }

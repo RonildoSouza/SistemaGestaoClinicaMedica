@@ -103,7 +103,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2020, 3, 3, 23, 24, 41, 352, DateTimeKind.Local).AddTicks(6114));
+                        .HasDefaultValue(new DateTime(2020, 3, 7, 13, 6, 54, 691, DateTimeKind.Local).AddTicks(1079));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -263,6 +263,55 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasIndex("MedicoId");
 
                     b.ToTable("MedicoEspecialidade");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Paciente", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("CriadoEm")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue(new DateTime(2020, 3, 7, 13, 6, 54, 720, DateTimeKind.Local).AddTicks(682));
+
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Paciente");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Recepcionista", b =>

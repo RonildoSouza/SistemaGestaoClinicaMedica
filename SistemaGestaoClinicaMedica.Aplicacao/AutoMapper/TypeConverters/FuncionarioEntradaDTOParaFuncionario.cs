@@ -24,7 +24,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
                 source.Email,
                 source.Telefone,
                 source.Senha,
-                cargoEntidade);
+                cargoEntidade,
+                source.Ativo);
 
             return funcionarioEntidade;
         }

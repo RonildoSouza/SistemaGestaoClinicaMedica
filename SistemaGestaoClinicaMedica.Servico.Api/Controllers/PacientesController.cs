@@ -19,9 +19,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer")]
         [HttpGet]
-        public IActionResult Get(string nome)
+        public IActionResult Get(string busca, bool ativo = true)
         {
-            var saidaDTOs = _pacienteServicoAplicacao.ObterTudo(nome);
+            var saidaDTOs = _pacienteServicoAplicacao.ObterTudo(busca, ativo);
             return Ok(saidaDTOs);
         }
 
@@ -33,13 +33,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
-        //[Authorize("Bearer", Roles = "Administrador")]
-        //[HttpDelete, Route("{id}")]
-        //public IActionResult Delete(Guid id)
-        //{
-        //    _pacienteServicoAplicacao.Deletar(id);
-        //    return Ok();
-        //}
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpDelete, Route("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            _pacienteServicoAplicacao.Deletar(id);
+            return Ok();
+        }
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpPost]

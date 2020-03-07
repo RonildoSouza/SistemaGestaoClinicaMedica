@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface IEspecialidadeServicoAplicacao : IServicoAplicacaoLeitura<EspecialidadeSaidaDTO, Guid>
     {
-        IList<EspecialidadeSaidaDTO> ObterTudo(bool comMedicos = false);
+        IList<EspecialidadeSaidaDTO> ObterTudo(bool comMedicos);
     }
 }

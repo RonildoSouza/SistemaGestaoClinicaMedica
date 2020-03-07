@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
@@ -7,7 +6,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Funcionario() { }
 
-        public Funcionario(Guid id, string nome, string email, string telefone, string senha, Cargo cargo)
+        public Funcionario(Guid id, string nome, string email, string telefone, string senha, Cargo cargo, bool ativo)
         {
             Id = id;
             Nome = nome;
@@ -15,6 +14,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
             Telefone = telefone;
             Senha = senha;
             Cargo = cargo;
+            Ativo = ativo;
         }
 
         public Guid Id { get; set; }

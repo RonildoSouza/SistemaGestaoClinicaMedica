@@ -11,5 +11,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+        public bool Ativo { get; set; }
     }
 }

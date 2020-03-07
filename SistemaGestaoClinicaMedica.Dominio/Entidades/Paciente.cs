@@ -11,6 +11,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+        public bool Ativo { get; set; }
         public DateTime CriadoEm { get; set; }
     }
 }

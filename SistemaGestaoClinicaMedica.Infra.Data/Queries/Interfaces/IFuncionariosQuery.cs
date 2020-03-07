@@ -1,11 +1,11 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IFuncionariosQuery : IQueryBase
+    public interface IFuncionariosQuery : IQueryBase<Funcionario>
     {
         Funcionario Autorizar(string email, string senha);
-        IQueryable<Funcionario> ObterTudo(bool ativo = true);
+        IList<Funcionario> ObterTudo(bool ativo);
     }
 }

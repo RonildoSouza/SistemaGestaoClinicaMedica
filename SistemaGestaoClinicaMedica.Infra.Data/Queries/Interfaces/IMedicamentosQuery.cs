@@ -1,10 +1,10 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IMedicamentosQuery : IQueryBase
+    public interface IMedicamentosQuery : IQueryBase<Medicamento>
     {
-        IQueryable<Medicamento> ObterTudo(string nome, bool ativo = true);
+        IList<Medicamento> ObterTudo(string busca, bool ativo);
     }
 }

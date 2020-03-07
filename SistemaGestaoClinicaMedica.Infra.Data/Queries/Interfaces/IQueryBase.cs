@@ -1,9 +1,6 @@
 ﻿namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IQueryBase
+    public interface IQueryBase<TEntidade> where TEntidade : class
     {
-        ContextoBancoDados ContextoBancoDados { get; }
-
-        void SetaContextoBD(ContextoBancoDados contextoBancoDados);
     }
 }

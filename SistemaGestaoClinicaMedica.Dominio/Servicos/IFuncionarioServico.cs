@@ -1,12 +1,12 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IFuncionarioServico : IServicoBase<Guid, Funcionario>
     {
         Funcionario Autorizar(string email, string senha);
-        IQueryable<Funcionario> ObterTudo(bool ativo = true);
+        IList<Funcionario> ObterTudo(bool ativo);
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class CriaTabelaPaciente : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,6 +44,25 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Paciente",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Nome = table.Column<string>(maxLength: 500, nullable: false),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    Telefone = table.Column<string>(maxLength: 20, nullable: false),
+                    Bairro = table.Column<string>(maxLength: 500, nullable: false),
+                    Cidade = table.Column<string>(maxLength: 500, nullable: false),
+                    Estado = table.Column<string>(maxLength: 50, nullable: false),
+                    Ativo = table.Column<bool>(nullable: false, defaultValue: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 7, 13, 6, 54, 720, DateTimeKind.Local).AddTicks(682))
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Paciente", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Funcionario",
                 columns: table => new
                 {
@@ -54,7 +73,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Senha = table.Column<string>(maxLength: 100, nullable: false),
                     CargoId = table.Column<string>(nullable: true),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 3, 23, 24, 41, 352, DateTimeKind.Local).AddTicks(6114))
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2020, 3, 7, 13, 6, 54, 691, DateTimeKind.Local).AddTicks(1079))
                 },
                 constraints: table =>
                 {
@@ -308,6 +327,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "MedicoEspecialidade");
+
+            migrationBuilder.DropTable(
+                name: "Paciente");
 
             migrationBuilder.DropTable(
                 name: "Recepcionista");

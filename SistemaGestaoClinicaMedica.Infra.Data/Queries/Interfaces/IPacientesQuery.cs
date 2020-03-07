@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IFabricantesQuery : IQueryBase<Fabricante>
+    public interface IPacientesQuery : IQueryBase<Paciente>
     {
-        IList<Fabricante> ObterTudo(string nome);
+        IList<Paciente> ObterTudo(string busca, bool ativo);
     }
 }
