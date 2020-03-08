@@ -1,10 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SistemaGestaoClinicaMedica.Dominio.Entidades;
+﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
@@ -35,16 +33,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public override Consulta Obter(Guid id)
+        public Consulta Obter(Guid id, bool comExames)
         {
-            var consulta = Entidades.Include(_ => _.Paciente)
-                                    .Include(_ => _.StatusConsulta)
-                                    .Include(_ => _.Medico)
-                                    .Include(_ => _.Especialidade)
-                                    .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Funcionario)}")
-                                    .FirstOrDefault(_ => _.Id == id);
-
-            return consulta;
+            return _consultasQuery.Obter(id, comExames);
         }
 
         public IList<Consulta> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)

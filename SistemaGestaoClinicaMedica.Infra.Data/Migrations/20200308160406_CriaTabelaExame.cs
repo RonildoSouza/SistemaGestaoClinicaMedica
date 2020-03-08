@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class CriaTabelaConsulta : Migration
+    public partial class CriaTabelaExame : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -199,6 +199,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    DaClinica = table.Column<bool>(nullable: false),
                     FuncionarioId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -380,10 +381,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     TipoDeExameId = table.Column<Guid>(nullable: true),
-                    Observacao = table.Column<string>(nullable: true),
+                    Observacao = table.Column<string>(maxLength: 500, nullable: true),
                     StatusExameId = table.Column<string>(nullable: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    ConsultaId = table.Column<Guid>(nullable: true)
+                    LaboratorioRealizouExameId = table.Column<Guid>(nullable: true),
+                    ConsultaId = table.Column<Guid>(nullable: true),
+                    LinkResultadoExame = table.Column<string>(maxLength: 500, nullable: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')")
                 },
                 constraints: table =>
                 {
@@ -392,6 +395,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         name: "FK_Exame_Consulta_ConsultaId",
                         column: x => x.ConsultaId,
                         principalTable: "Consulta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Exame_Laboratorio_LaboratorioRealizouExameId",
+                        column: x => x.LaboratorioRealizouExameId,
+                        principalTable: "Laboratorio",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -464,6 +473,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "IX_Exame_ConsultaId",
                 table: "Exame",
                 column: "ConsultaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exame_LaboratorioRealizouExameId",
+                table: "Exame",
+                column: "LaboratorioRealizouExameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Exame_StatusExameId",
@@ -584,9 +598,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "HorarioDeTrabalho");
 
             migrationBuilder.DropTable(
-                name: "Laboratorio");
-
-            migrationBuilder.DropTable(
                 name: "Medicamento");
 
             migrationBuilder.DropTable(
@@ -600,6 +611,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Consulta");
+
+            migrationBuilder.DropTable(
+                name: "Laboratorio");
 
             migrationBuilder.DropTable(
                 name: "StatusExame");

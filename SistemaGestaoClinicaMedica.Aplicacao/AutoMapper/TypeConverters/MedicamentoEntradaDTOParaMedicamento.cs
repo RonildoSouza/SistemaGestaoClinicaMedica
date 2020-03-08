@@ -2,7 +2,6 @@
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
-using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
 {
@@ -17,10 +16,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
 
         public Medicamento Convert(MedicamentoEntradaDTO source, Medicamento destination, ResolutionContext context)
         {
-            Fabricante fabricante = null;
-
-            if (Guid.TryParse(source.FabricanteId, out Guid fabricanteId))
-                fabricante = _fabricanteServico.Obter(fabricanteId);
+            Fabricante fabricante = _fabricanteServico.Obter(source.FabricanteId)
+                                    ?? new Fabricante(source.FabricanteId, source.FabricanteNome.ToUpper());
 
             return new Medicamento(
                 source.Id,
@@ -28,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
                 source.NomeFabrica,
                 source.Tarja,
                 source.Ativo,
-                fabricante ?? new Fabricante(fabricanteId, source.FabricanteNome.ToUpper()));
+                fabricante);
         }
     }
 }

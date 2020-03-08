@@ -55,9 +55,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]PacienteEntradaDTO medicamentoEntradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]PacienteEntradaDTO entradaDTO)
         {
-            var saidaDTO = _pacienteServicoAplicacao.Salvar(medicamentoEntradaDTO, id);
+            var saidaDTO = _pacienteServicoAplicacao.Salvar(entradaDTO, id);
 
             if (saidaDTO == null)
                 return BadRequest();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
@@ -35,6 +36,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<PacienteEntradaDTO, Paciente>();
 
             CreateMap<ConsultaEntradaDTO, Consulta>().ConvertUsing<ConsultaEntradaDTOParaConsulta>();
+
+            CreateMap<ExameEntradaDTO, Exame>().ConvertUsing<ExameEntradaDTOParaExame>();
         }
 
         private TimeSpan? TryParse(string time)

@@ -9,8 +9,8 @@ using SistemaGestaoClinicaMedica.Infra.Data;
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
     [DbContext(typeof(ContextoBancoDados))]
-    [Migration("20200307231556_CriaTabelaConsulta")]
-    partial class CriaTabelaConsulta
+    [Migration("20200308160406_CriaTabelaExame")]
+    partial class CriaTabelaExame
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -159,10 +159,20 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("date('now')");
+
+                    b.Property<Guid?>("LaboratorioRealizouExameId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("LinkResultadoExame")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
                     b.Property<string>("Observacao")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
 
                     b.Property<string>("StatusExameId")
                         .HasColumnType("TEXT");
@@ -173,6 +183,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConsultaId");
+
+                    b.HasIndex("LaboratorioRealizouExameId");
 
                     b.HasIndex("StatusExameId");
 
@@ -284,6 +296,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("DaClinica")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid?>("FuncionarioId")
                         .HasColumnType("TEXT");
@@ -578,9 +593,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Exame", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", null)
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", "Consulta")
                         .WithMany("Exames")
                         .HasForeignKey("ConsultaId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Laboratorio", "LaboratorioRealizouExame")
+                        .WithMany()
+                        .HasForeignKey("LaboratorioRealizouExameId");
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusExame", "StatusExame")
                         .WithMany()

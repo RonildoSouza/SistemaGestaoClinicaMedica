@@ -9,7 +9,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
         public Laboratorio Convert(FuncionarioEntradaDTO source, Laboratorio destination, ResolutionContext context)
         {
             var funcionario = context.Mapper.Map<Funcionario>(source);
-            var lab = new Laboratorio(funcionario);
+            var lab = new Laboratorio(funcionario, source.DaClinica);
 
             return lab;
         }

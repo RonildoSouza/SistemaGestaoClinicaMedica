@@ -13,6 +13,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario
         public string Senha { get; set; }
         public string CargoId { get; set; }
         public string CRM { get; set; }
+        public bool DaClinica { get; set; }
         public bool Ativo { get; set; }
         public List<HorarioDeTrabalhoEntradaDTO> HorariosDeTrabalho { get; set; }
         public List<MedicoEspecialidadeEntradaDTO> MedicoEspecialidades { get; set; }

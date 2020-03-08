@@ -24,21 +24,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
         public Consulta Convert(ConsultaEntradaDTO source, Consulta destination, ResolutionContext context)
         {
             StatusConsulta statusConsulta = null;
-            Paciente paciente = null;
-            Medico medico = null;
-            Especialidade especialidade = null;
+            Paciente paciente = _pacienteServico.Obter(source.PacienteId);
+            Medico medico = _medicoServico.Obter(source.MedicoId); ;
+            Especialidade especialidade = _especialidadeServico.Obter(source.EspecialidadeId);
 
             if (Enum.TryParse(source.StatusConsultaId, out EStatusConsulta eStatusConsulta))
                 statusConsulta = _statusConsultaServico.Obter(eStatusConsulta);
-
-            if (Guid.TryParse(source.PacienteId, out Guid pacienteId))
-                paciente = _pacienteServico.Obter(pacienteId);
-
-            if (Guid.TryParse(source.MedicoId, out Guid medicoId))
-                medico = _medicoServico.Obter(medicoId);
-
-            if (Guid.TryParse(source.EspecialidadeId, out Guid especialidadeId))
-                especialidade = _especialidadeServico.Obter(especialidadeId);
 
             return new Consulta(
                 source.Id,

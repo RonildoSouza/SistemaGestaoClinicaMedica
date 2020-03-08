@@ -13,7 +13,7 @@
 //        {
 //            base.Configure(builder);
 
-//            builder.Property(_ => _.Observacao).HasMaxLength(1000);
+//            builder.Property(_ => _.Observacao).HasMaxLength(500);
 //            builder.Property(_ => _.CriadoEm).HasDefaultValueSql("date('now')").IsRequired();
 
 //            builder.HasOne(_ => _.Medicamentos)

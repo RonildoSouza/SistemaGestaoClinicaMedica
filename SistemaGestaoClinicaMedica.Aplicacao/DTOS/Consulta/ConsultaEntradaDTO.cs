@@ -8,8 +8,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta
         public DateTime Data { get; set; }
         public string Observacao { get; set; }
         public string StatusConsultaId { get; set; }
-        public string PacienteId { get; set; }
-        public string MedicoId { get; set; }
-        public string EspecialidadeId { get; set; }
+        public Guid PacienteId { get; set; }
+        public Guid MedicoId { get; set; }
+        public Guid EspecialidadeId { get; set; }
     }
 }

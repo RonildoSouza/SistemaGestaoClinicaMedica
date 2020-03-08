@@ -8,7 +8,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento
         public string Nome { get; set; }
         public string NomeFabrica { get; set; }
         public string Tarja { get; set; }
-        public string FabricanteId { get; set; }
+        public Guid FabricanteId { get; set; }
         public string FabricanteNome { get; set; }
         public bool Ativo { get; set; } = true;
     }

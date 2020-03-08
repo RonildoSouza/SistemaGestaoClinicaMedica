@@ -10,6 +10,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
+            builder.Property(_ => _.DaClinica).IsRequired();
             builder.HasOne(_ => _.Funcionario);
         }
     }

@@ -6,12 +6,14 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Laboratorio() { }
 
-        public Laboratorio(Funcionario funcionario)
+        public Laboratorio(Funcionario funcionario, bool daClinica)
         {
             Funcionario = funcionario;
+            DaClinica = daClinica;
         }
 
         public Guid Id { get; set; }
+        public bool DaClinica { get; set; }
         public Funcionario Funcionario { get; set; }
     }
 }

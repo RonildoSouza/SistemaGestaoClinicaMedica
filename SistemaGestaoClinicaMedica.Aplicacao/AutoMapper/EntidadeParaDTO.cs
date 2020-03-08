@@ -28,6 +28,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Medico.Funcionario.Nome))
                 .ForMember(dest => dest.CRM, opt => opt.MapFrom(src => src.Medico.CRM));
 
+            CreateMap<Laboratorio, LaboratorioSaidaDTO>()
+                .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Funcionario.Nome));
+
             CreateMap<Cargo, CargoSaidaDTO>();
 
             CreateMap<Medicamento, MedicamentoSaidaDTO>()
@@ -37,11 +40,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<Fabricante, FabricanteSaidaDTO>();
 
             CreateMap<Paciente, PacienteSaidaDTO>()
-                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 5).ToUpper()))
+                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 4).ToUpper()))
                 .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => $"{src.Bairro}, {src.Cidade} - {src.Estado}"));
 
             CreateMap<Consulta, ConsultaSaidaDTO>()
-                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 8).ToUpper()))
+                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 6).ToUpper()))
                 .ForMember(dest => dest.StatusConsulta, opt => opt.MapFrom(src => src.StatusConsulta.Nome))
                 .ForMember(dest => dest.Especialidade, opt => opt.MapFrom(src => src.Especialidade.Nome));
 
@@ -49,11 +52,15 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Funcionario.Nome));
 
             CreateMap<Exame, ExameSaidaDTO>()
+                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 8).ToUpper()))
                 .ForMember(dest => dest.StatusExame, opt => opt.MapFrom(src => src.StatusExame.Nome));
 
             CreateMap<TipoDeExame, TipoDeExameSaidaDTO>();
 
             CreateMap<StatusConsulta, StatusConsultaSaidaDTO>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<StatusExame, StatusExameSaidaDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
         }
     }

@@ -27,9 +27,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpGet, Route("{id}")]
-        public IActionResult GetPorId(Guid id)
+        public IActionResult GetPorId(Guid id, bool comExames)
         {
-            var saidaDTO = _consultaServicoAplicacao.Obter(id);
+            var saidaDTO = _consultaServicoAplicacao.Obter(id, comExames);
             return Ok(saidaDTO);
         }
 
@@ -55,9 +55,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]ConsultaEntradaDTO medicamentoEntradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]ConsultaEntradaDTO entradaDTO)
         {
-            var saidaDTO = _consultaServicoAplicacao.Salvar(medicamentoEntradaDTO, id);
+            var saidaDTO = _consultaServicoAplicacao.Salvar(entradaDTO, id);
 
             if (saidaDTO == null)
                 return BadRequest();

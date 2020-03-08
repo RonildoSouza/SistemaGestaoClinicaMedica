@@ -31,7 +31,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             if (entidade.Id.Equals(default(TId)))
                 Entidades.Add(entidade);
             else
+            {
+                if (Entidades.Local.FirstOrDefault(_ => _.Id.Equals(entidade.Id)) != null)
+                    ContextoBancoDados.Entry(entidade).State = EntityState.Detached;
+
                 Entidades.Update(entidade);
+            }
 
             ContextoBancoDados.SaveChanges();
 

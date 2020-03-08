@@ -17,6 +17,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _consultaServico = consultaServico;
         }
 
+        public ConsultaSaidaDTO Obter(Guid id, bool comExames)
+        {
+            var entidade = _consultaServico.Obter(id, comExames);
+            return _mapper.Map<ConsultaSaidaDTO>(entidade);
+        }
+
         public IList<ConsultaSaidaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status)
         {
             List<Consulta> entidades;
