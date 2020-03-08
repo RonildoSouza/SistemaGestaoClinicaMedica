@@ -2,10 +2,10 @@
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IServicoAplicacaoBase<TSaidaDTO, TEntradaDTO, TId> : IServicoAplicacaoLeitura<TSaidaDTO, TId>
-        where TEntradaDTO : IEntradaDTO<TId>
+    public interface IServicoAplicacaoBase<TSaidaDTO, TEntradaDTO, TEntidadeId> : IServicoAplicacaoLeitura<TSaidaDTO, TEntidadeId>
+        where TEntradaDTO : IEntradaDTO<TEntidadeId>
     {
-        TSaidaDTO Salvar(TEntradaDTO entradaDTO, TId id = default);
-        void Deletar(TId id);
+        TSaidaDTO Salvar(TEntradaDTO entradaDTO, TEntidadeId id = default);
+        void Deletar(TEntidadeId id);
     }
 }

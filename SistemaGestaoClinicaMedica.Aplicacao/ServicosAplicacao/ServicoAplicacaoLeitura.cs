@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ServicoAplicacaoLeitura<TEntidade, TSaida, TId> : IServicoAplicacaoLeitura<TSaida, TId>
-         where TEntidade : IEntidade<TId>
+    public class ServicoAplicacaoLeitura<TEntidade, TSaida, TEntidadeId> : IServicoAplicacaoLeitura<TSaida, TEntidadeId>
+         where TEntidade : IEntidade<TEntidadeId>
     {
         protected readonly IMapper _mapper;
-        protected readonly IServicoBase<TId, TEntidade> _servico;
+        protected readonly IServicoBase<TEntidadeId, TEntidade> _servico;
 
-        public ServicoAplicacaoLeitura(IMapper mapper, IServicoBase<TId, TEntidade> servico)
+        public ServicoAplicacaoLeitura(IMapper mapper, IServicoBase<TEntidadeId, TEntidade> servico)
         {
             _mapper = mapper;
             _servico = servico;
         }
 
-        public virtual TSaida Obter(TId id)
+        public virtual TSaida Obter(TEntidadeId id)
         {
             var entidade = _servico.Obter(id);
             return _mapper.Map<TSaida>(entidade);

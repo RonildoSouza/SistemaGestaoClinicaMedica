@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IConsultaServico : IServicoBase<Guid, Consulta>
+    public interface IConsultasQuery : IQueryBase<Consulta>
     {
         IList<Consulta> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status);
     }

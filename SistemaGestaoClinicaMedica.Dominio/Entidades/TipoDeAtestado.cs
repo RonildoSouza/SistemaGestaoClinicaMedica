@@ -1,10 +1,22 @@
-﻿using System;
-
-namespace SistemaGestaoClinicaMedica.Dominio.Entidades
+﻿namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class TipoDeAtestado : IEntidade<Guid>
+    public class TipoDeAtestado : IEntidade<ETipoDeAtestado>
     {
-        public Guid Id { get; set; }
+        public ETipoDeAtestado Id { get; set; }
         public string Nome { get; set; }
+    }
+
+    public enum ETipoDeAtestado
+    {
+        AtestadoDeObito,
+        AtestadoPorDoenca,
+        AtestadoParaRepousoGestante,
+        AtestadoPorAcidenteDeTrabalho,
+        AtestadoParaFinsDeInterdicao,
+        AtestadoDeAptidaoFisica,
+        AtestadoDeSanidadeFisicaMental,
+        AtestadoParaAmamentação,
+        AtestadoDeComparecimento,
+        AtestadoParaInternacoes,
     }
 }

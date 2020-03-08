@@ -32,6 +32,33 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.ToTable("Administrador");
                 });
 
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Atestado", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ConsultaId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TipoDeAtestadoId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId");
+
+                    b.HasIndex("TipoDeAtestadoId");
+
+                    b.ToTable("Atestado");
+                });
+
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Cargo", b =>
                 {
                     b.Property<string>("Id")
@@ -47,6 +74,59 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Cargo");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .ValueGeneratedOnUpdate()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("date('now')");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("date('now')");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("EspecialidadeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("MedicoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<Guid?>("PacienteId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ReceitaId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StatusConsultaId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EspecialidadeId");
+
+                    b.HasIndex("MedicoId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("ReceitaId");
+
+                    b.HasIndex("StatusConsultaId");
+
+                    b.ToTable("Consulta");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Especialidade", b =>
@@ -65,6 +145,38 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Especialidade");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Exame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("ConsultaId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("StatusExameId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("TipoDeExameId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId");
+
+                    b.HasIndex("StatusExameId");
+
+                    b.HasIndex("TipoDeExameId");
+
+                    b.ToTable("Exame");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Fabricante", b =>
@@ -103,7 +215,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2020, 3, 7, 13, 6, 54, 691, DateTimeKind.Local).AddTicks(1079));
+                        .HasDefaultValueSql("date('now')");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -205,6 +317,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
+                    b.Property<Guid?>("ReceitaId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Tarja")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -213,6 +328,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FabricanteId");
+
+                    b.HasIndex("ReceitaId");
 
                     b.HasIndex("Nome", "NomeFabrica")
                         .IsUnique();
@@ -289,7 +406,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<DateTime>("CriadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue(new DateTime(2020, 3, 7, 13, 6, 54, 720, DateTimeKind.Local).AddTicks(682));
+                        .HasDefaultValueSql("date('now')");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("TEXT");
@@ -314,6 +431,23 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.ToTable("Paciente");
                 });
 
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Receita");
+                });
+
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Recepcionista", b =>
                 {
                     b.Property<Guid>("Id")
@@ -330,11 +464,129 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.ToTable("Recepcionista");
                 });
 
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusConsulta", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id", "Nome")
+                        .IsUnique();
+
+                    b.ToTable("StatusConsulta");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusExame", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id", "Nome")
+                        .IsUnique();
+
+                    b.ToTable("StatusExame");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeAtestado", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id", "Nome")
+                        .IsUnique();
+
+                    b.ToTable("TipoDeAtestado");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeExame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Id", "Nome")
+                        .IsUnique();
+
+                    b.ToTable("TipoDeExame");
+                });
+
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Administrador", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
                         .HasForeignKey("FuncionarioId");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Atestado", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", null)
+                        .WithMany("Atestados")
+                        .HasForeignKey("ConsultaId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeAtestado", "TipoDeAtestado")
+                        .WithMany()
+                        .HasForeignKey("TipoDeAtestadoId");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Especialidade", "Especialidade")
+                        .WithMany()
+                        .HasForeignKey("EspecialidadeId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", "Medico")
+                        .WithMany()
+                        .HasForeignKey("MedicoId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", "Receita")
+                        .WithMany()
+                        .HasForeignKey("ReceitaId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusConsulta", "StatusConsulta")
+                        .WithMany()
+                        .HasForeignKey("StatusConsultaId");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Exame", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", null)
+                        .WithMany("Exames")
+                        .HasForeignKey("ConsultaId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusExame", "StatusExame")
+                        .WithMany()
+                        .HasForeignKey("StatusExameId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeExame", "TipoDeExame")
+                        .WithMany()
+                        .HasForeignKey("TipoDeExameId");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", b =>
@@ -363,6 +615,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Fabricante", "Fabricante")
                         .WithMany()
                         .HasForeignKey("FabricanteId");
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", null)
+                        .WithMany("Medicamentos")
+                        .HasForeignKey("ReceitaId");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", b =>

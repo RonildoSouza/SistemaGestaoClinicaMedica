@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
-    public interface IStatusConsultaServico : IServicoBase<string, StatusConsulta>
+    public interface IStatusConsultaServico : IServicoBase<EStatusConsulta, StatusConsulta>
     {
     }
 }

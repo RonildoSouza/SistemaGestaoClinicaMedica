@@ -1,8 +1,16 @@
 ﻿namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class StatusConsulta : IEntidade<string>
+    public class StatusConsulta : IEntidade<EStatusConsulta>
     {
-        public string Id { get; set; }
+        public EStatusConsulta Id { get; set; }
         public string Nome { get; set; }
+    }
+
+    public enum EStatusConsulta
+    {
+        Agendada,
+        AguardandoRetorno,
+        Cancelada,
+        Concluida,
     }
 }

@@ -16,7 +16,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
             builder.Property(_ => _.Nome).HasMaxLength(500).IsRequired();
             builder.Property(_ => _.Senha).HasMaxLength(100).IsRequired();
             builder.Property(_ => _.Telefone).HasMaxLength(100);
-            builder.Property(_ => _.CriadoEm).HasDefaultValueSql("date('now')");
+            builder.Property(_ => _.CriadoEm).HasDefaultValueSql("date('now')").ValueGeneratedOnAdd();
 
             builder.HasIndex(_ => new { _.Email }).IsUnique();
 

@@ -10,9 +10,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
-            builder.Property(_ => _.Nome)
-                   .HasMaxLength(500)
-                   .IsRequired();
+            builder.Property(_ => _.Nome).HasMaxLength(500).IsRequired();
 
             builder.HasIndex(_ => new { _.Nome }).IsUnique();
         }
