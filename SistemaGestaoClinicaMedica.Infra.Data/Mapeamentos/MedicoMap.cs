@@ -14,8 +14,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.HasIndex(_ => new { _.CRM }).IsUnique();
 
-            builder.HasOne(_ => _.Funcionario);
+            builder.HasOne(_ => _.Funcionario).WithMany().IsRequired();
             builder.HasMany(_ => _.HorariosDeTrabalho);
+            builder.HasMany(_ => _.Especialidades);
         }
     }
 }

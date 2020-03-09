@@ -15,14 +15,14 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _funcionarioServico = funcionarioServico;
         }
 
-        public LoginSaidaDTO Autorizar(LoginEntradaDTO loginEntradaDTO)
+        public LoginEntradaAutenticacaoDTO Autorizar(LoginEntradaDTO loginEntradaDTO)
         {
             var entidade = _funcionarioServico.Autorizar(loginEntradaDTO.Email, loginEntradaDTO.Senha);
 
             if (entidade == null)
                 return null;
 
-            return _mapper.Map<LoginSaidaDTO>(entidade);
+            return _mapper.Map<LoginEntradaAutenticacaoDTO>(entidade);
         }
     }
 }

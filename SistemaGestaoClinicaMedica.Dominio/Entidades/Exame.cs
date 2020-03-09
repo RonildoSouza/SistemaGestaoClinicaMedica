@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Exame : IEntidade<Guid>
+    public class Exame : IEntidade<Guid>, IEntidadeAuditada
     {
         public Exame() { }
 
@@ -25,5 +25,8 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public Consulta Consulta { get; set; }
         public string LinkResultadoExame { get; set; }
         public DateTime CriadoEm { get; set; }
+        public string CriadoPor { get; set; }
+        public DateTime? AtualizadoEm { get; set; }
+        public string AtualizadoPor { get; set; }
     }
 }

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao\SistemaGestaoClinicaMedica.Aplicacao.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.csproj" />

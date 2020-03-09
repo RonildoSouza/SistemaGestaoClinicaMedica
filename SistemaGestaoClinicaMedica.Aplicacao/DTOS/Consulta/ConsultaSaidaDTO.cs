@@ -1,4 +1,5 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Atestado;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
 using System;
@@ -17,5 +18,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta
         public MedicoSaidaDTO Medico { get; set; }
         public string Especialidade { get; set; }
         public List<ExameSaidaDTO> Exames { get; set; }
+        public List<AtestadoSaidaDTO> Atestados { get; set; }
     }
 }

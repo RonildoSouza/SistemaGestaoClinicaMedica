@@ -1,12 +1,18 @@
-﻿using System;
-
-namespace SistemaGestaoClinicaMedica.Servico.Api.DTOS
+﻿namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
     public class LoginSaidaDTO
     {
-        public Guid Id { get; set; }
-        public string Nome { get; set; }
-        public string CargoId { get; set; }
-        public string Email { get; set; }
+        public LoginSaidaDTO(bool autenticado, string criadoEm, string expiracao, string tokenDeAcesso)
+        {
+            Autenticado = autenticado;
+            CriadoEm = criadoEm;
+            Expiracao = expiracao;
+            TokenDeAcesso = tokenDeAcesso;
+        }
+
+        public bool Autenticado { get; set; }
+        public string CriadoEm { get; set; }
+        public string Expiracao { get; set; }
+        public string TokenDeAcesso { get; set; }
     }
 }

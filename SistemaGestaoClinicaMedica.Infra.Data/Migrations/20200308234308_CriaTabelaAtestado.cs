@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class CriaTabelaExame : Migration
+    public partial class CriaTabelaAtestado : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Cidade = table.Column<string>(maxLength: 500, nullable: false),
                     Estado = table.Column<string>(maxLength: 50, nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')")
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')"),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -68,7 +71,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Observacao = table.Column<string>(nullable: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false)
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -132,9 +138,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Email = table.Column<string>(maxLength: 200, nullable: false),
                     Telefone = table.Column<string>(maxLength: 100, nullable: true),
                     Senha = table.Column<string>(maxLength: 100, nullable: false),
-                    CargoId = table.Column<string>(nullable: true),
+                    CargoId = table.Column<string>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')")
+                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')"),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -144,7 +153,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.CargoId,
                         principalTable: "Cargo",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,7 +165,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     NomeFabrica = table.Column<string>(maxLength: 100, nullable: false),
                     Tarja = table.Column<string>(maxLength: 50, nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    FabricanteId = table.Column<Guid>(nullable: true),
+                    FabricanteId = table.Column<Guid>(nullable: false),
                     ReceitaId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -167,7 +176,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.FabricanteId,
                         principalTable: "Fabricante",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Medicamento_Receita_ReceitaId",
                         column: x => x.ReceitaId,
@@ -181,7 +190,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: true)
+                    FuncionarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,7 +200,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,7 +209,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DaClinica = table.Column<bool>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: true)
+                    FuncionarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,7 +219,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -219,7 +228,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CRM = table.Column<string>(maxLength: 50, nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: true)
+                    FuncionarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,7 +238,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,7 +246,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: true)
+                    FuncionarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -247,7 +256,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.FuncionarioId,
                         principalTable: "Funcionario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -257,13 +266,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
                     Observacao = table.Column<string>(maxLength: 500, nullable: true),
-                    StatusConsultaId = table.Column<string>(nullable: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')"),
-                    AtualizadoEm = table.Column<DateTime>(nullable: true, defaultValueSql: "date('now')"),
-                    PacienteId = table.Column<Guid>(nullable: true),
-                    MedicoId = table.Column<Guid>(nullable: true),
-                    EspecialidadeId = table.Column<Guid>(nullable: true),
-                    ReceitaId = table.Column<Guid>(nullable: true)
+                    StatusConsultaId = table.Column<string>(nullable: false),
+                    PacienteId = table.Column<Guid>(nullable: false),
+                    MedicoId = table.Column<Guid>(nullable: false),
+                    EspecialidadeId = table.Column<Guid>(nullable: false),
+                    ReceitaId = table.Column<Guid>(nullable: true),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -273,19 +284,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.EspecialidadeId,
                         principalTable: "Especialidade",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Consulta_Medico_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "Medico",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Consulta_Paciente_PacienteId",
                         column: x => x.PacienteId,
                         principalTable: "Paciente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Consulta_Receita_ReceitaId",
                         column: x => x.ReceitaId,
@@ -297,7 +308,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.StatusConsultaId,
                         principalTable: "StatusConsulta",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -353,10 +364,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Observacao = table.Column<string>(nullable: true),
-                    TipoDeAtestadoId = table.Column<string>(nullable: true),
+                    Observacao = table.Column<string>(maxLength: 500, nullable: true),
+                    TipoDeAtestadoId = table.Column<string>(nullable: false),
+                    ConsultaId = table.Column<Guid>(nullable: false),
                     CriadoEm = table.Column<DateTime>(nullable: false),
-                    ConsultaId = table.Column<Guid>(nullable: true)
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -366,13 +380,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.ConsultaId,
                         principalTable: "Consulta",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Atestado_TipoDeAtestado_TipoDeAtestadoId",
                         column: x => x.TipoDeAtestadoId,
                         principalTable: "TipoDeAtestado",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -380,13 +394,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    TipoDeExameId = table.Column<Guid>(nullable: true),
+                    TipoDeExameId = table.Column<Guid>(nullable: false),
                     Observacao = table.Column<string>(maxLength: 500, nullable: true),
-                    StatusExameId = table.Column<string>(nullable: true),
+                    StatusExameId = table.Column<string>(nullable: false),
                     LaboratorioRealizouExameId = table.Column<Guid>(nullable: true),
-                    ConsultaId = table.Column<Guid>(nullable: true),
+                    ConsultaId = table.Column<Guid>(nullable: false),
                     LinkResultadoExame = table.Column<string>(maxLength: 500, nullable: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')")
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -396,7 +413,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.ConsultaId,
                         principalTable: "Consulta",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Exame_Laboratorio_LaboratorioRealizouExameId",
                         column: x => x.LaboratorioRealizouExameId,
@@ -408,13 +425,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         column: x => x.StatusExameId,
                         principalTable: "StatusExame",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Exame_TipoDeExame_TipoDeExameId",
                         column: x => x.TipoDeExameId,
                         principalTable: "TipoDeExame",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

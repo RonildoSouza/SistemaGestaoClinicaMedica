@@ -27,9 +27,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpGet, Route("{id}")]
-        public IActionResult GetPorId(Guid id, bool comExames)
+        public IActionResult GetPorId(Guid id, bool comExames, bool comAtestados)
         {
-            var saidaDTO = _consultaServicoAplicacao.Obter(id, comExames);
+            var saidaDTO = _consultaServicoAplicacao.Obter(id, comExames, comAtestados);
             return Ok(saidaDTO);
         }
 

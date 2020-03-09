@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Funcionario : IEntidade<Guid>
+    public class Funcionario : IEntidade<Guid>, IEntidadeAuditada
     {
         public Funcionario() { }
 
@@ -25,5 +25,8 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public Cargo Cargo { get; set; }
         public bool Ativo { get; set; }
         public DateTime CriadoEm { get; set; }
+        public string CriadoPor { get; set; }
+        public DateTime? AtualizadoEm { get; set; }
+        public string AtualizadoPor { get; set; }
     }
 }

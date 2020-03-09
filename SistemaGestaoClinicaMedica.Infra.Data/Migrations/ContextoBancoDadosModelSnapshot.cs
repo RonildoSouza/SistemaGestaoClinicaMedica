@@ -22,7 +22,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("FuncionarioId")
+                    b.Property<Guid>("FuncionarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -38,16 +38,27 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ConsultaId")
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ConsultaId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Observacao")
+                    b.Property<string>("CriadoPor")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Observacao")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
                     b.Property<string>("TipoDeAtestadoId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -83,35 +94,38 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("AtualizadoEm")
-                        .ValueGeneratedOnUpdate()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("date('now')");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("date('now')");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CriadoPor")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Data")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EspecialidadeId")
+                    b.Property<Guid>("EspecialidadeId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("MedicoId")
+                    b.Property<Guid>("MedicoId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Observacao")
                         .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
-                    b.Property<Guid?>("PacienteId")
+                    b.Property<Guid>("PacienteId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("ReceitaId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("StatusConsultaId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -153,13 +167,20 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ConsultaId")
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ConsultaId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("date('now')");
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CriadoPor")
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("LaboratorioRealizouExameId")
                         .HasColumnType("TEXT");
@@ -173,9 +194,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasMaxLength(500);
 
                     b.Property<string>("StatusExameId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("TipoDeExameId")
+                    b.Property<Guid>("TipoDeExameId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -221,13 +243,23 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(true);
 
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("CargoId")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CriadoEm")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("date('now')");
+
+                    b.Property<string>("CriadoPor")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -298,7 +330,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<bool>("DaClinica")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("FuncionarioId")
+                    b.Property<Guid>("FuncionarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -319,7 +351,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(true);
 
-                    b.Property<Guid?>("FabricanteId")
+                    b.Property<Guid>("FabricanteId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
@@ -363,7 +395,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<Guid?>("FuncionarioId")
+                    b.Property<Guid>("FuncionarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -408,6 +440,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("INTEGER")
                         .HasDefaultValue(true);
 
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Bairro")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -422,6 +460,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
                         .HasDefaultValueSql("date('now')");
+
+                    b.Property<string>("CriadoPor")
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("TEXT");
@@ -452,7 +493,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CriadoPor")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Observacao")
@@ -469,7 +519,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("FuncionarioId")
+                    b.Property<Guid>("FuncionarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -552,33 +602,45 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Atestado", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", null)
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", "Consulta")
                         .WithMany("Atestados")
-                        .HasForeignKey("ConsultaId");
+                        .HasForeignKey("ConsultaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeAtestado", "TipoDeAtestado")
                         .WithMany()
-                        .HasForeignKey("TipoDeAtestadoId");
+                        .HasForeignKey("TipoDeAtestadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Especialidade", "Especialidade")
                         .WithMany()
-                        .HasForeignKey("EspecialidadeId");
+                        .HasForeignKey("EspecialidadeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", "Medico")
                         .WithMany()
-                        .HasForeignKey("MedicoId");
+                        .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Paciente", "Paciente")
                         .WithMany()
-                        .HasForeignKey("PacienteId");
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", "Receita")
                         .WithMany()
@@ -586,14 +648,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusConsulta", "StatusConsulta")
                         .WithMany()
-                        .HasForeignKey("StatusConsultaId");
+                        .HasForeignKey("StatusConsultaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Exame", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", "Consulta")
                         .WithMany("Exames")
-                        .HasForeignKey("ConsultaId");
+                        .HasForeignKey("ConsultaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Laboratorio", "LaboratorioRealizouExame")
                         .WithMany()
@@ -601,18 +667,24 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusExame", "StatusExame")
                         .WithMany()
-                        .HasForeignKey("StatusExameId");
+                        .HasForeignKey("StatusExameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.TipoDeExame", "TipoDeExame")
                         .WithMany()
-                        .HasForeignKey("TipoDeExameId");
+                        .HasForeignKey("TipoDeExameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Cargo", "Cargo")
                         .WithMany()
-                        .HasForeignKey("CargoId");
+                        .HasForeignKey("CargoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.HorarioDeTrabalho", b =>
@@ -626,14 +698,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medicamento", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Fabricante", "Fabricante")
                         .WithMany()
-                        .HasForeignKey("FabricanteId");
+                        .HasForeignKey("FabricanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", null)
                         .WithMany("Medicamentos")
@@ -644,7 +720,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.MedicoEspecialidade", b =>
@@ -666,7 +744,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId");
+                        .HasForeignKey("FuncionarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

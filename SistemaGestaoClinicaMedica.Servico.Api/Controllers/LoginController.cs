@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
-using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
@@ -28,7 +27,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             if (autorizacao == null)
                 return Unauthorized();
 
-            var autenticacao = _autenticacaoServico.Autenticar(new AutenticacaoEntrada(autorizacao.Id, autorizacao.Nome, autorizacao.CargoId, autorizacao.Email));
+            var autenticacao = _autenticacaoServico.Autenticar(autorizacao);
 
             if (autenticacao == null)
                 return Unauthorized();

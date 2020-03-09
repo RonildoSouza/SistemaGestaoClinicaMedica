@@ -33,9 +33,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public Consulta Obter(Guid id, bool comExames)
+        public Consulta Obter(Guid id, bool comExames, bool comAtestados)
         {
-            return _consultasQuery.Obter(id, comExames);
+            return _consultasQuery.Obter(id, comExames, comAtestados);
         }
 
         public IList<Consulta> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)

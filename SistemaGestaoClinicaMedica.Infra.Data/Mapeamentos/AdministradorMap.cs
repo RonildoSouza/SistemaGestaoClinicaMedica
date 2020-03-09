@@ -10,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
-            builder.HasOne(_ => _.Funcionario);
+            builder.HasOne(_ => _.Funcionario).WithMany().IsRequired();
         }
     }
 }

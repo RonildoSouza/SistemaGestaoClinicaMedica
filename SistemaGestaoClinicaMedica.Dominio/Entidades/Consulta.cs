@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Consulta : IEntidade<Guid>
+    public class Consulta : IEntidade<Guid>, IEntidadeAuditada
     {
         public Consulta() { }
 
@@ -22,13 +22,15 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public DateTime Data { get; set; }
         public string Observacao { get; set; }
         public StatusConsulta StatusConsulta { get; set; }
-        public DateTime CriadoEm { get; set; }
-        public DateTime? AtualizadoEm { get; set; }
         public Paciente Paciente { get; set; }
         public Medico Medico { get; set; }
         public Especialidade Especialidade { get; set; }
         public Receita Receita { get; set; }
         public List<Atestado> Atestados { get; set; }
         public List<Exame> Exames { get; set; }
+        public DateTime CriadoEm { get; set; }
+        public string CriadoPor { get; set; }
+        public string AtualizadoPor { get; set; }
+        public DateTime? AtualizadoEm { get; set; }
     }
 }

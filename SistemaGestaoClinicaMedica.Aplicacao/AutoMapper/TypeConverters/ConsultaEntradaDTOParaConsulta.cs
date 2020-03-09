@@ -25,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper.TypeConverters
         {
             StatusConsulta statusConsulta = null;
             Paciente paciente = _pacienteServico.Obter(source.PacienteId);
-            Medico medico = _medicoServico.Obter(source.MedicoId); ;
+            Medico medico = _medicoServico.Obter(source.MedicoId);
             Especialidade especialidade = _especialidadeServico.Obter(source.EspecialidadeId);
 
             if (Enum.TryParse(source.StatusConsultaId, out EStatusConsulta eStatusConsulta))

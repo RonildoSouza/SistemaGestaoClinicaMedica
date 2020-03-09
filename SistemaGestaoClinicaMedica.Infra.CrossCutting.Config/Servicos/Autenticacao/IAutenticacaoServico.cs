@@ -1,9 +1,10 @@
-﻿using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
+﻿using SistemaGestaoClinicaMedica.Servico.Api.Controllers;
+using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
 namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao
 {
     public interface IAutenticacaoServico
     {
-        AutenticacaoSaida Autenticar(AutenticacaoEntrada entrada);
+        LoginSaidaDTO Autenticar(LoginEntradaAutenticacaoDTO login);
     }
 }

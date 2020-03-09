@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
@@ -18,6 +19,8 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             services.RegistrarTudoPorAssembly(typeof(ServicoBase<,>).Assembly, "Servico");
 
             services.RegistrarTudoPorAssembly(typeof(IQueryBase<>).Assembly, "Query");
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

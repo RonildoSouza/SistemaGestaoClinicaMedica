@@ -20,7 +20,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.HasIndex(_ => new { _.Email }).IsUnique();
 
-            builder.HasOne(_ => _.Cargo);
+            builder.HasOne(_ => _.Cargo).WithMany().IsRequired();
         }
     }
 }

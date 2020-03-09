@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Atestado;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
@@ -16,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
     {
         public EntidadeParaDTO()
         {
-            CreateMap<Funcionario, LoginSaidaDTO>()
+            CreateMap<Funcionario, LoginEntradaAutenticacaoDTO>()
                 .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
 
             CreateMap<Funcionario, FuncionarioSaidaDTO>()
@@ -62,6 +63,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
 
             CreateMap<StatusExame, StatusExameSaidaDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<Atestado, AtestadoSaidaDTO>()
+                .ForMember(dest => dest.ConsultaId, opt => opt.MapFrom(src => src.Consulta.Id))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+
+            CreateMap<TipoDeAtestado, TipoDeAtestadoSaidaDTO>();
         }
     }
 }

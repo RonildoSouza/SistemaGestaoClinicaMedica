@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
@@ -13,12 +12,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.Property(_ => _.Observacao).HasMaxLength(500);
             builder.Property(_ => _.LinkResultadoExame).HasMaxLength(500);
-            builder.Property(_ => _.CriadoEm).HasDefaultValueSql("date('now')").ValueGeneratedOnAdd();
 
-            builder.HasOne(_ => _.TipoDeExame);
-            builder.HasOne(_ => _.StatusExame);
+            builder.HasOne(_ => _.TipoDeExame).WithMany().IsRequired();
+            builder.HasOne(_ => _.StatusExame).WithMany().IsRequired();
             builder.HasOne(_ => _.LaboratorioRealizouExame);
-            builder.HasOne(_ => _.Consulta);
         }
     }
 }

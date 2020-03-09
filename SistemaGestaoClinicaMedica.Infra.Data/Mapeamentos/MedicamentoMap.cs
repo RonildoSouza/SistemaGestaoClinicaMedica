@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.HasIndex(_ => new { _.Nome, _.NomeFabrica }).IsUnique();
 
-            builder.HasOne(_ => _.Fabricante);
+            builder.HasOne(_ => _.Fabricante).WithMany().IsRequired();
         }
     }
 }
