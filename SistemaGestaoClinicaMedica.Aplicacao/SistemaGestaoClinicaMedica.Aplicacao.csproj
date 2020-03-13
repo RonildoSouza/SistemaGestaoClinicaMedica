@@ -5,6 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AutoMapper\**" />
+    <Compile Remove="DTOS\**" />
+    <EmbeddedResource Remove="AutoMapper\**" />
+    <EmbeddedResource Remove="DTOS\**" />
+    <None Remove="AutoMapper\**" />
+    <None Remove="DTOS\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="ServicosAplicacao\AuthorizationService.cs" />
     <Compile Remove="ServicosAplicacao\IAuthorizationService.cs" />
     <Compile Remove="ServicosAplicacao\IdentityLoggedUserService.cs" />
@@ -12,11 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

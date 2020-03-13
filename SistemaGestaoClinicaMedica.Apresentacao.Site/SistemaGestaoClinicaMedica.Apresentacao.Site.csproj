@@ -5,4 +5,13 @@
     <UserSecretsId>889a7763-fafc-4d56-8d64-e3f0c7b49d5d</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj" />
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.csproj" />
+  </ItemGroup>
+
 </Project>

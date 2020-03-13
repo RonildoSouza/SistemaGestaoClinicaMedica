@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.Infra.CrossCutting.Config", "SistemaGestaoClinicaMedica.Infra.CrossCutting.Config\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.csproj", "{9C3AF311-1BED-47ED-8CBB-0CFF456109E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoClinicaMedica.Apresentacao.Site", "SistemaGestaoClinicaMedica.Apresentacao.Site\SistemaGestaoClinicaMedica.Apresentacao.Site.csproj", "{15A20F13-9F8D-45A7-80C2-AB200761D725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.Apresentacao.Site", "SistemaGestaoClinicaMedica.Apresentacao.Site\SistemaGestaoClinicaMedica.Apresentacao.Site.csproj", "{15A20F13-9F8D-45A7-80C2-AB200761D725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoClinicaMedica.Aplicacao.DTO", "SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj", "{38D93411-B974-42FD-8F9D-1A81758E93CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{15A20F13-9F8D-45A7-80C2-AB200761D725}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15A20F13-9F8D-45A7-80C2-AB200761D725}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15A20F13-9F8D-45A7-80C2-AB200761D725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D93411-B974-42FD-8F9D-1A81758E93CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D93411-B974-42FD-8F9D-1A81758E93CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D93411-B974-42FD-8F9D-1A81758E93CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D93411-B974-42FD-8F9D-1A81758E93CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{CA5D3719-EB90-4C83-B932-AD798D905F77} = {172CEEBC-C07C-4A6A-B79C-98E1E6003881}
 		{9C3AF311-1BED-47ED-8CBB-0CFF456109E0} = {172CEEBC-C07C-4A6A-B79C-98E1E6003881}
 		{15A20F13-9F8D-45A7-80C2-AB200761D725} = {EFFE45A7-66C5-40FE-BE83-DFC8264EB554}
+		{38D93411-B974-42FD-8F9D-1A81758E93CF} = {ACD530E1-C25B-443C-8505-5C2B557EDD95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8A0ABD0-2605-4E31-B952-48041461F57E}
