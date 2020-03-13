@@ -19,6 +19,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                  .Include(_ => _.StatusConsulta)
                                  .Include(_ => _.Medico)
                                  .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Funcionario)}")
+                                 .Include(_ => _.Receita)
+                                 .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
                                  .Include(_ => _.Especialidade)
                                  .AsQueryable();
 
@@ -51,6 +53,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                      .Include(_ => _.Medico)
                                      .Include(_ => _.Especialidade)
                                      .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Funcionario)}")
+                                     .Include(_ => _.Receita)
+                                     .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
                                      .Where(_ => _.Data >= dataInicio && _.Data <= dataFim).ToList();
 
             if (!string.IsNullOrEmpty(busca))

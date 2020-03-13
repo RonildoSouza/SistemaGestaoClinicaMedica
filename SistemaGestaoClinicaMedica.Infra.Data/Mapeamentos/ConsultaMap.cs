@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
             builder.HasOne(_ => _.Paciente).WithMany().IsRequired();
             builder.HasOne(_ => _.Medico).WithMany().IsRequired();
             builder.HasOne(_ => _.Especialidade).WithMany().IsRequired();
-            builder.HasOne(_ => _.Receita);
+            builder.HasOne(_ => _.Receita).WithOne(_ => _.Consulta).HasForeignKey<Receita>("ConsultaId").IsRequired();
 
             builder.HasMany(_ => _.Atestados).WithOne(_ => _.Consulta).IsRequired();
             builder.HasMany(_ => _.Exames).WithOne(_ => _.Consulta).IsRequired();

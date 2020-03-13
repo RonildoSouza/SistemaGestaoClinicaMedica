@@ -1,9 +1,9 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IReceitaServico : IServicoBase<Guid, Receita>
+    public interface IReceitasQuery : IQueryBase<Receita>
     {
         Receita ObterPorConsultaId(Guid id);
     }

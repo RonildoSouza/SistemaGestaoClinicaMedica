@@ -121,9 +121,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("ReceitaId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("StatusConsultaId")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -135,8 +132,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasIndex("MedicoId");
 
                     b.HasIndex("PacienteId");
-
-                    b.HasIndex("ReceitaId");
 
                     b.HasIndex("StatusConsultaId");
 
@@ -364,9 +359,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
 
-                    b.Property<Guid?>("ReceitaId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Tarja")
                         .IsRequired()
                         .HasColumnType("TEXT")
@@ -375,8 +367,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FabricanteId");
-
-                    b.HasIndex("ReceitaId");
 
                     b.HasIndex("Nome", "NomeFabrica")
                         .IsUnique();
@@ -499,6 +489,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<string>("AtualizadoPor")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("ConsultaId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("TEXT");
 
@@ -506,11 +500,37 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Observacao")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultaId")
+                        .IsUnique();
+
+                    b.ToTable("Receita");
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.ReceitaMedicamento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("MedicamentoId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ReceitaId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Receita");
+                    b.HasIndex("MedicamentoId");
+
+                    b.HasIndex("ReceitaId");
+
+                    b.ToTable("ReceitaMedicamento");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Recepcionista", b =>
@@ -642,10 +662,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", "Receita")
-                        .WithMany()
-                        .HasForeignKey("ReceitaId");
-
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.StatusConsulta", "StatusConsulta")
                         .WithMany()
                         .HasForeignKey("StatusConsultaId")
@@ -710,10 +726,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasForeignKey("FabricanteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", null)
-                        .WithMany("Medicamentos")
-                        .HasForeignKey("ReceitaId");
                 });
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", b =>
@@ -736,6 +748,30 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", "Medico")
                         .WithMany("Especialidades")
                         .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Consulta", "Consulta")
+                        .WithOne("Receita")
+                        .HasForeignKey("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", "ConsultaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.ReceitaMedicamento", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Medicamento", "Medicamento")
+                        .WithMany("Receitas")
+                        .HasForeignKey("MedicamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Receita", "Receita")
+                        .WithMany("Medicamentos")
+                        .HasForeignKey("ReceitaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

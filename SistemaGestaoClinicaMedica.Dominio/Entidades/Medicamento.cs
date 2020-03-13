@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
@@ -22,5 +23,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public string Tarja { get; set; }
         public bool Ativo { get; set; }
         public Fabricante Fabricante { get; set; }
+        public List<ReceitaMedicamento> Receitas { get; set; }
     }
 }

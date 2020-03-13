@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class CriaTabelaAtestado : Migration
+    public partial class CriaTabelaReceita : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,22 +63,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Paciente", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Receita",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Observacao = table.Column<string>(nullable: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false),
-                    CriadoPor = table.Column<string>(nullable: true),
-                    AtualizadoEm = table.Column<DateTime>(nullable: true),
-                    AtualizadoPor = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Receita", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,8 +149,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     NomeFabrica = table.Column<string>(maxLength: 100, nullable: false),
                     Tarja = table.Column<string>(maxLength: 50, nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    FabricanteId = table.Column<Guid>(nullable: false),
-                    ReceitaId = table.Column<Guid>(nullable: true)
+                    FabricanteId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -177,12 +160,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         principalTable: "Fabricante",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Medicamento_Receita_ReceitaId",
-                        column: x => x.ReceitaId,
-                        principalTable: "Receita",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -270,7 +247,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     PacienteId = table.Column<Guid>(nullable: false),
                     MedicoId = table.Column<Guid>(nullable: false),
                     EspecialidadeId = table.Column<Guid>(nullable: false),
-                    ReceitaId = table.Column<Guid>(nullable: true),
                     CriadoEm = table.Column<DateTime>(nullable: false),
                     CriadoPor = table.Column<string>(nullable: true),
                     AtualizadoPor = table.Column<string>(nullable: true),
@@ -297,12 +273,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         principalTable: "Paciente",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Consulta_Receita_ReceitaId",
-                        column: x => x.ReceitaId,
-                        principalTable: "Receita",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Consulta_StatusConsulta_StatusConsultaId",
                         column: x => x.StatusConsultaId,
@@ -434,6 +404,54 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Receita",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Observacao = table.Column<string>(maxLength: 500, nullable: false),
+                    ConsultaId = table.Column<Guid>(nullable: false),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
+                    CriadoPor = table.Column<string>(nullable: true),
+                    AtualizadoEm = table.Column<DateTime>(nullable: true),
+                    AtualizadoPor = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Receita", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Receita_Consulta_ConsultaId",
+                        column: x => x.ConsultaId,
+                        principalTable: "Consulta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReceitaMedicamento",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ReceitaId = table.Column<Guid>(nullable: false),
+                    MedicamentoId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReceitaMedicamento", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReceitaMedicamento_Medicamento_MedicamentoId",
+                        column: x => x.MedicamentoId,
+                        principalTable: "Medicamento",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReceitaMedicamento_Receita_ReceitaId",
+                        column: x => x.ReceitaId,
+                        principalTable: "Receita",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Administrador_FuncionarioId",
                 table: "Administrador",
@@ -469,11 +487,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "IX_Consulta_PacienteId",
                 table: "Consulta",
                 column: "PacienteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Consulta_ReceitaId",
-                table: "Consulta",
-                column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Consulta_StatusConsultaId",
@@ -539,11 +552,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 column: "FabricanteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medicamento_ReceitaId",
-                table: "Medicamento",
-                column: "ReceitaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Medicamento_Nome_NomeFabrica",
                 table: "Medicamento",
                 columns: new[] { "Nome", "NomeFabrica" },
@@ -569,6 +577,22 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "IX_MedicoEspecialidade_MedicoId",
                 table: "MedicoEspecialidade",
                 column: "MedicoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receita_ConsultaId",
+                table: "Receita",
+                column: "ConsultaId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceitaMedicamento_MedicamentoId",
+                table: "ReceitaMedicamento",
+                column: "MedicamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceitaMedicamento_ReceitaId",
+                table: "ReceitaMedicamento",
+                column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recepcionista_FuncionarioId",
@@ -615,19 +639,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "HorarioDeTrabalho");
 
             migrationBuilder.DropTable(
-                name: "Medicamento");
+                name: "MedicoEspecialidade");
 
             migrationBuilder.DropTable(
-                name: "MedicoEspecialidade");
+                name: "ReceitaMedicamento");
 
             migrationBuilder.DropTable(
                 name: "Recepcionista");
 
             migrationBuilder.DropTable(
                 name: "TipoDeAtestado");
-
-            migrationBuilder.DropTable(
-                name: "Consulta");
 
             migrationBuilder.DropTable(
                 name: "Laboratorio");
@@ -639,7 +660,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "TipoDeExame");
 
             migrationBuilder.DropTable(
+                name: "Medicamento");
+
+            migrationBuilder.DropTable(
+                name: "Receita");
+
+            migrationBuilder.DropTable(
                 name: "Fabricante");
+
+            migrationBuilder.DropTable(
+                name: "Consulta");
 
             migrationBuilder.DropTable(
                 name: "Especialidade");
@@ -649,9 +679,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Paciente");
-
-            migrationBuilder.DropTable(
-                name: "Receita");
 
             migrationBuilder.DropTable(
                 name: "StatusConsulta");

@@ -8,6 +8,7 @@ using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Receita;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
@@ -69,6 +70,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
 
             CreateMap<TipoDeAtestado, TipoDeAtestadoSaidaDTO>();
+
+            CreateMap<Receita, ReceitaSaidaDTO>()
+                .ForMember(dest => dest.ConsultaId, opt => opt.MapFrom(src => src.Consulta.Id))
+                .ForMember(dest => dest.ReceitaMedicamentos, opt => opt.MapFrom(src => src.Medicamentos));
+
+            CreateMap<ReceitaMedicamento, ReceitaMedicamentoSaidaDTO>();
         }
     }
 }

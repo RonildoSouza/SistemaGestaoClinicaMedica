@@ -7,6 +7,7 @@ using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
+using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Receita;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
@@ -41,6 +42,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<ExameEntradaDTO, Exame>().ConvertUsing<ExameEntradaDTOParaExame>();
 
             CreateMap<AtestadoEntradaDTO, Atestado>().ConvertUsing<AtestadoEntradaDTOParaAtestado>();
+
+            CreateMap<ReceitaEntradaDTO, Receita>().ConvertUsing<ReceitaEntradaDTOParaReceita>();
         }
 
         private TimeSpan? TryParse(string time)
