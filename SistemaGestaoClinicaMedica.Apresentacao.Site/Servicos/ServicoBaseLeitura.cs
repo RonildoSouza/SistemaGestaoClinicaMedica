@@ -47,7 +47,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
                 throw new Exception($"Não foi possível criar a URI com a URL: {ApiUrlBase}/{EndPoint}");
 
             HttpClient = new HttpClient();
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjcyNzA1NTBGLTZCMTgtNDFFMi05ODE0LTdERTk3QjhEOTY2QSB8IFNVUEVSIFVTVcOBUklPIiwianRpIjoiYmRlMzc0NWNhZGZhNDdiYjliYTc4NTIxZDIzMTAyYWUiLCJEYXRhIjoie1wiSWRcIjpcIjcyNzA1NTBmLTZiMTgtNDFlMi05ODE0LTdkZTk3YjhkOTY2YVwiLFwiTm9tZVwiOlwiU3VwZXIgVXN1w6FyaW9cIixcIkNhcmdvSWRcIjpcIkFkbWluaXN0cmFkb3JcIixcIkVtYWlsXCI6XCJhZG1pbmlzdHJhZG9yQGVtYWlsLmNvbVwifSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwibmJmIjoxNTg0MDYwMDgyLCJleHAiOjE1ODQxMDMyODIsImlhdCI6MTU4NDA2MDA4MiwiaXNzIjoiUjBOMUxEMCIsImF1ZCI6IlIwTjFMRDAifQ.uKFpS3j4FWQiqaK9qx5RdncdA9nTvc1GlXq3Wg0eW-w");
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjcyNzA1NTBGLTZCMTgtNDFFMi05ODE0LTdERTk3QjhEOTY2QSB8IFNVUEVSIFVTVcOBUklPIiwianRpIjoiZjM4NzAyYTdmNDZmNGU0MGI0ZDU2NmIwYjc0YzFhNTciLCJEYXRhIjoie1wiSWRcIjpcIjcyNzA1NTBmLTZiMTgtNDFlMi05ODE0LTdkZTk3YjhkOTY2YVwiLFwiTm9tZVwiOlwiU3VwZXIgVXN1w6FyaW9cIixcIkNhcmdvSWRcIjpcIkFkbWluaXN0cmFkb3JcIixcIkVtYWlsXCI6XCJhZG1pbmlzdHJhZG9yQGVtYWlsLmNvbVwifSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwibmJmIjoxNTg0MjA2ODg2LCJleHAiOjE1OTUwMDY4ODYsImlhdCI6MTU4NDIwNjg4NiwiaXNzIjoiUjBOMUxEMCIsImF1ZCI6IlIwTjFMRDAifQ.klwDkf5bCwwYXBB7nKMRsp2RKMxyJzptHKj2PjxRmX0");
         }
     }
 }

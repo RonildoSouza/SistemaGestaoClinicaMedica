@@ -1,19 +1,25 @@
 ﻿@typeparam TItem
 
-<table class="table">
-    <thead>
-        <tr>@TableHeader</tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Items)
-        {
-            <tr>@RowTemplate(item)</tr>
-        }
-    </tbody>
-    @*<tfoot>
-        <tr>@TableFooter</tr>
-    </tfoot>*@
-</table>
+@if (Items == null)
+{
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status"></div>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>@TableHeader</tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr>@RowTemplate(item)</tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
     [Parameter]
@@ -21,9 +27,6 @@
 
     [Parameter]
     public RenderFragment<TItem> RowTemplate { get; set; }
-
-    //[Parameter]
-    //public RenderFragment TableFooter { get; set; }
 
     [Parameter]
     public IReadOnlyList<TItem> Items { get; set; }

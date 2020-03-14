@@ -1,0 +1,35 @@
+﻿@page "/consultas"
+
+@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
+@inject IConsultaServico ConsultaServico
+
+<h1 class="text-center">Consultas</h1>
+
+<TableComponent Items="consultas">
+    <TableHeader>
+        <th>Código</th>
+        <th>Data - Hora</th>
+        <th>Paciente</th>
+        <th>Especialidade</th>
+        <th>Médico</th>
+        <th>Ações</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Codigo</td>
+        <td>@context.Data.ToShortDateString() - @context.Data.ToShortTimeString()</td>
+        <td>@context.Paciente.Nome</td>
+        <td>@context.Especialidade</td>
+        <td>@context.Medico.Nome</td>
+    </RowTemplate>
+</TableComponent>
+
+@code {
+    private List<ConsultaSaidaDTO> consultas;
+
+    protected override async Task OnInitializedAsync()
+    {
+        consultas = await ConsultaServico.GetAsync();
+    }
+}
+

@@ -1,5 +1,5 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">SistemaGestaoClinicaMedica.Apresentacao.Site</a>
+    <a class="navbar-brand" href="">Clínica Médica</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,20 +8,35 @@
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+            <NavLink class="nav-link" href="funcionarios">
+                <span class="oi oi-people" aria-hidden="true"></span> Funcionários
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+            <NavLink class="nav-link" href="calendario-de-consultas">
+                <span class="oi oi-calendar" aria-hidden="true"></span> Calendário de Consultas
             </NavLink>
         </li>
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            <NavLink class="nav-link" href="consultas">
+                <span class="oi oi-list" aria-hidden="true"></span> Consultas
             </NavLink>
         </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="pacientes">
+                <span class="oi oi-person" aria-hidden="true"></span> Pacientes
+            </NavLink>
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="medicamentos">
+                <span class="oi oi-medical-cross" aria-hidden="true"></span> Medicamentos
+            </NavLink>
+        </li>
+        @*<li class="nav-item px-3">
+            <NavLink class="nav-link" href="estatisticas">
+                <span class="oi oi-pie-chart" aria-hidden="true"></span> Estatísticas
+            </NavLink>
+        </li>*@
     </ul>
 </div>
 

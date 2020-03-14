@@ -1,0 +1,32 @@
+﻿@page "/funcionarios"
+
+@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
+@inject IFuncionarioServico FuncionarioServico
+
+<h1 class="text-center">Usuários</h1>
+
+<TableComponent Items="funcionarios">
+    <TableHeader>
+        <th>Nome</th>
+        <th>Cargo</th>
+        <th>Telefone</th>
+        <th>Ações</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Nome</td>
+        <td>@context.Cargo.Nome</td>
+        <td>@context.Telefone</td>
+        <td>@context.Id</td>
+    </RowTemplate>
+</TableComponent>
+
+@code {
+    private List<FuncionarioSaidaDTO> funcionarios;
+
+    protected override async Task OnInitializedAsync()
+    {
+        funcionarios = await FuncionarioServico.GetAsync();
+    }
+}
+
