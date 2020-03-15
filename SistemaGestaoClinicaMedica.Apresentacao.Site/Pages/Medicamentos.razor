@@ -1,6 +1,6 @@
 ﻿@page "/medicamentos"
 
-<h1 class="text-center">Medicamentos</h1>
+<HeaderComponent Title="Medicamentos" NewRoute="medicamentos/0" />
 
 <TableComponent Items="medicamentos">
     <TableHeader>
@@ -13,5 +13,8 @@
         <td>@context.Nome</td>
         <td>@context.Tarja</td>
         <td>@context.FabricanteNome</td>
+        <td>
+            <a href="medicamentos/@context.Id"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+        </td>
     </RowTemplate>
 </TableComponent>

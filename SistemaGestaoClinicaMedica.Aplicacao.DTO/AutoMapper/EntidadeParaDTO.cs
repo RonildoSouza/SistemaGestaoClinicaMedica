@@ -35,7 +35,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<Cargo, CargoSaidaDTO>();
 
             CreateMap<Medicamento, MedicamentoSaidaDTO>()
-                .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => $"{src.Nome} - {src.NomeFabrica}"))
                 .ForMember(dest => dest.FabricanteNome, opt => opt.MapFrom(src => src.Fabricante.Nome));
 
             CreateMap<Fabricante, FabricanteSaidaDTO>();

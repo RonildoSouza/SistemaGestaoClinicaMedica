@@ -1,6 +1,5 @@
 ﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Extensions;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
@@ -11,14 +10,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public IList<Fabricante> ObterTudo(string nome)
+        public Fabricante Obter(string nome)
         {
-            var fabricantes = Entidades.OrderBy(_ => _.Nome).ToList();
+            if (string.IsNullOrEmpty(nome))
+                return null;
 
-            if (!string.IsNullOrEmpty(nome))
-                fabricantes = fabricantes.Where(_ => _.Nome.ToLowerContains(nome)).ToList();
-
-            return fabricantes;
+            return Entidades.FirstOrDefault(_ => _.Nome.ToLowerContains(nome));
         }
     }
 }

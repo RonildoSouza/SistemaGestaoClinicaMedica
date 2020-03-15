@@ -2,7 +2,6 @@
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
-using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
@@ -15,9 +14,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             _fabricantesQuery = fabricantesQuery;
         }
 
-        public IList<Fabricante> ObterTudo(string nome)
+        public Fabricante Obter(string nome)
         {
-            return _fabricantesQuery.ObterTudo(nome);
+            return _fabricantesQuery.Obter(nome);
         }
     }
 }

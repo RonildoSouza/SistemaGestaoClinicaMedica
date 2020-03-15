@@ -16,10 +16,10 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer", Roles = "Administrador")]
-        [HttpGet]
+        [HttpGet("{nome}")]
         public IActionResult Get(string nome)
         {
-            var saidaDTOs = _fabricanteServicoAplicacao.ObterTudo(nome);
+            var saidaDTOs = _fabricanteServicoAplicacao.Obter(nome);
             return Ok(saidaDTOs);
         }
     }

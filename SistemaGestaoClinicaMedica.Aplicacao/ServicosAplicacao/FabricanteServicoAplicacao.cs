@@ -3,7 +3,6 @@ using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
-using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
@@ -16,10 +15,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _fabricanteServico = fabricanteServico;
         }
 
-        public IList<FabricanteSaidaDTO> ObterTudo(string nome)
+        public FabricanteSaidaDTO Obter(string nome)
         {
-            var entidades = _fabricanteServico.ObterTudo(nome);
-            return _mapper.Map<List<FabricanteSaidaDTO>>(entidades);
+            var entidade = _fabricanteServico.Obter(nome);
+            return _mapper.Map<FabricanteSaidaDTO>(entidade);
         }
     }
 }
