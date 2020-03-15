@@ -1,9 +1,5 @@
 ﻿@page "/consultas"
 
-@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
-@inject IConsultaServico ConsultaServico
-
 <h1 class="text-center">Consultas</h1>
 
 <TableComponent Items="consultas">
@@ -23,13 +19,3 @@
         <td>@context.Medico.Nome</td>
     </RowTemplate>
 </TableComponent>
-
-@code {
-    private List<ConsultaSaidaDTO> consultas;
-
-    protected override async Task OnInitializedAsync()
-    {
-        consultas = await ConsultaServico.GetAsync();
-    }
-}
-

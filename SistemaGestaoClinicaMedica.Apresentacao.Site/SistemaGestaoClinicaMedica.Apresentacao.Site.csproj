@@ -15,4 +15,8 @@
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\jquery\" />
+  </ItemGroup>
+
 </Project>

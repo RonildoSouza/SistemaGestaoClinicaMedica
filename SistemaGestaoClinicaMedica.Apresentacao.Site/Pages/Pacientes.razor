@@ -1,9 +1,5 @@
 ﻿@page "/pacientes"
 
-@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
-@inject IPacienteServico PacienteServico
-
 <h1 class="text-center">Pacientes</h1>
 
 <TableComponent Items="pacientes">
@@ -19,13 +15,3 @@
         <td>@context.Telefone</td>
     </RowTemplate>
 </TableComponent>
-
-@code {
-    private List<PacienteSaidaDTO> pacientes;
-
-    protected override async Task OnInitializedAsync()
-    {
-        pacientes = await PacienteServico.GetAsync();
-    }
-}
-

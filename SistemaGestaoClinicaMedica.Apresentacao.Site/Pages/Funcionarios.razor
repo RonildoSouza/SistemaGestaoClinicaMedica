@@ -1,9 +1,5 @@
 ﻿@page "/funcionarios"
 
-@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
-@inject IFuncionarioServico FuncionarioServico
-
 <h1 class="text-center">Usuários</h1>
 
 <TableComponent Items="funcionarios">
@@ -20,13 +16,3 @@
         <td>@context.Id</td>
     </RowTemplate>
 </TableComponent>
-
-@code {
-    private List<FuncionarioSaidaDTO> funcionarios;
-
-    protected override async Task OnInitializedAsync()
-    {
-        funcionarios = await FuncionarioServico.GetAsync();
-    }
-}
-

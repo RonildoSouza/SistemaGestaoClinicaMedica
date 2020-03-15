@@ -1,9 +1,5 @@
 ﻿@page "/medicamentos"
 
-@using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
-@inject IMedicamentoServico MedicamentoServico
-
 <h1 class="text-center">Medicamentos</h1>
 
 <TableComponent Items="medicamentos">
@@ -19,13 +15,3 @@
         <td>@context.FabricanteNome</td>
     </RowTemplate>
 </TableComponent>
-
-@code {
-    private List<MedicamentoSaidaDTO> medicamentos;
-
-    protected override async Task OnInitializedAsync()
-    {
-        medicamentos = await MedicamentoServico .GetAsync();
-    }
-}
-
