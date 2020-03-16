@@ -1,10 +1,10 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Receita;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IReceitaServicoAplicacao : IServicoAplicacaoBase<ReceitaSaidaDTO, ReceitaEntradaDTO, Guid>
+    public interface IReceitaServicoAplicacao : IServicoAplicacaoBase<ReceitaDTO, Guid>
     {
-        ReceitaSaidaDTO ObterPorConsultaId(Guid id);
+        ReceitaDTO ObterPorConsultaId(Guid id);
     }
 }

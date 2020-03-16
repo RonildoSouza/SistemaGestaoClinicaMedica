@@ -1,8 +1,8 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface ICargoServicoAplicacao : IServicoAplicacaoLeitura<CargoSaidaDTO, string>
+    public interface ICargoServicoAplicacao : IServicoAplicacaoLeitura<CargoDTO, string>
     {
     }
 }

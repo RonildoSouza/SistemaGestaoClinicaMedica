@@ -1,10 +1,10 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IFabricanteServicoAplicacao : IServicoAplicacaoLeitura<FabricanteSaidaDTO, Guid>
+    public interface IFabricanteServicoAplicacao : IServicoAplicacaoLeitura<FabricanteDTO, Guid>
     {
-        FabricanteSaidaDTO Obter(string nome);
+        FabricanteDTO Obter(string nome);
     }
 }

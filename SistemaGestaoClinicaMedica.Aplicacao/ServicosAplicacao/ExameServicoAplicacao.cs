@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ExameServicoAplicacao : ServicoAplicacaoBase<Exame, ExameSaidaDTO, ExameEntradaDTO, Guid>, IExameServicoAplicacao
+    public sealed class ExameServicoAplicacao : ServicoAplicacaoBase<ExameDTO, Guid, Exame>, IExameServicoAplicacao
     {
         private readonly IExameServico _exameServico;
 
@@ -15,13 +15,13 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _exameServico = exameServico;
         }
 
-        public ExameSaidaDTO Obter(string codigo)
+        public ExameDTO Obter(string codigo)
         {
             var entidade = _exameServico.Obter(codigo);
-            return _mapper.Map<ExameSaidaDTO>(entidade);
+            return _mapper.Map<ExameDTO>(entidade);
         }
 
-        public void UploadResultado(Guid id, ArquivoResultadoExameEntradaDTO arquivoDTO)
+        public void UploadResultado(Guid id, ArquivoResultadoExameDTO arquivoDTO)
         {
             //TODO: Adicionar package para armazenar os arquivos no Azure Storage
             throw new NotImplementedException();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public abstract class ServicoBaseLeitura<TId, TSaidaDTO> : IServicoLeituraBase<TId, TSaidaDTO>
+    public abstract class ServicoBaseLeitura<TDTO, TId> : IServicoLeituraBase<TDTO, TId>
     {
         protected HttpClient HttpClient { get; private set; }
         protected string ApiUrlBase { get; private set; }
@@ -20,16 +20,16 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             ConfiguraHttpClient(configuration);
         }
 
-        public async Task<TSaidaDTO> GetAsync(TId id)
+        public async Task<TDTO> GetAsync(TId id)
         {
             var response = await HttpClient.GetStringAsync($"{RequestUri}/{id}");
-            return JsonToDTO<TSaidaDTO>(response);
+            return JsonToDTO<TDTO>(response);
         }
 
-        public async Task<List<TSaidaDTO>> GetAsync()
+        public async Task<List<TDTO>> GetAsync()
         {
             var response = await HttpClient.GetStringAsync(RequestUri);
-            return JsonToDTO<List<TSaidaDTO>>(response);
+            return JsonToDTO<List<TDTO>>(response);
         }
 
         protected T JsonToDTO<T>(string json)

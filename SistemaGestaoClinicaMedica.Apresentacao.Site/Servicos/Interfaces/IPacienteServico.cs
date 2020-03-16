@@ -1,9 +1,9 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IPacienteServico : IServicoBase<Guid, PacienteSaidaDTO, PacienteEntradaDTO>
+    public interface IPacienteServico : IServicoBase<PacienteDTO, Guid>
     {
     }
 }

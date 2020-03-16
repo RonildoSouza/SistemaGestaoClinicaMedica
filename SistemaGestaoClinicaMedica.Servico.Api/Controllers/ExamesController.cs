@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpPost]
-        public IActionResult Post([FromBody]ExameEntradaDTO entradaDTO)
+        public IActionResult Post([FromBody]ExameDTO entradaDTO)
         {
             var saidaDTO = _exameServicoAplicacao.Salvar(entradaDTO);
 
@@ -56,7 +56,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put(Guid id, [FromBody]ExameEntradaDTO entradaDTO)
+        public IActionResult Put(Guid id, [FromBody]ExameDTO entradaDTO)
         {
             var saidaDTO = _exameServicoAplicacao.Salvar(entradaDTO, id);
 
@@ -75,7 +75,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             if (!files.Any())
                 return BadRequest("Nenhum arquivo enviado para upload!");
 
-            var entradaDTO = files.Select(_ => new ArquivoResultadoExameEntradaDTO(_.FileName, _.OpenReadStream())).First();
+            var entradaDTO = files.Select(_ => new ArquivoResultadoExameDTO(_.FileName, _.OpenReadStream())).First();
             _exameServicoAplicacao.UploadResultado(id, entradaDTO);
 
             return Ok();

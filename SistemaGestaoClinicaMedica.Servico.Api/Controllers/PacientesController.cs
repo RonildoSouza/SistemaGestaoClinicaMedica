@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 
@@ -43,7 +43,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpPost]
-        public IActionResult Post([FromBody]PacienteEntradaDTO entradaDTO)
+        public IActionResult Post([FromBody]PacienteDTO entradaDTO)
         {
             var saidaDTO = _pacienteServicoAplicacao.Salvar(entradaDTO);
 
@@ -55,7 +55,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]PacienteEntradaDTO entradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]PacienteDTO entradaDTO)
         {
             var saidaDTO = _pacienteServicoAplicacao.Salvar(entradaDTO, id);
 

@@ -1,11 +1,11 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IEspecialidadeServicoAplicacao : IServicoAplicacaoLeitura<EspecialidadeSaidaDTO, Guid>
+    public interface IEspecialidadeServicoAplicacao : IServicoAplicacaoLeitura<EspecialidadeDTO, Guid>
     {
-        IList<EspecialidadeSaidaDTO> ObterTudo(bool comMedicos);
+        IList<EspecialidadeDTO> ObterTudo(bool comMedicos);
     }
 }

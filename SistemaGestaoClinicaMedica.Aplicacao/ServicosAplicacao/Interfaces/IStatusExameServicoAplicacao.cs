@@ -1,9 +1,9 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IStatusExameServicoAplicacao : IServicoAplicacaoLeitura<StatusExameSaidaDTO, EStatusExame>
+    public interface IStatusExameServicoAplicacao : IServicoAplicacaoLeitura<StatusExameDTO, EStatusExame>
     {
     }
 }

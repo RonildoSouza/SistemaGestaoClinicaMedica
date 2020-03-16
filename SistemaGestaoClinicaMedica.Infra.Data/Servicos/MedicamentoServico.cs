@@ -1,8 +1,10 @@
-﻿using SistemaGestaoClinicaMedica.Dominio.Entidades;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.Data.Queries;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 {
@@ -24,6 +26,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
 
             medicamento.Ativo = false;
             ContextoBancoDados.SaveChanges();
+        }
+
+        public override Medicamento Obter(Guid id)
+        {
+            var entidade = Entidades.Include(_ => _.Fabricante)
+                                    .FirstOrDefault(_ => _.Id == id);
+            return entidade;
         }
 
         public IList<Medicamento> ObterTudo(string busca, bool ativo)

@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public sealed class FuncionarioServicoAplicacao : ServicoAplicacaoBase<Funcionario, FuncionarioSaidaDTO, FuncionarioEntradaDTO, Guid>, IFuncionarioServicoAplicacao
+    public sealed class FuncionarioServicoAplicacao : ServicoAplicacaoBase<FuncionarioDTO, Guid, Funcionario>, IFuncionarioServicoAplicacao
     {
         private readonly IFuncionarioServico _funcionarioServico;
         private readonly IAdministradorServico _administradorServico;
@@ -31,13 +30,13 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _laboratorioServico = laboratorioServico;
         }
 
-        public IList<FuncionarioSaidaDTO> ObterTudo(bool ativo)
+        public IList<FuncionarioDTO> ObterTudo(bool ativo)
         {
             var entidades = _funcionarioServico.ObterTudo(ativo);
-            return _mapper.Map<List<FuncionarioSaidaDTO>>(entidades);
+            return _mapper.Map<List<FuncionarioDTO>>(entidades);
         }
 
-        public override FuncionarioSaidaDTO Salvar(FuncionarioEntradaDTO funcionarioEntradaDTO, Guid id = default)
+        public override FuncionarioDTO Salvar(FuncionarioDTO funcionarioEntradaDTO, Guid id = default)
         {
             funcionarioEntradaDTO.Id = id;
 
@@ -46,19 +45,19 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
                 case "Administrador":
                     var admin = _mapper.Map<Administrador>(funcionarioEntradaDTO);
                     admin = _administradorServico.Salvar(admin);
-                    return _mapper.Map<FuncionarioSaidaDTO>(admin.Funcionario);
+                    return _mapper.Map<FuncionarioDTO>(admin.Funcionario);
                 case "Medico":
                     var medico = _mapper.Map<Medico>(funcionarioEntradaDTO);
                     medico = _medicoServico.Salvar(medico);
-                    return _mapper.Map<FuncionarioSaidaDTO>(medico.Funcionario);
+                    return _mapper.Map<FuncionarioDTO>(medico.Funcionario);
                 case "Recepcionista":
                     var recepcionista = _mapper.Map<Recepcionista>(funcionarioEntradaDTO);
                     recepcionista = _recepcionistaServico.Salvar(recepcionista);
-                    return _mapper.Map<FuncionarioSaidaDTO>(recepcionista.Funcionario);
+                    return _mapper.Map<FuncionarioDTO>(recepcionista.Funcionario);
                 case "Laboratorio":
                     var lab = _mapper.Map<Laboratorio>(funcionarioEntradaDTO);
                     lab = _laboratorioServico.Salvar(lab);
-                    return _mapper.Map<FuncionarioSaidaDTO>(lab.Funcionario);
+                    return _mapper.Map<FuncionarioDTO>(lab.Funcionario);
                 default:
                     return null;
             }

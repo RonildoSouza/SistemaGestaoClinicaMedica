@@ -1,12 +1,14 @@
-﻿using System.Net.Http;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IServicoBase<TId, TSaidaDTO, TEntradaDTO> : IServicoLeituraBase<TId, TSaidaDTO>
+    public interface IServicoBase<TDTO, TId> : IServicoLeituraBase<TDTO, TId>
+        where TDTO : IDTO<TId>
     {
-        Task<HttpResponseMessage> PostAsync(TEntradaDTO dto);
-        Task<HttpResponseMessage> PutAsync(TId id, TEntradaDTO dto);
+        Task<HttpResponseMessage> PostAsync(TDTO dto);
+        Task<HttpResponseMessage> PutAsync(TId id, TDTO dto);
         Task<HttpResponseMessage> DeleteAsync(TId id);
     }
 }

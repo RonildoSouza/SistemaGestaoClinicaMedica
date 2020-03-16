@@ -14,7 +14,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
         {
             services.AddSingleton<IAutenticacaoServico, JwtAutenticacaoServico>();
 
-            services.RegistrarTudoPorAssembly(typeof(IServicoAplicacaoBase<,,>).Assembly, "ServicoAplicacao");
+            services.RegistrarTudoPorAssembly(typeof(IServicoAplicacaoBase<,>).Assembly, "ServicoAplicacao");
 
             services.RegistrarTudoPorAssembly(typeof(ServicoBase<,>).Assembly, "Servico");
 

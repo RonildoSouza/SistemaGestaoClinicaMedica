@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -13,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject]
         private IPacienteServico PacienteServico { get; set; }
 
-        private List<PacienteSaidaDTO> pacientes;
+        private List<PacienteDTO> pacientes;
 
         protected override async Task OnInitializedAsync()
         {

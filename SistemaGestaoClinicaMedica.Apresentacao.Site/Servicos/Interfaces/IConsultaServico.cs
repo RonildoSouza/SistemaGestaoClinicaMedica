@@ -1,9 +1,9 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IConsultaServico : IServicoBase<Guid, ConsultaSaidaDTO, ConsultaEntradaDTO>
+    public interface IConsultaServico : IServicoBase<ConsultaDTO, Guid>
     {
     }
 }

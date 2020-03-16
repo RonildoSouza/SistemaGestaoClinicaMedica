@@ -15,7 +15,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             if (string.IsNullOrEmpty(nome))
                 return null;
 
-            return Entidades.FirstOrDefault(_ => _.Nome.ToLowerContains(nome));
+            return Entidades.ToList().FirstOrDefault(_ => _.Nome.ToLowerContains(nome));
         }
     }
 }

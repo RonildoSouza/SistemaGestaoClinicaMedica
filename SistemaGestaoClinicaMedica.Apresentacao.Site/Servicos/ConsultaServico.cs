@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class ConsultaServico : ServicoBase<Guid, ConsultaSaidaDTO, ConsultaEntradaDTO>, IConsultaServico
+    public class ConsultaServico : ServicoBase<ConsultaDTO, Guid>, IConsultaServico
     {
         protected override string EndPoint => "consultas";
 

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IServicoLeituraBase<TId, TSaidaDTO>
+    public interface IServicoLeituraBase<TDTO, TId>
     {
-        Task<TSaidaDTO> GetAsync(TId id);
-        Task<List<TSaidaDTO>> GetAsync();
+        Task<TDTO> GetAsync(TId id);
+        Task<List<TDTO>> GetAsync();
     }
 }

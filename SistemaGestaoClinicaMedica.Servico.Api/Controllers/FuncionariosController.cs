@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 
@@ -43,7 +43,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPost]
-        public IActionResult Post([FromBody]FuncionarioEntradaDTO entradaDTO)
+        public IActionResult Post([FromBody]FuncionarioDTO entradaDTO)
         {
             var saidaDTO = _funcionarioServicoAplicacao.Salvar(entradaDTO);
 
@@ -55,7 +55,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPut, Route("{id}")]
-        public IActionResult Put([FromRoute]Guid id, [FromBody]FuncionarioEntradaDTO entradaDTO)
+        public IActionResult Put([FromRoute]Guid id, [FromBody]FuncionarioDTO entradaDTO)
         {
             var saidaDTO = _funcionarioServicoAplicacao.Salvar(entradaDTO, id);
 

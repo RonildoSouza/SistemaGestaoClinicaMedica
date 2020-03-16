@@ -1,11 +1,11 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IExameServicoAplicacao : IServicoAplicacaoBase<ExameSaidaDTO, ExameEntradaDTO, Guid>
+    public interface IExameServicoAplicacao : IServicoAplicacaoBase<ExameDTO, Guid>
     {
-        ExameSaidaDTO Obter(string codigo);
-        void UploadResultado(Guid id, ArquivoResultadoExameEntradaDTO arquivoDTO);
+        ExameDTO Obter(string codigo);
+        void UploadResultado(Guid id, ArquivoResultadoExameDTO arquivoDTO);
     }
 }

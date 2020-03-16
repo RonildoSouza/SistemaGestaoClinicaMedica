@@ -1,8 +1,8 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface ICargoServico : IServicoLeituraBase<string, CargoSaidaDTO>
+    public interface ICargoServico : IServicoLeituraBase<CargoDTO, string>
     {
     }
 }

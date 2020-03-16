@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public sealed class EspecialidadeServicoAplicacao : ServicoAplicacaoLeitura<Especialidade, EspecialidadeSaidaDTO, Guid>, IEspecialidadeServicoAplicacao
+    public sealed class EspecialidadeServicoAplicacao : ServicoAplicacaoLeitura<EspecialidadeDTO, Guid, Especialidade>, IEspecialidadeServicoAplicacao
     {
         private readonly IEspecialidadeServico _especialidadeServico;
 
@@ -17,10 +16,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _especialidadeServico = especialidadeServico;
         }
 
-        public IList<EspecialidadeSaidaDTO> ObterTudo(bool comMedicos)
+        public IList<EspecialidadeDTO> ObterTudo(bool comMedicos)
         {
             var entidades = _especialidadeServico.ObterTudo(comMedicos);
-            return _mapper.Map<List<EspecialidadeSaidaDTO>>(entidades);
+            return _mapper.Map<List<EspecialidadeDTO>>(entidades);
         }
     }
 }

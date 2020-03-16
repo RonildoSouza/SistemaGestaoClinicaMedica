@@ -26,7 +26,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             var fullCalendarEvent = consultas.Select(_ => new FullCalendarEvent
             {
                 Id = _.Codigo,
-                Title = $"Dr(a): {_.Medico.Nome}\nConsulta.: {_.Especialidade} - Paciente: {_.Paciente.Nome}",
+                Title = $"Dr(a): {_.MedicoId}\nConsulta.: {_.EspecialidadeId} - Paciente: {_.PacienteId}",
                 Start = _.Data
             });
 

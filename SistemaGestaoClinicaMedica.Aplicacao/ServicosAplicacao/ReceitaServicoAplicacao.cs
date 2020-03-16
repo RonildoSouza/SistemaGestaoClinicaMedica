@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Receita;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ReceitaServicoAplicacao : ServicoAplicacaoBase<Receita, ReceitaSaidaDTO, ReceitaEntradaDTO, Guid>, IReceitaServicoAplicacao
+    public sealed class ReceitaServicoAplicacao : ServicoAplicacaoBase<ReceitaDTO, Guid, Receita>, IReceitaServicoAplicacao
     {
         private readonly IReceitaServico _receitaServico;
 
@@ -15,10 +15,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _receitaServico = receitaServico;
         }
 
-        public ReceitaSaidaDTO ObterPorConsultaId(Guid id)
+        public ReceitaDTO ObterPorConsultaId(Guid id)
         {
             var receita = _receitaServico.ObterPorConsultaId(id);
-            return _mapper.Map<ReceitaSaidaDTO>(receita);
+            return _mapper.Map<ReceitaDTO>(receita);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using SistemaGestaoClinicaMedica.Servico.Api.Controllers;
-using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 
 namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao
 {

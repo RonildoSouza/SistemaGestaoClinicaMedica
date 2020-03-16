@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject]
         private IMedicamentoServico MedicamentoServico { get; set; }
 
-        private List<MedicamentoSaidaDTO> medicamentos;
+        private List<MedicamentoDTO> medicamentos;
 
         protected override async Task OnInitializedAsync()
         {

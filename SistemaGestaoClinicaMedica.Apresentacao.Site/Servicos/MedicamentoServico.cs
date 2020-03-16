@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class MedicamentoServico : ServicoBase<Guid, MedicamentoSaidaDTO, MedicamentoEntradaDTO>, IMedicamentoServico
+    public class MedicamentoServico : ServicoBase<MedicamentoDTO, Guid>, IMedicamentoServico
     {
         protected override string EndPoint => "medicamentos";
 

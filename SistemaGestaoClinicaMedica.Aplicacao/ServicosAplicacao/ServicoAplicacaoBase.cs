@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ServicoAplicacaoBase<TEntidade, TSaida, TEntradaDTO, TEntidadeId> : ServicoAplicacaoLeitura<TEntidade, TSaida, TEntidadeId>, IServicoAplicacaoBase<TSaida, TEntradaDTO, TEntidadeId>
+    public class ServicoAplicacaoBase<TDTO, TEntidadeId, TEntidade> : ServicoAplicacaoLeitura<TDTO, TEntidadeId, TEntidade>, IServicoAplicacaoBase<TDTO, TEntidadeId>
          where TEntidade : IEntidade<TEntidadeId>
-         where TEntradaDTO : IEntradaDTO<TEntidadeId>
+         where TDTO : IDTO<TEntidadeId>
     {
         public ServicoAplicacaoBase(IMapper mapper, IServicoBase<TEntidadeId, TEntidade> servico) : base(mapper, servico)
         {
@@ -18,13 +18,13 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _servico.Deletar(id);
         }
 
-        public virtual TSaida Salvar(TEntradaDTO entradaDTO, TEntidadeId id = default)
+        public virtual TDTO Salvar(TDTO entradaDTO, TEntidadeId id = default)
         {
             entradaDTO.Id = id;
             var entidade = _mapper.Map<TEntidade>(entradaDTO);
             entidade = _servico.Salvar(entidade);
 
-            return _mapper.Map<TSaida>(entidade);
+            return _mapper.Map<TDTO>(entidade);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ConsultaServicoAplicacao : ServicoAplicacaoBase<Consulta, ConsultaSaidaDTO, ConsultaEntradaDTO, Guid>, IConsultaServicoAplicacao
+    public sealed class ConsultaServicoAplicacao : ServicoAplicacaoBase<ConsultaDTO, Guid, Consulta>, IConsultaServicoAplicacao
     {
         private readonly IConsultaServico _consultaServico;
 
@@ -17,13 +17,13 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _consultaServico = consultaServico;
         }
 
-        public ConsultaSaidaDTO Obter(Guid id, bool comExames, bool comAtestados)
+        public ConsultaDTO Obter(Guid id, bool comExames, bool comAtestados)
         {
             var entidade = _consultaServico.Obter(id, comExames, comAtestados);
-            return _mapper.Map<ConsultaSaidaDTO>(entidade);
+            return _mapper.Map<ConsultaDTO>(entidade);
         }
 
-        public IList<ConsultaSaidaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status)
+        public IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status)
         {
             List<Consulta> entidades;
 
@@ -35,7 +35,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             else
                 entidades = _consultaServico.ObterTudo(dataInicio, dataFim, busca, null).ToList();
 
-            return _mapper.Map<List<ConsultaSaidaDTO>>(entidades);
+            return _mapper.Map<List<ConsultaDTO>>(entidades);
         }
     }
 }

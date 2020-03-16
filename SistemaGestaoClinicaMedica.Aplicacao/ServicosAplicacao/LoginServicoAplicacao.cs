@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
-using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {

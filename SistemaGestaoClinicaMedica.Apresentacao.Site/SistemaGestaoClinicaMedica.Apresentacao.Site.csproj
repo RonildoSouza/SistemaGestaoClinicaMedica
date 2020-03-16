@@ -1,9 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>889a7763-fafc-4d56-8d64-e3f0c7b49d5d</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Consultas.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Consultas.razor" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />

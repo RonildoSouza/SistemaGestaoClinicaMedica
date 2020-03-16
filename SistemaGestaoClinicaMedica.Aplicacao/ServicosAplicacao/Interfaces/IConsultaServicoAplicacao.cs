@@ -1,12 +1,12 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IConsultaServicoAplicacao : IServicoAplicacaoBase<ConsultaSaidaDTO, ConsultaEntradaDTO, Guid>
+    public interface IConsultaServicoAplicacao : IServicoAplicacaoBase<ConsultaDTO, Guid>
     {
-        ConsultaSaidaDTO Obter(Guid id, bool comExames, bool comAtestados);
-        IList<ConsultaSaidaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status);
+        ConsultaDTO Obter(Guid id, bool comExames, bool comAtestados);
+        IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status);
     }
 }

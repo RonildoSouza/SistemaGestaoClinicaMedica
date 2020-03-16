@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class FabricanteServicoAplicacao : ServicoAplicacaoLeitura<Fabricante, FabricanteSaidaDTO, Guid>, IFabricanteServicoAplicacao
+    public sealed class FabricanteServicoAplicacao : ServicoAplicacaoLeitura<FabricanteDTO, Guid, Fabricante>, IFabricanteServicoAplicacao
     {
         private readonly IFabricanteServico _fabricanteServico;
 
@@ -15,10 +15,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _fabricanteServico = fabricanteServico;
         }
 
-        public FabricanteSaidaDTO Obter(string nome)
+        public FabricanteDTO Obter(string nome)
         {
             var entidade = _fabricanteServico.Obter(nome);
-            return _mapper.Map<FabricanteSaidaDTO>(entidade);
+            return _mapper.Map<FabricanteDTO>(entidade);
         }
     }
 }

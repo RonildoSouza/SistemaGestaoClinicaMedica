@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class ServicoAplicacaoLeitura<TEntidade, TSaida, TEntidadeId> : IServicoAplicacaoLeitura<TSaida, TEntidadeId>
+    public class ServicoAplicacaoLeitura<TDTO, TEntidadeId, TEntidade> : IServicoAplicacaoLeitura<TDTO, TEntidadeId>
          where TEntidade : IEntidade<TEntidadeId>
     {
         protected readonly IMapper _mapper;
@@ -17,16 +17,16 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _servico = servico;
         }
 
-        public virtual TSaida Obter(TEntidadeId id)
+        public virtual TDTO Obter(TEntidadeId id)
         {
             var entidade = _servico.Obter(id);
-            return _mapper.Map<TSaida>(entidade);
+            return _mapper.Map<TDTO>(entidade);
         }
 
-        public virtual IList<TSaida> ObterTudo()
+        public virtual IList<TDTO> ObterTudo()
         {
             var entidades = _servico.ObterTudo();
-            return _mapper.Map<List<TSaida>>(entidades);
+            return _mapper.Map<List<TDTO>>(entidades);
         }
     }
 }

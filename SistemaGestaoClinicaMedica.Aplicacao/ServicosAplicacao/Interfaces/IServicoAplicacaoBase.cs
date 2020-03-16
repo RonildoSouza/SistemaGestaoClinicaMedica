@@ -1,11 +1,11 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IServicoAplicacaoBase<TSaidaDTO, TEntradaDTO, TEntidadeId> : IServicoAplicacaoLeitura<TSaidaDTO, TEntidadeId>
-        where TEntradaDTO : IEntradaDTO<TEntidadeId>
+    public interface IServicoAplicacaoBase<TDTO, TEntidadeId> : IServicoAplicacaoLeitura<TDTO, TEntidadeId>
+        where TDTO : IDTO<TEntidadeId>
     {
-        TSaidaDTO Salvar(TEntradaDTO entradaDTO, TEntidadeId id = default);
+        TDTO Salvar(TDTO entradaDTO, TEntidadeId id = default);
         void Deletar(TEntidadeId id);
     }
 }

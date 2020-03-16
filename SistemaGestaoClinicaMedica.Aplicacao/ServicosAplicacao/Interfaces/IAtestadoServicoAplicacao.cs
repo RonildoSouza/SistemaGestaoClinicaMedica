@@ -1,9 +1,9 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Atestado;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IAtestadoServicoAplicacao : IServicoAplicacaoBase<AtestadoSaidaDTO, AtestadoEntradaDTO, Guid>
+    public interface IAtestadoServicoAplicacao : IServicoAplicacaoBase<AtestadoDTO, Guid>
     {
     }
 }

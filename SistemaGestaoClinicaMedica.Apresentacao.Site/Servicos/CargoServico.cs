@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class CargoServico : ServicoBaseLeitura<string, CargoSaidaDTO>, ICargoServico
+    public class CargoServico : ServicoBaseLeitura<CargoDTO, string>, ICargoServico
     {
         protected override string EndPoint => "cargos";
 

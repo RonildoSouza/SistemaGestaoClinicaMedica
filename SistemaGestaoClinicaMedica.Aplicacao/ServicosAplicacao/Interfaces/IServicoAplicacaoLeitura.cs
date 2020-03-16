@@ -2,9 +2,9 @@
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IServicoAplicacaoLeitura<TSaidaDTO, TEntidadeId>
+    public interface IServicoAplicacaoLeitura<TDTO, TEntidadeId>
     {
-        TSaidaDTO Obter(TEntidadeId id);
-        IList<TSaidaDTO> ObterTudo();
+        TDTO Obter(TEntidadeId id);
+        IList<TDTO> ObterTudo();
     }
 }

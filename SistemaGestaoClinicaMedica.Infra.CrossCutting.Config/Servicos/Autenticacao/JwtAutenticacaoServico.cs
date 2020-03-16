@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
-using SistemaGestaoClinicaMedica.Servico.Api.Controllers;
-using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;

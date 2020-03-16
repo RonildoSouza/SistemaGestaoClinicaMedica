@@ -1,4 +1,4 @@
-﻿using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {

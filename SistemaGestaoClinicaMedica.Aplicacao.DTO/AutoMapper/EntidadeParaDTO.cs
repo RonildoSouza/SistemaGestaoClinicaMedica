@@ -1,16 +1,7 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Atestado;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Cargo;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Consulta;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Especialidade;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Exame;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Funcionario.Medico;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Paciente;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Receita;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
-using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
 {
@@ -21,59 +12,56 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<Funcionario, LoginEntradaAutenticacaoDTO>()
                 .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
 
-            CreateMap<Funcionario, FuncionarioSaidaDTO>();
+            CreateMap<Funcionario, FuncionarioDTO>();
 
-            CreateMap<Especialidade, EspecialidadeSaidaDTO>();
+            CreateMap<Especialidade, EspecialidadeDTO>();
 
-            CreateMap<MedicoEspecialidade, MedicoEspecialidadeSaidaDTO>()
-                .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Medico.Funcionario.Nome))
-                .ForMember(dest => dest.CRM, opt => opt.MapFrom(src => src.Medico.CRM));
+            CreateMap<MedicoEspecialidade, MedicoEspecialidadeDTO>()
+                .ForMember(dest => dest.EspecialidadeId, opt => opt.MapFrom(src => src.Especialidade.Id));
 
             CreateMap<Laboratorio, LaboratorioSaidaDTO>()
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Funcionario.Nome));
 
-            CreateMap<Cargo, CargoSaidaDTO>();
+            CreateMap<Cargo, CargoDTO>();
 
-            CreateMap<Medicamento, MedicamentoSaidaDTO>()
+            CreateMap<Medicamento, MedicamentoDTO>()
                 .ForMember(dest => dest.FabricanteNome, opt => opt.MapFrom(src => src.Fabricante.Nome));
 
-            CreateMap<Fabricante, FabricanteSaidaDTO>();
+            CreateMap<Fabricante, FabricanteDTO>();
 
-            CreateMap<Paciente, PacienteSaidaDTO>()
-                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 4).ToUpper()))
-                .ForMember(dest => dest.Endereco, opt => opt.MapFrom(src => $"{src.Bairro}, {src.Cidade} - {src.Estado}"));
+            CreateMap<Paciente, PacienteDTO>()
+                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 4).ToUpper()));
 
-            CreateMap<Consulta, ConsultaSaidaDTO>()
+            CreateMap<Consulta, ConsultaDTO>()
                 .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 6).ToUpper()))
-                .ForMember(dest => dest.StatusConsulta, opt => opt.MapFrom(src => src.StatusConsulta.Nome))
-                .ForMember(dest => dest.Especialidade, opt => opt.MapFrom(src => src.Especialidade.Nome));
+                .ForMember(dest => dest.StatusConsultaId, opt => opt.MapFrom(src => src.StatusConsulta.Id.ToString()))
+                .ForMember(dest => dest.EspecialidadeId, opt => opt.MapFrom(src => src.Especialidade.Id));
 
-            CreateMap<Medico, MedicoSaidaDTO>()
+            CreateMap<Medico, MedicoDTO>()
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Funcionario.Nome));
 
-            CreateMap<Exame, ExameSaidaDTO>()
+            CreateMap<Exame, ExameDTO>()
                 .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 8).ToUpper()))
-                .ForMember(dest => dest.StatusExame, opt => opt.MapFrom(src => src.StatusExame.Nome));
+                .ForMember(dest => dest.StatusExameId, opt => opt.MapFrom(src => src.StatusExame.Id));
 
-            CreateMap<TipoDeExame, TipoDeExameSaidaDTO>();
+            CreateMap<TipoDeExame, TipoDeExameDTO>();
 
-            CreateMap<StatusConsulta, StatusConsultaSaidaDTO>()
+            CreateMap<StatusConsulta, StatusConsultaDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
 
-            CreateMap<StatusExame, StatusExameSaidaDTO>()
+            CreateMap<StatusExame, StatusExameDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
 
-            CreateMap<Atestado, AtestadoSaidaDTO>()
-                .ForMember(dest => dest.ConsultaId, opt => opt.MapFrom(src => src.Consulta.Id))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()));
+            CreateMap<Atestado, AtestadoDTO>()
+                .ForMember(dest => dest.ConsultaId, opt => opt.MapFrom(src => src.Consulta.Id));
 
-            CreateMap<TipoDeAtestado, TipoDeAtestadoSaidaDTO>();
+            CreateMap<TipoDeAtestado, TipoDeAtestadoDTO>();
 
-            CreateMap<Receita, ReceitaSaidaDTO>()
+            CreateMap<Receita, ReceitaDTO>()
                 .ForMember(dest => dest.ConsultaId, opt => opt.MapFrom(src => src.Consulta.Id))
                 .ForMember(dest => dest.ReceitaMedicamentos, opt => opt.MapFrom(src => src.Medicamentos));
 
-            CreateMap<ReceitaMedicamento, ReceitaMedicamentoSaidaDTO>();
+            CreateMap<ReceitaMedicamento, ReceitaMedicamentoDTO>();
         }
     }
 }

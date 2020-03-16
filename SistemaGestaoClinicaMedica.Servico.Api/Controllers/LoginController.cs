@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
-using SistemaGestaoClinicaMedica.Servico.Api.DTOS;
 
 namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {

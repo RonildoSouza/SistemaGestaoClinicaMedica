@@ -1,11 +1,11 @@
-﻿using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IMedicamentoServicoAplicacao : IServicoAplicacaoBase<MedicamentoSaidaDTO, MedicamentoEntradaDTO, Guid>
+    public interface IMedicamentoServicoAplicacao : IServicoAplicacaoBase<MedicamentoDTO, Guid>
     {
-        IList<MedicamentoSaidaDTO> ObterTudo(string busca, bool ativo);
+        IList<MedicamentoDTO> ObterTudo(string busca, bool ativo);
     }
 }

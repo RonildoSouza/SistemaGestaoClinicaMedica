@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTOS.Medicamento;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public class MedicamentoServicoAplicacao : ServicoAplicacaoBase<Medicamento, MedicamentoSaidaDTO, MedicamentoEntradaDTO, Guid>, IMedicamentoServicoAplicacao
+    public sealed class MedicamentoServicoAplicacao : ServicoAplicacaoBase<MedicamentoDTO, Guid, Medicamento>, IMedicamentoServicoAplicacao
     {
         private readonly IMedicamentoServico _medicamentoServico;
 
@@ -16,10 +16,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _medicamentoServico = medicamentoServico;
         }
 
-        public IList<MedicamentoSaidaDTO> ObterTudo(string busca, bool ativo)
+        public IList<MedicamentoDTO> ObterTudo(string busca, bool ativo)
         {
             var entidades = _medicamentoServico.ObterTudo(busca, ativo);
-            return _mapper.Map<List<MedicamentoSaidaDTO>>(entidades);
+            return _mapper.Map<List<MedicamentoDTO>>(entidades);
         }
     }
 }
