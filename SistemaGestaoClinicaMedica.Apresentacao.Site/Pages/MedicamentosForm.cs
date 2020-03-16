@@ -15,28 +15,25 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject]
         private IMedicamentoServico MedicamentoServico { get; set; }
 
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
         private MedicamentoDTO _medicamento = new MedicamentoDTO();
-        private EditContext _editContext;
 
         protected override async Task OnParametersSetAsync()
         {
             if (Id != Guid.Empty)
                 _medicamento = await MedicamentoServico.GetAsync(Id);
-
-            //_editContext = new EditContext(_medicamento);
         }
 
-        //protected override void OnInitialized()
-        //{
-        //    _editContext = new EditContext(_medicamento);
-        //}
-
-        private async Task Salvar()
+        private async Task Salvar(EditContext editContext)
         {
-            //if (!_editContext.Validate())
-            //    return;
+            if (!editContext.Validate())
+                return;
 
             await MedicamentoServico.PostAsync(_medicamento);
+
+            NavigationManager.NavigateTo("medicamentos");
         }
     }
 }
