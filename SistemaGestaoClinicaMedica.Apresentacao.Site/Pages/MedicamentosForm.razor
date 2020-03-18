@@ -1,31 +1,35 @@
 ﻿@page "/medicamentos/novo"
 @page "/medicamentos/{id:guid}"
 
+@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@inherits FormBase<IMedicamentoServico, MedicamentoDTO, Guid>
+
 <HeaderComponent Title="Cadastro de Medicamento" BackRoute="medicamentos" />
 
 <div class="card">
     <div class="row card-body">
         <div class="col-12">
-            <EditForm Model="_medicamento" OnValidSubmit="Salvar">
+            <EditForm Model="_dto" OnValidSubmit="Salvar">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="nome">Nome</label>
-                        <InputText @bind-Value="_medicamento.Nome" class="form-control" id="nome" />
+                        <InputText @bind-Value="_dto.Nome" class="form-control" id="nome" />
                     </div>
                     <div class="form-group col-6">
                         <label for="nome-fabrica">Nome de Fabrica</label>
-                        <InputText @bind-Value="_medicamento.NomeFabrica" class="form-control" id="nome-fabrica" />
+                        <InputText @bind-Value="_dto.NomeFabrica" class="form-control" id="nome-fabrica" />
                     </div>
                     <div class="form-group col-8">
                         <label for="nome-fabricante">Nome do Fabricante</label>
-                        <InputText @bind-Value="_medicamento.FabricanteNome" class="form-control" id="nome-fabricante" />
+                        <InputText @bind-Value="_dto.FabricanteNome" class="form-control" id="nome-fabricante" />
                     </div>
                     <div class="form-group col-4">
                         <label for="tarja">Tarja</label>
-                        <InputSelect @bind-Value="_medicamento.Tarja" class="form-control" id="tarja">
+                        <InputSelect @bind-Value="_dto.Tarja" class="form-control" id="tarja">
                             <option value="">Selecione o tipo de tarja...</option>
                             <option value="Preta">Preta</option>
                             <option value="Vermelha">Vermelha</option>
@@ -41,3 +45,7 @@
         </div>
     </div>
 </div>
+
+@code {
+    protected override string AposSalvarRetonarPara => "medicamentos";
+}
