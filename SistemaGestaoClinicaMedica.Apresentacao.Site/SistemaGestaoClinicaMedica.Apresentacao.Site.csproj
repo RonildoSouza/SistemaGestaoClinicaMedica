@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\Consultas.razor" />
+    <Content Remove="Pages\FuncionariosForm.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,10 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC\SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\jquery\" />
   </ItemGroup>
 
 </Project>

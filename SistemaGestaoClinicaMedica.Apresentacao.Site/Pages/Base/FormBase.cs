@@ -15,12 +15,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         public TId Id { get; set; }
 
         [Inject]
-        protected NavigationManager NavigationManager { get; set; }
+        public NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        protected TServico HttpServico { get; set; }
+        public TServico HttpServico { get; set; }
 
-        protected TDTO _dto = (TDTO)Activator.CreateInstance(typeof(TDTO));
+        public TDTO _dto = (TDTO)Activator.CreateInstance(typeof(TDTO));
 
         protected abstract string AposSalvarRetonarPara { get; }
 

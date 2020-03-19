@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
-    public partial class CalendarioDeContatos
+    public partial class CalendarioDeConsultas
     {
         [Inject]
         private IJSRuntime JSRuntime { get; set; }

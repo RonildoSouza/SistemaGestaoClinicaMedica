@@ -1,0 +1,41 @@
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
+{
+    public abstract class TableBase<TServico, TDTO, TId> : ComponentBase
+        where TDTO : IDTO<TId>
+        where TServico : IServicoBase<TDTO, TId>
+    {
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public TServico HttpServico { get; set; }
+
+        public List<TDTO> dtos;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await CarregaDadosDaTabela();
+        }
+
+        protected virtual async Task Deletar(MouseEventArgs e, TId id)
+        {
+            if (default(TId).Equals(id))
+                return;
+
+            await HttpServico.DeleteAsync(id);
+            await CarregaDadosDaTabela();
+        }
+
+        private async Task CarregaDadosDaTabela()
+        {
+            dtos = await HttpServico.GetAsync();
+        }
+    }
+}

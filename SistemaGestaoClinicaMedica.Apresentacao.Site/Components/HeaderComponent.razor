@@ -2,28 +2,31 @@
     <div class="card-header">
         <h1 class="text-center">@Title</h1>
     </div>
-    <div class="card-body">
-        @if (!string.IsNullOrEmpty(BackRoute))
-        {
-            <NavLink class="btn btn-primary float-left" href="@BackRoute">
-                <span class="oi oi-arrow-left" aria-hidden="true"></span> Voltar
-            </NavLink>
-        }
+    @if (!string.IsNullOrEmpty(BackRoute) || ChildContent != null || !string.IsNullOrEmpty(NewRoute))
+    {
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(BackRoute))
+            {
+                <NavLink class="btn btn-primary float-left" href="@BackRoute">
+                    <span class="oi oi-arrow-left" aria-hidden="true"></span> Voltar
+                </NavLink>
+            }
 
-        @if (ChildContent != null)
-        {
-            <div class="align-middle">
-                @ChildContent
-            </div>
-        }
+            @if (ChildContent != null)
+            {
+                <div class="align-middle">
+                    @ChildContent
+                </div>
+            }
 
-        @if (!string.IsNullOrEmpty(NewRoute))
-        {
-            <NavLink class="btn btn-primary float-right" href="@NewRoute">
-                <span class="oi oi-plus" aria-hidden="true"></span> Novo
-            </NavLink>
-        }
-    </div>
+            @if (!string.IsNullOrEmpty(NewRoute))
+            {
+                <NavLink class="btn btn-primary float-right" href="@NewRoute">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Novo
+                </NavLink>
+            }
+        </div>
+    }
 </div>
 <br />
 
