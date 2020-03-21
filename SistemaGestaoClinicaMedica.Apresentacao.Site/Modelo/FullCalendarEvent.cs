@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
 {
-    public class FullCalendarEvent
+    public sealed class FullCalendarEvent
     {
         public string Id { get; set; }
         public string Title { get; set; }

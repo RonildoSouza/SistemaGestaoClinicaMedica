@@ -22,9 +22,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public Receita ObterPorConsultaId(Guid id)
+        public Receita ObterPorConsultaId(Guid consultaId)
         {
-            return _receitasQuery.ObterPorConsultaId(id);
+            return _receitasQuery.ObterPorConsultaId(consultaId);
         }
     }
 }

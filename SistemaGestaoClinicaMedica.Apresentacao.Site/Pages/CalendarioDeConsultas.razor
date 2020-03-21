@@ -1,6 +1,47 @@
 ﻿@page "/calendario-de-consultas"
 
-<HeaderComponent Title="Calendário de Consultas" NewRoute="consultas/novo" />
+<HeaderComponent Title="Calendário de Consultas">
+    <div class="row">
+        @if (AgendarConsulta)
+        {
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input @bind-value="_pacienteLocalStorage.Nome" type="text" aria-label="Nome do paciente" class="form-control" id="paciente-nome" disabled>
+                    <input @bind-value="PacienteCodigo" type="text" class="form-control" placeholder="Informe o código do paciente" aria-label="Informe o código do paciente" aria-describedby="paciente-codigo">
+                    <div class="input-group-append">
+                        <button @onclick="BuscaPacienteAsync" class="btn btn-outline-secondary" type="button" id="paciente-codigo">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <select @onchange="SelecionaEspecialidadeAsync" placeholder="Selecione a especialidade" class="form-control" id="especialidade">
+                    <option value="" disabled selected hidden>Selecione a especialidade</option>
+                    @foreach (var especialidade in Especialidades)
+                    {
+                        <option value="@especialidade.Id">@especialidade.Nome</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-6">
+                <select @onchange="SelecionaMedico" placeholder="Selecione o médico" class="form-control" id="medico">
+                    <option value="" disabled selected hidden>Selecione o médico</option>
+                    @foreach (var medico in Medicos)
+                    {
+                        <option value="@medico.Id">@medico.Nome</option>
+                    }
+                </select>
+            </div>
+        }
+
+        <br />
+
+        <div class="col-md-12">
+            <button @onclick="(e => { AgendarConsulta = !AgendarConsulta; })" class="btn @(AgendarConsulta ? "btn-danger" : "btn-primary") float-right">
+                <span class="oi @(AgendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(AgendarConsulta ? "Cancelar" : "Agendar Consulta")
+            </button>
+        </div>
+    </div>
+</HeaderComponent>
 
 <div class="card">
     <div class="card-body">

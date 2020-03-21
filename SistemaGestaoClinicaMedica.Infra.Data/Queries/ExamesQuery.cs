@@ -11,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public Exame Obter(string codigo)
+        public Exame ObterPorCodigo(string codigo)
         {
             var exames = Entidades.Include(_ => _.TipoDeExame)
                                   .Include(_ => _.StatusExame)

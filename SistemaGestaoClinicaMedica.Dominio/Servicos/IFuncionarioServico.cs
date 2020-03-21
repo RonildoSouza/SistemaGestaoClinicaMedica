@@ -7,6 +7,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     public interface IFuncionarioServico : IServicoBase<Guid, Funcionario>
     {
         Funcionario Autorizar(string email, string senha);
-        IList<Funcionario> ObterTudo(bool ativo);
+        IList<Funcionario> ObterTudoComFiltros(bool ativo);
     }
 }

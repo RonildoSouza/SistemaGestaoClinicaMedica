@@ -5,6 +5,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
     public interface IPacientesQuery : IQueryBase<Paciente>
     {
-        IList<Paciente> ObterTudo(string busca, bool ativo);
+        Paciente ObterPorCodigo(string pacienteCodigo);
+        IList<Paciente> ObterTudoComFiltros(string busca, bool ativo);
     }
 }

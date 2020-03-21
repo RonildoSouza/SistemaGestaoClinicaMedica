@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .FirstOrDefault(_ => _.Email.ToLower() == email.ToLower() && _.Senha == senha && _.Ativo);
         }
 
-        public IList<Funcionario> ObterTudo(bool ativo = true)
+        public IList<Funcionario> ObterTudoComFiltros(bool ativo = true)
         {
             return Entidades.Include(_ => _.Cargo)
                             .Where(_ => _.Ativo == ativo)

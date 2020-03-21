@@ -32,7 +32,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public IList<FuncionarioDTO> ObterTudo(bool ativo)
         {
-            var entidades = _funcionarioServico.ObterTudo(ativo);
+            var entidades = _funcionarioServico.ObterTudoComFiltros(ativo);
             return _mapper.Map<List<FuncionarioDTO>>(entidades);
         }
 

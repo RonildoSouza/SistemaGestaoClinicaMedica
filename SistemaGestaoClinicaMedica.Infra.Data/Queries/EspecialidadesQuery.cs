@@ -11,7 +11,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public IList<Especialidade> ObterTudo(bool comMedicos = false)
+        public IList<Especialidade> ObterDisponiveis()
+        {
+            var especialidadesComMedicoAtivo = Entidades.Include(_ => _.Medicos)
+                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
+                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Funcionario)}")
+                                .Where(_ => _.Medicos.Any() && _.Medicos.All(_ => _.Medico.Funcionario.Ativo))
+                                .OrderBy(_ => _.Nome)
+                                .ToList();
+
+            return especialidadesComMedicoAtivo;
+        }
+
+        public IList<Especialidade> ObterTudoComFiltros(bool comMedicos = false)
         {
             if (comMedicos)
                 return Entidades.Include(_ => _.Medicos)

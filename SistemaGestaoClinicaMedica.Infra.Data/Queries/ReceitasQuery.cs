@@ -11,12 +11,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public Receita ObterPorConsultaId(Guid id)
+        public Receita ObterPorConsultaId(Guid consultaId)
         {
             var receita = Entidades.Include(_ => _.Consulta)
                                    .Include(_ => _.Medicamentos)
                                    .Include($"{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
-                                   .FirstOrDefault(_ => _.Consulta.Id == id);
+                                   .FirstOrDefault(_ => _.Consulta.Id == consultaId);
 
             return receita;
         }

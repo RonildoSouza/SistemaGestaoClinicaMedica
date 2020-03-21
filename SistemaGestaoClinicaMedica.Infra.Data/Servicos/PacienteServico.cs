@@ -26,9 +26,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public IList<Paciente> ObterTudo(string busca, bool ativo)
+        public Paciente ObterPorCodigo(string pacienteCodigo)
         {
-            return _pacientesQuery.ObterTudo(busca, ativo);
+            return _pacientesQuery.ObterPorCodigo(pacienteCodigo);
+        }
+
+        public IList<Paciente> ObterTudoComFiltros(string busca, bool ativo)
+        {
+            return _pacientesQuery.ObterTudoComFiltros(busca, ativo);
         }
     }
 }

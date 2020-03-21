@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
@@ -11,14 +12,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         where TDTO : IDTO<TId>
         where TServico : IServicoBase<TDTO, TId>
     {
-        [Parameter]
-        public TId Id { get; set; }
+        [Parameter] public TId Id { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
-        [Inject]
-        public TServico HttpServico { get; set; }
+        [Inject] public ILocalStorageService LocalStorage { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public TServico HttpServico { get; set; }
 
         public TDTO _dto = (TDTO)Activator.CreateInstance(typeof(TDTO));
 

@@ -11,7 +11,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public IList<Paciente> ObterTudo(string busca, bool ativo)
+        public Paciente ObterPorCodigo(string pacienteCodigo)
+        {
+            return Entidades.ToList().FirstOrDefault(_ => _.Id.ToString().ToLowerStartsWith(pacienteCodigo));
+        }
+
+        public IList<Paciente> ObterTudoComFiltros(string busca, bool ativo)
         {
             var pacientes = Entidades.Where(_ => _.Ativo == ativo)
                                                   .OrderBy(_ => _.Nome)

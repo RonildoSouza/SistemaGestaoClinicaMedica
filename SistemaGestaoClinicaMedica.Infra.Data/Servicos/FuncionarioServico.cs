@@ -31,9 +31,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public IList<Funcionario> ObterTudo(bool ativo)
+        public IList<Funcionario> ObterTudoComFiltros(bool ativo)
         {
-            return _funcionariosQuery.ObterTudo(ativo);
+            return _funcionariosQuery.ObterTudoComFiltros(ativo);
         }
     }
 }

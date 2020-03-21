@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IMedicoServico : IServicoBase<Guid, Medico>
+    public interface IMedicosQuery : IQueryBase<Medico>
     {
         IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId);
     }

@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IMedicamentoServico : IServicoBase<Guid, Medicamento>
     {
-        IList<Medicamento> ObterTudo(string busca, bool ativo);
+        IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo);
     }
 }

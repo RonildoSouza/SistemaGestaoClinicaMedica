@@ -6,6 +6,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface IPacienteServicoAplicacao : IServicoAplicacaoBase<PacienteDTO, Guid>
     {
+        PacienteDTO ObterPorCodigo(string pacienteCodigo);
         IList<PacienteDTO> ObterTudo(string busca, bool ativo);
     }
 }

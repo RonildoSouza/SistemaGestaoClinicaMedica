@@ -22,12 +22,7 @@
 </div>
 
 @code {
-    [Parameter]
-    public string Id { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
-
-    [Parameter]
-    public EventCallback<MouseEventArgs> OnDeleteCallback { get; set; }
+    [Parameter] public string Id { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnDeleteCallback { get; set; }
 }

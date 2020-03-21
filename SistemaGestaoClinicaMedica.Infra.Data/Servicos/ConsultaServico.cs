@@ -33,14 +33,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public Consulta Obter(Guid id, bool comExames, bool comAtestados)
+        public Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados)
         {
-            return _consultasQuery.Obter(id, comExames, comAtestados);
+            return _consultasQuery.ObterComFiltros(id, comExames, comAtestados);
         }
 
-        public IList<Consulta> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
+        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
         {
-            return _consultasQuery.ObterTudo(dataInicio, dataFim, busca, status);
+            return _consultasQuery.ObterTudoComFiltros(dataInicio, dataFim, busca, status);
         }
     }
 }

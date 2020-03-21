@@ -28,16 +28,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
-        public override Medicamento Obter(Guid id)
+        public override Medicamento Obter(Guid id, bool asNoTracking = false)
         {
             var entidade = Entidades.Include(_ => _.Fabricante)
                                     .FirstOrDefault(_ => _.Id == id);
             return entidade;
         }
 
-        public IList<Medicamento> ObterTudo(string busca, bool ativo)
+        public IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo)
         {
-            return _medicamentosQuery.ObterTudo(busca, ativo);
+            return _medicamentosQuery.ObterTudoComFiltros(busca, ativo);
         }
     }
 }

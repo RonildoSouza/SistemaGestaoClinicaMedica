@@ -16,7 +16,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
 
         public Medicamento Convert(MedicamentoDTO source, Medicamento destination, ResolutionContext context)
         {
-            Fabricante fabricante = _fabricanteServico.Obter(source.FabricanteNome)
+            Fabricante fabricante = _fabricanteServico.ObterPorNome(source.FabricanteNome)
                                     ?? new Fabricante(Guid.Empty, source.FabricanteNome.ToUpper());
 
             return new Medicamento(

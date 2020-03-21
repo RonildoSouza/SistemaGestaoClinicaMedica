@@ -16,13 +16,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             Entidades = contextoBancoDados.Set<TEntidade>();
         }
 
-        public virtual TEntidade Obter(TId id)
+        public virtual TEntidade Obter(TId id, bool asNoTracking = false)
         {
+            if (asNoTracking)
+                return Entidades.AsNoTracking().FirstOrDefault(_ => _.Id.Equals(id));
+
             return Entidades.Find(id);
         }
 
-        public virtual IQueryable<TEntidade> ObterTudo()
+        public virtual IQueryable<TEntidade> ObterTudo(bool asNoTracking = false)
         {
+            if (asNoTracking)
+                return Entidades.AsNoTracking().AsQueryable();
+
             return Entidades.AsQueryable();
         }
 

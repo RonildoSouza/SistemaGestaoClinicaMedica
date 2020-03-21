@@ -5,6 +5,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
     public interface IReceitasQuery : IQueryBase<Receita>
     {
-        Receita ObterPorConsultaId(Guid id);
+        Receita ObterPorConsultaId(Guid consultaId);
     }
 }

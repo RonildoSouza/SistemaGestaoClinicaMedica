@@ -14,9 +14,7 @@
 
             @if (ChildContent != null)
             {
-                <div class="align-middle">
-                    @ChildContent
-                </div>
+                @ChildContent
             }
 
             @if (!string.IsNullOrEmpty(NewRoute))
@@ -31,15 +29,8 @@
 <br />
 
 @code {
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
-    public string BackRoute { get; set; }
-
-    [Parameter]
-    public string NewRoute { get; set; }
-
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string BackRoute { get; set; }
+    [Parameter] public string NewRoute { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
 }

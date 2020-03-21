@@ -6,6 +6,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IEspecialidadeServico : IServicoBase<Guid, Especialidade>
     {
-        IList<Especialidade> ObterTudo(bool comMedicos);
+        IList<Especialidade> ObterDisponiveis();
+        IList<Especialidade> ObterTudoComFiltros(bool comMedicos);
     }
 }

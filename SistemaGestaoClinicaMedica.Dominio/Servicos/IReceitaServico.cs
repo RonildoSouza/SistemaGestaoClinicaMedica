@@ -5,6 +5,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IReceitaServico : IServicoBase<Guid, Receita>
     {
-        Receita ObterPorConsultaId(Guid id);
+        Receita ObterPorConsultaId(Guid consultaId);
     }
 }

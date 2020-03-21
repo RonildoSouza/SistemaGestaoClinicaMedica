@@ -9,33 +9,33 @@
 
 <div class="card">
     <div class="row card-body">
-        <div class="col-12">
+        <div class="col-md-12">
             <EditForm Model="_dto" OnValidSubmit="Salvar">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="row">
-                    <div class="form-group col-6">
+                    <div class="form-group col-md-6">
                         <label for="nome">Nome</label>
                         <InputText @bind-Value="_dto.Nome" class="form-control" id="nome" />
                     </div>
-                    <div class="form-group col-3">
+                    <div class="form-group col-md-3">
                         <label for="data-nascimento">Data de Nascimento</label>
                         <InputDate @bind-Value="_dto.DataNascimento" class="form-control" id="data-nascimento" />
                     </div>
-                    <div class="form-group col-3">
+                    <div class="form-group col-md-3">
                         <label for="telefone">Telefone</label>
                         <InputText @bind-Value="_dto.Telefone" class="form-control" id="telefone" />
                     </div>
-                    <div class="form-group col-4">
+                    <div class="form-group col-md-4">
                         <label for="bairro">Bairro</label>
                         <InputText @bind-Value="_dto.Bairro" class="form-control" id="bairro" />
                     </div>
-                    <div class="form-group col-5">
+                    <div class="form-group col-md-5">
                         <label for="cidade">Cidade</label>
                         <InputText @bind-Value="_dto.Cidade" class="form-control" id="cidade" />
                     </div>
-                    <div class="form-group col-3">
+                    <div class="form-group col-md-3">
                         <label for="estado">Estado</label>
                         <InputSelect @bind-Value="_dto.Estado" class="form-control" id="estado">
                             <option value="">Selecione o estado...</option>
@@ -68,7 +68,7 @@
                         </InputSelect>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </div>

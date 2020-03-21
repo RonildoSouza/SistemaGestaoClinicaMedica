@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
     public interface IFuncionariosQuery : IQueryBase<Funcionario>
     {
         Funcionario Autorizar(string email, string senha);
-        IList<Funcionario> ObterTudo(bool ativo);
+        IList<Funcionario> ObterTudoComFiltros(bool ativo);
     }
 }

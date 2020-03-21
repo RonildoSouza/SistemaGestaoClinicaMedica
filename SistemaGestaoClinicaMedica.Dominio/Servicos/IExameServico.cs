@@ -5,6 +5,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
 {
     public interface IExameServico : IServicoBase<Guid, Exame>
     {
-        Exame Obter(string codigo);
+        Exame ObterPorCodigo(string codigo);
     }
 }

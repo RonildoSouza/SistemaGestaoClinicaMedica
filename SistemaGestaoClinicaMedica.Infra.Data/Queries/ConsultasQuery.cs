@@ -13,7 +13,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public Consulta Obter(Guid id, bool comExames, bool comAtestados)
+        public Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados)
         {
             var dbset = Entidades.Include(_ => _.Paciente)
                                  .Include(_ => _.StatusConsulta)
@@ -40,7 +40,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return dbset.FirstOrDefault(_ => _.Id == id);
         }
 
-        public IList<Consulta> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
+        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
         {
             if (dataInicio == default && dataFim == default)
             {

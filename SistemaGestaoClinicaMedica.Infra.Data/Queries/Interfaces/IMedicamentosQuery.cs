@@ -5,6 +5,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
     public interface IMedicamentosQuery : IQueryBase<Medicamento>
     {
-        IList<Medicamento> ObterTudo(string busca, bool ativo);
+        IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo);
     }
 }

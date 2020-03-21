@@ -12,7 +12,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<Funcionario, LoginEntradaAutenticacaoDTO>()
                 .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
 
-            CreateMap<Funcionario, FuncionarioDTO>();
+            CreateMap<Funcionario, FuncionarioDTO>()
+                .ForMember(dest => dest.Senha, opt => opt.Ignore());
 
             CreateMap<Especialidade, EspecialidadeDTO>();
 

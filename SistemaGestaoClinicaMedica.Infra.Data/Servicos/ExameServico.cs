@@ -8,17 +8,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
     public sealed class ExameServico : ServicoBase<Guid, Exame>, IExameServico
     {
         private readonly IExamesQuery _examesQuery;
-        private readonly IStatusExameServico _statusExameServico;
 
         public ExameServico(ContextoBancoDados contextoBancoDados, IExamesQuery examesQuery, IStatusExameServico statusExameServico) : base(contextoBancoDados)
         {
             _examesQuery = examesQuery;
-            _statusExameServico = statusExameServico;
         }
 
-        public Exame Obter(string codigo)
+        public Exame ObterPorCodigo(string codigo)
         {
-            return _examesQuery.Obter(codigo);
+            return _examesQuery.ObterPorCodigo(codigo);
         }
     }
 }

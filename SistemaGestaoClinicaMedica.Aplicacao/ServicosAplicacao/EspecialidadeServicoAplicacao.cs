@@ -16,9 +16,15 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _especialidadeServico = especialidadeServico;
         }
 
+        public IList<EspecialidadeDTO> ObterDisponiveis()
+        {
+            var entidades = _especialidadeServico.ObterDisponiveis();
+            return _mapper.Map<List<EspecialidadeDTO>>(entidades);
+        }
+
         public IList<EspecialidadeDTO> ObterTudo(bool comMedicos)
         {
-            var entidades = _especialidadeServico.ObterTudo(comMedicos);
+            var entidades = _especialidadeServico.ObterTudoComFiltros(comMedicos);
             return _mapper.Map<List<EspecialidadeDTO>>(entidades);
         }
     }

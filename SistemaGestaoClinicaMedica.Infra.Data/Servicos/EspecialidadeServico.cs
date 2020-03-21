@@ -15,9 +15,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             _especialidadesQuery = especialidadesQuery;
         }
 
-        public IList<Especialidade> ObterTudo(bool comMedicos)
+        public IList<Especialidade> ObterDisponiveis()
         {
-            return _especialidadesQuery.ObterTudo(comMedicos);
+            return _especialidadesQuery.ObterDisponiveis();
+        }
+
+        public IList<Especialidade> ObterTudoComFiltros(bool comMedicos)
+        {
+            return _especialidadesQuery.ObterTudoComFiltros(comMedicos);
         }
     }
 }

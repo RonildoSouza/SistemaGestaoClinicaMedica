@@ -1,21 +1,30 @@
-﻿using Microsoft.AspNetCore.Components;
-using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-using System.Collections.Generic;
+﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class ConsultasForm
     {
-        [Inject]
-        private IEspecialidadeServico EspecialidadeServico { get; set; }
-
-        private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
+        private string PacienteNome { get; set; }
+        private string EspecialidadeNome { get; set; }
+        private string MedicoNome { get; set; }
+        private string DataHora { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
-            _especialidades = await EspecialidadeServico.GetAsync();
+            var consultaLocalStorage = await LocalStorage.ObterConsultaLocalStorageAsync();
+
+            PacienteNome = consultaLocalStorage.Paciente.Nome;
+            EspecialidadeNome = consultaLocalStorage.Especialidade.Nome;
+            MedicoNome = consultaLocalStorage.Medico.Nome;
+            DataHora = consultaLocalStorage.Data.ToString("dd/MM/yyyy á\\s hh:mm");
+
+            _dto.Data = consultaLocalStorage.Data;
+            _dto.PacienteId = consultaLocalStorage.Paciente.Id;
+            _dto.EspecialidadeId = consultaLocalStorage.Especialidade.Id;
+            _dto.MedicoId = consultaLocalStorage.Medico.Id;
+            _dto.StatusConsultaId = "Agendada";
+
             await base.OnParametersSetAsync();
         }
     }

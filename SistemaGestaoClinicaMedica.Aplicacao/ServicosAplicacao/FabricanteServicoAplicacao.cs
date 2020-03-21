@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public FabricanteDTO Obter(string nome)
         {
-            var entidade = _fabricanteServico.Obter(nome);
+            var entidade = _fabricanteServico.ObterPorNome(nome);
             return _mapper.Map<FabricanteDTO>(entidade);
         }
     }

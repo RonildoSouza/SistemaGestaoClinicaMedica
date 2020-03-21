@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public ExameDTO Obter(string codigo)
         {
-            var entidade = _exameServico.Obter(codigo);
+            var entidade = _exameServico.ObterPorCodigo(codigo);
             return _mapper.Map<ExameDTO>(entidade);
         }
 

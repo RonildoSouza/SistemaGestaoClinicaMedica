@@ -10,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public Fabricante Obter(string nome)
+        public Fabricante ObterPorNome(string nome)
         {
             if (string.IsNullOrEmpty(nome))
                 return null;

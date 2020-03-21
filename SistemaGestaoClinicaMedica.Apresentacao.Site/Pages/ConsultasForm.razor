@@ -9,51 +9,34 @@
 
 <div class="card">
     <div class="row card-body">
-        <div class="col-12">
+        <div class="col-md-12">
             <EditForm Model="_dto" OnValidSubmit="Salvar">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div class="row">
-                    <div class="form-group col-3">
-                        <label for="data">Data</label>
-                        <InputDate @bind-Value="_dto.Data" class="form-control" id="data" disabled />
-                    </div>
-                    <div class="form-group col-3">
-                        <label for="especialidade">Especialidade</label>
-                        <InputSelect @bind-Value="_dto.EspecialidadeId" class="form-control" id="especialidade" disabled>
-                            <option value="">Selecione a especialidade...</option>
-                            @foreach (var especialidade in _especialidades)
-                            {
-                                <option value="@especialidade.Id">@especialidade.Nome</option>
-                            }
-                        </InputSelect>
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="medico">Médico</label>
-                        @*<InputText class="form-control" id="medico" disabled />*@
-                        <input class="form-control" type="text" value="TODO" />
-                    </div>
-                    <div class="form-group col-3">
-                        <label for="hora">Hora</label>
-                        <InputSelect @bind-Value="_dto.Data" class="form-control" id="hora">
-                            <option value="">Selecione a hora...</option>
-                            <option value="'@_dto.Data' + 'T10:00:00'">10:00</option>
-                            <option value="'@_dto.Data' + 'T10:40:00'">10:40</option>
-                            <option value="'@_dto.Data' + 'T11:20:00'">11:20</option>
-                        </InputSelect>
-                    </div>
-                    <div class="form-group col-9">
+                    <div class="form-group col-md-12">
                         <label for="paciente">Paciente</label>
-                        @*<InputText @bind-Value="_dto.PacienteId" class="form-control" id="paciente" />*@
-                        <input class="form-control" type="text" value="TODO" />
+                        <input type="text" value="@PacienteNome" class="form-control" id="paciente" disabled />
                     </div>
-                    <div class="form-group col-12">
+                    <div class="form-group col-md-4">
+                        <label for="especialidade">Especialidade</label>
+                        <input type="text" value="@EspecialidadeNome" class="form-control" id="especialidade" disabled />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="medico">Médico</label>
+                        <input type="text" value="@MedicoNome" class="form-control" id="medico" disabled />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="data">Data/Hora</label>
+                        <input type="text" value="@DataHora" class="form-control" id="data" disabled />
+                    </div>
+                    <div class="form-group col-md-12">
                         <label for="observacoes">Observações</label>
                         <InputTextArea @bind-Value="_dto.Observacao" class="form-control" id="observacoes" />
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-md-12">
                         <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
                 </div>

@@ -12,7 +12,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public IList<Medicamento> ObterTudo(string busca, bool ativo = true)
+        public IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo = true)
         {
             var medicamentos = Entidades.Include(_ => _.Fabricante)
                                         .Where(_ => _.Ativo == ativo)

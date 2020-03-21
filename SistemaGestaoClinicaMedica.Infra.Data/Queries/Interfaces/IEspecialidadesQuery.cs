@@ -5,6 +5,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
     public interface IEspecialidadesQuery : IQueryBase<Especialidade>
     {
-        IList<Especialidade> ObterTudo(bool comMedicos);
+        IList<Especialidade> ObterDisponiveis();
+        IList<Especialidade> ObterTudoComFiltros(bool comMedicos);
     }
 }

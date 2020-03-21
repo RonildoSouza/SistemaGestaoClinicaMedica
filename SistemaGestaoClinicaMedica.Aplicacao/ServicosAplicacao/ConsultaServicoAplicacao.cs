@@ -19,7 +19,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public ConsultaDTO Obter(Guid id, bool comExames, bool comAtestados)
         {
-            var entidade = _consultaServico.Obter(id, comExames, comAtestados);
+            var entidade = _consultaServico.ObterComFiltros(id, comExames, comAtestados);
             return _mapper.Map<ConsultaDTO>(entidade);
         }
 
@@ -30,10 +30,10 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             if (!string.IsNullOrEmpty(status))
             {
                 Enum.TryParse(status, out EStatusConsulta eStatusConsulta);
-                entidades = _consultaServico.ObterTudo(dataInicio, dataFim, busca, eStatusConsulta).ToList();
+                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, eStatusConsulta).ToList();
             }
             else
-                entidades = _consultaServico.ObterTudo(dataInicio, dataFim, busca, null).ToList();
+                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, null).ToList();
 
             return _mapper.Map<List<ConsultaDTO>>(entidades);
         }

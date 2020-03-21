@@ -25,6 +25,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer")]
+        [HttpGet, Route("disponiveis")]
+        public IActionResult Get()
+        {
+            var saidaDTOs = _especialidadeServicoAplicacao.ObterDisponiveis();
+            return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {

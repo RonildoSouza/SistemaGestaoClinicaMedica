@@ -14,9 +14,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             _fabricantesQuery = fabricantesQuery;
         }
 
-        public Fabricante Obter(string nome)
+        public Fabricante ObterPorNome(string nome)
         {
-            return _fabricantesQuery.Obter(nome);
+            return _fabricantesQuery.ObterPorNome(nome);
         }
     }
 }
