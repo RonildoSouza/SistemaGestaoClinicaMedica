@@ -1,0 +1,36 @@
+﻿<button style="@(MainButtonVisibled ? "" : "display:none;")" class="@MainButtonClass" id="@MainButtonId" onclick="$('#@Id').modal('show');">
+    @ChildContent
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="@Id" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@Message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" onclick="$('#@Id').modal('hide')">Fechar</button>
+                <button type="button" class="btn btn-danger" @onclick="OnActionButton" data-dismiss="modal">@ActionButtonText</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    [Parameter] public string Title { get; set; } = "ATENÇÃO!";
+    [Parameter] public string Message { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public bool MainButtonVisibled { get; set; } = true;
+    [Parameter] public string MainButtonId { get; set; }
+    [Parameter] public string MainButtonClass { get; set; } = "btn";
+    [Parameter] public string ActionButtonText { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnActionButton { get; set; }
+}

@@ -8,6 +8,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
     {
         IList<Especialidade> ObterDisponiveis();
         IList<Especialidade> ObterTudoComFiltros(bool comMedicos);
-        IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime data, Guid? medicoId = null);
+        IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId = null);
     }
 }

@@ -40,15 +40,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return Entidades.ToList();
         }
 
-        public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime data, Guid? medicoId = null)
+        public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId = null)
         {
             var medicos = Entidades.Include(_ => _.Medicos)
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
                                 .Where(_ => _.Id == especialidadeId)
-                                .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.All(_ => _.DiaDaSemana == data.DayOfWeek)))
+                                .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.All(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
                                 .SelectMany(_ => _.Medicos);
-            var consultas = _consultaServico.ObterTudoComFiltros(data, data.AddMinutes(1439), null, EStatusConsulta.Agendada);
+            var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada });
 
             if (medicoId.HasValue && medicoId != Guid.Empty)
             {

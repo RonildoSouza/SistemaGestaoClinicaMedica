@@ -7,6 +7,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     public interface IConsultaServico : IServicoBase<Guid, Consulta>
     {
         Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados);
-        IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status);
+        IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status);
     }
 }

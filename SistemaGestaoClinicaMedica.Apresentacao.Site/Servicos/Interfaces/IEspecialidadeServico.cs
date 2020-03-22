@@ -8,6 +8,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     public interface IEspecialidadeServico : IServicoLeituraBase<EspecialidadeDTO, Guid>
     {
         Task<List<EspecialidadeDTO>> GetDisponiveisAsync();
-        Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime data, Guid? medicoId);
+        Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId);
     }
 }

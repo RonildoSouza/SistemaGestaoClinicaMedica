@@ -40,7 +40,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return dbset.FirstOrDefault(_ => _.Id == id);
         }
 
-        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
+        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status)
         {
             if (dataInicio == default && dataFim == default)
             {
@@ -63,8 +63,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                                  || _.Paciente.Id.ToString().ToLowerStartsWith(busca)
                                                  || _.Id.ToString().ToLowerStartsWith(busca)).ToList();
 
-            if (!string.IsNullOrEmpty(status?.ToString()))
-                consultas = consultas.Where(_ => _.StatusConsulta.Id.ToString().ToLowerEquals(status.Value.ToString())).ToList();
+            if (status != null && status.Any())
+                consultas = consultas.Where(_ => status.Contains(_.StatusConsulta.Id)).ToList();
 
             return consultas;
         }

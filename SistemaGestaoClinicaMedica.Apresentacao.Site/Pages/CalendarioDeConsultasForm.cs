@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
-    public partial class ConsultasForm
+    public partial class CalendarioDeConsultasForm
     {
         private string PacienteNome { get; set; }
         private string EspecialidadeNome { get; set; }
@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             PacienteNome = consultaLocalStorage.Paciente.Nome;
             EspecialidadeNome = consultaLocalStorage.Especialidade.Nome;
             MedicoNome = $"{consultaLocalStorage.Medico.Nome} - CRM {consultaLocalStorage.Medico.CRM}";
-            DataHora = consultaLocalStorage.Data.ToString("dddd, dd \\de MMMM, yyyy á\\s HH:mm");
+            DataHora = consultaLocalStorage.Data.ToDateAndTime();
 
             _dto.Data = consultaLocalStorage.Data;
             _dto.PacienteId = consultaLocalStorage.Paciente.Id;

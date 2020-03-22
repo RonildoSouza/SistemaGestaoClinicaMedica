@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Dominio.Extensions;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
             if (!string.IsNullOrEmpty(status))
             {
-                Enum.TryParse(status, out EStatusConsulta eStatusConsulta);
-                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, eStatusConsulta).ToList();
+                var listaEStatusConsulta = status.StringParaStatusConsulta();
+                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, listaEStatusConsulta).ToList();
             }
             else
                 entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, null).ToList();

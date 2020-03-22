@@ -10,17 +10,19 @@
         }
         else
         {
-            <table class="table">
-                <thead>
-                    <tr>@TableHeader</tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Items)
-                    {
-                        <tr>@RowTemplate(item)</tr>
-                    }
-                </tbody>
-            </table>
+            <div class="table-responsive-md">
+                <table class="table">
+                    <thead>
+                        <tr>@TableHeader</tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Items)
+                        {
+                            <tr>@RowTemplate(item)</tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
     </div>
 </div>

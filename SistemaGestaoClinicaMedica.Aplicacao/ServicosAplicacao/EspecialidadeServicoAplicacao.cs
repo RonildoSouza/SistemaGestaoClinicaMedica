@@ -22,9 +22,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<List<EspecialidadeDTO>>(entidades);
         }
 
-        public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime data, Guid? medicoId = null)
+        public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId = null)
         {
-            return _especialidadeServico.ObterHorariosDisponiveis(especialidadeId, data, medicoId);
+            return _especialidadeServico.ObterHorariosDisponiveis(especialidadeId, dataDaConsulta, medicoId);
         }
 
         public IList<EspecialidadeDTO> ObterTudo(bool comMedicos)

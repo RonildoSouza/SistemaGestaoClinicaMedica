@@ -20,9 +20,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             return JsonToDTO<List<EspecialidadeDTO>>(response);
         }
 
-        public async Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime data, Guid? medicoId)
+        public async Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId)
         {
-            var endpoint = $"{RequestUri}/{especialidadeId}/horarios-disponiveis/{data.ToString("yyyy-MM-dd")}";
+            var endpoint = $"{RequestUri}/{especialidadeId}/horarios-disponiveis/{dataDaConsulta.ToString("yyyy-MM-dd")}";
             endpoint = medicoId.HasValue ? $"{endpoint}/{medicoId}" : endpoint;
             var response = await HttpClient.GetStringAsync(endpoint);
 

@@ -1,5 +1,8 @@
 ﻿window.calendarioDeConsultasJsInterop = {
-    showModal: function () {
-        $('#myModalTest').modal('show');
+    showModalHorarioConsulta: function () {
+        $('#modalHorarioConsulta').modal('show');
+    },
+    showModalDesmarcarConsulta: function () {
+        $('#modalDesmarcarConsulta').modal('show');
     }
 };

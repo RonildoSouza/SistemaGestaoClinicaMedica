@@ -38,7 +38,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return _consultasQuery.ObterComFiltros(id, comExames, comAtestados);
         }
 
-        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, EStatusConsulta? status)
+        public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status)
         {
             return _consultasQuery.ObterTudoComFiltros(dataInicio, dataFim, busca, status);
         }

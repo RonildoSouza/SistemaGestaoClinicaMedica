@@ -1,18 +1,52 @@
 ﻿window.fullCalendarJsInterop = {
     calendarRender: function (fullCalendarEvents, dotNetObject) {
         var calendarEl = document.getElementById('calendar');
+        calendarEl.innerHTML = '';
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             locale: 'pt-br',
             header: {
-                //'dayGridMonth,timeGridWeek,listWeek'
-                left: 'dayGridMonth,listWeek',
+                left: 'customMonthButton,customListButton',
                 center: 'title'
-            },
-            plugins: ['dayGrid', 'timeGrid', 'list', 'interaction'],
+            },            
+            plugins: ['dayGrid', 'list', 'interaction'],
             events: fullCalendarEvents,
             eventClick: function (info) {
-                alert('TODO: ' + info.event.title);
+                var consultaEvento = {
+                    id: info.event.id,
+                    codigo: info.event.extendedProps.consultaCodigo,
+                    titulo: info.event.title,
+                    data: info.event.start,
+                    pacienteNome: info.event.extendedProps.pacienteNome,
+                    especialidadeNome: info.event.extendedProps.especialidadeNome,
+                    medicoNome: info.event.extendedProps.medicoNome
+                };
+
+                dotNetObject.invokeMethodAsync('DetalhesConsultaAsync', consultaEvento);
+            },
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit'
+            },
+            customButtons: {
+                customMonthButton: {
+                    text: 'Mês',
+                    click: function () {
+                        console.log(calendar);
+
+                        $('#agendar-consulta').show();
+
+                        calendar.changeView('dayGridMonth');
+                    }
+                },
+                customListButton: {
+                    text: 'Lista',
+                    click: function () {
+                        $('#agendar-consulta').hide();
+
+                        calendar.changeView('listWeek');
+                    }
+                }
             },
             //dayRender: function (info) {
             //    var today = new Date();
@@ -28,18 +62,13 @@
 
                 var today = new Date();
                 today.setHours(0, 0, 0, 0);
-                var date = info.date;
-                date.setHours(0, 0, 0, 0);
 
-                console.log(info.date);
-                console.log(date);
-
-                if (date < today) {
+                if (info.date < today) {
                     alert('TODO: DATA MENOR QUE A ATUAL!');
                     return;
                 }
 
-                dotNetObject.invokeMethodAsync('HorariosDisponiveisAsync', date);
+                dotNetObject.invokeMethodAsync('HorariosDisponiveisAsync', info.date);
             }
         });
 
