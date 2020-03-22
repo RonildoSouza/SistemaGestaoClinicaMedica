@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\SelecionaHorario\**" />
+    <Content Remove="Components\SelecionaHorario\**" />
+    <EmbeddedResource Remove="Components\SelecionaHorario\**" />
+    <None Remove="Components\SelecionaHorario\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Pages\Consultas.cs" />
   </ItemGroup>
 

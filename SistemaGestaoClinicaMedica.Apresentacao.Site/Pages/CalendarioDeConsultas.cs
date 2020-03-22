@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
@@ -20,6 +21,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILocalStorageService LocalStorage { get; set; }
+        [Inject] private IToastService ToastService { get; set; }
         [Inject] private IConsultaServico ConsultaServico { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private IPacienteServico PacienteServico { get; set; }
@@ -30,6 +32,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private List<EspecialidadeDTO> Especialidades { get; set; }
         private List<MedicoDTO> Medicos { get; set; } = new List<MedicoDTO>();
         private bool AgendarConsulta { get; set; }
+        private List<TimeSpan> HorariosDisponiveis { get; set; } = new List<TimeSpan>();
+        private DateTime DataDaConsulta { get; set; }
+        private TimeSpan HorarioDaConsulta { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -51,7 +56,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             var fullCalendarEvent = consultas.Select(_ => new FullCalendarEvent
             {
                 Id = _.Codigo,
-                Title = $"Dr(a): {_.MedicoId}\nConsulta.: {_.EspecialidadeId} - Paciente: {_.PacienteId}",
+                Title = $"Dr(a): {_.Medico.Nome}\nEspecialidade.: {_.Especialidade.Nome} - Paciente: {_.Paciente.Nome}",
                 Start = _.Data
             });
 
@@ -104,21 +109,40 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             };
         }
 
-        [JSInvokable]
-        public async Task AgendarConsultaAsync(DateTime data)
+        public async Task AgendarConsultaAsync()
         {
-            if (_pacienteLocalStorage == default && _especialidadeLocalStorage == default && _medicoLocalStorage == default)
+            if (_pacienteLocalStorage == null && _especialidadeLocalStorage == null && _medicoLocalStorage == null)
+            {
+                ToastService.ShowInfo("Falta informar o Paciente, Especialidade ou Médico!");
                 return;
+            }
 
             await LocalStorage.CriaConsultaLocalStorageAsync(new ConsultaLocalStorage
             {
-                Data = data,
+                Data = DataDaConsulta.Add(HorarioDaConsulta),
                 Paciente = _pacienteLocalStorage,
                 Especialidade = _especialidadeLocalStorage,
                 Medico = _medicoLocalStorage,
             });
 
             NavigationManager.NavigateTo($"consultas/novo");
+        }
+
+        [JSInvokable]
+        public async Task HorariosDisponiveisAsync(DateTime dataDaConsulta)
+        {
+            if (_especialidadeLocalStorage == null)
+            {
+                ToastService.ShowInfo("Especialidade não foi selecionada!");
+                return;
+            }
+
+            DataDaConsulta = dataDaConsulta.AddHours(-dataDaConsulta.Hour);
+
+            HorariosDisponiveis = await EspecialidadeServico.GetHorariosDisponiveisAsync(_especialidadeLocalStorage.Id, DataDaConsulta, _medicoLocalStorage?.Id);
+            StateHasChanged();
+
+            await JSRuntime.InvokeVoidAsync("calendarioDeConsultasJsInterop.showModal");
         }
     }
 }

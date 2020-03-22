@@ -16,8 +16,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
             PacienteNome = consultaLocalStorage.Paciente.Nome;
             EspecialidadeNome = consultaLocalStorage.Especialidade.Nome;
-            MedicoNome = consultaLocalStorage.Medico.Nome;
-            DataHora = consultaLocalStorage.Data.ToString("dd/MM/yyyy á\\s hh:mm");
+            MedicoNome = $"{consultaLocalStorage.Medico.Nome} - CRM {consultaLocalStorage.Medico.CRM}";
+            DataHora = consultaLocalStorage.Data.ToString("dddd, dd \\de MMMM, yyyy á\\s HH:mm");
 
             _dto.Data = consultaLocalStorage.Data;
             _dto.PacienteId = consultaLocalStorage.Paciente.Id;

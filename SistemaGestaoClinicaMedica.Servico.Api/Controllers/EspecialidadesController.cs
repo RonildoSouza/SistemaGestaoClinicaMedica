@@ -33,6 +33,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer")]
+        [HttpGet, Route("{id}/horarios-disponiveis/{data}/{medicoId?}")]
+        public IActionResult GetHorariosDisponiveis(Guid id, DateTime data, Guid? medicoId)
+        {
+            var saidaDTOs = _especialidadeServicoAplicacao.ObterHorariosDisponiveis(id, data, medicoId);
+            return Ok(saidaDTOs);
+        }        
+
+        [Authorize("Bearer")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {

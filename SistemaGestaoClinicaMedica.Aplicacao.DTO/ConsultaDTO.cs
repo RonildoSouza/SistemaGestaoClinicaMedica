@@ -16,5 +16,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         public List<ExameDTO> Exames { get; set; }
         public List<AtestadoDTO> Atestados { get; set; }
         public ReceitaDTO Receita { get; set; }
+
+        public PacienteDTO Paciente { get; set; }
+        public EspecialidadeDTO Especialidade { get; set; }
+        public MedicoDTO Medico { get; set; }
     }
 }

@@ -20,6 +20,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return _especialidadesQuery.ObterDisponiveis();
         }
 
+        public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime data, Guid? medicoId = null)
+        {
+            return _especialidadesQuery.ObterHorariosDisponiveis(especialidadeId, data, medicoId);
+        }
+
         public IList<Especialidade> ObterTudoComFiltros(bool comMedicos)
         {
             return _especialidadesQuery.ObterTudoComFiltros(comMedicos);

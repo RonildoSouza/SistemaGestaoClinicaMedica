@@ -1,12 +1,12 @@
 ﻿window.fullCalendarJsInterop = {
     calendarRender: function (fullCalendarEvents, dotNetObject) {
         var calendarEl = document.getElementById('calendar');
-        //calendarEl.innerHTML = '';
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
             locale: 'pt-br',
             header: {
-                left: 'dayGridMonth,timeGridWeek,listWeek',
+                //'dayGridMonth,timeGridWeek,listWeek'
+                left: 'dayGridMonth,listWeek',
                 center: 'title'
             },
             plugins: ['dayGrid', 'timeGrid', 'list', 'interaction'],
@@ -14,19 +14,32 @@
             eventClick: function (info) {
                 alert('TODO: ' + info.event.title);
             },
+            //dayRender: function (info) {
+            //    var today = new Date();
+            //    today.setHours(0, 0, 0, 0);
+
+            //    if (info.date < today) {
+            //        $(info.el).addClass('disabled');
+            //    }
+            //},
             dateClick: function (info) {
                 if (info.view.type !== 'dayGridMonth')
                     return;
 
                 var today = new Date();
                 today.setHours(0, 0, 0, 0);
+                var date = info.date;
+                date.setHours(0, 0, 0, 0);
 
-                if (info.date < today) {
+                console.log(info.date);
+                console.log(date);
+
+                if (date < today) {
                     alert('TODO: DATA MENOR QUE A ATUAL!');
                     return;
                 }
 
-                dotNetObject.invokeMethodAsync('AgendarConsultaAsync', info.date);
+                dotNetObject.invokeMethodAsync('HorariosDisponiveisAsync', date);
             }
         });
 

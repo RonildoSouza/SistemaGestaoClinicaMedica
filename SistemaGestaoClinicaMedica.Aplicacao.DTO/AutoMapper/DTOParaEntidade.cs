@@ -39,9 +39,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<ReceitaDTO, Receita>().ConvertUsing<ReceitaDTOParaReceita>();
         }
 
-        private TimeSpan? TryParse(string time)
+        private TimeSpan TryParse(string time)
         {
-            TimeSpan.TryParse(time, out TimeSpan timeSpan);
+            if (!TimeSpan.TryParse(time, out TimeSpan timeSpan))
+                timeSpan = TimeSpan.Zero;
+
             return timeSpan;
         }
     }

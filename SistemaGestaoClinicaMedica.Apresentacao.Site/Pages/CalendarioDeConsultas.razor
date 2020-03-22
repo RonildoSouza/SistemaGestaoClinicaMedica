@@ -33,10 +33,8 @@
             </div>
         }
 
-        <br />
-
         <div class="col-md-12">
-            <button @onclick="(e => { AgendarConsulta = !AgendarConsulta; })" class="btn @(AgendarConsulta ? "btn-danger" : "btn-primary") float-right">
+            <button @onclick="(e => { AgendarConsulta = !AgendarConsulta; })" class="btn @(AgendarConsulta ? "" : "btn-primary") float-right" disabled="@(Especialidades == null)" >
                 <span class="oi @(AgendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(AgendarConsulta ? "Cancelar" : "Agendar Consulta")
             </button>
         </div>
@@ -50,5 +48,48 @@
         </div>
 
         <div id='calendar'></div>
+
+        <!-- Modal de Seleção de Horario da Consulta-->
+        <div class="modal" id="myModalTest" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@DataDaConsulta.ToString("dd/MM/yyyy") - Horários Disponíveis</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-borderless">
+                            @{
+                                var total = Math.Ceiling((double)HorariosDisponiveis.Count / 5);
+                                total = (total > 0 && total < 1) ? 1 : total;
+
+                                for (int i = 0; i < total; i++)
+                                {
+                                    <tr>
+                                        @{
+                                            var horarios = HorariosDisponiveis.Skip(i * 5).Take(5);
+
+                                            foreach (var horario in horarios)
+                                            {
+                                                <td>
+                                                    <input type="radio" class="btn" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => HorarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
+                                                    <label for="@horario">@horario.ToString("hh\\:mm")</label>
+                                                </td>
+                                            }
+                                        }
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="AgendarConsultaAsync">Selecionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

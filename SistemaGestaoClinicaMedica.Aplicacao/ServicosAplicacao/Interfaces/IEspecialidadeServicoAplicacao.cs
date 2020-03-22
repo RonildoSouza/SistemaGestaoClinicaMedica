@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
     {
         IList<EspecialidadeDTO> ObterDisponiveis();
         IList<EspecialidadeDTO> ObterTudo(bool comMedicos);
+        IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime data, Guid? medicoId = null);
     }
 }

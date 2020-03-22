@@ -1,9 +1,11 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -15,6 +17,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Parameter] public TId Id { get; set; }
 
         [Inject] public ILocalStorageService LocalStorage { get; set; }
+        [Inject] public IToastService ToastService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public TServico HttpServico { get; set; }
 
@@ -33,10 +36,17 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (!editContext.Validate())
                 return;
 
+            HttpResponseMessage httpResponse;
+
             if (!default(TId).Equals(Id))
-                await HttpServico.PutAsync(Id, _dto);
+                httpResponse = await HttpServico.PutAsync(Id, _dto);
             else
-                await HttpServico.PostAsync(_dto);
+                httpResponse = await HttpServico.PostAsync(_dto);
+
+            if (httpResponse.IsSuccessStatusCode)
+                ToastService.ShowSuccess("Registro salvo com sucesso");
+            else
+                ToastService.ShowError("Falha ao tentar salvar o registro!");
 
             NavigationManager.NavigateTo(AposSalvarRetonarPara);
         }

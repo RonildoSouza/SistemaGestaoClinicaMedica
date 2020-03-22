@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
@@ -13,6 +14,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         where TServico : IServicoBase<TDTO, TId>
     {
         [Inject] public ILocalStorageService LocalStorage { get; set; }
+        [Inject] public IToastService ToastService { get; set; }
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public TServico HttpServico { get; set; }
 
