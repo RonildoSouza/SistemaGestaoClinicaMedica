@@ -1,0 +1,26 @@
+﻿@typeparam TItem
+
+<div class="card">
+    <div class="row card-body">
+        <div class="col-md-12">
+            <EditForm Model="Item" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+                <div class="row">
+                    @ChildContent(Item)
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success float-right">@SubmitButtonText</button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public TItem Item { get; set; }
+    [Parameter] public RenderFragment<TItem> ChildContent { get; set; }
+    [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
+    [Parameter] public string SubmitButtonText { get; set; } = "Salvar";
+}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
 {
@@ -6,11 +7,17 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
     {
         public Guid Id { get; set; }
         public string Codigo { get; set; }
+        [Required]
         public string Nome { get; set; }
+        [Required]
         public DateTime DataNascimento { get; set; }
+        [Required]
         public string Telefone { get; set; }
+        [Required]
         public string Bairro { get; set; }
+        [Required]
         public string Cidade { get; set; }
+        [Required]
         public string Estado { get; set; }
         public string Endereco => $"{Bairro}, {Cidade} - {Estado}";
         public bool Ativo { get; set; }

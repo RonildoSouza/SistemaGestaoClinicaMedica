@@ -21,8 +21,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public TServico HttpServico { get; set; }
 
-        public TDTO _dto = (TDTO)Activator.CreateInstance(typeof(TDTO));
-
+        protected TDTO _dto = (TDTO)Activator.CreateInstance(typeof(TDTO));
         protected abstract string AposSalvarRetonarPara { get; }
 
         protected override async Task OnParametersSetAsync()

@@ -34,7 +34,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             await CarregaDadosDaTabela();
         }
 
-        private async Task CarregaDadosDaTabela()
+        protected virtual async Task CarregaDadosDaTabela()
         {
             dtos = await HttpServico.GetAsync();
         }

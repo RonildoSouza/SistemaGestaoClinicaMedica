@@ -1,4 +1,11 @@
-﻿<div class="modal" id="@Id" tabindex="-1" role="dialog">
+﻿@if (ButtonVisibled)
+{
+    <button class="btn @ButtonClass" onclick="$('#@Id').modal('show');">
+        @ButtonText
+    </button>
+}
+
+<div class="modal" id="@Id" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -30,6 +37,9 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public RenderFragment Body { get; set; }
     [Parameter] public RenderFragment Footer { get; set; }
+    [Parameter] public string ButtonText { get; set; }
+    [Parameter] public string ButtonClass { get; set; }
+    [Parameter] public bool ButtonVisibled { get; set; }
     [Parameter] public string ActionButtonClass { get; set; } = "btn-danger";
     [Parameter] public string ActionButtonText { get; set; }
     [Parameter] public bool ActionButtonDisabled { get; set; }

@@ -48,13 +48,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                 .Where(_ => _.Id == especialidadeId)
                                 .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.All(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
                                 .SelectMany(_ => _.Medicos);
-            var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada });
+            var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada }, medicoId);
 
             if (medicoId.HasValue && medicoId != Guid.Empty)
-            {
                 medicos = medicos.Where(_ => _.MedicoId == medicoId.GetValueOrDefault());
-                consultas = consultas.Where(_ => _.Medico.Id == medicoId).ToList();
-            }
 
             var horarios = medicos.SelectMany(_ => _.Medico.HorariosDeTrabalho);
             var horariosDisponiveis = HorariosDisponiveis(horarios).ToList();

@@ -7,6 +7,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public interface IConsultaServico : IServicoBase<ConsultaDTO, Guid>
     {
-        Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status);
+        Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null);
     }
 }

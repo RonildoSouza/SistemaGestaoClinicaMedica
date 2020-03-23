@@ -19,9 +19,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpGet]
-        public IActionResult Get(DateTime dataInicio, DateTime dataFim, string busca, string status)
+        public IActionResult Get(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId)
         {
-            var saidaDTOs = _consultaServicoAplicacao.ObterTudo(dataInicio, dataFim, busca, status);
+            var saidaDTOs = _consultaServicoAplicacao.ObterTudo(dataInicio, dataFim, busca, status, medicoId);
             return Ok(saidaDTOs);
         }
 
