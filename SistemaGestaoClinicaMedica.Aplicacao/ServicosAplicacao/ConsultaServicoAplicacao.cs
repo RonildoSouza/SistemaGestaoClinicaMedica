@@ -24,17 +24,17 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<ConsultaDTO>(entidade);
         }
 
-        public IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status)
+        public IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {
             List<Consulta> entidades;
 
             if (!string.IsNullOrEmpty(status))
             {
                 var listaEStatusConsulta = status.StringParaStatusConsulta();
-                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, listaEStatusConsulta).ToList();
+                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, listaEStatusConsulta, medicoId).ToList();
             }
             else
-                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, null).ToList();
+                entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, null, medicoId).ToList();
 
             return _mapper.Map<List<ConsultaDTO>>(entidades);
         }

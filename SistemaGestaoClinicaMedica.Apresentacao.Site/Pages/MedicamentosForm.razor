@@ -7,44 +7,29 @@
 
 <HeaderComponent Title="Cadastro de Medicamento" BackRoute="medicamentos" />
 
-<div class="card">
-    <div class="row card-body">
-        <div class="col-md-12">
-            <EditForm Model="_dto" OnValidSubmit="Salvar">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="nome">Nome</label>
-                        <InputText @bind-Value="_dto.Nome" class="form-control" id="nome" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="nome-fabrica">Nome de Fabrica</label>
-                        <InputText @bind-Value="_dto.NomeFabrica" class="form-control" id="nome-fabrica" />
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="nome-fabricante">Nome do Fabricante</label>
-                        <InputText @bind-Value="_dto.FabricanteNome" class="form-control" id="nome-fabricante" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="tarja">Tarja</label>
-                        <InputSelect @bind-Value="_dto.Tarja" class="form-control" id="tarja">
-                            <option value="">Selecione o tipo de tarja...</option>
-                            <option value="Preta">Preta</option>
-                            <option value="Vermelha">Vermelha</option>
-                            <option value="Livre">Venda Livre</option>
-                        </InputSelect>
-                    </div>
-
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success">Salvar</button>
-                    </div>
-                </div>
-            </EditForm>
-        </div>
+<FormComponent Item="_dto" OnValidSubmit="Salvar">
+    <div class="form-group col-md-6">
+        <label for="nome">Nome</label>
+        <InputText @bind-Value="context.Nome" class="form-control" id="nome" />
     </div>
-</div>
+    <div class="form-group col-md-6">
+        <label for="nome-fabrica">Nome de Fabrica</label>
+        <InputText @bind-Value="context.NomeFabrica" class="form-control" id="nome-fabrica" />
+    </div>
+    <div class="form-group col-md-8">
+        <label for="nome-fabricante">Nome do Fabricante</label>
+        <InputText @bind-Value="context.FabricanteNome" class="form-control" id="nome-fabricante" />
+    </div>
+    <div class="form-group col-md-4">
+        <label for="tarja">Tarja</label>
+        <InputSelect @bind-Value="context.Tarja" class="form-control" id="tarja">
+            <option value="">Selecione o tipo de tarja...</option>
+            <option value="Preta">Preta</option>
+            <option value="Vermelha">Vermelha</option>
+            <option value="Livre">Venda Livre</option>
+        </InputSelect>
+    </div>
+</FormComponent>
 
 @code {
     protected override string AposSalvarRetonarPara => "medicamentos";

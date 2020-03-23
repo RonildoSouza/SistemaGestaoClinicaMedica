@@ -13,11 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Consultas.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\Consultas.razor" />
     <Content Remove="Pages\FuncionariosForm.razor" />
   </ItemGroup>
 

@@ -14,9 +14,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         {
         }
 
-        public async Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status)
+        public async Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {
             var endpoint = $"{RequestUri}/?dataInicio={dataInicio.ToString("yyyy-MM-dd")}&dataFim={dataFim.ToString("yyyy-MM-dd")}&busca={busca}&status={status}";
+
+            if (medicoId.HasValue && medicoId != Guid.Empty)
+                endpoint += $"&medicoId={medicoId.Value}";
+
             var response = await HttpClient.GetStringAsync(endpoint);
 
             return JsonToDTO<List<ConsultaDTO>>(response);
