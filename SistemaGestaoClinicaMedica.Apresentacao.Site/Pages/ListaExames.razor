@@ -1,0 +1,35 @@
+﻿@page "/exames"
+
+@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@inherits TableBase<IExameServico, ExameDTO, Guid>
+
+<HeaderComponent Title="Exames"
+                 SearchPlaceholder="Buscar pelo código do exame..."
+                 SearchVisibled="true"
+                 OnSearch="@BuscarAsync"/>
+
+<TableComponent Items="dtos">
+    <TableHeader>
+        <th>Codigo</th>
+        <th>Tipo de Exame</th>
+        <th>Status</th>
+        <th>Ações</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>@context.Codigo</td>
+        <td>@context.TipoDeExame.Nome</td>
+        <td>@context.StatusExame.Nome</td>
+        <td>
+            <a class="btn"><span class="oi oi-cloud-upload" aria-hidden="true"></span></a>
+            <a href="consultas/@context.ConsultaId/exames/{@context.Id}" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>            
+        </td>
+    </RowTemplate>
+</TableComponent>
+
+@code {
+    private async Task BuscarAsync(string busca)
+    {
+        dtos = await HttpServico.GetAsync();
+    }
+}

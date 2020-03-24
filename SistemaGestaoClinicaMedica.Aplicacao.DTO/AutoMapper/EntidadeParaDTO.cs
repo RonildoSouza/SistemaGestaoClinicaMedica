@@ -42,8 +42,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.Nome, opt => opt.MapFrom(src => src.Funcionario.Nome));
 
             CreateMap<Exame, ExameDTO>()
-                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 8).ToUpper()))
-                .ForMember(dest => dest.StatusExameId, opt => opt.MapFrom(src => src.StatusExame.Id));
+                .ForMember(dest => dest.Codigo, opt => opt.MapFrom(src => src.Id.ToString().Substring(0, 8).ToUpper()));
 
             CreateMap<TipoDeExame, TipoDeExameDTO>();
 

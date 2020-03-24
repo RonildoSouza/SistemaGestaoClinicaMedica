@@ -38,7 +38,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _statusConsultaSelecionado = statusSelecionado;
         }
 
-        private async Task Buscar(string busca)
+        private async Task BuscarAsync(string busca)
         {
             _busca = busca;
             await CarregaDadosDaTabela();

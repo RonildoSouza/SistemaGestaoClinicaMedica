@@ -18,13 +18,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _exameServicoAplicacao = exameServicoAplicacao;
         }
 
-        //[Authorize("Bearer", Roles = "Administrador")]
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    var saidaDTOs = _exameServicoAplicacao.ObterTudo();
-        //    return Ok(saidaDTOs);
-        //}
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var saidaDTOs = _exameServicoAplicacao.ObterTudo();
+            return Ok(saidaDTOs);
+        }
 
         //[Authorize("Bearer")]
         //[HttpGet, Route("{id}")]
