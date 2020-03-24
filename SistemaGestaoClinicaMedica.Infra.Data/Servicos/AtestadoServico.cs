@@ -20,6 +20,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
+        public override Atestado Obter(Guid id, bool asNoTracking = false)
+        {
+            return Entidades.Include(_ => _.TipoDeAtestado)
+                            .Include(_ => _.Consulta)
+                            .FirstOrDefault(_ => _.Id == id);
+        }
+
         public override IQueryable<Atestado> ObterTudo(bool asNoTracking = false)
         {
             return Entidades.Include(_ => _.TipoDeAtestado)

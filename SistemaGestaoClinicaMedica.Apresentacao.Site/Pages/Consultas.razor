@@ -5,7 +5,11 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IConsultaServico, ConsultaDTO, Guid>
 
-<HeaderComponent Title="Consultas">
+<HeaderComponent Title="Consultas"
+                 SearchText="Filtrar"
+                 SearchPlaceholder="Buscar por código da consulta ou nome do paciente"
+                 SearchVisibled="true"
+                 OnSearch="@Buscar">
     <div class="row">
         <div class="form-group col-md-4">
             <label for="data-inicio">Data Inicio</label>
@@ -23,12 +27,6 @@
                     <option value="@status.Id">@status.Nome</option>
                 }
             </select>
-        </div>
-        <div class="form-group col-md-12">
-            <input @bind-value="Busca" type="text" class="form-control" placeholder="Buscar por...">
-        </div>
-        <div class="col-md-12">
-            <button class="btn btn-primary float-right" @onclick="Buscar">Buscar</button>
         </div>
     </div>
 </HeaderComponent>

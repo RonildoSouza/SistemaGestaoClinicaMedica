@@ -16,5 +16,15 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
 
             await jsRuntime.InvokeVoidAsync($"scrollTo", options);
         }
+
+        public async static Task ShowTabFromUrlId(this IJSRuntime jsRuntime)
+        {
+            await jsRuntime.InvokeVoidAsync("jsRuntimeExtensionJsInterop.showTabFromUrlId");
+        }
+
+        public async static Task ForceReload(this IJSRuntime jsRuntime)
+        {
+            await jsRuntime.InvokeVoidAsync("location.reload");
+        }
     }
 }

@@ -10,13 +10,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     public partial class Consultas
     {
         private string _statusConsultaSelecionado = "Agendada";
+        private string _busca;
 
         [Inject] public IConsultaServico ConsultaServico { get; set; }
         [Inject] public IStatusConsultaServico StatusConsultaServico { get; set; }
 
         private DateTime DataInicio { get; set; }
         private DateTime DataFim { get; set; }
-        private string Busca { get; set; }
         public List<StatusConsultaDTO> StatusConsulta { get; set; } = new List<StatusConsultaDTO>();
         //private List<MedicoDTO> Medicos { get; set; }
 
@@ -38,14 +38,15 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _statusConsultaSelecionado = statusSelecionado;
         }
 
-        private async Task Buscar()
+        private async Task Buscar(string busca)
         {
+            _busca = busca;
             await CarregaDadosDaTabela();
         }
 
         protected async override Task CarregaDadosDaTabela()
         {
-            dtos = await HttpServico.GetTudoComFiltrosAsync(DataInicio, DataFim, Busca, _statusConsultaSelecionado);
+            dtos = await HttpServico.GetTudoComFiltrosAsync(DataInicio, DataFim, _busca, _statusConsultaSelecionado);
             StateHasChanged();
         }
     }

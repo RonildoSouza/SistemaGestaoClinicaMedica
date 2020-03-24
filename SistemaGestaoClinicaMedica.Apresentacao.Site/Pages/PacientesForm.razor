@@ -5,7 +5,7 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IPacienteServico, PacienteDTO, Guid>
 
-<HeaderComponent Title="Cadastro de Paciente" BackRoute="pacientes" />
+<HeaderComponent Title="Cadastro de Paciente" BackRoute="@AposSalvarRetonarPara" />
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar">
     <div class="form-group col-md-6">
