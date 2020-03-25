@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
+using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
@@ -10,6 +11,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 
         public ExameServico(IConfiguration configuration) : base(configuration)
         {
+        }
+
+        public async Task<ExameDTO> GetPorCodigoAsync(string codigo)
+        {
+            var response = await HttpClient.GetStringAsync($"{RequestUri}/por-codigo/{codigo}");
+            return JsonToDTO<ExameDTO>(response);
         }
     }
 }

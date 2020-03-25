@@ -9,8 +9,9 @@
                 <div class="row">
                     @ChildContent(Item)
 
-                    <div class="col-md-12">
-                        <button type="submit" class="btn btn-success float-right">@SubmitButtonText</button>
+                    <div class="d-flex justify-content-end col-md-12">
+                        @MoreActionContent
+                        <button type="submit" class="btn btn-success">@SubmitButtonText</button>
                     </div>
                 </div>
             </EditForm>
@@ -21,6 +22,7 @@
 @code {
     [Parameter] public TItem Item { get; set; }
     [Parameter] public RenderFragment<TItem> ChildContent { get; set; }
+    [Parameter] public RenderFragment MoreActionContent { get; set; }
     [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
     [Parameter] public string SubmitButtonText { get; set; } = "Salvar";
 }

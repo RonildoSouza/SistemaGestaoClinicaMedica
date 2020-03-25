@@ -26,16 +26,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTOs);
         }
 
-        //[Authorize("Bearer")]
-        //[HttpGet, Route("{id}")]
-        //public IActionResult GetPorId(Guid id)
-        //{
-        //    var saidaDTO = _exameServicoAplicacao.Obter(id);
-        //    return Ok(saidaDTO);
-        //}
+        [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
+        [HttpGet, Route("{id}")]
+        public IActionResult Get(Guid id)
+        {
+            var saidaDTO = _exameServicoAplicacao.Obter(id);
+            return Ok(saidaDTO);
+        }
 
-        [Authorize("Bearer")]
-        [HttpGet, Route("{codigo}")]
+        [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
+        [HttpGet, Route("por-codigo/{codigo}")]
         public IActionResult GetPorCodigo(string codigo)
         {
             var saidaDTO = _exameServicoAplicacao.Obter(codigo);

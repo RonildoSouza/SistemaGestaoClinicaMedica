@@ -1,5 +1,5 @@
 ﻿<div class="card">
-    @if(!string.IsNullOrEmpty(Title))
+    @if (!string.IsNullOrEmpty(Title))
     {
         <div class="card-header">
             <h1 class="text-center">@Title</h1>
@@ -31,12 +31,26 @@
             @if (SearchVisibled)
             {
                 <div class="row">
-                    <div class="form-group col-md-12">
-                        <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder">
-                    </div>
-                    <div class="col-md-12">
-                        <button class="btn btn-primary float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">@SearchText</button>
-                    </div>
+                    @if (!SearchWithButton)
+                    {
+                        <div class="form-group col-md-12">
+                            <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder">
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-primary float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">@SearchText</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-12">
+                            <div class="input-group mb-3">
+                                <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="search-code">
+                                <div class="input-group-append">
+                                    <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-outline-secondary" type="button" id="search-code">@SearchText</button>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
         </div>
@@ -52,6 +66,7 @@
     [Parameter] public string NewRoute { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public bool SearchVisibled { get; set; }
+    [Parameter] public bool SearchWithButton { get; set; }
     [Parameter] public string SearchText { get; set; } = "Buscar";
     [Parameter] public string SearchPlaceholder { get; set; }
     [Parameter] public EventCallback<string> OnSearch { get; set; }

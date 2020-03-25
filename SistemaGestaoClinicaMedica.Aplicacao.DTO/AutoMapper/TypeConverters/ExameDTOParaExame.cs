@@ -22,12 +22,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
 
         public Exame Convert(ExameDTO source, Exame destination, ResolutionContext context)
         {
-            TipoDeExame tipoDeExame = _tipoDeExameServico.Obter(source.TipoDeExameId);
+            TipoDeExame tipoDeExame = _tipoDeExameServico.Obter(source.TipoDeExame.Id);
             StatusExame statusExame = null;
             Laboratorio laboratorio = _laboratorioServico.Obter(source.LaboratorioRealizouExameId.GetValueOrDefault());
             Consulta consulta = _consultaServico.Obter(source.ConsultaId);
 
-            if (Enum.TryParse(source.StatusExameId, out EStatusExame eStatusExame))
+            if (Enum.TryParse(source.StatusExame.Id, out EStatusExame eStatusExame))
                 statusExame = _statusExameServico.Obter(eStatusExame);
 
             return new Exame(
