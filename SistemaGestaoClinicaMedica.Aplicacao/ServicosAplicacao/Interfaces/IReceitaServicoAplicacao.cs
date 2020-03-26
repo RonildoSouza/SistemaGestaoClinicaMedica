@@ -5,6 +5,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface IReceitaServicoAplicacao : IServicoAplicacaoBase<ReceitaDTO, Guid>
     {
-        ReceitaDTO ObterPorConsultaId(Guid id);
+        ReceitaDTO ObterPorConsultaId(Guid consultaId);
     }
 }

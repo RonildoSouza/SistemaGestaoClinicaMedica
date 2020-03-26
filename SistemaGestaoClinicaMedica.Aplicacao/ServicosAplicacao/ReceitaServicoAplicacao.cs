@@ -15,9 +15,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _receitaServico = receitaServico;
         }
 
-        public ReceitaDTO ObterPorConsultaId(Guid id)
+        public ReceitaDTO ObterPorConsultaId(Guid consultaId)
         {
-            var receita = _receitaServico.ObterPorConsultaId(id);
+            var receita = _receitaServico.ObterPorConsultaId(consultaId);
             return _mapper.Map<ReceitaDTO>(receita);
         }
     }

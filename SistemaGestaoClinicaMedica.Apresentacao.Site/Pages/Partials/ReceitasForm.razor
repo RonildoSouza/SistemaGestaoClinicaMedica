@@ -1,0 +1,44 @@
+﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@inherits FormBase<IReceitaServico, ReceitaDTO, Guid>
+
+<HeaderComponent Title="Cadastro de Exame" BackRoute="@AposSalvarRetonarPara" />
+
+<FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar Receita">
+    <div class="form-group col-md-8">
+        <strong>Paciente:</strong> @Consulta.Paciente?.Nome
+    </div>
+    <div class="form-group col-md-4">
+        <strong>Data de Nascimento:</strong> @Consulta.Paciente?.DataNascimento.ToShortDateString()
+    </div>
+    <div class="form-group col-md-8">
+        <strong>Médico:</strong> @Consulta.Medico?.Nome
+    </div>
+    <div class="form-group col-md-4">
+        <strong>Código da Consulta:</strong> @Consulta.Codigo
+    </div>
+    <div class="form-group col-md-12">
+        <label for="medicamentos">Medicamentos</label>
+        <select class="form-control" id="medicamentos" required>
+            <option value="" selected disabled>Pesquisar medicamentos para adicionar à receita</option>
+        </select>
+    </div>
+    <div class="form-group col-md-12">
+        <label for="observacao">Observação</label>
+        <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="observacao" />
+    </div>
+</FormComponent>
+
+@code {
+    [Parameter] public ConsultaDTO Consulta { get; set; }
+
+    protected override string AposSalvarRetonarPara => $"consultas/{Consulta.Id}#receitas";
+
+    protected async override Task OnParametersSetAsync()
+    {
+        var receita = await HttpServico.GetPorConsultaAsync(Consulta.Id);
+
+        if (receita != null)
+            _dto = receita;
+    }
+}

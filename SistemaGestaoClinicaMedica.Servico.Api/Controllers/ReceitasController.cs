@@ -25,13 +25,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         //    return Ok(saidaDTOs);
         //}
 
-        //[Authorize("Bearer", Roles = "Administrador, Medico")]
-        //[HttpGet, Route("{id}")]
-        //public IActionResult GetPorConsultaId(Guid id)
-        //{
-        //    var saidaDTO = _receitaServicoAplicacao.ObterPorConsultaId(id);
-        //    return Ok(saidaDTO);
-        //}
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("por-consulta/{id}")]
+        public IActionResult GetPorConsulta(Guid consultaId)
+        {
+            var saidaDTO = _receitaServicoAplicacao.ObterPorConsultaId(consultaId);
+            return Ok(saidaDTO);
+        }
 
         [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpDelete, Route("{id}")]
