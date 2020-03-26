@@ -26,7 +26,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTOs);
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet, Route("{id}")]
         public IActionResult Get(Guid id)
         {
@@ -39,6 +39,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         public IActionResult GetPorCodigo(string codigo)
         {
             var saidaDTO = _exameServicoAplicacao.Obter(codigo);
+            return Ok(saidaDTO);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("por-consulta/{consultaId}")]
+        public IActionResult GetPorConsulta(Guid consultaId)
+        {
+            var saidaDTO = _exameServicoAplicacao.ObterTudoPorConsultaId(consultaId);
             return Ok(saidaDTO);
         }
 
@@ -76,8 +84,16 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
                 return BadRequest("Nenhum arquivo enviado para upload!");
 
             var entradaDTO = files.Select(_ => new ArquivoResultadoExameDTO(_.FileName, _.OpenReadStream())).First();
-            _exameServicoAplicacao.UploadResultado(id, entradaDTO);
+            var uri = _exameServicoAplicacao.UploadResultado(id, entradaDTO);
 
+            return Ok(uri);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
+        [HttpPut, Route("alterar-status/{id}")]
+        public IActionResult Put([FromRoute]Guid id, [FromBody]StatusExameDTO statusExame)
+        {
+            _exameServicoAplicacao.AlterarStatus(id, statusExame);
             return Ok();
         }
     }

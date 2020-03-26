@@ -17,5 +17,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
         public string PacienteNome { get; set; }
         public string EspecialidadeNome { get; set; }
         public string MedicoNome { get; set; }
+        public string StatusId { get; set; }
     }
 }

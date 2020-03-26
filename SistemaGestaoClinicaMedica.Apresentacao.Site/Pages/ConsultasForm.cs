@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,8 +12,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class ConsultasForm
     {
-        private string _statusConsulta = "Concluida";
-
         [Inject] public IStatusConsultaServico StatusConsultaServico { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
 
@@ -32,7 +31,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         protected override Task Salvar(EditContext editContext)
         {
-            _dto.StatusConsultaId = _statusConsulta;
+            if (_dto.StatusConsultaId == StatusConsultaConst.Agendada)
+                _dto.StatusConsultaId = StatusConsultaConst.Concluida;
+
             return base.Salvar(editContext);
         }
     }

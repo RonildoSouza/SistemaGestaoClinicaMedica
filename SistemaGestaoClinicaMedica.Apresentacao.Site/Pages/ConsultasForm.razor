@@ -2,6 +2,7 @@
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IConsultaServico, ConsultaDTO, Guid>
 
@@ -14,7 +15,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a disabled="@(_dto.StatusConsultaId != "Concluida" || _dto.StatusConsultaId != "AguardandoRetorno")" class="nav-link" id="atestados-tab" data-toggle="tab" href="#atestados" role="tab" aria-controls="atestados" aria-selected="false">Atestados</a>
+        <a disabled="@(_dto.StatusConsultaId != StatusConsultaConst.Concluida || _dto.StatusConsultaId != StatusConsultaConst.AguardandoRetorno)" class="nav-link" id="atestados-tab" data-toggle="tab" href="#atestados" role="tab" aria-controls="atestados" aria-selected="false">Atestados</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="exames-tab" data-toggle="tab" href="#exames" role="tab" aria-controls="exames" aria-selected="false">Exames</a>
@@ -44,12 +45,14 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="status">Status</label>
-                <InputSelect @bind-Value="context.StatusConsultaId" class="form-control" id="status">
+                <input type="text" value="@context.StatusConsulta?.Nome" class="form-control" id="data" disabled />
+
+                @*<InputSelect @bind-Value="context.StatusConsultaId" class="form-control" id="status">
                     @foreach (var status in StatusConsulta)
                     {
                         <option value="@status.Id">@status.Nome</option>
                     }
-                </InputSelect>
+                </InputSelect>*@
             </div>
             <div class="form-group col-md-12">
                 <label for="observacoes">Observações</label>

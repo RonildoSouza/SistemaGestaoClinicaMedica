@@ -19,7 +19,8 @@
                     data: info.event.start,
                     pacienteNome: info.event.extendedProps.pacienteNome,
                     especialidadeNome: info.event.extendedProps.especialidadeNome,
-                    medicoNome: info.event.extendedProps.medicoNome
+                    medicoNome: info.event.extendedProps.medicoNome,
+                    statusId: info.event.extendedProps.statusId
                 };
 
                 dotNetObject.invokeMethodAsync('DetalhesConsultaAsync', consultaEvento);

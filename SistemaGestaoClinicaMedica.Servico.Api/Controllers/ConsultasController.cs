@@ -64,5 +64,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
             return Created($"/{saidaDTO.Id}", saidaDTO);
         }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpPut, Route("alterar-status/{id}")]
+        public IActionResult Put([FromRoute]Guid id, [FromBody]StatusConsultaDTO statusConsulta)
+        {
+            _consultaServicoAplicacao.AlterarStatus(id, statusConsulta);
+            return Ok();
+        }
     }
 }

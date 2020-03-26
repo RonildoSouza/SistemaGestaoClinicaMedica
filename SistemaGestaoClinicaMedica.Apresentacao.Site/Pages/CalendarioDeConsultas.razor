@@ -1,6 +1,7 @@
 ﻿@page "/calendario-de-consultas"
 
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 
 <HeaderComponent Title="Calendário de Consultas">
     <div class="row">
@@ -110,7 +111,11 @@
     </Body>
     <Footer>
         <button type="button" class="btn" data-dismiss="modal">Fechar</button>
-        <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
+
+        @if(ConsultaEvento.StatusId == StatusConsultaConst.Agendada)
+        {
+            <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
+        }
     </Footer>
 </ModalComponent>
 

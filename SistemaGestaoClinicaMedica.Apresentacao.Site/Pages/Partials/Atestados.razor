@@ -25,4 +25,9 @@
 
 @code {
     [Parameter] public Guid ConsultaId { get; set; }
+
+    protected async override Task CarregaDadosDaTabela()
+    {
+        dtos = await HttpServico.GetPorConsultasAsync(ConsultaId);
+    }
 }

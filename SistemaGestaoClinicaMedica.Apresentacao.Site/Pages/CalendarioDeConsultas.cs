@@ -66,7 +66,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     ConsultaCodigo = _.Codigo,
                     PacienteNome = _.Paciente.Nome,
                     EspecialidadeNome = _.Especialidade.Nome,
-                    MedicoNome = $"{_.Medico.Nome} - CRM {_.Medico.CRM}"
+                    MedicoNome = $"{_.Medico.Nome} - CRM {_.Medico.CRM}",
+                    StatusId = _.StatusConsulta.Id
                 }
             });
 

@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace SistemaGestaoClinicaMedica.Dominio.Servicos
+namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public interface IAtestadoServico : IServicoBase<Guid, Atestado>
+    public interface IAtestadosQuery : IQueryBase<Atestado>
     {
         IList<Atestado> ObterTudoPorConsultaId(Guid consultaId);
     }

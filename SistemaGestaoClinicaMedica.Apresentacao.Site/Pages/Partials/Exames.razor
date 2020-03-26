@@ -2,7 +2,7 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IExameServico, ExameDTO, Guid>
 
-<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/exames/novo")"/>
+<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/exames/novo")" />
 
 <TableComponent Items="dtos">
     <TableHeader>
@@ -30,4 +30,9 @@
 
 @code {
     [Parameter] public Guid ConsultaId { get; set; }
+
+    protected async override Task CarregaDadosDaTabela()
+    {
+        dtos = await HttpServico.GetPorConsultaAsync(ConsultaId);
+    }
 }

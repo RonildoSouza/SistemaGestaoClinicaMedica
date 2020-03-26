@@ -20,7 +20,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         public List<TDTO> dtos;
 
-        protected override async Task OnInitializedAsync()
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    await CarregaDadosDaTabela();
+        //}
+
+        protected async override Task OnParametersSetAsync()
         {
             await CarregaDadosDaTabela();
         }

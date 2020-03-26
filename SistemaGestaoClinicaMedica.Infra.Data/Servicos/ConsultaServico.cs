@@ -20,6 +20,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             _statusConsultaServico = statusConsultaServico;
         }
 
+        public void AlterarStatus(Guid id, EStatusConsulta eStatusConsulta)
+        {
+            var consulta = Entidades.Find(id);
+            var statusConsulta = _statusConsultaServico.Obter(eStatusConsulta);
+            consulta.StatusConsulta = statusConsulta;
+
+            ContextoBancoDados.SaveChanges();
+        }
+
         public override void Deletar(Guid id)
         {
             var consulta = Entidades.Find(id);
@@ -27,10 +36,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             if (consulta == null)
                 return;
 
-            var status = _statusConsultaServico.Obter(EStatusConsulta.Cancelada);
-            consulta.StatusConsulta = status;
-
-            ContextoBancoDados.SaveChanges();
+            AlterarStatus(id, EStatusConsulta.Cancelada);
         }
 
         public Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados)

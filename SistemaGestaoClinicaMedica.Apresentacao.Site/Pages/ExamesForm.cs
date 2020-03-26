@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Parameter] public Guid ConsultaId { get; set; }
 
         [Inject] public ITipoDeExameServico TipoDeExameServico { get; set; }
+        [Inject] public IConsultaServico ConsultaServico { get; set; }
 
         public List<TipoDeExameDTO> TiposDeExames { get; set; } = new List<TipoDeExameDTO>();
         public string TipoDeExameId { get; set; }
@@ -38,9 +40,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (string.IsNullOrEmpty(TipoDeExameId))
                 return;
 
-            _dto.StatusExame.Id = "Pendente";
+            _dto.StatusExame.Id = StatusExameConst.Pendente;
             _dto.TipoDeExame.Id = Guid.Parse(TipoDeExameId);
+            
             await base.Salvar(editContext);
+
+            await ConsultaServico.PutAlterarStatusAsync(_dto.ConsultaId, StatusConsultaConst.AguardandoRetorno);
         }
     }
 }

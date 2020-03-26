@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class Consultas
     {
-        private string _statusConsultaSelecionado = "Agendada";
+        private string _statusConsultaSelecionado = StatusConsultaConst.Agendada;
         private string _busca;
 
         [Inject] public IConsultaServico ConsultaServico { get; set; }

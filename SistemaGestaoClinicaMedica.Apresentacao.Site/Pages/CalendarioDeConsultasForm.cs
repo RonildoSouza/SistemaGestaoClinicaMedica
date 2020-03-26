@@ -1,4 +1,5 @@
 ﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -23,7 +24,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _dto.PacienteId = consultaLocalStorage.Paciente.Id;
             _dto.EspecialidadeId = consultaLocalStorage.Especialidade.Id;
             _dto.MedicoId = consultaLocalStorage.Medico.Id;
-            _dto.StatusConsultaId = "Agendada";
+            _dto.StatusConsultaId = StatusConsultaConst.Agendada;
 
             await base.OnParametersSetAsync();
         }

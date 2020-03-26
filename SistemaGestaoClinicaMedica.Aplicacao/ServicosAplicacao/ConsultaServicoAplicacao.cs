@@ -18,6 +18,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _consultaServico = consultaServico;
         }
 
+        public void AlterarStatus(Guid id, StatusConsultaDTO statusConsulta)
+        {
+            var eStatusConsulta = statusConsulta.Id.StringParaStatusConsulta();
+            _consultaServico.AlterarStatus(id, eStatusConsulta);
+        }
+
         public ConsultaDTO Obter(Guid id, bool comExames, bool comAtestados)
         {
             var entidade = _consultaServico.ObterComFiltros(id, comExames, comAtestados);
@@ -30,7 +36,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
             if (!string.IsNullOrEmpty(status))
             {
-                var listaEStatusConsulta = status.StringParaStatusConsulta();
+                var listaEStatusConsulta = status.StringParaListaDeStatusConsulta();
                 entidades = _consultaServico.ObterTudoComFiltros(dataInicio, dataFim, busca, listaEStatusConsulta, medicoId).ToList();
             }
             else
