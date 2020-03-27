@@ -8,6 +8,9 @@
 
         // Configura listening de eventos
         if (dotNetObject !== undefined) {
+            $(selectId).unbind("select2:select");
+            $(selectId).unbind("select2:unselect");
+
             $(selectId).on("select2:select", function (e) {
                 invokeDotNetMethod(dotNetMethodName, e.params.data);
             });

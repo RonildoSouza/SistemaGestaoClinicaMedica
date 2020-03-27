@@ -29,7 +29,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
             var receita = await HttpServico.GetPorConsultaAsync(Consulta.Id);
 
             if (receita != null)
+            {
+                Id = receita.Id;
                 _dto = receita;
+            }
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
