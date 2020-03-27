@@ -12,6 +12,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
+        public IEnumerable<Medicamento> ObterTudoPorNome(string nome)
+        {
+            return Entidades.ToList().Where(_ => _.Ativo && _.Nome.ToLowerContains(nome))
+                            .Take(10).OrderBy(_ => _.Nome);
+        }
+
         public IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo = true)
         {
             var medicamentos = Entidades.Include(_ => _.Fabricante)

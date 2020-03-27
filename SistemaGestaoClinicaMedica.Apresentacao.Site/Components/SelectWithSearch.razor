@@ -1,0 +1,24 @@
+﻿@typeparam TItem
+
+<select class="form-control select2 select2-hidden-accessible select-with-search"
+        data-placeholder="@Placeholder" style="width: 100%;"
+        tabindex="-1" aria-hidden="true" id="@Id" multiple="@IsMultiple">
+
+    @if (!IsMultiple)
+    {
+        <option value="" selected disabled>@Placeholder</option>
+    }
+
+    @foreach (var item in Items)
+    {
+        @ChildContent(item)
+    }
+</select>
+
+@code {
+    [Parameter] public string Id { get; set; }
+    [Parameter] public string Placeholder { get; set; }
+    [Parameter] public bool IsMultiple { get; set; }
+    [Parameter] public RenderFragment<TItem> ChildContent { get; set; }
+    [Parameter] public IReadOnlyList<TItem> Items { get; set; }
+}

@@ -33,6 +33,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("por-nome/{nome}")]
+        public IActionResult GetPorNome(string nome)
+        {
+            var saidaDTOs = _medicamentoServicoAplicacao.ObterTudoPorNome(nome);
+            return Ok(saidaDTOs);
+        }
+
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpDelete, Route("{id}")]
         public IActionResult Delete(Guid id)

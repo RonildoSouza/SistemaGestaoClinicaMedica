@@ -35,6 +35,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return entidade;
         }
 
+        public IList<Medicamento> ObterTudoPorNome(string nome)
+        {
+            return _medicamentosQuery.ObterTudoPorNome(nome).ToList();
+        }
+
         public IList<Medicamento> ObterTudoComFiltros(string busca, bool ativo)
         {
             return _medicamentosQuery.ObterTudoComFiltros(busca, ativo);

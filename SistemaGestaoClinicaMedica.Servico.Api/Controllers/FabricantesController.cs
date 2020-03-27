@@ -22,5 +22,13 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             var saidaDTOs = _fabricanteServicoAplicacao.Obter(nome);
             return Ok(saidaDTOs);
         }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpGet, Route("por-nome/{nome}")]
+        public IActionResult GetPorNome(string nome)
+        {
+            var saidaDTOs = _fabricanteServicoAplicacao.ObterTudoPorNome(nome);
+            return Ok(saidaDTOs);
+        }
     }
 }

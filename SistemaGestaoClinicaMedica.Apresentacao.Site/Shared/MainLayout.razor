@@ -15,3 +15,15 @@
         @Body
     </div>
 </div>
+
+@code {
+    [Inject] public IJSRuntime JSRuntime { get; set; }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        
+        if (firstRender)
+            await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
+    }
+}

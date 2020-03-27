@@ -26,7 +26,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         //}
 
         [Authorize("Bearer", Roles = "Administrador, Medico")]
-        [HttpGet, Route("por-consulta/{id}")]
+        [HttpGet, Route("por-consulta/{consultaId}")]
         public IActionResult GetPorConsulta(Guid consultaId)
         {
             var saidaDTO = _receitaServicoAplicacao.ObterPorConsultaId(consultaId);

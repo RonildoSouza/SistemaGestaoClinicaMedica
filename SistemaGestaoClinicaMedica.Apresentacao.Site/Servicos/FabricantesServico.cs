@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class MedicamentoServico : ServicoBase<MedicamentoDTO, Guid>, IMedicamentoServico
+    public class FabricantesServico : ServicoBaseLeitura<FabricanteDTO, Guid>, IFabricantesServico
     {
-        protected override string EndPoint => "medicamentos";
+        protected override string EndPoint => "fabricantes";
 
-        public MedicamentoServico(IConfiguration configuration) : base(configuration)
+        public FabricantesServico(IConfiguration configuration) : base(configuration)
         {
         }
 
-        public async Task<List<MedicamentoDTO>> GetPorNomeAsync(string nome)
+        public async Task<List<FabricanteDTO>> GetPorNomeAsync(string nome)
         {
             var response = await HttpClient.GetStringAsync($"{RequestUri}/por-nome/{nome}");
-            return JsonToDTO<List<MedicamentoDTO>>(response);
+            return JsonToDTO<List<FabricanteDTO>>(response);
         }
     }
 }
