@@ -1,6 +1,6 @@
-﻿namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
+﻿namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes
 {
-    public sealed class StatusConsultaConst
+    public struct StatusConsultaConst
     {
         public const string Agendada = nameof(Agendada);
         public const string AguardandoRetorno = nameof(AguardandoRetorno);

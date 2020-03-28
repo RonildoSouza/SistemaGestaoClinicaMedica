@@ -7,9 +7,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
     public sealed class LoginServicoAplicacao : ILoginServicoAplicacao
     {
         private readonly IMapper _mapper;
-        private readonly IFuncionarioServico _funcionarioServico;
+        private readonly IUsuarioServico _funcionarioServico;
 
-        public LoginServicoAplicacao(IMapper mapper, IFuncionarioServico funcionarioServico)
+        public LoginServicoAplicacao(IMapper mapper, IUsuarioServico funcionarioServico)
         {
             _mapper = mapper;
             _funcionarioServico = funcionarioServico;

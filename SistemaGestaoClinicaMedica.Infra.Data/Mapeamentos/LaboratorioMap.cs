@@ -12,7 +12,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
 
             builder.Property(_ => _.DaClinica).IsRequired();
 
-            builder.HasOne(_ => _.Funcionario).WithMany().IsRequired();
+            builder.HasOne(_ => _.Usuario).WithMany().IsRequired();
         }
     }
 }

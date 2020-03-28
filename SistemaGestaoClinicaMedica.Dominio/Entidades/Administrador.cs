@@ -6,12 +6,12 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Administrador() { }
 
-        public Administrador(Funcionario funcionario)
+        public Administrador(Usuario usuario)
         {
-            Funcionario = funcionario;
+            Usuario = usuario;
         }
 
         public Guid Id { get; set; }
-        public Funcionario Funcionario { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }

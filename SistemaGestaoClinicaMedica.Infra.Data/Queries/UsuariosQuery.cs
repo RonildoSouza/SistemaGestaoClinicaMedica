@@ -5,19 +5,19 @@ using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 {
-    public class FuncionariosQuery : QueryBase<Funcionario>, IFuncionariosQuery
+    public class UsuariosQuery : QueryBase<Usuario>, IUsuariosQuery
     {
-        public FuncionariosQuery(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
+        public UsuariosQuery(ContextoBancoDados contextoBancoDados) : base(contextoBancoDados)
         {
         }
 
-        public Funcionario Autorizar(string email, string senha)
+        public Usuario Autorizar(string email, string senha)
         {
             return Entidades.Include(_ => _.Cargo)
                             .FirstOrDefault(_ => _.Email.ToLower() == email.ToLower() && _.Senha == senha && _.Ativo);
         }
 
-        public IList<Funcionario> ObterTudoComFiltros(bool ativo = true)
+        public IList<Usuario> ObterTudoComFiltros(bool ativo = true)
         {
             return Entidades.Include(_ => _.Cargo)
                             .Where(_ => _.Ativo == ativo)

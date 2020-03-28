@@ -20,8 +20,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
             var especialidadesComMedicoAtivo = Entidades.Include(_ => _.Medicos)
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
-                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Funcionario)}")
-                                .Where(_ => _.Medicos.Any() && _.Medicos.All(_ => _.Medico.Funcionario.Ativo))
+                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
+                                .Where(_ => _.Medicos.Any() && _.Medicos.All(_ => _.Medico.Usuario.Ativo))
                                 .OrderBy(_ => _.Nome)
                                 .ToList();
 
@@ -33,7 +33,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             if (comMedicos)
                 return Entidades.Include(_ => _.Medicos)
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
-                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Funcionario)}")
+                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
                                 .OrderBy(_ => _.Nome)
                                 .ToList();
 
@@ -43,17 +43,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         public IList<TimeSpan> ObterHorariosDisponiveis(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId = null)
         {
             var medicos = Entidades.Include(_ => _.Medicos)
-                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
-                                .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
-                                .Where(_ => _.Id == especialidadeId)
-                                .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.All(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
-                                .SelectMany(_ => _.Medicos);
+                                   .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
+                                   .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
+                                   .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
+                                   .Where(_ => _.Id == especialidadeId)
+                                   .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
+                                   .SelectMany(_ => _.Medicos);
             var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada }, medicoId);
 
             if (medicoId.HasValue && medicoId != Guid.Empty)
-                medicos = medicos.Where(_ => _.MedicoId == medicoId.GetValueOrDefault());
+                medicos = medicos.Where(_ => _.MedicoId == medicoId.GetValueOrDefault() || _.Medico.Usuario.Id == medicoId.GetValueOrDefault());
 
-            var horarios = medicos.SelectMany(_ => _.Medico.HorariosDeTrabalho);
+            var horarios = medicos.SelectMany(_ => _.Medico.HorariosDeTrabalho)
+                                  .Where(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek);
             var horariosDisponiveis = HorariosDisponiveis(horarios).ToList();
 
             RemoveHorariosIndisponiveis(ref horariosDisponiveis, horarios, consultas);

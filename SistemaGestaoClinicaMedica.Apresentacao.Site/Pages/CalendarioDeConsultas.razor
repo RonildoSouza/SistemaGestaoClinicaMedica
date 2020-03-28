@@ -1,5 +1,6 @@
 ﻿@page "/calendario-de-consultas"
 
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 
@@ -77,8 +78,10 @@
                             foreach (var horario in horarios)
                             {
                                 <td>
-                                    <input type="radio" class="btn" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => HorarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
-                                    <label for="@horario">@horario.ToString("hh\\:mm")</label>
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" class="custom-control-input" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => HorarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
+                                        <label for="@horario" class="custom-control-label">@horario.ToString("hh\\:mm")</label>
+                                    </div>
                                 </td>
                             }
                         }
@@ -112,7 +115,7 @@
     <Footer>
         <button type="button" class="btn" data-dismiss="modal">Fechar</button>
 
-        @if(ConsultaEvento.StatusId == StatusConsultaConst.Agendada)
+        @if (ConsultaEvento.StatusId == StatusConsultaConst.Agendada)
         {
             <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
         }

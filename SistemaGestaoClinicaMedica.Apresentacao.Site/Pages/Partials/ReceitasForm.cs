@@ -29,9 +29,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
         protected async override Task OnParametersSetAsync()
         {
             Medicamentos = await MedicamentosServico.GetPorNomeAsync("a");
+            _dto.ConsultaId = Consulta.Id;
 
             if (Consulta.Receita != null && Consulta.Receita.Id != Guid.Empty)
+            {
+                Id = Consulta.Receita.Id;
                 _dto = Consulta.Receita;
+            }
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -40,6 +44,25 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
 
             var dotNetReference = DotNetObjectReference.Create(this);
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup", "#medicamentos", dotNetReference, nameof(SelecionaMedicamento));
+        }
+
+        private void ConstroiObservacao()
+        {
+            var medicamentosStringBuilder = new StringBuilder();
+
+            for (int i = 0; i < _medicamentosSelecionados.Count; i++)
+                medicamentosStringBuilder.AppendLine($"{i + 1}) {_medicamentosSelecionados[i]}\n\t- ");
+
+            var receitaTemplate = new ReceitaTemplate(
+                Consulta.Codigo,
+                Consulta.Paciente.Nome,
+                Consulta.Paciente.DataNascimento.ToShortDateString(),
+                Consulta.Medico.Nome,
+                Consulta.Medico.CRM,
+                medicamentosStringBuilder.ToString());
+
+            _dto.Observacao = ConstroiDocumento.ConstroiTemplate(receitaTemplate);
+            StateHasChanged();
         }
 
         [JSInvokable]
@@ -64,25 +87,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
             }
 
             ConstroiObservacao();
-        }
-
-        private void ConstroiObservacao()
-        {
-            var medicamentosStringBuilder = new StringBuilder();
-
-            for (int i = 0; i < _medicamentosSelecionados.Count; i++)
-                medicamentosStringBuilder.AppendLine($"{i + 1}) {_medicamentosSelecionados[i]}\n\t- ");
-
-            var receitaTemplate = new ReceitaTemplate(
-                Consulta.Codigo,
-                Consulta.Paciente.Nome,
-                Consulta.Paciente.DataNascimento.ToShortDateString(),
-                Consulta.Medico.Nome,
-                Consulta.Medico.CRM,
-                medicamentosStringBuilder.ToString());
-
-            _dto.Observacao = ConstroiDocumento.ConstroiTemplate(receitaTemplate);
-            StateHasChanged();
         }
     }
 }

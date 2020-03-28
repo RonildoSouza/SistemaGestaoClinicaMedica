@@ -16,6 +16,11 @@
                 </NavLink>
             }
 
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+
             @if (SearchVisibled)
             {
                 <div class="row">
@@ -40,11 +45,6 @@
                         </div>
                     }
                 </div>
-            }
-
-            @if (ChildContent != null)
-            {
-                @ChildContent
             }
 
             @if (!string.IsNullOrEmpty(NewRoute))

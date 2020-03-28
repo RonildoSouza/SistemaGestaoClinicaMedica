@@ -1,7 +1,7 @@
 ﻿@page "/realiza-exames"
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IExamesServico, ExameDTO, Guid>
 
@@ -11,8 +11,8 @@
                  SearchWithButton="true"
                  OnSearch="@BuscarAsync" />
 
-<FormComponent Item="_dto" 
-               OnValidSubmit="Salvar" 
+<FormComponent Item="_dto"
+               OnValidSubmit="Salvar"
                SubmitButtonText="Concluir Exame"
                SubmitButtonVisibled="@(_dto.StatusExame.Id != StatusExameConst.Concluido)">
 

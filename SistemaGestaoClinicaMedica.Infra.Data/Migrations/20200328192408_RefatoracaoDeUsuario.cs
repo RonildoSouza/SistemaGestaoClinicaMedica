@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class CriaTabelaReceita : Migration
+    public partial class RefatoracaoDeUsuario : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,13 +49,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Nome = table.Column<string>(maxLength: 500, nullable: false),
+                    NomeDaMae = table.Column<string>(maxLength: 500, nullable: false),
+                    CPF = table.Column<string>(maxLength: 50, nullable: false),
+                    Sexo = table.Column<string>(maxLength: 50, nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
                     Telefone = table.Column<string>(maxLength: 20, nullable: false),
                     Bairro = table.Column<string>(maxLength: 500, nullable: false),
                     Cidade = table.Column<string>(maxLength: 500, nullable: false),
                     Estado = table.Column<string>(maxLength: 50, nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')"),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
                     CriadoPor = table.Column<string>(nullable: true),
                     AtualizadoEm = table.Column<DateTime>(nullable: true),
                     AtualizadoPor = table.Column<string>(nullable: true)
@@ -114,7 +117,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionario",
+                name: "Usuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -124,16 +127,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Senha = table.Column<string>(maxLength: 100, nullable: false),
                     CargoId = table.Column<string>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false, defaultValue: true),
-                    CriadoEm = table.Column<DateTime>(nullable: false, defaultValueSql: "date('now')"),
+                    CriadoEm = table.Column<DateTime>(nullable: false),
                     CriadoPor = table.Column<string>(nullable: true),
                     AtualizadoEm = table.Column<DateTime>(nullable: true),
                     AtualizadoPor = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionario", x => x.Id);
+                    table.PrimaryKey("PK_Usuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funcionario_Cargo_CargoId",
+                        name: "FK_Usuario_Cargo_CargoId",
                         column: x => x.CargoId,
                         principalTable: "Cargo",
                         principalColumn: "Id",
@@ -167,15 +170,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: false)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Administrador", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Administrador_Funcionario_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionario",
+                        name: "FK_Administrador_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -186,15 +189,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DaClinica = table.Column<bool>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: false)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Laboratorio", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Laboratorio_Funcionario_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionario",
+                        name: "FK_Laboratorio_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -205,15 +208,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CRM = table.Column<string>(maxLength: 50, nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: false)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Medico", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Medico_Funcionario_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionario",
+                        name: "FK_Medico_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -223,15 +226,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    FuncionarioId = table.Column<Guid>(nullable: false)
+                    UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recepcionista", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recepcionista_Funcionario_FuncionarioId",
-                        column: x => x.FuncionarioId,
-                        principalTable: "Funcionario",
+                        name: "FK_Recepcionista_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -242,7 +245,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
-                    Observacao = table.Column<string>(maxLength: 500, nullable: true),
+                    Observacao = table.Column<string>(maxLength: 1000, nullable: true),
                     StatusConsultaId = table.Column<string>(nullable: false),
                     PacienteId = table.Column<Guid>(nullable: false),
                     MedicoId = table.Column<Guid>(nullable: false),
@@ -288,8 +291,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     DiaDaSemana = table.Column<int>(nullable: false),
                     Inicio = table.Column<TimeSpan>(nullable: false),
-                    InicioAlmoco = table.Column<TimeSpan>(nullable: true),
-                    FimAlmoco = table.Column<TimeSpan>(nullable: true),
+                    InicioAlmoco = table.Column<TimeSpan>(nullable: false),
+                    FimAlmoco = table.Column<TimeSpan>(nullable: false),
                     Fim = table.Column<TimeSpan>(nullable: false),
                     MedicoId = table.Column<Guid>(nullable: true)
                 },
@@ -334,7 +337,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Observacao = table.Column<string>(maxLength: 500, nullable: true),
+                    Observacao = table.Column<string>(maxLength: 5000, nullable: true),
                     TipoDeAtestadoId = table.Column<string>(nullable: false),
                     ConsultaId = table.Column<Guid>(nullable: false),
                     CriadoEm = table.Column<DateTime>(nullable: false),
@@ -365,7 +368,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     TipoDeExameId = table.Column<Guid>(nullable: false),
-                    Observacao = table.Column<string>(maxLength: 500, nullable: true),
+                    Observacao = table.Column<string>(maxLength: 5000, nullable: true),
                     StatusExameId = table.Column<string>(nullable: false),
                     LaboratorioRealizouExameId = table.Column<Guid>(nullable: true),
                     ConsultaId = table.Column<Guid>(nullable: false),
@@ -409,7 +412,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Observacao = table.Column<string>(maxLength: 500, nullable: false),
+                    Observacao = table.Column<string>(maxLength: 5000, nullable: false),
                     ConsultaId = table.Column<Guid>(nullable: false),
                     CriadoEm = table.Column<DateTime>(nullable: false),
                     CriadoPor = table.Column<string>(nullable: true),
@@ -453,9 +456,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Administrador_FuncionarioId",
+                name: "IX_Administrador_UsuarioId",
                 table: "Administrador",
-                column: "FuncionarioId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Atestado_ConsultaId",
@@ -526,25 +529,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionario_CargoId",
-                table: "Funcionario",
-                column: "CargoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Funcionario_Email",
-                table: "Funcionario",
-                column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_HorarioDeTrabalho_MedicoId",
                 table: "HorarioDeTrabalho",
                 column: "MedicoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Laboratorio_FuncionarioId",
+                name: "IX_Laboratorio_UsuarioId",
                 table: "Laboratorio",
-                column: "FuncionarioId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medicamento_FabricanteId",
@@ -564,9 +556,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Medico_FuncionarioId",
+                name: "IX_Medico_UsuarioId",
                 table: "Medico",
-                column: "FuncionarioId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicoEspecialidade_EspecialidadeId",
@@ -577,6 +569,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "IX_MedicoEspecialidade_MedicoId",
                 table: "MedicoEspecialidade",
                 column: "MedicoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Paciente_CPF",
+                table: "Paciente",
+                column: "CPF",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Receita_ConsultaId",
@@ -595,9 +593,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recepcionista_FuncionarioId",
+                name: "IX_Recepcionista_UsuarioId",
                 table: "Recepcionista",
-                column: "FuncionarioId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StatusConsulta_Id_Nome",
@@ -621,6 +619,17 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "IX_TipoDeExame_Id_Nome",
                 table: "TipoDeExame",
                 columns: new[] { "Id", "Nome" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_CargoId",
+                table: "Usuario",
+                column: "CargoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_Email",
+                table: "Usuario",
+                column: "Email",
                 unique: true);
         }
 
@@ -684,7 +693,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 name: "StatusConsulta");
 
             migrationBuilder.DropTable(
-                name: "Funcionario");
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Cargo");

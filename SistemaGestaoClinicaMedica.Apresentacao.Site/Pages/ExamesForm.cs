@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
 using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
             _dto.StatusExame.Id = StatusExameConst.Pendente;
             _dto.TipoDeExame.Id = Guid.Parse(TipoDeExameId);
-            
+
             await base.Salvar(editContext);
 
             await ConsultasServico.PutAlterarStatusAsync(_dto.ConsultaId, StatusConsultaConst.AguardandoRetorno);

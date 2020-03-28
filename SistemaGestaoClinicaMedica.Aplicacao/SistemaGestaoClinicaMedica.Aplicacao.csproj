@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Compile Remove="ServicosAplicacao\AuthorizationService.cs" />
+    <Compile Remove="ServicosAplicacao\FuncionarioServicoAplicacao - Copy.cs" />
     <Compile Remove="ServicosAplicacao\IAuthorizationService.cs" />
     <Compile Remove="ServicosAplicacao\IdentityLoggedUserService.cs" />
     <Compile Remove="ServicosAplicacao\ILoggedUserService.cs" />

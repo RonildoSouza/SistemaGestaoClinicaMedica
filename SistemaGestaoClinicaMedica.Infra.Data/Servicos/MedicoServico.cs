@@ -20,9 +20,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         public override Medico Obter(Guid id, bool asNoTracking = false)
         {
             if (asNoTracking)
-                return Entidades.Include(_ => _.Funcionario).AsNoTracking().SingleOrDefault(_ => _.Id == id || _.Funcionario.Id == id);
+                return Entidades.Include(_ => _.Usuario)
+                                .Include($"{nameof(Medico.Usuario)}.{nameof(Usuario.Cargo)}")
+                                .Include(_ => _.HorariosDeTrabalho)
+                                .Include($"{nameof(Medico.Especialidades)}.{nameof(MedicoEspecialidade.Especialidade)}")
+                                .AsNoTracking()
+                                .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
 
-            return Entidades.Include(_ => _.Funcionario).SingleOrDefault(_ => _.Id == id || _.Funcionario.Id == id);
+            return Entidades.Include(_ => _.Usuario)
+                            .Include($"{nameof(Medico.Usuario)}.{nameof(Usuario.Cargo)}")
+                            .Include(_ => _.HorariosDeTrabalho)
+                            .Include($"{nameof(Medico.Especialidades)}.{nameof(MedicoEspecialidade.Especialidade)}")
+                            .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
         }
 
         public IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId)

@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             var dbset = Entidades.Include(_ => _.Paciente)
                                  .Include(_ => _.StatusConsulta)
                                  .Include(_ => _.Medico)
-                                 .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Funcionario)}")
+                                 .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                                  .Include(_ => _.Receita)
                                  .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
                                  .Include(_ => _.Especialidade)
@@ -29,7 +29,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.TipoDeExame)}")
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.StatusExame)}")
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.LaboratorioRealizouExame)}")
-                             .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Funcionario)}")
+                             .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                              .AsQueryable();
 
             if (comAtestados)
@@ -52,13 +52,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                      .Include(_ => _.StatusConsulta)
                                      .Include(_ => _.Medico)
                                      .Include(_ => _.Especialidade)
-                                     .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Funcionario)}")
+                                     .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                                      .Include(_ => _.Receita)
                                      .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
                                      .Where(_ => _.Data >= dataInicio && _.Data <= dataFim).ToList();
 
             if (!string.IsNullOrEmpty(busca))
-                consultas = consultas.Where(_ => _.Medico.Funcionario.Nome.ToLowerContains(busca)
+                consultas = consultas.Where(_ => _.Medico.Usuario.Nome.ToLowerContains(busca)
                                                  || _.Paciente.Nome.ToLowerContains(busca)
                                                  || _.Paciente.Id.ToString().ToLowerStartsWith(busca)
                                                  || _.Id.ToString().ToLowerStartsWith(busca)).ToList();
@@ -67,7 +67,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                 consultas = consultas.Where(_ => status.Contains(_.StatusConsulta.Id)).ToList();
 
             if (medicoId.HasValue && medicoId != Guid.Empty)
-                consultas = consultas.Where(_ => _.Medico.Id == medicoId || _.Medico.Funcionario.Id == medicoId).ToList();
+                consultas = consultas.Where(_ => _.Medico.Id == medicoId || _.Medico.Usuario.Id == medicoId).ToList();
 
             return consultas;
         }

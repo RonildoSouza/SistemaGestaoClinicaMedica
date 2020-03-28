@@ -15,9 +15,14 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         public override Recepcionista Obter(Guid id, bool asNoTracking = false)
         {
             if (asNoTracking)
-                return Entidades.AsNoTracking().SingleOrDefault(_ => _.Id == id || _.Funcionario.Id == id);
+                return Entidades.Include(_ => _.Usuario)
+                                .Include($"{nameof(Recepcionista.Usuario)}.{nameof(Usuario.Cargo)}")
+                                .AsNoTracking()
+                                .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
 
-            return Entidades.SingleOrDefault(_ => _.Id == id || _.Funcionario.Id == id);
+            return Entidades.Include(_ => _.Usuario)
+                            .Include($"{nameof(Recepcionista.Usuario)}.{nameof(Usuario.Cargo)}")
+                            .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
         }
     }
 }

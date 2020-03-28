@@ -18,7 +18,7 @@
     </div>
     <div class="form-group col-md-8">
         <label for="nome-fabricante">Nome do Fabricante</label>
-        <InputText @bind-Value="context.FabricanteNome" class="form-control" id="nome-fabricante" />
+        @*<InputText @bind-Value="context.FabricanteNome" class="form-control" id="nome-fabricante" />*@
 
         @*<SelectWithSearch Id="nome-fabricante"
                           Placeholder="Selecione o fabricante ou informe um novo"
@@ -27,12 +27,13 @@
             <option value="@ctx.Id.ToString()" selected="@(_dto.FabricanteNome == ctx.Nome)">@ctx.Nome</option>
         </SelectWithSearch>*@
 
-        @*<input type="text" list="tarjas" @bind-value="context.Tarja" class="form-control" id="tarja" placeholder="Selecione o tipo de tarja">
-        <datalist id="tarjas">
-            <option value="Preta">Preta</option>
-            <option value="Vermelha">Vermelha</option>
-            <option value="Livre">Venda Livre</option>
-        </datalist>*@
+        <input type="text" list="fabricantes" @bind-value="context.FabricanteNome" class="form-control" id="nome-fabricante" placeholder="Selecione o fabricante ou informe um novo">
+        <datalist id="fabricantes">
+            @foreach (var fabricante in Fabricantes)
+            {
+                <option value="@fabricante.Nome"></option>
+            }
+        </datalist>
 
     </div>
     <div class="form-group col-md-4">
@@ -59,14 +60,6 @@
     {
         Fabricantes = await FabricantesServico.GetPorNomeAsync("a");
         await base.OnParametersSetAsync();
-    }
-
-    protected async override Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-
-        var dotNetReference = DotNetObjectReference.Create(this);
-        await JSRuntime.InvokeVoidAsync("select2JsInterop.startup", "#nome-fabricante", dotNetReference, nameof(SelecionaFabricante));
     }
 
     [JSInvokable]

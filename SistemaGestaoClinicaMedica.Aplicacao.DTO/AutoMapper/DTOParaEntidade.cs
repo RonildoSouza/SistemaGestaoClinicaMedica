@@ -10,11 +10,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
     {
         public DTOParaEntidade()
         {
-            CreateMap<FuncionarioDTO, Funcionario>().ConvertUsing<FuncionarioDTOParaFuncionario>();
-            CreateMap<FuncionarioDTO, Administrador>().ConvertUsing<FuncionarioDTOParaAdministrador>();
-            CreateMap<FuncionarioDTO, Medico>().ConvertUsing<FuncionarioDTOParaMedico>();
-            CreateMap<FuncionarioDTO, Recepcionista>().ConvertUsing<FuncionarioDTOParaRecepcionista>();
-            CreateMap<FuncionarioDTO, Laboratorio>().ConvertUsing<FuncionarioDTOParaLaboratorio>();
+            CreateMap<UsuarioDTO, Usuario>().ConvertUsing<UsuarioDTOParaUsuario>();
+            CreateMap<AdministradorDTO, Administrador>().ConvertUsing<AdministradorDTOParaAdministrador>();
+            CreateMap<MedicoDTO, Medico>().ConvertUsing<MedicoDTOParaMedico>();
+            CreateMap<RecepcionistaDTO, Recepcionista>().ConvertUsing<RecepcionistaDTOParaRecepcionista>();
+            CreateMap<LaboratorioDTO, Laboratorio>().ConvertUsing<LaboratorioDTOParaLaboratorio>();
 
             CreateMap<HorarioDeTrabalhoDTO, HorarioDeTrabalho>()
                 .ForMember(dest => dest.DiaDaSemana, opt => opt.MapFrom(src => (DayOfWeek)src.DiaDaSemana))
@@ -24,7 +24,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.Fim, opt => opt.MapFrom(src => TryParse(src.Fim)));
 
             CreateMap<MedicoEspecialidadeDTO, MedicoEspecialidade>()
-                .ForMember(dest => dest.EspecialidadeId, opt => opt.MapFrom(src => Guid.Parse(src.EspecialidadeId)));
+                .ForMember(dest => dest.Medico, opt => opt.Ignore());
 
             CreateMap<MedicamentoDTO, Medicamento>().ConvertUsing<MedicamentoDTOParaMedicamento>();
 

@@ -1,10 +1,10 @@
-﻿@page "/funcionarios"
+﻿@page "/usuarios"
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-@inherits TableBase<IFuncionarioServico, FuncionarioDTO, Guid>
+@inherits TableBase<IUsuariosServico, UsuarioDTO, Guid>
 
-<HeaderComponent Title="Funcionários" NewRoute="funcionarios/novo" />
+<HeaderComponent Title="Usuários" NewRoute="usuarios/novo" />
 
 <TableComponent Items="dtos">
     <TableHeader>
@@ -15,10 +15,10 @@
     </TableHeader>
     <RowTemplate>
         <td>@context.Nome</td>
-        <td>@context.CargoId</td>
+        <td>@context.Cargo.Nome</td>
         <td>@context.Telefone</td>
         <td>
-            <a href="funcionarios/@context.Id" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>
+            <a href="usuarios/@context.Id" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>
             <ConfirmDialogComponent Id="@context.Id.ToString()"
                                     Message="@($"Deseja prosseguir com a exclusão do funcionário {context.Nome}?")"
                                     ActionButtonText="Excluir"

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public sealed class MedicoServicoAplicacao : ServicoAplicacaoLeitura<MedicoDTO, Guid, Medico>, IMedicoServicoAplicacao
+    public sealed class MedicoServicoAplicacao : ServicoAplicacaoBase<MedicoDTO, Guid, Medico>, IMedicoServicoAplicacao
     {
         private readonly IMedicoServico _medicoServico;
 

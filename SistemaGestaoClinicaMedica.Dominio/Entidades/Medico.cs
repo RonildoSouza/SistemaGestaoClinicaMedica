@@ -7,10 +7,10 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Medico() { }
 
-        public Medico(string crm, Funcionario funcionario, List<HorarioDeTrabalho> horariosDeTrabalho, List<MedicoEspecialidade> especialidades)
+        public Medico(string crm, Usuario usuario, List<HorarioDeTrabalho> horariosDeTrabalho, List<MedicoEspecialidade> especialidades)
         {
             CRM = crm;
-            Funcionario = funcionario;
+            Usuario = usuario;
             HorariosDeTrabalho = horariosDeTrabalho;
             Especialidades = especialidades;
         }
@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public Guid Id { get; set; }
         public string CRM { get; set; }
 
-        public Funcionario Funcionario { get; set; }
+        public Usuario Usuario { get; set; }
         public List<HorarioDeTrabalho> HorariosDeTrabalho { get; set; }
         public List<MedicoEspecialidade> Especialidades { get; set; }
     }
