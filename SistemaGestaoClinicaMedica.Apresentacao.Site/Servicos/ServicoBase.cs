@@ -10,9 +10,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     public abstract class ServicoBase<TDTO, TId> : ServicoBaseLeitura<TDTO, TId>, IServicoBase<TDTO, TId>
         where TDTO : IDTO<TId>
     {
-        public ServicoBase(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public ServicoBase(IConfiguration configuration) : base(configuration) { }
 
         public async Task<HttpResponseMessage> PostAsync(TDTO dto)
         {

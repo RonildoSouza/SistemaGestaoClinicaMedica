@@ -3,7 +3,7 @@
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-@inherits FormBase<IExameServico, ExameDTO, Guid>
+@inherits FormBase<IExamesServico, ExameDTO, Guid>
 
 <HeaderComponent Title="Exames"
                  SearchPlaceholder="Informe o código do exame"
@@ -15,6 +15,7 @@
                OnValidSubmit="Salvar" 
                SubmitButtonText="Concluir Exame"
                SubmitButtonVisibled="@(_dto.StatusExame.Id != StatusExameConst.Concluido)">
+
     @if (_dto.StatusExame.Id != StatusExameConst.Concluido && _dto.Id != Guid.Empty && string.IsNullOrEmpty(_dto.LinkResultadoExame))
     {
         <div class="form-group col-md-12">

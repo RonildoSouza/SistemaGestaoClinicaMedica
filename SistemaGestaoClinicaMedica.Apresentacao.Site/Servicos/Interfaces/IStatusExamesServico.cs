@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IStatusExameServico : IServicoLeituraBase<StatusExameDTO, string>
+    public interface IStatusExamesServico : IServicoLeituraBase<StatusExameDTO, string>
     {
     }
 }

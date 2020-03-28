@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class MedicoServico : ServicoBaseLeitura<MedicoDTO, Guid>, IMedicoServico
+    public class MedicosServico : ServicoBaseLeitura<MedicoDTO, Guid>, IMedicosServico
     {
-        protected override string EndPoint => "medicos";
-
-        public MedicoServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public MedicosServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<List<MedicoDTO>> GetPorEspecialidadeAsync(Guid especialidadeId)
         {

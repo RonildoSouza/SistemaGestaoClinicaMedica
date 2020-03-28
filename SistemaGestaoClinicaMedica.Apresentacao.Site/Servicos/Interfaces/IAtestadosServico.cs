@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IMedicamentoServico : IServicoBase<MedicamentoDTO, Guid>
+    public interface IAtestadosServico : IServicoBase<AtestadoDTO, Guid>
     {
-        Task<List<MedicamentoDTO>> GetPorNomeAsync(string nome);
+        Task<List<AtestadoDTO>> GetPorConsultaAsync(Guid consultaId);
     }
 }

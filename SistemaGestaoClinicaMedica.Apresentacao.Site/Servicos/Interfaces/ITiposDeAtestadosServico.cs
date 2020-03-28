@@ -3,7 +3,7 @@ using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IFuncionarioServico : IServicoBase<FuncionarioDTO, Guid>
+    public interface ITiposDeAtestadosServico : IServicoLeituraBase<TipoDeAtestadoDTO, string>
     {
     }
 }

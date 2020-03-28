@@ -9,13 +9,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class ConsultaServico : ServicoBase<ConsultaDTO, Guid>, IConsultaServico
+    public class ConsultasServico : ServicoBase<ConsultaDTO, Guid>, IConsultasServico
     {
-        protected override string EndPoint => "consultas";
-
-        public ConsultaServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public ConsultasServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {

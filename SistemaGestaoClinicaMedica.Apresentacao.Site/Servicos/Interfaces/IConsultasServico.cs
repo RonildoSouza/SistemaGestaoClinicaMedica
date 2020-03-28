@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IConsultaServico : IServicoBase<ConsultaDTO, Guid>
+    public interface IConsultasServico : IServicoBase<ConsultaDTO, Guid>
     {
         Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null);
         Task<HttpResponseMessage> PutAlterarStatusAsync(Guid id, string statusConsultaId);

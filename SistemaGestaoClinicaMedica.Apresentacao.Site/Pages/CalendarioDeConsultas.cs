@@ -22,11 +22,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILocalStorageService LocalStorage { get; set; }
         [Inject] private IToastService ToastService { get; set; }
-        [Inject] private IConsultaServico ConsultaServico { get; set; }
+        [Inject] private IConsultasServico ConsultasServico { get; set; }
         [Inject] private NavigationManager NavigationManager { get; set; }
-        [Inject] private IPacienteServico PacienteServico { get; set; }
-        [Inject] private IEspecialidadeServico EspecialidadeServico { get; set; }
-        [Inject] private IMedicoServico MedicoServico { get; set; }
+        [Inject] private IPacientesServico PacientesServico { get; set; }
+        [Inject] private IEspecialidadesServico EspecialidadesServico { get; set; }
+        [Inject] private IMedicosServico MedicosServico { get; set; }
 
         private string PacienteCodigo { get; set; }
         private List<EspecialidadeDTO> Especialidades { get; set; }
@@ -40,7 +40,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            Especialidades = await EspecialidadeServico.GetDisponiveisAsync();
+            Especialidades = await EspecialidadesServico.GetDisponiveisAsync();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -53,7 +53,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         private async Task CalendarRenderAsync(DateTime dataInicio, DateTime dataFim, string busca = "", string status = "Agendada|AguardandoRetorno")
         {
-            var consultas = await ConsultaServico.GetTudoComFiltrosAsync(dataInicio, dataFim, busca, status);
+            var consultas = await ConsultasServico.GetTudoComFiltrosAsync(dataInicio, dataFim, busca, status);
 
 
             var fullCalendarEvent = consultas.Select(_ => new FullCalendarEvent
@@ -80,7 +80,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         private async Task BuscaPacienteAsync()
         {
-            var paciente = await PacienteServico.GetPorCodigoAsync(PacienteCodigo);
+            var paciente = await PacientesServico.GetPorCodigoAsync(PacienteCodigo);
             if (paciente == null)
             {
                 ToastService.ShowInfo("Nenhum paciente encontrado!");
@@ -100,7 +100,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 return;
 
             var especialidadeId = Guid.Parse(args.Value.ToString());
-            Medicos = await MedicoServico.GetPorEspecialidadeAsync(especialidadeId);
+            Medicos = await MedicosServico.GetPorEspecialidadeAsync(especialidadeId);
 
             var especialidade = Especialidades.First(_ => _.Id == especialidadeId);
             _especialidadeLocalStorage = new EspecialidadeLocalStorage
@@ -151,7 +151,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (!Guid.TryParse(ConsultaEvento.Id, out Guid consultaId))
                 return;
 
-            var httpResponse = await ConsultaServico.DeleteAsync(consultaId);
+            var httpResponse = await ConsultasServico.DeleteAsync(consultaId);
 
             if (httpResponse.IsSuccessStatusCode)
             {
@@ -175,7 +175,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
             DataDaConsulta = dataDaConsulta.AddHours(-dataDaConsulta.Hour);
 
-            HorariosDisponiveis = await EspecialidadeServico.GetHorariosDisponiveisAsync(_especialidadeLocalStorage.Id, DataDaConsulta, _medicoLocalStorage?.Id);
+            HorariosDisponiveis = await EspecialidadesServico.GetHorariosDisponiveisAsync(_especialidadeLocalStorage.Id, DataDaConsulta, _medicoLocalStorage?.Id);
             StateHasChanged();
 
             await JSRuntime.InvokeVoidAsync("calendarioDeConsultasJsInterop.showModalHorarioConsulta");

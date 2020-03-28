@@ -15,31 +15,23 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
 {
     public partial class ReceitasForm
     {
-        [Parameter] public ConsultaDTO Consulta { get; set; }
-
-        [Inject] public IJSRuntime JSRuntime { get; set; }
-        [Inject] public IMedicamentoServico MedicamentoServico { get; set; }
-        [Inject] public IConstroiDocumento ConstroiDocumento { get; set; }
-
-        public List<MedicamentoDTO> Medicamentos { get; set; } = new List<MedicamentoDTO>();
-
-        protected override string AposSalvarRetonarPara => $"consultas/{Consulta.Id}#receitas";
-
         private List<string> _medicamentosSelecionados = new List<string>();
 
+        [Parameter] public ConsultaDTO Consulta { get; set; }
+
+        [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private IMedicamentosServico MedicamentosServico { get; set; }
+        [Inject] private IConstroiDocumento ConstroiDocumento { get; set; }
+
+        private List<MedicamentoDTO> Medicamentos { get; set; } = new List<MedicamentoDTO>();
+        protected override string AposSalvarRetonarPara => $"consultas/{Consulta.Id}#receitas";
 
         protected async override Task OnParametersSetAsync()
         {
-            Medicamentos = await MedicamentoServico.GetPorNomeAsync("a");
+            Medicamentos = await MedicamentosServico.GetPorNomeAsync("a");
 
-            _dto.ConsultaId = Consulta.Id;
-            var receita = await HttpServico.GetPorConsultaAsync(Consulta.Id);
-
-            if (receita != null)
-            {
-                Id = receita.Id;
-                _dto = receita;
-            }
+            if (Consulta.Receita != null && Consulta.Receita.Id != Guid.Empty)
+                _dto = Consulta.Receita;
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)

@@ -10,13 +10,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class ExameServico : ServicoBase<ExameDTO, Guid>, IExameServico
+    public class ExamesServico : ServicoBase<ExameDTO, Guid>, IExamesServico
     {
-        protected override string EndPoint => "exames";
-
-        public ExameServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public ExamesServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<ExameDTO> GetPorCodigoAsync(string codigo)
         {

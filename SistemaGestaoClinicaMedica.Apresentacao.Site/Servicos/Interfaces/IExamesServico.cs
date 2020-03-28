@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IExameServico : IServicoBase<ExameDTO, Guid>
+    public interface IExamesServico : IServicoBase<ExameDTO, Guid>
     {
         Task<ExameDTO> GetPorCodigoAsync(string codigo);
         Task<Uri> UploadResultado(Guid id, Stream stream, string arquivoNome);

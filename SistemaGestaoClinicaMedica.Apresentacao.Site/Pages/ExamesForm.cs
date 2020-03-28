@@ -13,15 +13,15 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     {
         [Parameter] public Guid ConsultaId { get; set; }
 
-        [Inject] public ITipoDeExameServico TipoDeExameServico { get; set; }
-        [Inject] public IConsultaServico ConsultaServico { get; set; }
+        [Inject] private ITiposDeExamesServico TiposDeExamesServico { get; set; }
+        [Inject] private IConsultasServico ConsultasServico { get; set; }
 
-        public List<TipoDeExameDTO> TiposDeExames { get; set; } = new List<TipoDeExameDTO>();
-        public string TipoDeExameId { get; set; }
+        private List<TipoDeExameDTO> TiposDeExames { get; set; } = new List<TipoDeExameDTO>();
+        private string TipoDeExameId { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
-            TiposDeExames = await TipoDeExameServico.GetAsync();
+            TiposDeExames = await TiposDeExamesServico.GetAsync();
         }
 
         protected async override Task OnParametersSetAsync()
@@ -45,7 +45,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             
             await base.Salvar(editContext);
 
-            await ConsultaServico.PutAlterarStatusAsync(_dto.ConsultaId, StatusConsultaConst.AguardandoRetorno);
+            await ConsultasServico.PutAlterarStatusAsync(_dto.ConsultaId, StatusConsultaConst.AguardandoRetorno);
         }
     }
 }

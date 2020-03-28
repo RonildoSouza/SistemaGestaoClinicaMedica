@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class MedicamentoServico : ServicoBase<MedicamentoDTO, Guid>, IMedicamentoServico
+    public class MedicamentosServico : ServicoBase<MedicamentoDTO, Guid>, IMedicamentosServico
     {
-        protected override string EndPoint => "medicamentos";
-
-        public MedicamentoServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public MedicamentosServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<List<MedicamentoDTO>> GetPorNomeAsync(string nome)
         {

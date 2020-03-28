@@ -10,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class RealizaExamesForm
     {
-        [Inject] public IJSRuntime JSRuntime { get; set; }
+        [Inject] private IJSRuntime JSRuntime { get; set; }
 
         private async Task BuscarAsync(string busca)
         {
@@ -34,9 +34,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 ToastService.ShowWarning("Não foi realizado o envio do resultados!");
                 return;
             }
-
-            //_dto.StatusExame.Id = StatusExameConst.Concluido;
-            //await base.Salvar(editContext);
 
             await HttpServico.PutAlterarStatusAsync(_dto.Id, StatusExameConst.Concluido);
             await JSRuntime.ForceReload();

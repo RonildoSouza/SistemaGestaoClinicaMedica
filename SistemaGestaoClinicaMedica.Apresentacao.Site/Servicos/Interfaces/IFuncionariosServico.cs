@@ -1,8 +1,9 @@
 ﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface ICargoServico : IServicoLeituraBase<CargoDTO, string>
+    public interface IFuncionariosServico : IServicoBase<FuncionarioDTO, Guid>
     {
     }
 }

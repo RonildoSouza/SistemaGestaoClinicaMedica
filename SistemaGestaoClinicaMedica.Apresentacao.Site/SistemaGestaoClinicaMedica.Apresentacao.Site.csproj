@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\FuncionariosForm.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Documentos\Templates\ReceitaTemplate.txt" />
   </ItemGroup>
 

@@ -11,13 +11,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     {
         [Parameter] public Guid ConsultaId { get; set; }
 
-        [Inject] public ITipoDeAtestadoServico TipoDeAtestadoServico { get; set; }
+        [Inject] private ITiposDeAtestadosServico TiposDeAtestadoServico { get; set; }
 
-        public List<TipoDeAtestadoDTO> TiposDeAtestados { get; set; } = new List<TipoDeAtestadoDTO>();
+        private List<TipoDeAtestadoDTO> TiposDeAtestados { get; set; } = new List<TipoDeAtestadoDTO>();
 
         protected async override Task OnInitializedAsync()
         {
-            TiposDeAtestados = await TipoDeAtestadoServico.GetAsync();
+            TiposDeAtestados = await TiposDeAtestadoServico.GetAsync();
         }
 
         protected async override Task OnParametersSetAsync()

@@ -16,18 +16,6 @@
                 </NavLink>
             }
 
-            @if (ChildContent != null)
-            {
-                @ChildContent
-            }
-
-            @if (!string.IsNullOrEmpty(NewRoute))
-            {
-                <NavLink class="btn btn-primary float-right" href="@NewRoute">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Novo
-                </NavLink>
-            }
-
             @if (SearchVisibled)
             {
                 <div class="row">
@@ -52,6 +40,18 @@
                         </div>
                     }
                 </div>
+            }
+
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+
+            @if (!string.IsNullOrEmpty(NewRoute))
+            {
+                <NavLink class="btn btn-primary float-right" href="@NewRoute">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Novo
+                </NavLink>
             }
         </div>
     }

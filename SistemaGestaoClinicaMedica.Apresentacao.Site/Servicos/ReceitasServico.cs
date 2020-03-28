@@ -5,13 +5,9 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class ReceitaServico : ServicoBase<ReceitaDTO, Guid>, IReceitaServico
+    public class ReceitasServico : ServicoBase<ReceitaDTO, Guid>, IReceitasServico
     {
-        protected override string EndPoint => "receitas";
-
-        public ReceitaServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public ReceitasServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<ReceitaDTO> GetPorConsultaAsync(Guid consultaId)
         {

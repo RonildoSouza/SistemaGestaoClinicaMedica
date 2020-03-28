@@ -3,7 +3,7 @@
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-@inherits FormBase<IMedicamentoServico, MedicamentoDTO, Guid>
+@inherits FormBase<IMedicamentosServico, MedicamentoDTO, Guid>
 
 <HeaderComponent Title="Cadastro de Medicamento" BackRoute="@AposSalvarRetonarPara" />
 
@@ -27,6 +27,13 @@
             <option value="@ctx.Id.ToString()" selected="@(_dto.FabricanteNome == ctx.Nome)">@ctx.Nome</option>
         </SelectWithSearch>*@
 
+        @*<input type="text" list="tarjas" @bind-value="context.Tarja" class="form-control" id="tarja" placeholder="Selecione o tipo de tarja">
+        <datalist id="tarjas">
+            <option value="Preta">Preta</option>
+            <option value="Vermelha">Vermelha</option>
+            <option value="Livre">Venda Livre</option>
+        </datalist>*@
+
     </div>
     <div class="form-group col-md-4">
         <label for="tarja">Tarja</label>
@@ -43,10 +50,10 @@
 @code {
     protected override string AposSalvarRetonarPara => "medicamentos";
 
-    [Inject] public IJSRuntime JSRuntime { get; set; }
-    [Inject] public IFabricantesServico FabricantesServico { get; set; }
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private IFabricantesServico FabricantesServico { get; set; }
 
-    public List<FabricanteDTO> Fabricantes { get; set; } = new List<FabricanteDTO>();
+    private List<FabricanteDTO> Fabricantes { get; set; } = new List<FabricanteDTO>();
 
     protected async override Task OnParametersSetAsync()
     {

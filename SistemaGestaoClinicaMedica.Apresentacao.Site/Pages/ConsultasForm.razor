@@ -4,18 +4,17 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-@inherits FormBase<IConsultaServico, ConsultaDTO, Guid>
+@inherits FormBase<IConsultasServico, ConsultaDTO, Guid>
 
 <HeaderComponent Title="Realizando Consulta" BackRoute="@AposSalvarRetonarPara" />
 
+<!-- TABS -->
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="detalhes-consulta-tab" data-toggle="tab" href="#detalhes-consulta" role="tab" aria-controls="detalhes-consulta" aria-selected="false">
-            Detalhes da Consulta
-        </a>
+        <a class="nav-link active" id="detalhes-consulta-tab" data-toggle="tab" href="#detalhes-consulta" role="tab" aria-controls="detalhes-consulta" aria-selected="false">Detalhes da Consulta</a>
     </li>
-    <li class="nav-item">
-        <a disabled="@(_dto.StatusConsultaId != StatusConsultaConst.Concluida || _dto.StatusConsultaId != StatusConsultaConst.AguardandoRetorno)" class="nav-link" id="atestados-tab" data-toggle="tab" href="#atestados" role="tab" aria-controls="atestados" aria-selected="false">Atestados</a>
+    <li class="nav-item disabled" disabled="@(_dto.StatusConsultaId != StatusConsultaConst.Concluida || _dto.StatusConsultaId != StatusConsultaConst.AguardandoRetorno)">
+        <a class="nav-link" id="atestados-tab" data-toggle="tab" href="#atestados" role="tab" aria-controls="atestados" aria-selected="false">Atestados</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" id="exames-tab" data-toggle="tab" href="#exames" role="tab" aria-controls="exames" aria-selected="false">Exames</a>
@@ -60,7 +59,7 @@
         <Exames ConsultaId="@_dto.Id" />
     </div>
     <div class="tab-pane fade" id="receita" role="tabpanel" aria-labelledby="receita-tab">
-        <ReceitasForm Consulta="@_dto" />
+        <ReceitasForm Consulta="@_dto" Id="@_dto.Receita.Id" />
     </div>
 </div>
 

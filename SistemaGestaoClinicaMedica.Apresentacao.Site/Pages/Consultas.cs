@@ -13,12 +13,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private string _statusConsultaSelecionado = StatusConsultaConst.Agendada;
         private string _busca;
 
-        [Inject] public IConsultaServico ConsultaServico { get; set; }
-        [Inject] public IStatusConsultaServico StatusConsultaServico { get; set; }
+        [Inject] private IConsultasServico ConsultasServico { get; set; }
+        [Inject] private IStatusConsultasServico StatusConsultaServico { get; set; }
 
         private DateTime DataInicio { get; set; }
         private DateTime DataFim { get; set; }
-        public List<StatusConsultaDTO> StatusConsulta { get; set; } = new List<StatusConsultaDTO>();
+        private List<StatusConsultaDTO> StatusConsulta { get; set; } = new List<StatusConsultaDTO>();
         //private List<MedicoDTO> Medicos { get; set; }
 
         protected async override Task OnInitializedAsync()

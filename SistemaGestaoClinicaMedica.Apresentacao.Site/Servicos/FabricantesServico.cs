@@ -8,11 +8,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class FabricantesServico : ServicoBaseLeitura<FabricanteDTO, Guid>, IFabricantesServico
     {
-        protected override string EndPoint => "fabricantes";
-
-        public FabricantesServico(IConfiguration configuration) : base(configuration)
-        {
-        }
+        public FabricantesServico(IConfiguration configuration) : base(configuration) { }
 
         public async Task<List<FabricanteDTO>> GetPorNomeAsync(string nome)
         {

@@ -3,7 +3,7 @@
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-@inherits FormBase<IPacienteServico, PacienteDTO, Guid>
+@inherits FormBase<IPacientesServico, PacienteDTO, Guid>
 
 <HeaderComponent Title="Cadastro de Paciente" BackRoute="@AposSalvarRetonarPara" />
 
@@ -31,7 +31,7 @@
     <div class="form-group col-md-3">
         <label for="estado">Estado</label>
         <InputSelect @bind-Value="context.Estado" class="form-control" id="estado">
-            <option value="">Selecione o estado...</option>
+            <option value="" selected disabled>Selecione o estado...</option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public interface IEspecialidadeServico : IServicoLeituraBase<EspecialidadeDTO, Guid>
+    public interface IEspecialidadesServico : IServicoLeituraBase<EspecialidadeDTO, Guid>
     {
         Task<List<EspecialidadeDTO>> GetDisponiveisAsync();
         Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId);

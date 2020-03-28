@@ -6,6 +6,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
 {
     public class ConsultaDTO : IDTO<Guid>
     {
+        public ConsultaDTO()
+        {
+            Receita = new ReceitaDTO();
+        }
+
         public Guid Id { get; set; }
         public string Codigo { get; set; }
         [Required]
