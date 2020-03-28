@@ -27,6 +27,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             services.AddServerSideBlazor();
 
             services.RegistrarTudoPorAssembly(GetType().Assembly, "Servico");
+            services.RegistrarTudoPorAssembly(GetType().Assembly, "Documento");
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
 

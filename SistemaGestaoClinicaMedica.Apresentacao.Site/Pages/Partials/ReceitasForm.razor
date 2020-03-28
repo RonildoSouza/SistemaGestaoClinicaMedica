@@ -5,18 +5,6 @@
 <HeaderComponent Title="Cadastro de Exame" BackRoute="@AposSalvarRetonarPara" />
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar Receita">
-    <div class="form-group col-md-8">
-        <strong>Paciente:</strong> @Consulta.Paciente?.Nome
-    </div>
-    <div class="form-group col-md-4">
-        <strong>Data de Nascimento:</strong> @Consulta.Paciente?.DataNascimento.ToShortDateString()
-    </div>
-    <div class="form-group col-md-8">
-        <strong>Médico:</strong> @Consulta.Medico?.Nome
-    </div>
-    <div class="form-group col-md-4">
-        <strong>Código da Consulta:</strong> @Consulta.Codigo
-    </div>
     <div class="form-group col-md-12">
         <label for="medicamentos">Medicamentos</label>
         <SelectWithSearch Id="medicamentos"
@@ -24,7 +12,7 @@
                           Items="Medicamentos"
                           IsMultiple="true"
                           Context="ctx">
-            <option value="@ctx.Id.ToString()" selected="@(_dto.ReceitaMedicamentos.Any(_ => _.MedicamentoId == ctx.Id))">@ctx.Nome</option>
+            <option value="@ctx.Id.ToString()" selected="@(_dto.ReceitaMedicamentos.Any(_ => _.MedicamentoId == ctx.Id))">@ctx.NomeFabrica</option>
         </SelectWithSearch>
     </div>
     <div class="form-group col-md-12">

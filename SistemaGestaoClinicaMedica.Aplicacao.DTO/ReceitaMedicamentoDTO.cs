@@ -6,5 +6,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
     {
         public Guid Id { get; set; }
         public Guid MedicamentoId { get; set; }
+        public MedicamentoDTO Medicamento { get; set; }
     }
 }

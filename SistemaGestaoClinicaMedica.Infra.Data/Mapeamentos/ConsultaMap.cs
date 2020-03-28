@@ -11,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
             base.Configure(builder);
 
             builder.Property(_ => _.Data).IsRequired();
-            builder.Property(_ => _.Observacao).HasMaxLength(500);
+            builder.Property(_ => _.Observacao).HasMaxLength(1000);
 
             builder.HasOne(_ => _.StatusConsulta).WithMany().IsRequired();
             builder.HasOne(_ => _.Paciente).WithMany().IsRequired();
