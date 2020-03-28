@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IMedicoServicoAplicacao : IServicoAplicacaoLeitura<MedicoDTO, Guid>
+    public interface IMedicoServicoAplicacao : IServicoAplicacaoBase<MedicoDTO, Guid>
     {
         IList<MedicoDTO> ObterTudoPorEspecialidade(Guid especialidadeId);
     }

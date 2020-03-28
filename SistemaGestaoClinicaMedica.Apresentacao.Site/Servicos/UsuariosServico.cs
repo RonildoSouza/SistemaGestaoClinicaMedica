@@ -4,8 +4,8 @@ using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class FuncionariosServico : ServicoBase<FuncionarioDTO, Guid>, IFuncionariosServico
+    public class UsuariosServico : ServicoBase<UsuarioDTO, Guid>, IUsuariosServico
     {
-        public FuncionariosServico(IConfiguration configuration) : base(configuration) { }
+        public UsuariosServico(IConfiguration configuration) : base(configuration) { }
     }
 }

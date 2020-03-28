@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
 {
-    public class MedicoDTO : IDTO<Guid>
+    public class MedicoDTO : UsuarioDTO
     {
-        public Guid Id { get; set; }
-        public string Nome { get; set; }
         public string CRM { get; set; }
+        public List<HorarioDeTrabalhoDTO> HorariosDeTrabalho { get; set; }
+        public List<MedicoEspecialidadeDTO> MedicoEspecialidades { get; set; }
     }
 }

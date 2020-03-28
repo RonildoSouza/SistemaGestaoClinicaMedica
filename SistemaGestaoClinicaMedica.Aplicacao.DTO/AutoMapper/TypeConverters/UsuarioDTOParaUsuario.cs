@@ -4,29 +4,29 @@ using SistemaGestaoClinicaMedica.Dominio.Servicos;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
 {
-    public class FuncionarioDTOParaFuncionario : ITypeConverter<FuncionarioDTO, Funcionario>
+    public class UsuarioDTOParaUsuario : ITypeConverter<UsuarioDTO, Usuario>
     {
         private readonly ICargoServico _cargoServico;
 
-        public FuncionarioDTOParaFuncionario(ICargoServico cargoServico)
+        public UsuarioDTOParaUsuario(ICargoServico cargoServico)
         {
             _cargoServico = cargoServico;
         }
 
-        public Funcionario Convert(FuncionarioDTO source, Funcionario destination, ResolutionContext context)
+        public Usuario Convert(UsuarioDTO source, Usuario destination, ResolutionContext context)
         {
-            var cargoEntidade = _cargoServico.Obter(source.CargoId);
+            var cargo = _cargoServico.Obter(source.Cargo.Id);
 
-            var funcionarioEntidade = new Funcionario(
+            var usuario = new Usuario(
                 source.Id,
                 source.Nome,
                 source.Email,
                 source.Telefone,
                 source.Senha,
-                cargoEntidade,
+                cargo,
                 source.Ativo);
 
-            return funcionarioEntidade;
+            return usuario;
         }
     }
 }

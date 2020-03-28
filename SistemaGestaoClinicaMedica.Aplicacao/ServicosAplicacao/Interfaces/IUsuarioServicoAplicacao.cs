@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
-    public interface IFuncionarioServicoAplicacao : IServicoAplicacaoBase<FuncionarioDTO, Guid>
+    public interface IUsuarioServicoAplicacao : IServicoAplicacaoBase<UsuarioDTO, Guid>
     {
-        IList<FuncionarioDTO> ObterTudo(bool ativo);
+        IList<UsuarioDTO> ObterTudo(bool ativo);
     }
 }

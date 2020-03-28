@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AutoMapper\TypeConverters\BKP\**" />
+    <EmbeddedResource Remove="AutoMapper\TypeConverters\BKP\**" />
+    <None Remove="AutoMapper\TypeConverters\BKP\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 

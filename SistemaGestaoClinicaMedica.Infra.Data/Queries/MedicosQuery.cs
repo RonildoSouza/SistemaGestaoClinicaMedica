@@ -14,9 +14,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 
         public IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId)
         {
-            var medicos = Entidades.Include(_ => _.Funcionario)
+            var medicos = Entidades.Include(_ => _.Usuario)
                                    .Include($"{nameof(Medico.Especialidades)}.{nameof(MedicoEspecialidade.Especialidade)}")
-                                   .Where(_ => _.Funcionario.Ativo && _.Especialidades.Any(_ => _.EspecialidadeId == especialidadeId))
+                                   .Where(_ => _.Usuario.Ativo && _.Especialidades.Any(_ => _.EspecialidadeId == especialidadeId))
                                    .ToList();
 
             return medicos;

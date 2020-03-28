@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
 
@@ -38,6 +39,30 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         {
             var saidaDTOs = _medicoServicoAplicacao.ObterTudoPorEspecialidade(especialidadeId);
             return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpPost]
+        public IActionResult Post([FromBody]MedicoDTO entradaDTO)
+        {
+            var saidaDTO = _medicoServicoAplicacao.Salvar(entradaDTO);
+
+            if (saidaDTO == null)
+                return BadRequest();
+
+            return Created($"/{saidaDTO.Id}", saidaDTO);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpPut, Route("{id}")]
+        public IActionResult Put([FromRoute]Guid id, [FromBody]MedicoDTO entradaDTO)
+        {
+            var saidaDTO = _medicoServicoAplicacao.Salvar(entradaDTO, id);
+
+            if (saidaDTO == null)
+                return BadRequest();
+
+            return Ok(saidaDTO);
         }
     }
 }

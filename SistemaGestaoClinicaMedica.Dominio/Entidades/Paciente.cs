@@ -6,6 +6,9 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
+        public string NomeDaMae { get; set; }
+        public string CPF { get; set; }
+        public string Sexo { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Telefone { get; set; }
         public string Bairro { get; set; }

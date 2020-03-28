@@ -18,7 +18,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             var exames = Entidades.Include(_ => _.TipoDeExame)
                                   .Include(_ => _.StatusExame)
                                   .Include(_ => _.LaboratorioRealizouExame)
-                                  .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Funcionario)}")
+                                  .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                                   .Include(_ => _.Consulta)
                                   .ToList();
 
@@ -30,7 +30,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return Entidades.Include(_ => _.TipoDeExame)
                             .Include(_ => _.StatusExame)
                             .Include(_ => _.LaboratorioRealizouExame)
-                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Funcionario)}")
+                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                             .Include(_ => _.Consulta)
                             .Where(_ => _.Consulta.Id == consultaId)
                             .ToList();

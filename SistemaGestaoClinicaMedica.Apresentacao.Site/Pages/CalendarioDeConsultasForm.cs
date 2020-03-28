@@ -1,5 +1,5 @@
-﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages

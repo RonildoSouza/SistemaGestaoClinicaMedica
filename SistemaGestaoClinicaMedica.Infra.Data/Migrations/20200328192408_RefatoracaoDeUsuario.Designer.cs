@@ -9,8 +9,8 @@ using SistemaGestaoClinicaMedica.Infra.Data;
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
     [DbContext(typeof(ContextoBancoDados))]
-    [Migration("20200313003659_CriaTabelaReceita")]
-    partial class CriaTabelaReceita
+    [Migration("20200328192408_RefatoracaoDeUsuario")]
+    partial class RefatoracaoDeUsuario
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,12 +24,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("FuncionarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Administrador");
                 });
@@ -57,7 +57,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
                     b.Property<string>("Observacao")
                         .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(5000);
 
                     b.Property<string>("TipoDeAtestadoId")
                         .IsRequired()
@@ -118,7 +118,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
                     b.Property<string>("Observacao")
                         .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(1000);
 
                     b.Property<Guid>("PacienteId")
                         .HasColumnType("TEXT");
@@ -188,7 +188,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
                     b.Property<string>("Observacao")
                         .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(5000);
 
                     b.Property<string>("StatusExameId")
                         .IsRequired()
@@ -229,64 +229,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.ToTable("Fabricante");
                 });
 
-            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Ativo")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER")
-                        .HasDefaultValue(true);
-
-                    b.Property<DateTime?>("AtualizadoEm")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AtualizadoPor")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("CargoId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("date('now')");
-
-                    b.Property<string>("CriadoPor")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Telefone")
-                        .HasColumnType("TEXT")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CargoId");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Funcionario");
-                });
-
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.HorarioDeTrabalho", b =>
                 {
                     b.Property<Guid>("Id")
@@ -299,13 +241,13 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<TimeSpan>("Fim")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan?>("FimAlmoco")
+                    b.Property<TimeSpan>("FimAlmoco")
                         .HasColumnType("TEXT");
 
                     b.Property<TimeSpan>("Inicio")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan?>("InicioAlmoco")
+                    b.Property<TimeSpan>("InicioAlmoco")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("MedicoId")
@@ -327,12 +269,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<bool>("DaClinica")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("FuncionarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Laboratorio");
                 });
@@ -387,7 +329,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("FuncionarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -395,7 +337,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.HasIndex("CRM")
                         .IsUnique();
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Medico");
                 });
@@ -443,15 +385,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Cidade")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
                     b.Property<DateTime>("CriadoEm")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("date('now')");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("CriadoPor")
                         .HasColumnType("TEXT");
@@ -469,12 +414,25 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(500);
 
+                    b.Property<string>("NomeDaMae")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Telefone")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CPF")
+                        .IsUnique();
 
                     b.ToTable("Paciente");
                 });
@@ -504,7 +462,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<string>("Observacao")
                         .IsRequired()
                         .HasColumnType("TEXT")
-                        .HasMaxLength(500);
+                        .HasMaxLength(5000);
 
                     b.HasKey("Id");
 
@@ -541,12 +499,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("FuncionarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Recepcionista");
                 });
@@ -620,11 +578,67 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.ToTable("TipoDeExame");
                 });
 
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AtualizadoPor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CargoId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("CriadoPor")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Telefone")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CargoId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Usuario");
+                });
+
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Administrador", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -696,15 +710,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", b =>
-                {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Cargo", "Cargo")
-                        .WithMany()
-                        .HasForeignKey("CargoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.HorarioDeTrabalho", b =>
                 {
                     b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", null)
@@ -714,9 +719,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Laboratorio", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -732,9 +737,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Medico", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -780,9 +785,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Recepcionista", b =>
                 {
-                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Funcionario", "Funcionario")
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Usuario", b =>
+                {
+                    b.HasOne("SistemaGestaoClinicaMedica.Dominio.Entidades.Cargo", "Cargo")
+                        .WithMany()
+                        .HasForeignKey("CargoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

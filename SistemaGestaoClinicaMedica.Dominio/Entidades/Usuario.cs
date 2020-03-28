@@ -2,11 +2,11 @@
 
 namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
-    public class Funcionario : IEntidade<Guid>, IEntidadeAuditada
+    public class Usuario : IEntidade<Guid>, IEntidadeAuditada
     {
-        public Funcionario() { }
+        public Usuario() { }
 
-        public Funcionario(Guid id, string nome, string email, string telefone, string senha, Cargo cargo, bool ativo)
+        public Usuario(Guid id, string nome, string email, string telefone, string senha, Cargo cargo, bool ativo)
         {
             Id = id;
             Nome = nome;
