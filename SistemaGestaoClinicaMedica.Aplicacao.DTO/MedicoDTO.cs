@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
     {
         public string CRM { get; set; }
         public List<HorarioDeTrabalhoDTO> HorariosDeTrabalho { get; set; }
-        public List<MedicoEspecialidadeDTO> MedicoEspecialidades { get; set; }
+        public List<MedicoEspecialidadeDTO> Especialidades { get; set; }
     }
 }

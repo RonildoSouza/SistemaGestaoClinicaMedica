@@ -21,7 +21,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             var especialidadesComMedicoAtivo = Entidades.Include(_ => _.Medicos)
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
                                 .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
-                                .Where(_ => _.Medicos.Any() && _.Medicos.All(_ => _.Medico.Usuario.Ativo))
+                                .Where(_ => _.Medicos.Any(_ => _.Ativo) && _.Medicos.All(_ => _.Medico.Usuario.Ativo))
                                 .OrderBy(_ => _.Nome)
                                 .ToList();
 
@@ -47,7 +47,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                    .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
                                    .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
                                    .Where(_ => _.Id == especialidadeId)
-                                   .Where(_ => _.Medicos.All(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
+                                   .Where(_ => _.Medicos.Any(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
+                                   .Where(_ => _.Medicos.Any(_ => _.Ativo) && _.Medicos.Any(_ => _.Medico.Usuario.Ativo))
                                    .SelectMany(_ => _.Medicos);
             var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada }, medicoId);
 
@@ -55,7 +56,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                 medicos = medicos.Where(_ => _.MedicoId == medicoId.GetValueOrDefault() || _.Medico.Usuario.Id == medicoId.GetValueOrDefault());
 
             var horarios = medicos.SelectMany(_ => _.Medico.HorariosDeTrabalho)
-                                  .Where(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek);
+                                  .Where(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek && _.Ativo);
             var horariosDisponiveis = HorariosDisponiveis(horarios).ToList();
 
             RemoveHorariosIndisponiveis(ref horariosDisponiveis, horarios, consultas);
@@ -81,8 +82,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 
         private void RemoveHorariosIndisponiveis(ref List<TimeSpan> horariosDisponiveis, IEnumerable<HorarioDeTrabalho> horarios, IList<Consulta> consultas)
         {
-            var horariosUnicosInicioAlmoco = horarios.GroupBy(_ => _.InicioAlmoco).Select(_ => _.Key);
-            var horariosUnicosFimAlmoco = horarios.GroupBy(_ => _.FimAlmoco).Select(_ => _.Key);
+            var horariosUnicosInicioIntervalo = horarios.GroupBy(_ => _.InicioIntervalo).Select(_ => _.Key);
+            var horariosUnicosFimIntervalo = horarios.GroupBy(_ => _.FimIntervalo).Select(_ => _.Key);
 
             foreach (var horarioDisp in horariosDisponiveis.GetRange(0, horariosDisponiveis.Count()))
             {
@@ -93,7 +94,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                 }
 
                 if (!horarios.Select(_ => _.Inicio).Contains(horarioDisp)
-                    && (horariosUnicosInicioAlmoco.Contains(horarioDisp) || horariosUnicosFimAlmoco.Contains(horarioDisp)))
+                    && (horariosUnicosInicioIntervalo.Contains(horarioDisp) || horariosUnicosFimIntervalo.Contains(horarioDisp)))
                 {
                     horariosDisponiveis.Remove(horarioDisp);
                 }

@@ -1,4 +1,5 @@
-﻿using Blazored.LocalStorage;
+﻿using AutoMapper;
+using Blazored.LocalStorage;
 using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -8,8 +9,11 @@ using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -18,18 +22,22 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     {
         [Parameter] public Guid Id { get; set; }
 
+        [Inject] private IMapper Mapper { get; set; }
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILocalStorageService LocalStorage { get; set; }
         [Inject] private IToastService ToastService { get; set; }
+        [Inject] private NavigationManager NavigationManager { get; set; }
         [Inject] private ICargosServico CargosServico { get; set; }
         [Inject] private IEspecialidadesServico EspecialidadesServico { get; set; }
         [Inject] private IAdministradoresServico AdministradoresServico { get; set; }
+        [Inject] private IRecepcionistasServico RecepcionistasServico { get; set; }
+        [Inject] private ILaboratoriosServico LaboratoriosServico { get; set; }
+        [Inject] private IMedicosServico MedicosServico { get; set; }
 
-        private List<string> _medicamentosSelecionados = new List<string>();
         private List<CargoDTO> _cargos = new List<CargoDTO>();
         private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
-        private List<HorarioDeTrabalho> _horariosDeTrabalho = new List<HorarioDeTrabalho>();
         private UsuarioViewModel _usuarioViewModel = new UsuarioViewModel();
+        private string _cargoIdLocalStorage;
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
@@ -44,46 +52,28 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _cargos = await CargosServico.GetAsync();
             _especialidades = await EspecialidadesServico.GetAsync();
 
-            _horariosDeTrabalho = new List<HorarioDeTrabalho>
-            {
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Monday, "Segunda-feira"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Tuesday, "Terça-feira" ), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Wednesday, "Quarta-feira"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Thursday, "Quinta-feira"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Friday, "Sexta-feira"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Saturday, "Sábado"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-               new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Sunday, "Domingo"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
-            };
+            _cargoIdLocalStorage = await LocalStorage.ObterUsuarioCargoIdLocalStorageAsync();
 
-            var cargoId = await LocalStorage.ObterUsuarioCargoIdLocalStorageAsync();
-            _usuarioViewModel.CargoId = cargoId;
-
-            switch (cargoId)
+            switch (_cargoIdLocalStorage)
             {
                 case CargosConst.Administrador:
-
                     var administrador = await AdministradoresServico.GetAsync(Id);
-                    _usuarioViewModel.Nome = administrador.Nome;
-                    _usuarioViewModel.Email = administrador.Email;
-                    _usuarioViewModel.Telefone = administrador.Telefone;
-                    _usuarioViewModel.Senha = administrador.Senha;
-
+                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(administrador);
                     break;
                 case CargosConst.Recepcionista:
+                    var recepcionista = await RecepcionistasServico.GetAsync(Id);
+                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(recepcionista);
                     break;
                 case CargosConst.Laboratorio:
+                    var laboratorio = await LaboratoriosServico.GetAsync(Id);
+                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(laboratorio);
                     break;
                 case CargosConst.Medico:
-                    break;
-                default:
+                    var medico = await MedicosServico.GetAsync(Id);
+                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(medico);
                     break;
             }
         }
-
-        //protected async override Task OnParametersSetAsync()
-        //{
-
-        //}
 
         protected async Task Salvar(EditContext editContext)
         {
@@ -93,54 +83,59 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             switch (_usuarioViewModel.CargoId)
             {
                 case CargosConst.Administrador:
-
-                    var administrador = new AdministradorDTO();
-                    administrador.Id = Id;
-                    administrador.Nome = _usuarioViewModel.Nome;
-                    administrador.Email = _usuarioViewModel.Email;
-                    administrador.Telefone = _usuarioViewModel.Telefone;
-                    administrador.Senha = _usuarioViewModel.Senha;
-
-                    if (Id == Guid.Empty)
-                        await AdministradoresServico.PostAsync(administrador);
-                    else
-                        await AdministradoresServico.PutAsync(Id, administrador);
-
+                    var administrador = Mapper.Map<AdministradorDTO>(_usuarioViewModel);
+                    await PostOrPutAsync(AdministradoresServico, administrador);
                     break;
                 case CargosConst.Recepcionista:
+                    var recepcionista = Mapper.Map<RecepcionistaDTO>(_usuarioViewModel);
+                    await PostOrPutAsync(RecepcionistasServico, recepcionista);
                     break;
+
                 case CargosConst.Laboratorio:
+                    var laboratorio = Mapper.Map<LaboratorioDTO>(_usuarioViewModel);
+                    await PostOrPutAsync(LaboratoriosServico, laboratorio);
                     break;
                 case CargosConst.Medico:
+                    if (!_usuarioViewModel.Especialidades.Any())
+                    {
+                        ToastService.ShowWarning("Deve ser selecionado ao menos uma especialidade!");
+                        return;
+                    }
+
+                    var horariosSelecionados = _usuarioViewModel.HorariosDeTrabalho.Where(_ => _.Selecionado);
+
+                    if (!horariosSelecionados.Any())
+                    {
+                        ToastService.ShowWarning("Deve ser selecionado ao menos um horário de trabalho!");
+                        return;
+                    }
+
+                    var medico = Mapper.Map<MedicoDTO>(_usuarioViewModel);
+                    await PostOrPutAsync(MedicosServico, medico);
                     break;
                 default:
+                    ToastService.ShowWarning("O cargo informado é inválido");
                     break;
             }
+        }
 
-            //var horariosSelecionados = _horariosDeTrabalho.Where(_ => _.Selecionado);
+        private async Task PostOrPutAsync<TServico, TDTO>(TServico servico, TDTO dto)
+            where TDTO : IDTO<Guid>
+            where TServico : IServicoBase<TDTO, Guid>
+        {
+            HttpResponseMessage httpResponse;
 
-            //if (horariosSelecionados.Any(_ => _.Fim > _.Inicio || _.FimIntervalo > _.InicioIntervalo))
-            //{
-            //    ToastService.ShowInfo("O horário final não pode ser maio que o horário inicial!");
-            //    return;
-            //}
+            if (dto.Id == Guid.Empty)
+                httpResponse = await servico.PostAsync(dto);
+            else
+                httpResponse = await servico.PutAsync(dto.Id, dto);
 
-            //if (Id == Guid.Empty)
-            //{
-            //    _dto.HorariosDeTrabalho = horariosSelecionados.Select(_ =>
-            //        new HorarioDeTrabalhoDTO
-            //        {
-            //            DiaDaSemana = _.DiaDaSemana.Item1,
-            //            Inicio = _.Inicio.TimeOfDay.ToString(),
-            //            InicioAlmoco = _.InicioIntervalo.TimeOfDay.ToString(),
-            //            FimAlmoco = _.InicioIntervalo.TimeOfDay.ToString(),
-            //            Fim = _.InicioIntervalo.TimeOfDay.ToString(),
-            //        }).ToList();
-            //}
-            //else
-            //{
+            if (httpResponse.IsSuccessStatusCode)
+                ToastService.ShowSuccess("Registro salvo com sucesso");
+            else
+                ToastService.ShowError("Falha ao tentar salvar o registro!");
 
-            //}
+            NavigationManager.NavigateTo("usuarios");
         }
 
         [JSInvokable]
@@ -149,49 +144,19 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (!Guid.TryParse(select2.Id, out Guid especialidadeId))
                 return;
 
-            //if (_dto.Id != Guid.Empty && _dto.MedicoEspecialidades.Any())
-            //    _medicamentosSelecionados = _dto.MedicoEspecialidades.Select(_ => _.EspecialidadeId).ToList();
+            if (_usuarioViewModel.Especialidades.Any(_ => _.EspecialidadeId == especialidadeId))
+            {
+                var index = _usuarioViewModel.Especialidades.FindIndex(_ => _.EspecialidadeId == especialidadeId);
 
-            //if (_dto.MedicoEspecialidades.Any(_ => _.EspecialidadeId == especialidadeId))
-            //{
-            //    var index = _dto.MedicoEspecialidades.FindIndex(_ => _.EspecialidadeId == especialidadeId);
-            //    _dto.MedicoEspecialidades.RemoveAt(index);
-            //    _medicamentosSelecionados.Remove(select2.Text);
-            //}
-            //else
-            //{
-            //    _dto.MedicoEspecialidades.Add(new FuncionarioDTO { EspecialidadeId = especialidadeId });
-            //    _medicamentosSelecionados.Add(select2.Text);
-            //}
+                if (_usuarioViewModel.Especialidades[index].Id == Guid.Empty)
+                    _usuarioViewModel.Especialidades.RemoveAt(index);
+                else
+                    _usuarioViewModel.Especialidades[index].Ativo = !_usuarioViewModel.Especialidades[index].Ativo;
+            }
+            else
+            {
+                _usuarioViewModel.Especialidades.Add(UsuarioViewModel.ControiMedicoEspecialidade(Guid.Empty, especialidadeId, true));
+            }
         }
-    }
-
-    public class UsuarioViewModel
-    {
-        public string Nome { get; set; }
-        public string Email { get; set; }
-        public string Telefone { get; set; }
-        public string Senha { get; set; }
-        public string CargoId { get; set; }
-    }
-
-    public class HorarioDeTrabalho
-    {
-        public HorarioDeTrabalho(Tuple<int, string> diaDaSemana, bool selecionado, DateTime inicio, DateTime inicioIntervalo, DateTime fimIntervalo, DateTime fim)
-        {
-            DiaDaSemana = diaDaSemana;
-            Selecionado = selecionado;
-            Inicio = inicio;
-            InicioIntervalo = inicioIntervalo;
-            FimIntervalo = fimIntervalo;
-            Fim = fim;
-        }
-
-        public Tuple<int, string> DiaDaSemana { get; set; }
-        public bool Selecionado { get; set; }
-        public DateTime Inicio { get; set; }
-        public DateTime InicioIntervalo { get; set; }
-        public DateTime FimIntervalo { get; set; }
-        public DateTime Fim { get; set; }
     }
 }

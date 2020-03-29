@@ -21,7 +21,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
 
             var usuario = context.Mapper.Map<Usuario>(source);
             var listaHorarioDeTrabalho = context.Mapper.Map<List<HorarioDeTrabalho>>(source.HorariosDeTrabalho);
-            var listaMedicoEspecialidade = context.Mapper.Map<List<MedicoEspecialidade>>(source.MedicoEspecialidades);
+            var listaMedicoEspecialidade = context.Mapper.Map<List<MedicoEspecialidade>>(source.Especialidades);
 
             var medico = new Medico(
                 source.CRM,

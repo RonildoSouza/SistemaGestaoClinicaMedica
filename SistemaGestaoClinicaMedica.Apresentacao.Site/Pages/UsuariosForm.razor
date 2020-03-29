@@ -1,29 +1,40 @@
 ﻿@page "/usuarios/novo"
 @page "/usuarios/{id:guid}"
 
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+
 <HeaderComponent Title="Cadastro de Usuário" BackRoute="usuarios" />
 
-<EditForm Model="@_usuarioViewModel" OnValidSubmit="Salvar">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    <div class="card">
-        <div class="row card-body">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="form-group col-md-6">
-                        <label for="nome">Nome</label>
-                        <InputText @bind-Value="_usuarioViewModel.Nome" class="form-control" id="nome" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="email">Email</label>
-                        <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" />
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="telefone">Telefone</label>
-                        <InputText @bind-Value="_usuarioViewModel.Telefone" class="form-control" id="telefone" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="cargo">Cargo</label>
+<div class="card">
+    <div class="card-body">
+        <EditForm Model="@_usuarioViewModel" OnValidSubmit="Salvar">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="ativo">Ativo? </label>
+                    <InputCheckbox @bind-Value="_usuarioViewModel.Ativo" id="ativo" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="nome">Nome</label>
+                    <InputText @bind-Value="_usuarioViewModel.Nome" class="form-control" id="nome" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" />
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="telefone">Telefone</label>
+                    <InputText @bind-Value="_usuarioViewModel.Telefone" class="form-control" id="telefone" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cargo">Cargo</label>
+                    @if(_usuarioViewModel.Id != Guid.Empty)
+                    {
+                        <input type="text" class="form-control" value="@_usuarioViewModel.CargoId" disabled />
+                    }
+                    else
+                    {
                         <InputSelect @bind-Value="_usuarioViewModel.CargoId" class="form-control" id="cargo">
                             <option value="" selected disabled>Selecione o cargo</option>
                             @foreach (var cargo in _cargos)
@@ -31,88 +42,86 @@
                                 <option value="@cargo.Id">@cargo.Nome</option>
                             }
                         </InputSelect>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="senha">Senha</label>
-                        <input type="password" @bind-value="_usuarioViewModel.Senha" class="form-control" id="senha" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="confirmar-senha">Confirmar Senha</label>
-                        <input type="password" class="form-control" id="confirmar-senha" />
-                    </div>
+                    }
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="senha">Senha</label>
+                    <InputText type="password" @bind-Value="_usuarioViewModel.Senha" class="form-control" id="senha" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="confirmar-senha">Confirmar Senha</label>
+                    <input type="password" class="form-control" id="confirmar-senha" />
+                </div>
 
-                    @*@if (_dto.Cargo.Id == CargosConst.Laboratorio)
-                        {
-                            <div class="form-group col-md-4">
-                                <div class="custom-control custom-checkbox">
-                                    <label class="custom-control-label" for="da-clinica">Da Clínica?</label>
-                                    <input type="checkbox" class="custom-control-input" @bind-value="context.DaClinica" id="da-clinica" />
-                                </div>
-                            </div>
-                        }*@
-
-                    @*@if (_dto.CargoId == CargosConst.Medico)
-                        {
-                            <div class="form-group col-md-4">
-                                <label for="crm">CRM</label>
-                                <InputText @bind-Value="context.CRM" class="form-control" id="crm" />
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="especialidades">Especialidades</label>
-                                <SelectWithSearch Id="especialidades"
-                                                  Placeholder="Selecione as especialidade do médico"
-                                                  Items="Especialidades"
-                                                  IsMultiple="true"
-                                                  Context="ctx">
-                                    <option value="@ctx.Id.ToString()">@ctx.Nome</option>
-                                </SelectWithSearch>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <h3 class="text-center">Horário de Trabalho do Médico</h3>
-                                <div class="table-responsive-md">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Dia da Semana</th>
-                                                <th>Início</th>
-                                                <th>Início Intervalo</th>
-                                                <th>Fim Intervalo</th>
-                                                <th>Fim</th>
-                                            </tr>
-                                        </thead>
-                                        @foreach (var horario in HorariosDeTrabalho)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" @bind-value="horario.Selecionado" id="@horario.DiaDaSemana.Item1" />
-                                                        <label class="custom-control-label" for="@horario.DiaDaSemana.Item1">@horario.DiaDaSemana.Item2 </label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input type="time" class="form-control" @bind-value="@horario.Inicio" disabled="@(!horario.Selecionado)" required />
-                                                </td>
-                                                <td>
-                                                    <input type="time" class="form-control" @bind-value="@horario.InicioIntervalo" disabled="@(!horario.Selecionado)" />
-                                                </td>
-                                                <td>
-                                                    <input type="time" class="form-control" @bind-value="@horario.FimIntervalo" disabled="@(!horario.Selecionado)" />
-                                                </td>
-                                                <td>
-                                                    <input type="time" class="form-control" @bind-value="@horario.Fim" disabled="@(!horario.Selecionado)" required />
-                                                </td>
-                                            </tr>
-                                        }
-                                    </table>
-                                </div>
-                            </div>
-                        }*@
-
-                    <div class="d-flex justify-content-end col-md-12">
-                        <button type="submit" class="btn btn-success">Salvar</button>
+                <!-- Campos extras para Cargo de Laboratório -->
+                @if (_usuarioViewModel.CargoId == CargosConst.Laboratorio)
+                {
+                    <div class="form-group col-md-4">
+                        <label for="da-clinica">Laboratório é da Clínica? </label>
+                        <InputCheckbox @bind-Value="_usuarioViewModel.DaClinica" id="da-clinica" />
                     </div>
+                }
+
+                <!-- Campos extras para Cargo de Médico -->
+                @if (_usuarioViewModel.CargoId == CargosConst.Medico)
+                {
+                    <div class="form-group col-md-4">
+                        <label for="crm">CRM</label>
+                        <InputText @bind-Value="_usuarioViewModel.CRM" class="form-control" id="crm" />
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label for="especialidades">Especialidades</label>
+                        <SelectWithSearch Id="especialidades"
+                                          Placeholder="Selecione as especialidade do médico"
+                                          Items="_especialidades"
+                                          IsMultiple="true"
+                                          Context="ctx">
+                            <option value="@ctx.Id.ToString()" selected="@(_usuarioViewModel.Especialidades.Any(_ => _.EspecialidadeId == ctx.Id && _.Ativo))">@ctx.Nome</option>
+                        </SelectWithSearch>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <h3 class="text-center">Horário de Trabalho do Médico</h3>
+                        <div class="table-responsive-md">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Dia da Semana</th>
+                                        <th>Início</th>
+                                        <th>Início Intervalo</th>
+                                        <th>Fim Intervalo</th>
+                                        <th>Fim</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var horario in _usuarioViewModel.HorariosDeTrabalho)
+                                {
+                                    <tr>
+                                        <td>
+                                            <InputCheckbox @bind-Value="horario.Selecionado" id="@horario.DiaDaSemana.Item1" />
+                                            <label for="@horario.DiaDaSemana.Item1">@horario.DiaDaSemana.Item2 </label>
+                                        </td>
+                                        <td>
+                                            <input type="time" class="form-control" @bind-value="@horario.Inicio" disabled="@(!horario.Selecionado)" step="1800" required />
+                                        </td>
+                                        <td>
+                                            <input type="time" class="form-control" @bind-value="@horario.InicioIntervalo" min="@horario.Inicio.ToString("HH:mm")" step="1800" disabled="@(!horario.Selecionado)" />
+                                        </td>
+                                        <td>
+                                            <input type="time" class="form-control" @bind-value="@horario.FimIntervalo" min="@horario.InicioIntervalo.ToString("HH:mm")" max="@horario.InicioIntervalo.AddHours(1).ToString("HH:mm")" step="1800" disabled="@(!horario.Selecionado)" />
+                                        </td>
+                                        <td>
+                                            <input type="time" class="form-control" @bind-value="@horario.Fim" min="@horario.Inicio.ToString("HH:mm")" disabled="@(!horario.Selecionado)" step="1800" required />
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    </div>
+                }
+
+                <div class="d-flex justify-content-end col-md-12">
+                    <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
             </div>
-        </div>
+        </EditForm>
     </div>
-</EditForm>
+</div>

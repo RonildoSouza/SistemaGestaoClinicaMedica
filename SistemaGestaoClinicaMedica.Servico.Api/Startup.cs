@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC;
@@ -25,7 +26,10 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(cfg =>
+            {
+                cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddDbContext<ContextoBancoDados>();
 

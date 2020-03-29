@@ -16,7 +16,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
             var medicos = Entidades.Include(_ => _.Usuario)
                                    .Include($"{nameof(Medico.Especialidades)}.{nameof(MedicoEspecialidade.Especialidade)}")
-                                   .Where(_ => _.Usuario.Ativo && _.Especialidades.Any(_ => _.EspecialidadeId == especialidadeId))
+                                   .Where(_ => _.Usuario.Ativo && _.Especialidades.Any(_ => _.EspecialidadeId == especialidadeId && _.Ativo))
                                    .ToList();
 
             return medicos;

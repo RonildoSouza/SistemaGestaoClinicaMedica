@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
-    public class MedicosServico : ServicoBaseLeitura<MedicoDTO, Guid>, IMedicosServico
+    public class MedicosServico : ServicoBase<MedicoDTO, Guid>, IMedicosServico
     {
         public MedicosServico(IConfiguration configuration) : base(configuration) { }
 

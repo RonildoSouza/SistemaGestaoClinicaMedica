@@ -7,8 +7,9 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public Guid Id { get; set; }
         public DayOfWeek DiaDaSemana { get; set; }
         public TimeSpan Inicio { get; set; }
-        public TimeSpan InicioAlmoco { get; set; }
-        public TimeSpan FimAlmoco { get; set; }
+        public TimeSpan InicioIntervalo { get; set; }
+        public TimeSpan FimIntervalo { get; set; }
         public TimeSpan Fim { get; set; }
+        public bool Ativo { get; set; }
     }
 }

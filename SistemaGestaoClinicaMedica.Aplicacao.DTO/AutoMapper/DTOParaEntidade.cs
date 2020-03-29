@@ -19,8 +19,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
             CreateMap<HorarioDeTrabalhoDTO, HorarioDeTrabalho>()
                 .ForMember(dest => dest.DiaDaSemana, opt => opt.MapFrom(src => (DayOfWeek)src.DiaDaSemana))
                 .ForMember(dest => dest.Inicio, opt => opt.MapFrom(src => TryParse(src.Inicio)))
-                .ForMember(dest => dest.InicioAlmoco, opt => opt.MapFrom(src => TryParse(src.InicioAlmoco)))
-                .ForMember(dest => dest.FimAlmoco, opt => opt.MapFrom(src => TryParse(src.FimAlmoco)))
+                .ForMember(dest => dest.InicioIntervalo, opt => opt.MapFrom(src => TryParse(src.InicioIntervalo)))
+                .ForMember(dest => dest.FimIntervalo, opt => opt.MapFrom(src => TryParse(src.FimIntervalo)))
                 .ForMember(dest => dest.Fim, opt => opt.MapFrom(src => TryParse(src.Fim)));
 
             CreateMap<MedicoEspecialidadeDTO, MedicoEspecialidade>()

@@ -11,6 +11,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
+            builder.Property(_ => _.Ativo).HasDefaultValue(true);
+
             builder.HasOne(_ => _.Medico)
                 .WithMany(_ => _.Especialidades)
                 .HasForeignKey(_ => _.MedicoId)

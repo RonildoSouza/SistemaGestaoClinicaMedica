@@ -58,7 +58,7 @@
 
 <!-- Modal de Seleção de Horario da Consulta-->
 <ModalComponent Id="modalHorarioConsulta"
-                Title="@($"{DataDaConsulta.ToString("dd/MM/yyyy")} - Horários Disponíveis")"
+                Title="@($"Horários Disponíveis para {DataDaConsulta.ToString("dddd, dd \\de MMMM, yyyy")}")"
                 ActionButtonText="Confirmar"
                 OnActionButton="AgendarConsultaAsync"
                 ActionButtonClass="btn-success"

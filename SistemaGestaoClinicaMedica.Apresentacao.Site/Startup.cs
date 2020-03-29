@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
 using System.Globalization;
+using AutoMapper;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site
 {
@@ -30,6 +32,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             services.RegistrarTudoPorAssembly(GetType().Assembly, "Documento");
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
+            services.AddAutoMapper(typeof(DTOParaViewModel), typeof(ViewModelParaDTO));
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }

@@ -6,6 +6,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
     {
         public Guid Id { get; set; }
         public Guid EspecialidadeId { get; set; }
+        public bool Ativo { get; set; }
         public MedicoDTO Medico { get; set; }
     }
 }
