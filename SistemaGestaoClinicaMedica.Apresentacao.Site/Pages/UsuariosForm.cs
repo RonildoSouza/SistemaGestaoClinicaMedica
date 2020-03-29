@@ -1,39 +1,35 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.LocalStorage;
+using Blazored.Toast.Services;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class UsuariosForm
     {
-        private List<string> _medicamentosSelecionados = new List<string>();
-        private object _dto;
+        [Parameter] public Guid Id { get; set; }
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private ILocalStorageService LocalStorage { get; set; }
+        [Inject] private IToastService ToastService { get; set; }
         [Inject] private ICargosServico CargosServico { get; set; }
         [Inject] private IEspecialidadesServico EspecialidadesServico { get; set; }
+        [Inject] private IAdministradoresServico AdministradoresServico { get; set; }
 
-        private List<CargoDTO> Cargos { get; set; } = new List<CargoDTO>();
-        private List<EspecialidadeDTO> Especialidades { get; set; } = new List<EspecialidadeDTO>();
-        private Dictionary<int, string> DiasDaSemana => new Dictionary<int, string>
-            {
-                {(int)DayOfWeek.Monday, "Segunda-feira" },
-                {(int)DayOfWeek.Tuesday, "Terça-feira" },
-                {(int)DayOfWeek.Wednesday, "Quarta-feira" },
-                {(int)DayOfWeek.Thursday, "Quinta-feira" },
-                {(int)DayOfWeek.Friday, "Sexta-feira" },
-                {(int)DayOfWeek.Saturday, "Sábado" },
-                {(int)DayOfWeek.Sunday, "Domingo" },
-            };
-
-        private List<HorarioDeTrabalho> HorariosDeTrabalho { get; set; } = new List<HorarioDeTrabalho>();
+        private List<string> _medicamentosSelecionados = new List<string>();
+        private List<CargoDTO> _cargos = new List<CargoDTO>();
+        private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
+        private List<HorarioDeTrabalho> _horariosDeTrabalho = new List<HorarioDeTrabalho>();
+        private UsuarioViewModel _usuarioViewModel = new UsuarioViewModel();
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
@@ -45,10 +41,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         protected async override Task OnInitializedAsync()
         {
-            Cargos = await CargosServico.GetAsync();
-            Especialidades = await EspecialidadesServico.GetAsync();
+            _cargos = await CargosServico.GetAsync();
+            _especialidades = await EspecialidadesServico.GetAsync();
 
-            HorariosDeTrabalho = new List<HorarioDeTrabalho>
+            _horariosDeTrabalho = new List<HorarioDeTrabalho>
             {
                new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Monday, "Segunda-feira"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
                new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Tuesday, "Terça-feira" ), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
@@ -58,9 +54,33 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Saturday, "Sábado"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
                new HorarioDeTrabalho(Tuple.Create((int)DayOfWeek.Sunday, "Domingo"), false, new DateTime(), new DateTime(), new DateTime(), new DateTime()),
             };
+
+            var cargoId = await LocalStorage.ObterUsuarioCargoIdLocalStorageAsync();
+            _usuarioViewModel.CargoId = cargoId;
+
+            switch (cargoId)
+            {
+                case CargosConst.Administrador:
+
+                    var administrador = await AdministradoresServico.GetAsync(Id);
+                    _usuarioViewModel.Nome = administrador.Nome;
+                    _usuarioViewModel.Email = administrador.Email;
+                    _usuarioViewModel.Telefone = administrador.Telefone;
+                    _usuarioViewModel.Senha = administrador.Senha;
+
+                    break;
+                case CargosConst.Recepcionista:
+                    break;
+                case CargosConst.Laboratorio:
+                    break;
+                case CargosConst.Medico:
+                    break;
+                default:
+                    break;
+            }
         }
 
-        //private void SelecionaDiaDaSemana(int dia)
+        //protected async override Task OnParametersSetAsync()
         //{
 
         //}
@@ -70,13 +90,40 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (!editContext.Validate())
                 return;
 
-            var horariosSelecionados = HorariosDeTrabalho.Where(_ => _.Selecionado);
-
-            if (horariosSelecionados.Any(_ => _.Fim > _.Inicio || _.FimIntervalo > _.InicioIntervalo))
+            switch (_usuarioViewModel.CargoId)
             {
-                //ToastService.ShowInfo("O horário final não pode ser maio que o horário inicial!");
-                return;
+                case CargosConst.Administrador:
+
+                    var administrador = new AdministradorDTO();
+                    administrador.Id = Id;
+                    administrador.Nome = _usuarioViewModel.Nome;
+                    administrador.Email = _usuarioViewModel.Email;
+                    administrador.Telefone = _usuarioViewModel.Telefone;
+                    administrador.Senha = _usuarioViewModel.Senha;
+
+                    if (Id == Guid.Empty)
+                        await AdministradoresServico.PostAsync(administrador);
+                    else
+                        await AdministradoresServico.PutAsync(Id, administrador);
+
+                    break;
+                case CargosConst.Recepcionista:
+                    break;
+                case CargosConst.Laboratorio:
+                    break;
+                case CargosConst.Medico:
+                    break;
+                default:
+                    break;
             }
+
+            //var horariosSelecionados = _horariosDeTrabalho.Where(_ => _.Selecionado);
+
+            //if (horariosSelecionados.Any(_ => _.Fim > _.Inicio || _.FimIntervalo > _.InicioIntervalo))
+            //{
+            //    ToastService.ShowInfo("O horário final não pode ser maio que o horário inicial!");
+            //    return;
+            //}
 
             //if (Id == Guid.Empty)
             //{
@@ -117,6 +164,15 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             //    _medicamentosSelecionados.Add(select2.Text);
             //}
         }
+    }
+
+    public class UsuarioViewModel
+    {
+        public string Nome { get; set; }
+        public string Email { get; set; }
+        public string Telefone { get; set; }
+        public string Senha { get; set; }
+        public string CargoId { get; set; }
     }
 
     public class HorarioDeTrabalho
