@@ -33,6 +33,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
         [Required]
         public string CargoId { get; set; }
         public bool Ativo { get; set; }
+        public bool ESuperUsuario { get; set; }
 
         public bool DaClinica { get; set; }
 

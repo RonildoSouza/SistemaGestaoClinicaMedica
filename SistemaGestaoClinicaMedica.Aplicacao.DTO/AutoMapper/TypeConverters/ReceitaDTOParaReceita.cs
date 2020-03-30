@@ -33,7 +33,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
                 yield return new ReceitaMedicamento
                 {
                     Id = recMed.Id,
-                    Medicamento = medicamento
+                    Medicamento = medicamento,
+                    Ativo = medicamento.Ativo
                 };
             }
         }

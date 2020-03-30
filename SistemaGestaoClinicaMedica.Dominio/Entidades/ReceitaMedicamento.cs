@@ -11,5 +11,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 
         public Guid MedicamentoId { get; set; }
         public Medicamento Medicamento { get; set; }
+
+        public bool Ativo { get; set; }
     }
 }

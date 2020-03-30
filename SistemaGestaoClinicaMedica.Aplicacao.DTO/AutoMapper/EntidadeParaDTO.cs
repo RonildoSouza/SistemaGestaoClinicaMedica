@@ -13,7 +13,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
                 .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
 
             CreateMap<Usuario, UsuarioDTO>()
-                .ForMember(dest => dest.Senha, opt => opt.Ignore());
+                .ForMember(dest => dest.Senha, opt => opt.Ignore())
+                .ForMember(dest => dest.ESuperUsuario, opt => opt.MapFrom(src => src.ESuperUsuario()));
 
             CreateMap<Administrador, AdministradorDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Usuario.Id))

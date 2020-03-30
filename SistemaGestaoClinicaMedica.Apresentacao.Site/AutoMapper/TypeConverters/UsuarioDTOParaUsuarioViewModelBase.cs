@@ -17,7 +17,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.TypeConverters
                 Email = source.Email,
                 Telefone = source.Telefone,
                 Senha = source.Senha,
-                Ativo = source.Ativo
+                Ativo = source.Ativo,
+                ESuperUsuario = source.ESuperUsuario
             };
 
             return destination;

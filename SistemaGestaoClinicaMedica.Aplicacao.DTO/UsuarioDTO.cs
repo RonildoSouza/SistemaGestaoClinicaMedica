@@ -16,5 +16,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         public string Senha { get; set; }
         public CargoDTO Cargo { get; set; }
         public bool Ativo { get; set; }
+
+        public bool ESuperUsuario { get; set; }
     }
 }

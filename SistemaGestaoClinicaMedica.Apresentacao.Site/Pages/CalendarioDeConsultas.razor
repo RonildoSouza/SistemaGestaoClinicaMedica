@@ -58,7 +58,7 @@
 
 <!-- Modal de Seleção de Horario da Consulta-->
 <ModalComponent Id="modalHorarioConsulta"
-                Title="@($"Horários Disponíveis para {DataDaConsulta.ToString("dddd, dd \\de MMMM, yyyy")}")"
+                Title="@($"Horários disponíveis para a especialidade {_especialidadeLocalStorage?.Nome} em {DataDaConsulta.ToString("dddd, dd \\de MMMM, yyyy")}")"
                 ActionButtonText="Confirmar"
                 OnActionButton="AgendarConsultaAsync"
                 ActionButtonClass="btn-success"
@@ -107,6 +107,7 @@
                 Title="Detalhes da Consulta">
     <Body>
         <p><strong>Código:</strong> @ConsultaEvento.Codigo</p>
+        <p><strong>Status da Consulta:</strong> @ConsultaEvento.StatusNome</p>
         <p><strong>Data/Hora:</strong> @ConsultaEvento.Data.ToDateAndTime()</p>
         <p><strong>Paciente:</strong> @ConsultaEvento.PacienteNome</p>
         <p><strong>Especialidade:</strong> @ConsultaEvento.EspecialidadeNome</p>
@@ -125,6 +126,6 @@
 <ConfirmDialogComponent Id="confirmModalDesmarcarConsulta"
                         MainButtonId="confirmDialogComponent"
                         MainButtonVisibled=false
-                        Message="@($"A consulta de código {ConsultaEvento?.Codigo} do paciente {ConsultaEvento?.PacienteNome} será desmarcada, deseja processeguir?")"
+                        Message="@($"A consulta de código {ConsultaEvento?.Codigo} do paciente {ConsultaEvento?.PacienteNome} será desmarcada, deseja prosseguir?")"
                         ActionButtonText="Sim"
                         OnActionButton="@DesmarcarConsultaAsync" />

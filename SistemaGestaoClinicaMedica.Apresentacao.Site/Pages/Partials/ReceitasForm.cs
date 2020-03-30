@@ -77,8 +77,14 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
             if (_dto.ReceitaMedicamentos.Any(_ => _.MedicamentoId == medicamentoId))
             {
                 var index = _dto.ReceitaMedicamentos.FindIndex(_ => _.MedicamentoId == medicamentoId);
-                _dto.ReceitaMedicamentos.RemoveAt(index);
-                _medicamentosSelecionados.Remove(select2.Text);
+
+                if (_dto.ReceitaMedicamentos[index].Id == Guid.Empty)
+                {
+                    _dto.ReceitaMedicamentos.RemoveAt(index);
+                    _medicamentosSelecionados.Remove(select2.Text);
+                }
+                else
+                    _dto.ReceitaMedicamentos[index].Ativo = !_dto.ReceitaMedicamentos[index].Ativo;
             }
             else
             {
