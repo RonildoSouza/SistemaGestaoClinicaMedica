@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class MedicamentosServico : ServicoBase<MedicamentoDTO, Guid>, IMedicamentosServico
     {
-        public MedicamentosServico(IConfiguration configuration) : base(configuration) { }
+        public MedicamentosServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
 
         public async Task<List<MedicamentoDTO>> GetPorNomeAsync(string nome)
         {

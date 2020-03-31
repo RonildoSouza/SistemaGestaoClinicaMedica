@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         protected Uri RequestUri { get; private set; }
         protected virtual string EndPoint => GetType().Name.Replace("Servico", string.Empty).ToLower();
 
-        public ServicoBaseLeitura(IConfiguration configuration)
+        public ServicoBaseLeitura(IConfiguration configuration, ILocalStorageService localStorage)
         {
-            ConfiguraHttpClient(configuration);
+            ConfiguraHttpClient(configuration, localStorage);
         }
 
         public async Task<TDTO> GetAsync(TId id)
@@ -36,7 +37,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             return JsonConvert.DeserializeObject<T>(json);
         }
 
-        private void ConfiguraHttpClient(IConfiguration configuration)
+        private void ConfiguraHttpClient(IConfiguration configuration, ILocalStorageService localStorage)
         {
             var apiUrlBase = configuration.GetValue<string>("ApiUrlBase");
             Uri.TryCreate($"{apiUrlBase}/{EndPoint}", UriKind.Absolute, out Uri uri);
@@ -45,8 +46,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             if (RequestUri == null)
                 throw new Exception($"Não foi possível criar a URI com a URL: {apiUrlBase}/{EndPoint}");
 
+            var token = localStorage.GetItemAsync<string>(LoginServico.ChaveLocalStorage).Result;
+
             HttpClient = new HttpClient();
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjcyNzA1NTBGLTZCMTgtNDFFMi05ODE0LTdERTk3QjhEOTY2QSB8IFNVUEVSIFVTVcOBUklPIiwianRpIjoiZjM4NzAyYTdmNDZmNGU0MGI0ZDU2NmIwYjc0YzFhNTciLCJEYXRhIjoie1wiSWRcIjpcIjcyNzA1NTBmLTZiMTgtNDFlMi05ODE0LTdkZTk3YjhkOTY2YVwiLFwiTm9tZVwiOlwiU3VwZXIgVXN1w6FyaW9cIixcIkNhcmdvSWRcIjpcIkFkbWluaXN0cmFkb3JcIixcIkVtYWlsXCI6XCJhZG1pbmlzdHJhZG9yQGVtYWlsLmNvbVwifSIsInJvbGUiOiJBZG1pbmlzdHJhZG9yIiwibmJmIjoxNTg0MjA2ODg2LCJleHAiOjE1OTUwMDY4ODYsImlhdCI6MTU4NDIwNjg4NiwiaXNzIjoiUjBOMUxEMCIsImF1ZCI6IlIwTjFMRDAifQ.klwDkf5bCwwYXBB7nKMRsp2RKMxyJzptHKj2PjxRmX0");
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
     }
 }

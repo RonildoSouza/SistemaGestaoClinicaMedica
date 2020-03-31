@@ -83,6 +83,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
 
             app.UseRouting();
 
+            //app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

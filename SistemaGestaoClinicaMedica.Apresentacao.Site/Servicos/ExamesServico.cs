@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
@@ -12,7 +13,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class ExamesServico : ServicoBase<ExameDTO, Guid>, IExamesServico
     {
-        public ExamesServico(IConfiguration configuration) : base(configuration) { }
+        public ExamesServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
 
         public async Task<ExameDTO> GetPorCodigoAsync(string codigo)
         {

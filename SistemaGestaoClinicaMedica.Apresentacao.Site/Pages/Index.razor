@@ -1,12 +1,18 @@
 ﻿@page "/"
+@attribute [Authorize(Roles = "Administrador")]
+
+@using Newtonsoft.Json;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
 
 <h1>Pagina de Testes</h1>
+
+<h3>@(UserName())</h3>
 
 <div class="custom-control custom-checkbox">
     <input type="checkbox" class="custom-control-input" id="customControlValidation1">
     <label class="custom-control-label" for="customControlValidation1">Default</label>
 </div>
-
 
 <div class="form-group">
     <label>Multiple</label>
@@ -21,3 +27,21 @@
         <option value="7">Ronildo</option>
     </select>
 </div>
+
+
+@code{
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    private string UserName()
+    {
+        var state = AuthenticationStateTask.Result;
+
+        if (state == null)
+            return string.Empty;
+
+        var c = state.User.Claims.FirstOrDefault(_ => _.Type == "Data");
+        var p = JsonConvert.DeserializeObject<PerfilViewModel>(c.Value);
+
+        return p.Nome;
+    }
+}

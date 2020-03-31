@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
@@ -11,7 +12,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class ConsultasServico : ServicoBase<ConsultaDTO, Guid>, IConsultasServico
     {
-        public ConsultasServico(IConfiguration configuration) : base(configuration) { }
+        public ConsultasServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
 
         public async Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {

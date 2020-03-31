@@ -1,14 +1,15 @@
+using AutoMapper;
 using Blazored.LocalStorage;
 using Blazored.Toast;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
 using System.Globalization;
-using AutoMapper;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site
 {
@@ -33,8 +34,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
             services.AddAutoMapper(typeof(DTOParaViewModel), typeof(ViewModelParaDTO));
-
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+            services.AddAuthorizationCore();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class PacientesServico : ServicoBase<PacienteDTO, Guid>, IPacientesServico
     {
-        public PacientesServico(IConfiguration configuration) : base(configuration) { }
+        public PacientesServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
 
         public async Task<PacienteDTO> GetPorCodigoAsync(string pacienteCodigo)
         {

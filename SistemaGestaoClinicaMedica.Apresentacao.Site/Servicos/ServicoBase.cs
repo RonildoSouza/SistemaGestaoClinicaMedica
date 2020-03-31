@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System.Net.Http;
@@ -10,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     public abstract class ServicoBase<TDTO, TId> : ServicoBaseLeitura<TDTO, TId>, IServicoBase<TDTO, TId>
         where TDTO : IDTO<TId>
     {
-        public ServicoBase(IConfiguration configuration) : base(configuration) { }
+        public ServicoBase(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
 
         public async Task<HttpResponseMessage> PostAsync(TDTO dto)
         {

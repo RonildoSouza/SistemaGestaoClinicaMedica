@@ -2,6 +2,8 @@
 {
     public class LoginSaidaDTO
     {
+        public LoginSaidaDTO() { }
+
         public LoginSaidaDTO(bool autenticado, string criadoEm, string expiracao, string tokenDeAcesso)
         {
             Autenticado = autenticado;
