@@ -1,6 +1,4 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System.Net.Http;
 using System.Text;
@@ -11,25 +9,25 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     public abstract class ServicoBase<TDTO, TId> : ServicoBaseLeitura<TDTO, TId>, IServicoBase<TDTO, TId>
         where TDTO : IDTO<TId>
     {
-        public ServicoBase(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
+        public ServicoBase(ApplicationState applicationState) : base(applicationState) { }
 
         public async Task<HttpResponseMessage> PostAsync(TDTO dto)
         {
             var jsonString = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            return await HttpClient.PostAsync(RequestUri, content);
+            return await ApplicationState.HttpClient.PostAsync(ApiEndPoint, content);
         }
 
         public async Task<HttpResponseMessage> PutAsync(TId id, TDTO dto)
         {
             var jsonString = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            return await HttpClient.PutAsync($"{RequestUri}/{id}", content);
+            return await ApplicationState.HttpClient.PutAsync($"{ApiEndPoint}/{id}", content);
         }
 
         public async Task<HttpResponseMessage> DeleteAsync(TId id)
         {
-            return await HttpClient.DeleteAsync($"{RequestUri}/{id}");
+            return await ApplicationState.HttpClient.DeleteAsync($"{ApiEndPoint}/{id}");
         }
     }
 }

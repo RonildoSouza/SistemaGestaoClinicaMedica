@@ -1,10 +1,7 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
-using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,43 +9,34 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class LoginServico : ILoginServico
     {
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
-        private readonly ILocalStorageService _localStorage;
-        public const string ChaveLocalStorage = "authToken";
-        private readonly Uri _requestUri;
+        private readonly ApplicationState _applicationState;
+        public const string ChaveLocalStorage = "access_token";
 
-        public LoginServico(IConfiguration configuration, AuthenticationStateProvider authenticationStateProvider, ILocalStorageService localStorage)
+        public LoginServico(ApplicationState applicationState)
         {
-            var apiUrlBase = configuration.GetValue<string>("ApiUrlBase");
-            Uri.TryCreate($"{apiUrlBase}/login", UriKind.Absolute, out _requestUri);
-
-            _authenticationStateProvider = authenticationStateProvider;
-            _localStorage = localStorage;
+            _applicationState = applicationState;
         }
 
-        public async Task<HttpResponseMessage> Login(LoginEntradaDTO loginEntrada)
+        public async Task<LoginSaidaDTO> LoginAsync(LoginEntradaDTO loginEntrada)
         {
             var jsonString = JsonConvert.SerializeObject(loginEntrada);
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            var response = await new HttpClient().PostAsync(_requestUri, content);
+            var response = await _applicationState.HttpClient.PostAsync("/api/login", content);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var loginSaida = JsonConvert.DeserializeObject<LoginSaidaDTO>(await response.Content.ReadAsStringAsync());
+            if (!response.IsSuccessStatusCode)
+                return null;
 
-                await _localStorage.SetItemAsync(ChaveLocalStorage, loginSaida.TokenDeAcesso);
-                CustomAuthenticationStateProvider.SetaTokenJwt(loginSaida.TokenDeAcesso);
-                ((CustomAuthenticationStateProvider)_authenticationStateProvider).SetaUsuarioComoAutenticado(loginEntrada.Email);
-            }
+            var loginSaida = JsonConvert.DeserializeObject<LoginSaidaDTO>(await response.Content.ReadAsStringAsync());
+            _applicationState.Token = loginSaida.Token;
+            _applicationState.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", loginSaida.Token);
 
-            return response;
+            return loginSaida;
         }
 
-        public async Task Logout()
+        public void Logout()
         {
-            await _localStorage.RemoveItemAsync(ChaveLocalStorage);
-            CustomAuthenticationStateProvider.SetaTokenJwt(string.Empty);
-            ((CustomAuthenticationStateProvider)_authenticationStateProvider).SetaUsuarioComoNaoAutenticado();
+            _applicationState.Token = null;
+            _applicationState.HttpClient.DefaultRequestHeaders.Authorization = null;
         }
     }
 }

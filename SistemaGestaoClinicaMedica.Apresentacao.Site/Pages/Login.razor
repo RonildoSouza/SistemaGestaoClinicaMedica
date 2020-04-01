@@ -1,52 +1,45 @@
 ﻿@page "/login"
 
+@using Blazored.LocalStorage;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 
-<h1>Login</h1>
+<div class="card" style="width: 30rem;position: relative;margin: auto;margin-top: 10rem;">
+    <div class="card-body">
+        <h5 class="card-title">Logar no sistema</h5>
 
-<EditForm Model="_loginEntradaDTO" OnValidSubmit="LoginAsync">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+        <EditForm Model="_loginEntradaDTO" OnValidSubmit="LoginAsync">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-    <div class="row">
-        <div class="col-md-12">
-            <InputText type="email" @bind-Value="_loginEntradaDTO.Email" placeholder="Email" class="form-control" />
-        </div>
-        <div class="col-md-12">
-            <InputText type="password" @bind-Value="_loginEntradaDTO.Senha" placeholder="Senha" class="form-control" />
-        </div>
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-success">Login</button>
-        </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <InputText type="email" @bind-Value="_loginEntradaDTO.Email" class="form-control" id="email" />
+            </div>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <InputText type="password" @bind-Value="_loginEntradaDTO.Senha" class="form-control" id="senha" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Logar</button>
+        </EditForm>
     </div>
-</EditForm>
+</div>
 
 @code{
     private LoginEntradaDTO _loginEntradaDTO = new LoginEntradaDTO();
 
-    [Inject] private ILoginServico AuthServico { get; set; }
+    [Inject] private ILoginServico LoginServico { get; set; }
+    [Inject] private ILocalStorageService LocalStorageService { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     private async Task LoginAsync()
     {
-        await AuthServico.Login(_loginEntradaDTO);
+        var loginSaida = await LoginServico.LoginAsync(_loginEntradaDTO);
+
+        if (loginSaida != null)
+        {
+            await LocalStorageService.SetItemAsync(Servicos.LoginServico.ChaveLocalStorage, loginSaida.Token);
+            NavigationManager.NavigateTo("/", true);
+        }
     }
-
-
-    //[CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-    //private async Task LogUserAuthenticationState()
-    //{
-    //    var authState = await AuthenticationStateTask;
-    //    var user = authState.User;
-
-    //    if (user.Identity.IsAuthenticated)
-    //    {
-    //        Console.WriteLine($"User {user.Identity.Name} is authenticated.");
-    //    }
-    //    else
-    //    {
-    //        Console.WriteLine("User is NOT authenticated.");
-    //    }
-    //}
 }

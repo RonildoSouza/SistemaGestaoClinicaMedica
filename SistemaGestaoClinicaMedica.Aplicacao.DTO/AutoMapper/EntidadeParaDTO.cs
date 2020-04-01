@@ -1,15 +1,14 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 
-namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
+namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
 {
     public class EntidadeParaDTO : Profile
     {
         public EntidadeParaDTO()
         {
-            CreateMap<Usuario, LoginEntradaAutenticacaoDTO>()
+            CreateMap<Usuario, LoginAutenticacaoDTO>()
                 .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
 
             CreateMap<Usuario, UsuarioDTO>()

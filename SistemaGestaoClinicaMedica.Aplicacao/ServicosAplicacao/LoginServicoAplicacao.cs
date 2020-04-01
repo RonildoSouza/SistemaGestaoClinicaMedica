@@ -1,28 +1,34 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public sealed class LoginServicoAplicacao : ILoginServicoAplicacao
     {
         private readonly IMapper _mapper;
-        private readonly IUsuarioServico _funcionarioServico;
+        private readonly IUsuarioServico _usuarioServico;
+        private readonly IAutenticacaoServico _autenticacaoServico;
 
-        public LoginServicoAplicacao(IMapper mapper, IUsuarioServico funcionarioServico)
+        public LoginServicoAplicacao(IMapper mapper, IUsuarioServico funcionarioServico, IAutenticacaoServico autenticacaoServico)
         {
             _mapper = mapper;
-            _funcionarioServico = funcionarioServico;
+            _usuarioServico = funcionarioServico;
+            _autenticacaoServico = autenticacaoServico;
         }
 
-        public LoginEntradaAutenticacaoDTO Autorizar(LoginEntradaDTO loginEntradaDTO)
+        public LoginSaidaDTO Login(LoginEntradaDTO loginEntradaDTO)
         {
-            var entidade = _funcionarioServico.Autorizar(loginEntradaDTO.Email, loginEntradaDTO.Senha);
+            var usuario = _usuarioServico.Autorizar(loginEntradaDTO.Email, loginEntradaDTO.Senha);
 
-            if (entidade == null)
+            if (usuario == null)
                 return null;
 
-            return _mapper.Map<LoginEntradaAutenticacaoDTO>(entidade);
+            var loginAutenticacao = _mapper.Map<LoginAutenticacaoDTO>(usuario);
+            var loginSaida = _autenticacaoServico.Autenticar(loginAutenticacao);
+            
+            return loginSaida;
         }
     }
 }

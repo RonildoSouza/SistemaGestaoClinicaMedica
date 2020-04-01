@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+using System;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
 {
@@ -8,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
         public string Nome { get; set; }
         public string CargoId { get; set; }
         public string Email { get; set; }
+        public bool EAdministrador => CargoId == CargosConst.Administrador;
     }
 }

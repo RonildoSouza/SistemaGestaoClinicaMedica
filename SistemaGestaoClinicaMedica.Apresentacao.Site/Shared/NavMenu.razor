@@ -1,5 +1,10 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Clínica Médica</a>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="navbar-brand" href="">Clínica Médica</a>
+            <button class="btn btn-danger float-md-right" @onclick="Logout">Deslogar</button>
+        </div>
+    </div>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -45,13 +50,47 @@
     </ul>
 </div>
 
+@using Blazored.LocalStorage;
+@using Newtonsoft.Json;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
+
 @code {
     private bool collapseNavMenu = true;
-
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private PerfilViewModel _perfilViewModel;
+
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [Inject] private ILoginServico LoginServico { get; set; }
+    [Inject] private ILocalStorageService LocalStorageService { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        var authState = await AuthenticationStateTask;
+
+        if (authState == null)
+            return;
+
+        var claim = authState.User.Claims.FirstOrDefault(_ => _.Type == "Data");
+
+        if (claim != null)
+            _perfilViewModel = JsonConvert.DeserializeObject<PerfilViewModel>(claim.Value);
+    }
+
+    private async Task Logout()
+    {
+        LoginServico.Logout();
+        await LocalStorageService.RemoveItemAsync(Servicos.LoginServico.ChaveLocalStorage);
+        NavigationManager.NavigateTo("login", true);
     }
 }

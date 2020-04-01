@@ -8,8 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Providers;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
+using System;
 using System.Globalization;
+using System.Net.Http;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site
 {
@@ -29,11 +33,21 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             services.AddRazorPages();
             services.AddServerSideBlazor();
 
+            var apiUrlBase = Configuration.GetValue<string>("ApiUrlBase");
+            Uri.TryCreate(apiUrlBase, UriKind.Absolute, out Uri uri);
+
+            services.AddSingleton(new HttpClient
+            {
+                BaseAddress = uri,
+            });
+
             services.RegistrarTudoPorAssembly(GetType().Assembly, "Servico");
             services.RegistrarTudoPorAssembly(GetType().Assembly, "Documento");
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
             services.AddAutoMapper(typeof(DTOParaViewModel), typeof(ViewModelParaDTO));
+
+            services.AddSingleton<ApplicationState>();
             services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
             services.AddAuthorizationCore();
         }

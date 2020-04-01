@@ -4,6 +4,6 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
 {
     public interface IAutenticacaoServico
     {
-        LoginSaidaDTO Autenticar(LoginEntradaAutenticacaoDTO login);
+        LoginSaidaDTO Autenticar(LoginAutenticacaoDTO login);
     }
 }

@@ -1,11 +1,9 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.Extensions.Configuration;
-using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class CargosServico : ServicoBaseLeitura<CargoDTO, string>, ICargosServico
     {
-        public CargosServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
+        public CargosServico(ApplicationState applicationState) : base(applicationState) { }
     }
 }

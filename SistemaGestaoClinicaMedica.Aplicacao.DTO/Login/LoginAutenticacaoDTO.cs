@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.Login
 {
-    public class LoginEntradaAutenticacaoDTO
+    public class LoginAutenticacaoDTO
     {
         [Required]
         public Guid Id { get; set; }

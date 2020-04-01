@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj" />
     <ProjectReference Include="..\SistemaGestaoClinicaMedica.Dominio\SistemaGestaoClinicaMedica.Dominio.csproj" />
+    <ProjectReference Include="..\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config\SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
             _jwtAutenticacaoConfig = jwtAutenticacaoConfig;
         }
 
-        public LoginSaidaDTO Autenticar(LoginEntradaAutenticacaoDTO login)
+        public LoginSaidaDTO Autenticar(LoginAutenticacaoDTO login)
         {
             var claims = new List<Claim>
             {
@@ -48,6 +48,7 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autentic
             var formatacaoData = "yyyy-MM-dd HH:mm:ss";
 
             return new LoginSaidaDTO(
+                login.Id,
                 true,
                 criadoEm.ToString(formatacaoData),
                 expiracao.ToString(formatacaoData),

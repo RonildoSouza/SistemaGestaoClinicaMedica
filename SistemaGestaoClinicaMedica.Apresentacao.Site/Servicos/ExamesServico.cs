@@ -1,6 +1,4 @@
-﻿using Blazored.LocalStorage;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
 using System.Collections.Generic;
@@ -13,11 +11,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public class ExamesServico : ServicoBase<ExameDTO, Guid>, IExamesServico
     {
-        public ExamesServico(IConfiguration configuration, ILocalStorageService localStorage) : base(configuration, localStorage) { }
+        public ExamesServico(ApplicationState applicationState) : base(applicationState) { }
 
         public async Task<ExameDTO> GetPorCodigoAsync(string codigo)
         {
-            var response = await HttpClient.GetStringAsync($"{RequestUri}/por-codigo/{codigo}");
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-codigo/{codigo}");
             return JsonToDTO<ExameDTO>(response);
         }
 
@@ -28,7 +26,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
                 { new StreamContent(stream), "file", arquivoNome }
             };
 
-            var response = await HttpClient.PostAsync($"{RequestUri}/uploadresultado/{id}", m);
+            var response = await ApplicationState.HttpClient.PostAsync($"{ApiEndPoint}/uploadresultado/{id}", m);
             var content = await response.Content.ReadAsStringAsync();
             return JsonToDTO<Uri>(content);
         }
@@ -37,13 +35,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         {
             var jsonString = JsonConvert.SerializeObject(new StatusConsultaDTO { Id = statusExameId });
             var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            var response = await HttpClient.PutAsync($"{RequestUri}/alterar-status/{id}", content);
+            var response = await ApplicationState.HttpClient.PutAsync($"{ApiEndPoint}/alterar-status/{id}", content);
             return response;
         }
 
         public async Task<List<ExameDTO>> GetPorConsultaAsync(Guid consultaId)
         {
-            var response = await HttpClient.GetStringAsync($"{RequestUri}/por-consulta/{consultaId}");
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-consulta/{consultaId}");
             return JsonToDTO<List<ExameDTO>>(response);
         }
     }

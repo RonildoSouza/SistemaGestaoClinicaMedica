@@ -4,6 +4,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
     public interface ILoginServicoAplicacao
     {
-        LoginEntradaAutenticacaoDTO Autorizar(LoginEntradaDTO loginEntradaDTO);
+        LoginSaidaDTO Login(LoginEntradaDTO loginEntradaDTO);
     }
 }

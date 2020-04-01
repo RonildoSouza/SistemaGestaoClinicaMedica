@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using System;
 
-namespace SistemaGestaoClinicaMedica.Aplicacao.AutoMapper
+namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
 {
     public class DTOParaEntidade : Profile
     {

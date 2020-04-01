@@ -2,8 +2,7 @@
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
             <NotAuthorized>
-                <h1>:(</h1>
-                <p>Você não está autorizado a acessar esta página.</p>
+                <h3>Você não está autorizado a acessar esta página. :(</h3>
             </NotAuthorized>
         </AuthorizeRouteView>
     </Found>
@@ -15,3 +14,23 @@
         </CascadingAuthenticationState>
     </NotFound>
 </Router>
+
+@using Blazored.LocalStorage;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
+@code{
+    [Inject] private ILocalStorageService LocalStorageService { get; set; }
+    [Inject] private ApplicationState ApplicationState { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            ApplicationState.Token = await LocalStorageService.GetItemAsync<string>(LoginServico.ChaveLocalStorage);
+
+            if (string.IsNullOrEmpty(ApplicationState.Token))
+                NavigationManager.NavigateTo("login");
+        }
+    }
+}

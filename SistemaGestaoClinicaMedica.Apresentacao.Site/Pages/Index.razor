@@ -2,12 +2,13 @@
 @attribute [Authorize(Roles = "Administrador")]
 
 @using Newtonsoft.Json;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
 
 <h1>Pagina de Testes</h1>
 
-<h3>@(UserName())</h3>
+<hr />
+<h3>@_userName</h3>
+<hr />
 
 <div class="custom-control custom-checkbox">
     <input type="checkbox" class="custom-control-input" id="customControlValidation1">
@@ -32,16 +33,20 @@
 @code{
     [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-    private string UserName()
+    private string _userName;
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
+        await base.OnAfterRenderAsync(firstRender);
+
         var state = AuthenticationStateTask.Result;
 
         if (state == null)
-            return string.Empty;
+            _userName = string.Empty;
 
         var c = state.User.Claims.FirstOrDefault(_ => _.Type == "Data");
         var p = JsonConvert.DeserializeObject<PerfilViewModel>(c.Value);
 
-        return p.Nome;
+        _userName = p.Nome;
     }
 }

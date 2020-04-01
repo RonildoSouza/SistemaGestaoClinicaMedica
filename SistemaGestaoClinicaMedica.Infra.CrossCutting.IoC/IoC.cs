@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
@@ -21,6 +23,8 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             services.RegistrarTudoPorAssembly(typeof(IQueryBase<>).Assembly, "Query");
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddAutoMapper(typeof(DTOParaEntidade), typeof(EntidadeParaDTO));
         }
     }
 }

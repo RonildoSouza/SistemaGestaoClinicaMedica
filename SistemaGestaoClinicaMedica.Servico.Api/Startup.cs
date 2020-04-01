@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC;
 using SistemaGestaoClinicaMedica.Infra.Data;
@@ -64,10 +63,6 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser().Build());
             });
-            #endregion
-
-            #region Registra AutoMapper
-            AutoMapperConfig.Registrar(services);
             #endregion
         }
 

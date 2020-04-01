@@ -23,7 +23,7 @@
         <td>@(context.Ativo ? "Sim" : "Não")</td>
         <td>
             <button @onclick="(e => EditarUsuario(context.Cargo.Id, context.Id))" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></button>
-            
+
             @if (context.Ativo && !context.ESuperUsuario)
             {
                 <ConfirmDialogComponent Id="@context.Id.ToString()"
