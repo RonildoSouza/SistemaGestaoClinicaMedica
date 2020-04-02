@@ -34,6 +34,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [HttpGet, Route("por-codigo/{codigo}")]
+        public IActionResult GetPorCodigo(string codigo)
+        {
+            var saidaDTO = _consultaServicoAplicacao.ObterPorCodigo(codigo);
+            return Ok(saidaDTO);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
         [HttpDelete, Route("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -65,7 +73,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Created($"/{saidaDTO.Id}", saidaDTO);
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpPut, Route("alterar-status/{id}")]
         public IActionResult Put([FromRoute]Guid id, [FromBody]StatusConsultaDTO statusConsulta)
         {

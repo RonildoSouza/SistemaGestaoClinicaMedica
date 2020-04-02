@@ -32,7 +32,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Providers
             var claims = jwtToken.Claims.ToList();
             CorrigeClaimType(ref claims);
 
-            return Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"))));
+            var authStateTask = Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"))));
+
+            NotifyAuthenticationStateChanged(authStateTask);
+            return authStateTask;
         }
 
         private void CorrigeClaimType(ref List<Claim> claims)

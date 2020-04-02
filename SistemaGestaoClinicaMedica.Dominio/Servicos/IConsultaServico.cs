@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
         Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados);
         IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status, Guid? medicoId = null);
         void AlterarStatus(Guid id, EStatusConsulta eStatusConsulta);
+        Consulta ObterPorCodigo(string codigo);
     }
 }

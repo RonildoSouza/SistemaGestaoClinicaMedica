@@ -38,7 +38,15 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         {
             var saidaDTOs = _especialidadeServicoAplicacao.ObterHorariosDisponiveis(id, dataDaConsulta, medicoId);
             return Ok(saidaDTOs);
-        }        
+        }
+
+        [Authorize("Bearer")]
+        [HttpGet, Route("{id}/datas-com-horarios-disponiveis/{dataInicio}/{dataFim}/{medicoId?}")]
+        public IActionResult GetDatasComHorariosDisponiveis(Guid id, DateTime dataInicio, DateTime dataFim, Guid? medicoId)
+        {
+            var saidaDTOs = _especialidadeServicoAplicacao.ObterDatasComHorariosDisponiveis(id, dataInicio, dataFim, medicoId);
+            return Ok(saidaDTOs);
+        }
 
         [Authorize("Bearer")]
         [HttpGet, Route("{id}")]

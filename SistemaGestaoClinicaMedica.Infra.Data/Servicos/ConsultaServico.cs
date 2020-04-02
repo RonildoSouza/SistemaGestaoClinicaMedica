@@ -48,5 +48,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return _consultasQuery.ObterTudoComFiltros(dataInicio, dataFim, busca, status, medicoId);
         }
+
+        public Consulta ObterPorCodigo(string codigo)
+        {
+            return _consultasQuery.ObterPorCodigo(codigo);
+        }
     }
 }

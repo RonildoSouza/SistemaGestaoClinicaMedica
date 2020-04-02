@@ -3,6 +3,7 @@ using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
@@ -18,6 +19,17 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private PacienteLocalStorage _pacienteLocalStorage = new PacienteLocalStorage();
         private EspecialidadeLocalStorage _especialidadeLocalStorage;
         private MedicoLocalStorage _medicoLocalStorage;
+        private static DateTime _fullCalendarCurrentStartDate;
+        private string _pacienteCodigo;
+        private List<EspecialidadeDTO> _especialidades;
+        private List<MedicoDTO> _medicos = new List<MedicoDTO>();
+        private bool _agendarConsulta;
+        private List<TimeSpan> _horariosDisponiveis = new List<TimeSpan>();
+        private DateTime _dataDaConsulta;
+        private TimeSpan _horarioDaConsulta;
+        private ConsultaEvento _consultaEvento = new ConsultaEvento();
+        private bool _carregando;
+        private string _busca;
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILocalStorageService LocalStorage { get; set; }
@@ -28,19 +40,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject] private IEspecialidadesServico EspecialidadesServico { get; set; }
         [Inject] private IMedicosServico MedicosServico { get; set; }
 
-        private string PacienteCodigo { get; set; }
-        private List<EspecialidadeDTO> Especialidades { get; set; }
-        private List<MedicoDTO> Medicos { get; set; } = new List<MedicoDTO>();
-        private bool AgendarConsulta { get; set; }
-        private List<TimeSpan> HorariosDisponiveis { get; set; } = new List<TimeSpan>();
-        private DateTime DataDaConsulta { get; set; }
-        private TimeSpan HorarioDaConsulta { get; set; }
-        private ConsultaEvento ConsultaEvento { get; set; } = new ConsultaEvento();
-
         protected async override Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            Especialidades = await EspecialidadesServico.GetDisponiveisAsync();
+            _especialidades = await EspecialidadesServico.GetDisponiveisAsync();
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -51,10 +54,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 await CalendarRenderAsync(DateTime.Today, DateTime.Today.AddYears(1));
         }
 
-        private async Task CalendarRenderAsync(DateTime dataInicio, DateTime dataFim, string busca = "", string status = "Agendada|AguardandoRetorno")
+        private async Task CalendarRenderAsync(DateTime dataInicio, DateTime dataFim, string busca = "", string viewRender = null, DateTime? gotoDate = null)
         {
-            var consultas = await ConsultasServico.GetTudoComFiltrosAsync(dataInicio, dataFim, busca, status);
+            _carregando = true;
+            StateHasChanged();
 
+            var consultas = await ConsultasServico.GetTudoComFiltrosAsync(dataInicio, dataFim, busca, "Agendada|AguardandoRetorno|Reagendada");
+            var datas = await EspecialidadesServico.GetObterDatasComHorariosDisponiveisAsync((_especialidadeLocalStorage?.Id).GetValueOrDefault(), dataInicio, dataFim, _medicoLocalStorage?.Id);
 
             var fullCalendarEvent = consultas.Select(_ => new FullCalendarEvent
             {
@@ -65,23 +71,40 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 {
                     ConsultaCodigo = _.Codigo,
                     PacienteNome = _.Paciente.Nome,
+                    EspecialidadeId = _.Especialidade.Id,
                     EspecialidadeNome = _.Especialidade.Nome,
+                    MedicoId = _.Medico.Id,
                     MedicoNome = $"{_.Medico.Nome} - CRM {_.Medico.CRM}",
                     StatusId = _.StatusConsulta.Id,
-                    StatusNome = _.StatusConsulta.Nome,
-                }
+                    StatusNome = _.StatusConsulta.Nome,                    
+                },
+                BackgroundColor = _.StatusConsultaId == "AguardandoRetorno" ? "#6c757d" : "#ffc107",
+                TextColor = _.StatusConsultaId == "AguardandoRetorno" ? "#fff" : "#212529",
             });
+
+            _carregando = false;
+            StateHasChanged();
 
             var dotNetReference = DotNetObjectReference.Create(this);
 
             await JSRuntime.InvokeVoidAsync(
                 "fullCalendarJsInterop.calendarRender",
-                fullCalendarEvent, dotNetReference);
+                fullCalendarEvent,
+                dotNetReference,
+                datas?.Select(_ => new { Data = _.Key, TemHorario = _.Value }),
+                viewRender,
+                gotoDate);
         }
 
         private async Task BuscaPacienteAsync()
         {
-            var paciente = await PacientesServico.GetPorCodigoAsync(PacienteCodigo);
+            if (string.IsNullOrEmpty(_pacienteCodigo) || _pacienteCodigo.Length < 4)
+            {
+                ToastService.ShowInfo($"O código {_pacienteCodigo} de paciente é inválido!");
+                return;
+            }
+
+            var paciente = await PacientesServico.GetPorCodigoAsync(_pacienteCodigo);
             if (paciente == null)
             {
                 ToastService.ShowInfo("Nenhum paciente encontrado!");
@@ -101,23 +124,25 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 return;
 
             var especialidadeId = Guid.Parse(args.Value.ToString());
-            Medicos = await MedicosServico.GetPorEspecialidadeAsync(especialidadeId);
+            _medicos = await MedicosServico.GetPorEspecialidadeAsync(especialidadeId);
 
-            var especialidade = Especialidades.First(_ => _.Id == especialidadeId);
+            var especialidade = _especialidades.First(_ => _.Id == especialidadeId);
             _especialidadeLocalStorage = new EspecialidadeLocalStorage
             {
                 Id = especialidadeId,
                 Nome = especialidade.Nome
             };
+
+            await CalendarReRenderAsync();
         }
 
-        private void SelecionaMedico(ChangeEventArgs args)
+        private async Task SelecionaMedico(ChangeEventArgs args)
         {
             if (string.IsNullOrEmpty(args.Value?.ToString()))
                 return;
 
             var medicoId = Guid.Parse(args.Value.ToString());
-            var medico = Medicos.First(_ => _.Id == medicoId);
+            var medico = _medicos.First(_ => _.Id == medicoId);
 
             _medicoLocalStorage = new MedicoLocalStorage
             {
@@ -125,20 +150,22 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 Nome = medico.Nome,
                 CRM = medico.CRM
             };
+
+            await CalendarReRenderAsync();
         }
 
-        public async Task AgendarConsultaAsync()
+        private async Task AgendarConsultaAsync()
         {
             if (_medicoLocalStorage == null)
             {
-                ToastService.ShowInfo("Falta informar Médico!");
+                ToastService.ShowInfo("Falta informar o Médico!");
                 await JSRuntime.ScrollTo();
                 return;
             }
 
             await LocalStorage.CriaConsultaLocalStorageAsync(new ConsultaLocalStorage
             {
-                Data = DataDaConsulta.Add(HorarioDaConsulta),
+                Data = _dataDaConsulta.Add(_horarioDaConsulta),
                 Paciente = _pacienteLocalStorage,
                 Especialidade = _especialidadeLocalStorage,
                 Medico = _medicoLocalStorage,
@@ -147,24 +174,125 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             NavigationManager.NavigateTo($"consultas/novo");
         }
 
-        public async Task DesmarcarConsultaAsync()
+        private async Task DesmarcarConsultaAsync()
         {
-            if (!Guid.TryParse(ConsultaEvento.Id, out Guid consultaId))
+            if (!Guid.TryParse(_consultaEvento.Id, out Guid consultaId))
                 return;
 
             var httpResponse = await ConsultasServico.DeleteAsync(consultaId);
 
             if (httpResponse.IsSuccessStatusCode)
             {
-                ToastService.ShowSuccess($"Consulta de código {ConsultaEvento.Codigo}, foi desmarcada!");
+                ToastService.ShowSuccess($"Consulta de código {_consultaEvento.Codigo}, foi desmarcada!");
                 await CalendarRenderAsync(DateTime.Today, DateTime.Today.AddYears(1));
             }
         }
 
+        private async Task ReAgendarConsultaAsync()
+        {
+            if (!Guid.TryParse(_consultaEvento.Id, out Guid consultaId))
+                return;
+
+            if (_dataDaConsulta == DateTime.MinValue || _dataDaConsulta < DateTime.Now)
+            {
+                ToastService.ShowError("A data selecionada é inválido!");
+                return;
+            }
+
+            var consulta = await ConsultasServico.GetAsync(consultaId);
+            var dto = new ConsultaDTO
+            {
+                Data = _dataDaConsulta.Add(_horarioDaConsulta),
+                Observacao = consulta.Observacao,
+                StatusConsultaId = StatusConsultaConst.Reagendada,
+                PacienteId = consulta.PacienteId,
+                MedicoId = consulta.MedicoId,
+                EspecialidadeId = consulta.EspecialidadeId,
+            };
+
+            var httpResponse = await ConsultasServico.PutAsync(consultaId, dto);
+
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                ToastService.ShowSuccess($"Consulta de código {_consultaEvento.Codigo}, foi reagendada!");
+                await CalendarRenderAsync(DateTime.Today, DateTime.Today.AddYears(1));
+            }
+            else
+            {
+                ToastService.ShowError($"Falha ao tentar reagendar a consulta de código {_consultaEvento.Codigo}!");
+            }
+        }
+
+        private void Cancelar()
+        {
+            _agendarConsulta = !_agendarConsulta;
+            _pacienteCodigo = string.Empty;
+            _pacienteLocalStorage = new PacienteLocalStorage();
+
+            StateHasChanged();
+        }
+
+        private async Task CalendarReRenderAsync()
+        {
+            var dataInicio = _fullCalendarCurrentStartDate;
+            var dataFim = _fullCalendarCurrentStartDate.AddMonths(3);
+
+            await CalendarRenderAsync(dataInicio, dataFim, gotoDate: dataInicio);
+        }
+
+        private async Task AlteraDataReagendamento(ChangeEventArgs args)
+        {
+            if (!DateTime.TryParse(args.Value.ToString(), out DateTime data))
+                return;
+
+            if (data < DateTime.Now)
+            {
+                ToastService.ShowError("A data selecionada é menor que a atual!");
+                return;
+            }
+
+            var especialidadeId = Guid.Parse(_consultaEvento.EspecialidadeId);
+            var medicoId = Guid.Parse(_consultaEvento.MedicoId);
+
+            _dataDaConsulta = data;
+            _horariosDisponiveis = await EspecialidadesServico.GetHorariosDisponiveisAsync(especialidadeId, _dataDaConsulta, medicoId);
+            StateHasChanged();
+        }
+
+        private void SelecionaHorarioReagendamento(ChangeEventArgs args)
+        {
+            if (!TimeSpan.TryParse(args.Value.ToString(), out TimeSpan horarioDaConsulta))
+            {
+                ToastService.ShowError("O horário selecionado é inválido");
+                return;
+            }
+
+            _horarioDaConsulta = horarioDaConsulta;
+        }
+
+        private async Task BuscarAsync()
+        {
+            if (string.IsNullOrEmpty(_busca))
+                return;
+
+            var consulta = await ConsultasServico.GetPorCodigoAsync(_busca);
+
+            if (consulta == null)
+            {
+                ToastService.ShowInfo($"Nenhuma consulta encontrada com o código {_busca}");
+                return;
+            }
+
+            await CalendarRenderAsync(consulta.Data, consulta.Data, _busca, "listWeek", consulta.Data);
+        }
+
+        [JSInvokable]
+        public void SetCurrentStartDate(DateTime dateTime) => _fullCalendarCurrentStartDate = dateTime;
+
         [JSInvokable]
         public async Task HorariosDisponiveisAsync(DateTime dataDaConsulta)
         {
-            if (!AgendarConsulta)
+            if (!_agendarConsulta)
                 return;
 
             if (_pacienteLocalStorage.Id == Guid.Empty || _especialidadeLocalStorage == null)
@@ -174,9 +302,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 return;
             }
 
-            DataDaConsulta = dataDaConsulta.AddHours(-dataDaConsulta.Hour);
+            _dataDaConsulta = dataDaConsulta.AddHours(-dataDaConsulta.Hour);
 
-            HorariosDisponiveis = await EspecialidadesServico.GetHorariosDisponiveisAsync(_especialidadeLocalStorage.Id, DataDaConsulta, _medicoLocalStorage?.Id);
+            _horariosDisponiveis = await EspecialidadesServico.GetHorariosDisponiveisAsync(_especialidadeLocalStorage.Id, _dataDaConsulta, _medicoLocalStorage?.Id);
             StateHasChanged();
 
             await JSRuntime.InvokeVoidAsync("calendarioDeConsultasJsInterop.showModalHorarioConsulta");
@@ -185,7 +313,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [JSInvokable]
         public async Task DetalhesConsultaAsync(ConsultaEvento consultaEvento)
         {
-            ConsultaEvento = consultaEvento;
+            _consultaEvento = consultaEvento;
             StateHasChanged();
             await JSRuntime.InvokeVoidAsync("calendarioDeConsultasJsInterop.showModalDesmarcarConsulta");
         }

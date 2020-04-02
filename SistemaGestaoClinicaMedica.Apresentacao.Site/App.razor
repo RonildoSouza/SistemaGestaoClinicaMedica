@@ -17,6 +17,7 @@
 
 @using Blazored.LocalStorage;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@using System.Net.Http.Headers;
 
 @code{
     [Inject] private ILocalStorageService LocalStorageService { get; set; }
@@ -28,6 +29,7 @@
         if (firstRender)
         {
             ApplicationState.Token = await LocalStorageService.GetItemAsync<string>(LoginServico.ChaveLocalStorage);
+            ApplicationState.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApplicationState.Token);
 
             if (string.IsNullOrEmpty(ApplicationState.Token))
                 NavigationManager.NavigateTo("login");

@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
         ConsultaDTO Obter(Guid id, bool comExames, bool comAtestados);
         IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null);
         void AlterarStatus(Guid id, StatusConsultaDTO statusConsulta);
+        ConsultaDTO ObterPorCodigo(string codigo);
     }
 }

@@ -64,6 +64,23 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return horariosDisponiveis;
         }
 
+        public IDictionary<DateTime, bool> ObterDatasComHorariosDisponiveis(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId = null)
+        {
+            var dicionarioDatas = new Dictionary<DateTime, bool>();
+
+            if (especialidadeId == Guid.Empty)
+                return dicionarioDatas;
+
+            while (dataInicio <= dataFim)
+            {
+                var horarios = ObterHorariosDisponiveis(especialidadeId, dataInicio, medicoId);
+                dicionarioDatas.Add(dataInicio, horarios.Any());
+                dataInicio = dataInicio.AddDays(1);
+            }
+
+            return dicionarioDatas;
+        }
+
         private IEnumerable<TimeSpan> HorariosDisponiveis(IEnumerable<HorarioDeTrabalho> horarios)
         {
             if (!horarios.Any())

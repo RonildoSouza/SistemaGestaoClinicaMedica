@@ -12,6 +12,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     {
         public ConsultasServico(ApplicationState applicationState) : base(applicationState) { }
 
+        public async Task<ConsultaDTO> GetPorCodigoAsync(string codigo)
+        {
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-codigo/{codigo}");
+            return JsonToDTO<ConsultaDTO>(response);
+        }
+
         public async Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {
             var endpoint = $"{ApiEndPoint}/?dataInicio={dataInicio.ToString("yyyy-MM-dd")}&dataFim={dataFim.ToString("yyyy-MM-dd")}&busca={busca}&status={status}";

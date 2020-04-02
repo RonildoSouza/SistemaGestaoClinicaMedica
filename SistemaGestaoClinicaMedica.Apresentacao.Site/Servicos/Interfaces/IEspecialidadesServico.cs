@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     {
         Task<List<EspecialidadeDTO>> GetDisponiveisAsync();
         Task<List<TimeSpan>> GetHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataDaConsulta, Guid? medicoId);
+        Task<Dictionary<DateTime, bool>> GetObterDatasComHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId);
     }
 }

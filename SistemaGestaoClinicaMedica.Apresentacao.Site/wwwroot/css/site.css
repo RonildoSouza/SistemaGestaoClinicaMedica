@@ -117,11 +117,15 @@ app {
     color: red;
 }
 
-/*.disabled {
-    pointer-events: none;
-    opacity: 0.6;
-    cursor: not-allowed;
-}*/
+.disabled {
+    pointer-events: none !important;
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+}
+
+.display-none {
+    display: none;
+}
 
 #blazor-error-ui {
     background: lightyellow;

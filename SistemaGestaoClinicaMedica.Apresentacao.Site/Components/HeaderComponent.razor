@@ -27,7 +27,7 @@
                     @if (!SearchWithButton)
                     {
                         <div class="form-group col-md-12">
-                            <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder">
+                            <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" minlength="@SearchMinLenght">
                         </div>
                         <div class="col-md-12">
                             <button class="btn btn-primary float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">@SearchText</button>
@@ -37,7 +37,7 @@
                     {
                         <div class="col-md-12">
                             <div class="input-group mb-3">
-                                <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="search-code">
+                                <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="search-code" minlength="@SearchMinLenght">
                                 <div class="input-group-append">
                                     <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-outline-secondary" type="button" id="search-code">@SearchText</button>
                                 </div>
@@ -69,5 +69,6 @@
     [Parameter] public bool SearchWithButton { get; set; }
     [Parameter] public string SearchText { get; set; } = "Buscar";
     [Parameter] public string SearchPlaceholder { get; set; }
+    [Parameter] public int SearchMinLenght { get; set; } = 500;
     [Parameter] public EventCallback<string> OnSearch { get; set; }
 }

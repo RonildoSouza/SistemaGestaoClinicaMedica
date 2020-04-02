@@ -16,6 +16,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _especialidadeServico = especialidadeServico;
         }
 
+        public IDictionary<DateTime, bool> ObterDatasComHorariosDisponiveis(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId = null)
+        {
+            return _especialidadeServico.ObterDatasComHorariosDisponiveis(especialidadeId, dataInicio, dataFim, medicoId);
+        }
+
         public IList<EspecialidadeDTO> ObterDisponiveis()
         {
             var entidades = _especialidadeServico.ObterDisponiveis();

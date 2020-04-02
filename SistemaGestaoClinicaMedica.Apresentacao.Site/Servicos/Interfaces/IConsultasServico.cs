@@ -10,5 +10,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     {
         Task<List<ConsultaDTO>> GetTudoComFiltrosAsync(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null);
         Task<HttpResponseMessage> PutAlterarStatusAsync(Guid id, string statusConsultaId);
+        Task<ConsultaDTO> GetPorCodigoAsync(string codigo);
     }
 }

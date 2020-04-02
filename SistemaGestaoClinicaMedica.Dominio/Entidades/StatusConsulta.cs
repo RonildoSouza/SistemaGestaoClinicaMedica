@@ -12,5 +12,6 @@
         AguardandoRetorno,
         Cancelada,
         Concluida,
+        Reagendada,
     }
 }

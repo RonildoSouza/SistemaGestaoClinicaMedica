@@ -23,5 +23,14 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 
             return JsonToDTO<List<TimeSpan>>(response);
         }
+
+        public async Task<Dictionary<DateTime, bool>> GetObterDatasComHorariosDisponiveisAsync(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId)
+        {
+            var endpoint = $"{ApiEndPoint}/{especialidadeId}/datas-com-horarios-disponiveis/{dataInicio.ToString("yyyy-MM-dd")}/{dataFim.ToString("yyyy-MM-dd")}";
+            endpoint = medicoId.HasValue ? $"{endpoint}/{medicoId}" : endpoint;
+            var response = await ApplicationState.HttpClient.GetStringAsync(endpoint);
+
+            return JsonToDTO<Dictionary<DateTime, bool>>(response);
+        }
     }
 }

@@ -2,34 +2,45 @@
 
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 
 <HeaderComponent Title="Calendário de Consultas">
-    <div class="row">
-        @if (AgendarConsulta)
+    @if (_carregando)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status"></div>
+        </div>
+    }
+
+    <div class="row @(_carregando ? "display-none" : "")" id="agendar-consulta">
+        @if (_agendarConsulta)
         {
-            <div class="col-md-12">
+            <div class="form-group col-md-6 offset-md-6">
                 <div class="input-group mb-3">
-                    <input @bind-value="_pacienteLocalStorage.Nome" type="text" aria-label="Nome do paciente" class="form-control" id="paciente-nome" disabled>
-                    <input @bind-value="PacienteCodigo" type="text" class="form-control" placeholder="Informe o código do paciente" aria-label="Informe o código do paciente" aria-describedby="paciente-codigo">
+                    <input @bind-value="_pacienteCodigo" type="text" class="form-control" placeholder="Informe o código do paciente" aria-label="Informe o código do paciente" aria-describedby="paciente-codigo" minlength="4">
                     <div class="input-group-append">
                         <button @onclick="BuscaPacienteAsync" class="btn btn-outline-secondary" type="button" id="paciente-codigo">Buscar</button>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="form-group col-md-12">
+                <label for="paciente-nome">Nome do Paciente</label>
+                <input @bind-value="_pacienteLocalStorage.Nome" type="text" class="form-control" id="paciente-nome" disabled>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="especialidade">Especialidade</label>
                 <select @onchange="SelecionaEspecialidadeAsync" placeholder="Selecione a especialidade" class="form-control" id="especialidade">
                     <option value="" disabled selected hidden>Selecione a especialidade</option>
-                    @foreach (var especialidade in Especialidades)
+                    @foreach (var especialidade in _especialidades)
                     {
                         <option value="@especialidade.Id">@especialidade.Nome</option>
                     }
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="form-group col-md-6">
+                <label for="medico">Médico</label>
                 <select @onchange="SelecionaMedico" placeholder="Selecione o médico" class="form-control" id="medico">
                     <option value="" disabled selected hidden>Selecione o médico</option>
-                    @foreach (var medico in Medicos)
+                    @foreach (var medico in _medicos)
                     {
                         <option value="@medico.Id">@medico.Nome</option>
                     }
@@ -37,10 +48,21 @@
             </div>
         }
 
-        <div class="col-md-12" id="agendar-consulta">
-            <button @onclick="(e => { AgendarConsulta = !AgendarConsulta; })" class="btn @(AgendarConsulta ? "" : "btn-primary") float-right" disabled="@(Especialidades == null)">
-                <span class="oi @(AgendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(AgendarConsulta ? "Cancelar" : "Agendar Consulta")
+        <div class="form-group col-md-12">
+            <button @onclick="Cancelar" class="btn @(_agendarConsulta ? "" : "btn-primary") float-right" disabled="@(_especialidades == null)">
+                <span class="oi @(_agendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(_agendarConsulta ? "Cancelar" : "Agendar Consulta")
             </button>
+        </div>
+    </div>
+
+    <div class="row" id="busca-consulta-calendario" style="display:none;">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <input @bind-value="_busca" type="text" class="form-control" placeholder="Informe o código da consulta para realizar a busca" aria-describedby="busca-consulta" minlength="6">
+                <div class="input-group-append">
+                    <button @onclick="BuscarAsync" class="btn btn-outline-secondary" type="button" id="busca-consulta">Buscar</button>
+                </div>
+            </div>
         </div>
     </div>
 </HeaderComponent>
@@ -48,38 +70,34 @@
 <!-- Seção de Renderização do Calendário -->
 <div class="card">
     <div class="card-body">
-        <div class="d-flex justify-content-center" id="calendar-loading">
-            <div class="spinner-border" role="status"></div>
-        </div>
-
         <div id='calendar'></div>
     </div>
 </div>
 
 <!-- Modal de Seleção de Horario da Consulta-->
 <ModalComponent Id="modalHorarioConsulta"
-                Title="@($"Horários disponíveis para a especialidade {_especialidadeLocalStorage?.Nome} em {DataDaConsulta.ToString("dddd, dd \\de MMMM, yyyy")}")"
+                Title="@($"Horários disponíveis para a especialidade {_especialidadeLocalStorage?.Nome.ToUpper()} em {_dataDaConsulta.ToString("dddd, dd \\de MMMM, yyyy")}")"
                 ActionButtonText="Confirmar"
                 OnActionButton="AgendarConsultaAsync"
                 ActionButtonClass="btn-success"
-                ActionButtonDisabled="@(!HorariosDisponiveis.Any() || _medicoLocalStorage == null)">
+                ActionButtonDisabled="@(!_horariosDisponiveis.Any() || _medicoLocalStorage == null)">
     <Body>
         <table class="table table-borderless">
             @{
-                var total = Math.Ceiling((double)HorariosDisponiveis.Count / 5);
+                var total = Math.Ceiling((double)_horariosDisponiveis.Count / 5);
                 total = (total > 0 && total < 1) ? 1 : total;
 
                 for (int i = 0; i < total; i++)
                 {
                     <tr>
                         @{
-                            var horarios = HorariosDisponiveis.Skip(i * 5).Take(5);
+                            var horarios = _horariosDisponiveis.Skip(i * 5).Take(5);
 
                             foreach (var horario in horarios)
                             {
                                 <td>
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => HorarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
+                                        <input type="radio" class="custom-control-input" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => _horarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
                                         <label for="@horario" class="custom-control-label">@horario.ToString("hh\\:mm")</label>
                                     </div>
                                 </td>
@@ -89,13 +107,13 @@
                 }
             }
 
-            @if (!HorariosDisponiveis.Any())
+            @if (!_horariosDisponiveis.Any())
             {
                 @("Nenhum horário disponível!")
             }
         </table>
 
-        @if (HorariosDisponiveis.Any() && _medicoLocalStorage == null)
+        @if (_horariosDisponiveis.Any() && _medicoLocalStorage == null)
         {
             <div class="alert alert-warning" role="alert">Nenhum médico foi selecionado!</div>
         }
@@ -103,20 +121,47 @@
 </ModalComponent>
 
 <!-- Modal de Detalhes e Desmarcação de Consulta-->
-<ModalComponent Id="modalDesmarcarConsulta"
-                Title="Detalhes da Consulta">
+<ModalComponent Id="modalDesmarcarConsulta" Title="Detalhes da Consulta">
     <Body>
-        <p><strong>Código:</strong> @ConsultaEvento.Codigo</p>
-        <p><strong>Status da Consulta:</strong> @ConsultaEvento.StatusNome</p>
-        <p><strong>Data/Hora:</strong> @ConsultaEvento.Data.ToDateAndTime()</p>
-        <p><strong>Paciente:</strong> @ConsultaEvento.PacienteNome</p>
-        <p><strong>Especialidade:</strong> @ConsultaEvento.EspecialidadeNome</p>
-        <p><strong>Médico:</strong> @ConsultaEvento.MedicoNome</p>
+        <p><strong>Código:</strong> @_consultaEvento.Codigo</p>
+        <p><strong>Status da Consulta:</strong> @_consultaEvento.StatusNome</p>
+        <p><strong>Data/Hora:</strong> @_consultaEvento.Data.ToDateAndTime()</p>
+        <p><strong>Paciente:</strong> @_consultaEvento.PacienteNome</p>
+        <p><strong>Especialidade:</strong> @_consultaEvento.EspecialidadeNome</p>
+        <p><strong>Médico:</strong> @_consultaEvento.MedicoNome</p>
+        
+        @if (_consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
+        {
+            <hr />
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="data-reagendamento">Data Reagendamento</label>
+                    <input type="date" @onchange="AlteraDataReagendamento" class="form-control" id="data-reagendamento" min="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="horarios-reagendamento">Horário Reagendamento</label>
+                    <select class="form-control" id="horarios-reagendamento" @onchange="SelecionaHorarioReagendamento" disabled="@(!_horariosDisponiveis.Any())">
+                        <option value="" selected disabled>Selecione o horário do reagendamento</option>
+                        @foreach(var horario in _horariosDisponiveis)
+                        {
+                            <option value="@horario">@horario.ToString("hh\\:mm")</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        }
     </Body>
     <Footer>
         <button type="button" class="btn" data-dismiss="modal">Fechar</button>
 
-        @if (ConsultaEvento.StatusId == StatusConsultaConst.Agendada)
+        @if (_consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
+        {
+            <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="ReAgendarConsultaAsync">Reagendar</button>
+        }
+
+        @if (_consultaEvento.StatusId == StatusConsultaConst.Agendada || _consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
         {
             <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
         }
@@ -126,6 +171,6 @@
 <ConfirmDialogComponent Id="confirmModalDesmarcarConsulta"
                         MainButtonId="confirmDialogComponent"
                         MainButtonVisibled=false
-                        Message="@($"A consulta de código {ConsultaEvento?.Codigo} do paciente {ConsultaEvento?.PacienteNome} será desmarcada, deseja prosseguir?")"
+                        Message="@($"A consulta de código {_consultaEvento?.Codigo} do paciente {_consultaEvento?.PacienteNome} será desmarcada, deseja prosseguir?")"
                         ActionButtonText="Sim"
                         OnActionButton="@DesmarcarConsultaAsync" />

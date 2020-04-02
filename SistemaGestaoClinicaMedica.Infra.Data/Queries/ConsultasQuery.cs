@@ -55,7 +55,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                      .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                                      .Include(_ => _.Receita)
                                      .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
-                                     .Where(_ => _.Data >= dataInicio && _.Data <= dataFim).ToList();
+                                     .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date).ToList();
 
             if (!string.IsNullOrEmpty(busca))
                 consultas = consultas.Where(_ => _.Medico.Usuario.Nome.ToLowerContains(busca)
@@ -70,6 +70,19 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                 consultas = consultas.Where(_ => _.Medico.Id == medicoId || _.Medico.Usuario.Id == medicoId).ToList();
 
             return consultas;
+        }
+
+        public Consulta ObterPorCodigo(string codigo)
+        {
+            return Entidades.Include(_ => _.Paciente)
+                            .Include(_ => _.StatusConsulta)
+                            .Include(_ => _.Medico)
+                            .Include(_ => _.Especialidade)
+                            .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
+                            .Include(_ => _.Receita)
+                            .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
+                            .ToList()
+                            .FirstOrDefault(_ => _.Id.ToString().ToLowerStartsWith(codigo));
         }
     }
 }

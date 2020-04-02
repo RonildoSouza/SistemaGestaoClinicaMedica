@@ -9,7 +9,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
         public DateTime Start { get; set; }
         public string Description { get; set; }
         public dynamic ExtendedProps { get; set; }
-        public string BackgroundColor => "green";
-        public string TextColor => "white";
+        public string BackgroundColor { get; set; }
+        public string BorderColor => BackgroundColor;
+        public string TextColor { get; set; }
     }
 }

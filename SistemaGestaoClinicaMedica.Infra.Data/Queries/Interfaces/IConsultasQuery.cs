@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
     {
         Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados);
         IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status, Guid? medicoId = null);
+        Consulta ObterPorCodigo(string codigo);
     }
 }

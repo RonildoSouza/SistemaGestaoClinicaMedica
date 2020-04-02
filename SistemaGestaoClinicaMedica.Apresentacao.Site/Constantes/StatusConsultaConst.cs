@@ -6,5 +6,6 @@
         public const string AguardandoRetorno = nameof(AguardandoRetorno);
         public const string Cancelada = nameof(Cancelada);
         public const string Concluida = nameof(Concluida);
+        public const string Reagendada = nameof(Reagendada);
     }
 }

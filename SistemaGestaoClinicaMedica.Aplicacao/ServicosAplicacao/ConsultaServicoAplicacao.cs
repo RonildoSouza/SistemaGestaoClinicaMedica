@@ -30,6 +30,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<ConsultaDTO>(entidade);
         }
 
+        public ConsultaDTO ObterPorCodigo(string codigo)
+        {
+            var entidade = _consultaServico.ObterPorCodigo(codigo);
+            return _mapper.Map<ConsultaDTO>(entidade);
+        }
+
         public IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {
             List<Consulta> entidades;
