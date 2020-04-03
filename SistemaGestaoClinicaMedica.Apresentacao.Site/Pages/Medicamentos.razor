@@ -1,4 +1,5 @@
 ﻿@page "/medicamentos"
+@attribute [Authorize(Roles = "Administrador")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;

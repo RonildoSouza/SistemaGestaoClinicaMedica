@@ -10,5 +10,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
         Uri UploadResultado(Guid id, ArquivoResultadoExameDTO arquivoDTO);
         void AlterarStatus(Guid id, StatusExameDTO statusExame);
         IList<ExameDTO> ObterTudoPorConsultaId(Guid consultaId);
+        IList<ExameDTO> ObterTudoComFiltro(string busca);
     }
 }

@@ -1,4 +1,5 @@
 ﻿@page "/realiza-exames"
+@attribute [Authorize(Roles = "Administrador, Laboratorio")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;

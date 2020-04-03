@@ -1,8 +1,9 @@
 ﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IAtestadosServico, AtestadoDTO, Guid>
+@attribute [Authorize(Roles = "Administrador, Medico")]
 
-<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/atestados/novo")"/>
+<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/atestados/novo")" />
 
 <TableComponent Items="dtos">
     <TableHeader>

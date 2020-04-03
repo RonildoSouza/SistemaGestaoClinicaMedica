@@ -1,6 +1,7 @@
 ﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IReceitasServico, ReceitaDTO, Guid>
+@attribute [Authorize(Roles = "Administrador, Medico")]
 
 <HeaderComponent Title="Cadastro de Receita" BackRoute="@AposSalvarRetonarPara" />
 

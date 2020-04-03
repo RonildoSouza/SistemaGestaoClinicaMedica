@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _consultaServicoAplicacao = consultaServicoAplicacao;
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpGet]
         public IActionResult Get(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId)
         {
@@ -25,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTOs);
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id, bool comExames, bool comAtestados)
         {
@@ -33,7 +33,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpGet, Route("por-codigo/{codigo}")]
         public IActionResult GetPorCodigo(string codigo)
         {
@@ -41,7 +41,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpDelete, Route("{id}")]
         public IActionResult Delete(Guid id)
         {
@@ -49,7 +49,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok();
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Recepcionista")]
+        [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpPost]
         public IActionResult Post([FromBody]ConsultaDTO entradaDTO)
         {

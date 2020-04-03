@@ -1,4 +1,5 @@
 ﻿@page "/calendario-de-consultas"
+@attribute [Authorize(Roles = "Administrador, Recepcionista")]
 
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
@@ -129,7 +130,7 @@
         <p><strong>Paciente:</strong> @_consultaEvento.PacienteNome</p>
         <p><strong>Especialidade:</strong> @_consultaEvento.EspecialidadeNome</p>
         <p><strong>Médico:</strong> @_consultaEvento.MedicoNome</p>
-        
+
         @if (_consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
         {
             <hr />
@@ -144,7 +145,7 @@
                     <label for="horarios-reagendamento">Horário Reagendamento</label>
                     <select class="form-control" id="horarios-reagendamento" @onchange="SelecionaHorarioReagendamento" disabled="@(!_horariosDisponiveis.Any())">
                         <option value="" selected disabled>Selecione o horário do reagendamento</option>
-                        @foreach(var horario in _horariosDisponiveis)
+                        @foreach (var horario in _horariosDisponiveis)
                         {
                             <option value="@horario">@horario.ToString("hh\\:mm")</option>
                         }

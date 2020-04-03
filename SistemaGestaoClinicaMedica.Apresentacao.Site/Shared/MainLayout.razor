@@ -20,14 +20,34 @@
     </div>
 </div>
 
+@using Newtonsoft.Json;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
 @code {
-    [Inject] public IJSRuntime JSRuntime { get; set; }
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private ApplicationState ApplicationState { get; set; }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        
+
         if (firstRender)
+        {
+            var authenticationState = await AuthenticationStateTask;
+
+            if (authenticationState.User.Identity.IsAuthenticated)
+            {
+                var claim = authenticationState.User.Claims.FirstOrDefault(_ => _.Type == "Data");
+                var perfilViewModel = JsonConvert.DeserializeObject<PerfilViewModel>(claim.Value);
+                ApplicationState.Perfil = perfilViewModel;
+            }
+            else
+                ApplicationState.Perfil = new PerfilViewModel();
+
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
+        }
     }
 }

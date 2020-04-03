@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -33,11 +34,19 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
             services.AddDbContext<ContextoBancoDados>();
 
             var jwtConfigurationSection = Configuration.GetSection(nameof(JwtAutenticacaoConfig));
+            var azureStorageConfigurationSection = Configuration.GetSection(nameof(AzureStorageConfig));
 
             #region Injeção de Dependência
             IoC.Registrar(services);
 
             services.Configure<JwtAutenticacaoConfig>(jwtConfigurationSection);
+            services.Configure<AzureStorageConfig>(azureStorageConfigurationSection);
+            #endregion
+
+            #region Configuração Azure Storage
+            var azureStorageConfig = azureStorageConfigurationSection.Get<AzureStorageConfig>();
+
+            services.AddSingleton(new BlobContainerClient(azureStorageConfig.ConnectionString, azureStorageConfig.Container));
             #endregion
 
             #region Configuração de Autenticação JWT

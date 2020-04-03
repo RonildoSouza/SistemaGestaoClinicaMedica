@@ -57,5 +57,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return _examesQuery.ObterTudoPorConsultaId(consultaId);
         }
+
+        public IList<Exame> ObterTudoComFiltro(string busca)
+        {
+            return _examesQuery.ObterTudoComFiltro(busca);
+        }
     }
 }

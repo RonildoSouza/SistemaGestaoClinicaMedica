@@ -1,5 +1,6 @@
 ﻿@page "/medicamentos/novo"
 @page "/medicamentos/{id:guid}"
+@attribute [Authorize(Roles = "Administrador")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
@@ -18,15 +19,6 @@
     </div>
     <div class="form-group col-md-8">
         <label for="nome-fabricante">Nome do Fabricante</label>
-        @*<InputText @bind-Value="context.FabricanteNome" class="form-control" id="nome-fabricante" />*@
-
-        @*<SelectWithSearch Id="nome-fabricante"
-                          Placeholder="Selecione o fabricante ou informe um novo"
-                          Items="Fabricantes"
-                          Context="ctx">
-            <option value="@ctx.Id.ToString()" selected="@(_dto.FabricanteNome == ctx.Nome)">@ctx.Nome</option>
-        </SelectWithSearch>*@
-
         <input type="text" list="fabricantes" @bind-value="context.FabricanteNome" class="form-control" id="nome-fabricante" placeholder="Selecione o fabricante ou informe um novo">
         <datalist id="fabricantes">
             @foreach (var fabricante in Fabricantes)
@@ -34,7 +26,6 @@
                 <option value="@fabricante.Nome"></option>
             }
         </datalist>
-
     </div>
     <div class="form-group col-md-4">
         <label for="tarja">Tarja</label>

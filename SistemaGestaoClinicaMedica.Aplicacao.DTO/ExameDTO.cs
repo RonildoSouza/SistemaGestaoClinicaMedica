@@ -19,5 +19,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         public Guid ConsultaId { get; set; }
         public string LinkResultadoExame { get; set; }
         public LaboratorioDTO LaboratorioRealizouExame { get; set; }
+        public DateTime CriadoEm { get; set; }
     }
 }

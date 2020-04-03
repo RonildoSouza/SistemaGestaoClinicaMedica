@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
         Exame ObterPorCodigo(string codigo);
         void AlterarStatus(Guid id, EStatusExame eStatusExame);
         IList<Exame> ObterTudoPorConsultaId(Guid consultaId);
+        IList<Exame> ObterTudoComFiltro(string busca);
     }
 }

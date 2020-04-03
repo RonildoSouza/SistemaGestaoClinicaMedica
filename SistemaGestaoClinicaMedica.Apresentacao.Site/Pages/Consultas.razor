@@ -1,4 +1,5 @@
 ﻿@page "/consultas"
+@attribute [Authorize(Roles = "Administrador, Medico")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;

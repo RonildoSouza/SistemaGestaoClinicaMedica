@@ -1,5 +1,6 @@
 ﻿@page "/consultas/{consultaId:guid}/exames/novo"
 @page "/consultas/{consultaId:guid}/exames/{id:guid}"
+@attribute [Authorize(Roles = "Administrador, Medico")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;

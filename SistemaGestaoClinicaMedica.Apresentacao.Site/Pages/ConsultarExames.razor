@@ -1,26 +1,35 @@
-﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+﻿@page "/exames"
+@attribute [Authorize(Roles = "Administrador, Medico")]
+
+@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IExamesServico, ExameDTO, Guid>
-@attribute [Authorize(Roles = "Administrador, Medico")]
 
-<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/exames/novo")" />
+<HeaderComponent Title="Consultar Exames" 
+                 SearchVisibled="true"
+                 SearchWithButton="true"
+                 SearchPlaceholder="Informe o código do exame, consulta ou paciente"
+                 OnSearch="BuscarAsync"/>
 
-<TableComponent Items="dtos">
+<TableComponent Items="dtos?.OrderByDescending(_ => _.CriadoEm).Take(20).ToList()">
     <TableHeader>
-        <th>Codigo</th>
+        <th>Código</th>
         <th>Tipo de Exame</th>
         <th>Status</th>
+        <th>Laboratório Realizou o Exame</th>
+        <th>Criado Em</th>
         <th>Ações</th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
         <td>@context.TipoDeExame.Nome</td>
         <td>@context.StatusExame.Nome</td>
+        <td>@context.LaboratorioRealizouExame?.Nome</td>
+        <td>@context.CriadoEm.ToShortDateString()</td>
         <td>
             @if (context.StatusExame.Id == StatusExameConst.Pendente && context.CriadoEm.Date == DateTime.Now.Date)
             {
-                <a href="consultas/@context.ConsultaId/exames/{@context.Id}" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                 <ConfirmDialogComponent Id="@context.Id.ToString()"
                                         Message="@($"Deseja prosseguir com a exclusão do exame de {context.TipoDeExame.Nome}?")"
                                         ActionButtonText="Excluir"
@@ -37,11 +46,9 @@
     </RowTemplate>
 </TableComponent>
 
-@code {
-    [Parameter] public Guid ConsultaId { get; set; }
-
-    protected async override Task CarregaDadosDaTabela()
+@code{
+    private async Task BuscarAsync(string busca)
     {
-        dtos = await HttpServico.GetPorConsultaAsync(ConsultaId);
+        dtos = await HttpServico.GetTudoComFiltrosAsync(busca);
     }
 }

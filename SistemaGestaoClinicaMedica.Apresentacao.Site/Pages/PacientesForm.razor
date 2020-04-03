@@ -1,5 +1,6 @@
 ﻿@page "/pacientes/novo"
 @page "/pacientes/{id:guid}"
+@attribute [Authorize(Roles = "Administrador, Recepcionista")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;

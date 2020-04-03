@@ -1,5 +1,6 @@
 ﻿@page "/usuarios/novo"
 @page "/usuarios/{id:guid}"
+@attribute [Authorize(Roles = "Administrador")]
 
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 
@@ -32,7 +33,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="cargo">Cargo</label>
-                    @if(_usuarioViewModel.Id != Guid.Empty)
+                    @if (_usuarioViewModel.Id != Guid.Empty)
                     {
                         <input type="text" class="form-control" value="@_usuarioViewModel.CargoId" disabled />
                     }
@@ -41,9 +42,10 @@
                         <InputSelect @bind-Value="_usuarioViewModel.CargoId" class="form-control" id="cargo">
                             <option value="" selected disabled>Selecione o cargo</option>
                             @foreach (var cargo in _cargos)
-                            {
+                                {
                                 <option value="@cargo.Id">@cargo.Nome</option>
-                            }
+                                }
+                            /**/
                         </InputSelect>
                     }
                 </div>

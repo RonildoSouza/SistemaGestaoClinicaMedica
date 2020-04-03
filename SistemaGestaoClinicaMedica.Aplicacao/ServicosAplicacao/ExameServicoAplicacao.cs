@@ -3,6 +3,7 @@ using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Extensions;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Storage;
 using System;
 using System.Collections.Generic;
 
@@ -11,10 +12,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
     public sealed class ExameServicoAplicacao : ServicoAplicacaoBase<ExameDTO, Guid, Exame>, IExameServicoAplicacao
     {
         private readonly IExameServico _exameServico;
+        private readonly IAzureStorage _azureStorage;
 
-        public ExameServicoAplicacao(IMapper mapper, IExameServico exameServico) : base(mapper, exameServico)
+        public ExameServicoAplicacao(IMapper mapper, IExameServico exameServico, IAzureStorage azureStorage) : base(mapper, exameServico)
         {
             _exameServico = exameServico;
+            _azureStorage = azureStorage;
         }
 
         public void AlterarStatus(Guid id, StatusExameDTO statusExame)
@@ -29,6 +32,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<ExameDTO>(entidade);
         }
 
+        public IList<ExameDTO> ObterTudoComFiltro(string busca)
+        {
+            var entidades = _exameServico.ObterTudoComFiltro(busca);
+            return _mapper.Map<List<ExameDTO>>(entidades);
+        }
+
         public IList<ExameDTO> ObterTudoPorConsultaId(Guid consultaId)
         {
             var entidades = _exameServico.ObterTudoPorConsultaId(consultaId);
@@ -37,8 +46,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 
         public Uri UploadResultado(Guid id, ArquivoResultadoExameDTO arquivoDTO)
         {
-            //TODO: Adicionar package para armazenar os arquivos no Azure Storage
-            var uri = new Uri("https://lokeshdhakar.com/projects/lightbox2/images/image-3.jpg");
+            var uri = _azureStorage.UploadDeArquivo(arquivoDTO.StreamArquivo, $"resultado-exames/{id}_{arquivoDTO.NomeArquivo}");
 
             if (uri != null)
             {

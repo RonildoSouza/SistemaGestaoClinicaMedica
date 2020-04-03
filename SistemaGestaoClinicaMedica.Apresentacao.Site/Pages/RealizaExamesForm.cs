@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -11,6 +13,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     public partial class RealizaExamesForm
     {
         [Inject] private IJSRuntime JSRuntime { get; set; }
+        [Inject] private ApplicationState ApplicationState { get; set; }
 
         private async Task BuscarAsync(string busca)
         {
@@ -35,7 +38,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 return;
             }
 
-            await HttpServico.PutAlterarStatusAsync(_dto.Id, StatusExameConst.Concluido);
+            _dto.LaboratorioRealizouExameId = ApplicationState.Perfil.Id;
+            _dto.StatusExame.Id = StatusExameConst.Concluido;
+
+            await HttpServico.PutAsync(_dto.Id, _dto);
             await JSRuntime.ForceReload();
         }
     }

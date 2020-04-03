@@ -24,7 +24,7 @@
     [Inject] private ApplicationState ApplicationState { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
@@ -32,7 +32,10 @@
             ApplicationState.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApplicationState.Token);
 
             if (string.IsNullOrEmpty(ApplicationState.Token))
+            {
                 NavigationManager.NavigateTo("login");
+                return;
+            }
         }
     }
 }

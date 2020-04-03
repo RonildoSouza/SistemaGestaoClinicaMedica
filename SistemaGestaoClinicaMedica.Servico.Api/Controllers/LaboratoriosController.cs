@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _laboratorioServicoAplicacao = laboratorioServicoAplicacao;
         }
 
-        [Authorize("Bearer", Roles = "Administrador")]
+        [Authorize("Bearer", Roles = "Administrador, Laboratorio")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {
