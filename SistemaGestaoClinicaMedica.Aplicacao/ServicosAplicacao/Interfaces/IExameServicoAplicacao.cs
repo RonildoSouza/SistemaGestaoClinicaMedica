@@ -11,5 +11,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
         void AlterarStatus(Guid id, StatusExameDTO statusExame);
         IList<ExameDTO> ObterTudoPorConsultaId(Guid consultaId);
         IList<ExameDTO> ObterTudoComFiltro(string busca);
+        IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim);
     }
 }

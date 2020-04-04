@@ -62,5 +62,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return _examesQuery.ObterTudoComFiltro(busca);
         }
+
+        public IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim)
+        {
+            return _examesQuery.ObterTotalExames(dataInicio, dataFim);
+        }
     }
 }

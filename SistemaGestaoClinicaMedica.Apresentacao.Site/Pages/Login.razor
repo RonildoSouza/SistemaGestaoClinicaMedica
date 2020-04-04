@@ -6,27 +6,38 @@
 
 <div class="card" style="width: 30rem;position: relative;margin: auto;margin-top: 10rem;">
     <div class="card-body">
-        <h5 class="card-title">Logar no sistema</h5>
 
-        <EditForm Model="_loginEntradaDTO" OnValidSubmit="LoginAsync">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+        @if (_carregando)
+        {
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;"></div>
+            </div>
+        }
+        else
+        {
+            <h5 class="card-title">Logar no sistema</h5>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <InputText type="email" @bind-Value="_loginEntradaDTO.Email" class="form-control" id="email" />
-            </div>
-            <div class="form-group">
-                <label for="senha">Senha</label>
-                <InputText type="password" @bind-Value="_loginEntradaDTO.Senha" class="form-control" id="senha" />
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg">Logar</button>
-        </EditForm>
+            <EditForm Model="_loginEntradaDTO" OnValidSubmit="LoginAsync">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <InputText type="email" @bind-Value="_loginEntradaDTO.Email" class="form-control" id="email" />
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <InputText type="password" @bind-Value="_loginEntradaDTO.Senha" class="form-control" id="senha" />
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Logar</button>
+            </EditForm>
+        }
     </div>
 </div>
 
 @code{
     private LoginEntradaDTO _loginEntradaDTO = new LoginEntradaDTO();
+    private bool _carregando;
 
     [Inject] private ILoginServico LoginServico { get; set; }
     [Inject] private ILocalStorageService LocalStorageService { get; set; }
@@ -34,12 +45,20 @@
 
     private async Task LoginAsync()
     {
+        _carregando = true;
+        StateHasChanged();
+
         var loginSaida = await LoginServico.LoginAsync(_loginEntradaDTO);
 
         if (loginSaida != null)
         {
             await LocalStorageService.SetItemAsync(Servicos.LoginServico.ChaveLocalStorage, loginSaida.Token);
             NavigationManager.NavigateTo("/", true);
+        }
+        else
+        {
+            _carregando = false;
+            StateHasChanged();
         }
     }
 }

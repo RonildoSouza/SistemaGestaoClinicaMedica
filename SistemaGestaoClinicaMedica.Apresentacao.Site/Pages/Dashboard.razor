@@ -1,0 +1,93 @@
+﻿@page "/"
+@attribute [Authorize(Roles = "Administrador, Medico")]
+
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
+<HeaderComponent Title="Dashboard">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="data-inicio">Data Início</label>
+            <input type="date" class="form-control" id="data-inicio" @bind-value="_dataInicio" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="data-fim">Data Fim</label>
+            <input type="date" class="form-control" id="data-fim" @bind-value="_dataFim" />
+        </div>
+        <div class="form-group col-md-12">
+            <button class="btn btn-primary float-md-right" @onclick="FiltrarAsync">Filtrar</button>
+        </div>
+    </div>
+</HeaderComponent>
+
+<div class="card">
+    <div class="card-body">
+        @if (_carregando)
+        {
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status"></div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <canvas id="total-consultas-por-sexo-paciente"></canvas>
+                </div>
+                <div class="form-group col-md-12">
+                    <canvas id="total-consulta-por-especialidades"></canvas>
+                </div>
+                <div class="form-group col-md-12">
+                    <canvas id="total-exames-por-tipo"></canvas>
+                </div>
+                <div class="form-group col-md-12">
+                    <canvas id="total-consultas-por-mes"></canvas>
+                </div>
+                <div class="form-group col-md-12">
+                    <canvas id="total-consultas-por-idade-paciente"></canvas>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code{
+    private static DateTime _dataInicio = DateTime.Now.AddMonths(-3);
+    private static DateTime _dataFim = DateTime.Now.AddMonths(3);
+    private bool _carregando = true;
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private IConsultasServico ConsultasServico { get; set; }
+    [Inject] private IExamesServico ExamesServico { get; set; }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await ControiGraficos(_dataInicio, _dataFim);
+    }
+
+    private async Task ControiGraficos(DateTime dataInicio, DateTime dataFim)
+    {
+        var totalConsultasPorSexoPaciente = await ConsultasServico.GetTotalConsultasPorSexoPacienteAsync(dataInicio, dataFim);
+        var totalConsultasPorEspecialidade = await ConsultasServico.GetTotalConsultasPorEspecialidadeAsync(dataInicio, dataFim);
+        var totalExames = await ExamesServico.GetTotalExamesAsync(dataInicio, dataFim);
+        var totalConsultasPorMes = await ConsultasServico.GetTotalConsultasPorMesAsync(dataInicio, dataFim);
+        var totalConsultasPorIdadePaciente = await ConsultasServico.GetTotalConsultasPorIdadePacienteAsync(dataInicio, dataFim);
+
+        _carregando = false;
+        StateHasChanged();
+
+        await JSRuntime.InvokeVoidAsync("chartJsInterop.graficoTotalConsultasPorSexoPaciente", totalConsultasPorSexoPaciente);
+        await JSRuntime.InvokeVoidAsync("chartJsInterop.graficoTotalConsultaPorEspecialidade", totalConsultasPorEspecialidade);
+        await JSRuntime.InvokeVoidAsync("chartJsInterop.graficoTotalExamesPorTipo", totalExames);
+        await JSRuntime.InvokeVoidAsync("chartJsInterop.graficoTotalConsultasPorMes", totalConsultasPorMes);
+        await JSRuntime.InvokeVoidAsync("chartJsInterop.graficoTotalConsultasPorIdadePaciente", totalConsultasPorIdadePaciente);
+    }
+
+    private async Task FiltrarAsync()
+    {
+        _carregando = true;
+        StateHasChanged();
+
+        await ControiGraficos(_dataInicio, _dataFim);
+    }
+}

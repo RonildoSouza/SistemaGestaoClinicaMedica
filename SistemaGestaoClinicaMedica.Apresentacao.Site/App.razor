@@ -1,9 +1,7 @@
 ﻿<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
-            <NotAuthorized>
-                <h3>Você não está autorizado a acessar esta página. :(</h3>
-            </NotAuthorized>
+            <NotAuthorized />
         </AuthorizeRouteView>
     </Found>
     <NotFound>
@@ -22,7 +20,6 @@
 @code{
     [Inject] private ILocalStorageService LocalStorageService { get; set; }
     [Inject] private ApplicationState ApplicationState { get; set; }
-    [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -30,12 +27,6 @@
         {
             ApplicationState.Token = await LocalStorageService.GetItemAsync<string>(LoginServico.ChaveLocalStorage);
             ApplicationState.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApplicationState.Token);
-
-            if (string.IsNullOrEmpty(ApplicationState.Token))
-            {
-                NavigationManager.NavigateTo("login");
-                return;
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
+﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using System.Net.Http;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
@@ -12,6 +12,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 
         public HttpClient HttpClient { get; }
         public string Token { get; set; }
-        public PerfilViewModel Perfil { get; set; }
+        public UsuarioLogado UsuarioLogado { get; set; }
     }
 }

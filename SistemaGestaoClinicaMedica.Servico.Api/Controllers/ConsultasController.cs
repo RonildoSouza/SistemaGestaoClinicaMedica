@@ -41,6 +41,38 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("total-consultas-por-especialidade/{dataInicio}/{dataFim}")]
+        public IActionResult GetTotalConsultasPorEspecialidade(DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTOs = _consultaServicoAplicacao.ObterTotalConsultasPorEspecialidade(dataInicio, dataFim);
+            return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("total-consultas-por-mes/{dataInicio}/{dataFim}")]
+        public IActionResult GetTotalConsultasPorMes(DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTOs = _consultaServicoAplicacao.ObterTotalConsultasPorMes(dataInicio, dataFim);
+            return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("total-consultas-por-sexo-paciente/{dataInicio}/{dataFim}")]
+        public IActionResult GetTotalConsultasPorSexoPaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTOs = _consultaServicoAplicacao.ObterTotalConsultasPorSexoPaciente(dataInicio, dataFim);
+            return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("total-consultas-por-idade-paciente/{dataInicio}/{dataFim}")]
+        public IActionResult GetTotalConsultasPorIdadePaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTOs = _consultaServicoAplicacao.ObterTotalConsultasPorIdadePaciente(dataInicio, dataFim);
+            return Ok(saidaDTOs);
+        }
+
         [Authorize("Bearer", Roles = "Administrador, Recepcionista, Medico")]
         [HttpDelete, Route("{id}")]
         public IActionResult Delete(Guid id)

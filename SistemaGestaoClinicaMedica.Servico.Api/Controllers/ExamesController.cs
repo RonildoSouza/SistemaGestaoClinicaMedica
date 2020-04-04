@@ -51,6 +51,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer", Roles = "Administrador, Medico")]
+        [HttpGet, Route("total-exames/{dataInicio}/{dataFim}")]
+        public IActionResult GetTotalExames(DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTO = _exameServicoAplicacao.ObterTotalExames(dataInicio, dataFim);
+            return Ok(saidaDTO);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpPost]
         public IActionResult Post([FromBody]ExameDTO entradaDTO)
         {

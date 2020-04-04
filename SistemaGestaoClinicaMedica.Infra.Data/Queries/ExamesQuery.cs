@@ -56,5 +56,15 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                          .Take(30)
                          .ToList();
         }
+
+        public IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim)
+        {
+            return Entidades.Include(_ => _.TipoDeExame)
+                            .Where(_ => _.CriadoEm.Date >= dataInicio.Date && _.CriadoEm.Date <= dataFim.Date)
+                            .OrderBy(_ => _.TipoDeExame.Nome)
+                            .GroupBy(_ => _.TipoDeExame.Nome)
+                            .Select(_ => Tuple.Create(_.Key, _.Count()))
+                            .ToList();
+        }
     }
 }

@@ -50,13 +50,13 @@
         <AuthorizeView Roles="Administrador, Recepcionista">
             <Authorized>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="pacientes">
-                        <span class="oi oi-person" aria-hidden="true"></span> Pacientes
+                    <NavLink class="nav-link" href="calendario-de-consultas">
+                        <span class="oi oi-calendar" aria-hidden="true"></span> Calendário de Consultas
                     </NavLink>
                 </li>
                 <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="calendario-de-consultas">
-                        <span class="oi oi-calendar" aria-hidden="true"></span> Calendário de Consultas
+                    <NavLink class="nav-link" href="pacientes">
+                        <span class="oi oi-person" aria-hidden="true"></span> Pacientes
                     </NavLink>
                 </li>
             </Authorized>
@@ -75,7 +75,6 @@
 </div>
 
 @using Blazored.LocalStorage;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 
 @code {
@@ -85,7 +84,6 @@
     [Inject] private ILoginServico LoginServico { get; set; }
     [Inject] private ILocalStorageService LocalStorageService { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
-    //[Inject] private ApplicationState ApplicationState { get; set; }
 
     private void ToggleNavMenu()
     {

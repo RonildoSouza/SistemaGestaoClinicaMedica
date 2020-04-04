@@ -1,4 +1,5 @@
 ﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,5 +15,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         Task<HttpResponseMessage> PutAlterarStatusAsync(Guid id, string statusExameId);
         Task<List<ExameDTO>> GetPorConsultaAsync(Guid consultaId);
         Task<List<ExameDTO>> GetTudoComFiltrosAsync(string busca);
+        Task<ChartJSDataset> GetTotalExamesAsync(DateTime dataInicio, DateTime dataFim);
     }
 }

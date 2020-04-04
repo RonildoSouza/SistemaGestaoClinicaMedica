@@ -53,5 +53,25 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return _consultasQuery.ObterPorCodigo(codigo);
         }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorEspecialidade(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultasQuery.ObterTotalConsultasPorEspecialidade(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorMes(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultasQuery.ObterTotalConsultasPorMes(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorSexoPaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultasQuery.ObterTotalConsultasPorSexoPaciente(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<int, int>> ObterTotalConsultasPorIdadePaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultasQuery.ObterTotalConsultasPorIdadePaciente(dataInicio, dataFim);
+        }
     }
 }

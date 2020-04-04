@@ -36,6 +36,26 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<ConsultaDTO>(entidade);
         }
 
+        public IList<Tuple<string, int>> ObterTotalConsultasPorEspecialidade(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultaServico.ObterTotalConsultasPorEspecialidade(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<int, int>> ObterTotalConsultasPorIdadePaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultaServico.ObterTotalConsultasPorIdadePaciente(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorMes(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultaServico.ObterTotalConsultasPorMes(dataInicio, dataFim);
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorSexoPaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return _consultaServico.ObterTotalConsultasPorSexoPaciente(dataInicio, dataFim);
+        }
+
         public IList<ConsultaDTO> ObterTudo(DateTime dataInicio, DateTime dataFim, string busca, string status, Guid? medicoId = null)
         {
             List<Consulta> entidades;

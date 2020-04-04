@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelos;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +51,16 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         {
             var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/?busca={busca}");
             return JsonToDTO<List<ExameDTO>>(response);
+        }
+
+        public async Task<ChartJSDataset> GetTotalExamesAsync(DateTime dataInicio, DateTime dataFim)
+        {
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/total-exames/{dataInicio.ToString("yyyy-MM-dd")}/{dataFim.ToString("yyyy-MM-dd")}");
+            var result = JsonToDTO<List<Tuple<string, int>>>(response);
+            var labels = result.Select(_ => _.Item1).ToArray();
+            var data = result.Select(_ => _.Item2).ToArray();
+
+            return new ChartJSDataset { Labels = labels, Data = data };
         }
     }
 }
