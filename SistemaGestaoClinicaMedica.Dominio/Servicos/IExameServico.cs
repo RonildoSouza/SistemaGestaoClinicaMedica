@@ -10,5 +10,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
         void AlterarStatus(Guid id, EStatusExame eStatusExame);
         IList<Exame> ObterTudoPorConsultaId(Guid consultaId);
         IList<Exame> ObterTudoComFiltro(string busca);
+        IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim);
     }
 }

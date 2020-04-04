@@ -38,7 +38,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 return;
             }
 
-            _dto.LaboratorioRealizouExameId = ApplicationState.Perfil.Id;
+            _dto.LaboratorioRealizouExameId = ApplicationState.UsuarioLogado.Id;
             _dto.StatusExame.Id = StatusExameConst.Concluido;
 
             await HttpServico.PutAsync(_dto.Id, _dto);

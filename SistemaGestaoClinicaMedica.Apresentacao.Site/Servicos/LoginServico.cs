@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -37,6 +38,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         {
             _applicationState.Token = null;
             _applicationState.HttpClient.DefaultRequestHeaders.Authorization = null;
+            _applicationState.UsuarioLogado = new UsuarioLogado();
         }
     }
 }

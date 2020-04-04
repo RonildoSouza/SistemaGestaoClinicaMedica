@@ -32,6 +32,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _mapper.Map<ExameDTO>(entidade);
         }
 
+        public IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim)
+        {
+            return _exameServico.ObterTotalExames(dataInicio, dataFim);
+        }
+
         public IList<ExameDTO> ObterTudoComFiltro(string busca)
         {
             var entidades = _exameServico.ObterTudoComFiltro(busca);

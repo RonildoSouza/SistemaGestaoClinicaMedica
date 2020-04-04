@@ -84,5 +84,52 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .ToList()
                             .FirstOrDefault(_ => _.Id.ToString().ToLowerStartsWith(codigo));
         }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorEspecialidade(DateTime dataInicio, DateTime dataFim)
+        {
+            return Entidades.Include(_ => _.Especialidade)
+                            .Include(_ => _.StatusConsulta)
+                            .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
+                            .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
+                            .OrderBy(_ => _.Especialidade.Nome)
+                            .GroupBy(_ => _.Especialidade.Nome)
+                            .Select(_ => Tuple.Create(_.Key, _.Count()))
+                            .ToList();
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorMes(DateTime dataInicio, DateTime dataFim)
+        {
+            return Entidades.Include(_ => _.StatusConsulta)
+                            .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
+                            .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
+                            .OrderBy(_ => _.Data.Month).ThenBy(_ => _.Data.Year)
+                            .ToList()
+                            .GroupBy(_ => _.Data.ToString("MMM-yyyy"))
+                            .Select(_ => Tuple.Create(_.Key, _.Count()))
+                            .ToList();
+        }
+
+        public IList<Tuple<string, int>> ObterTotalConsultasPorSexoPaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return Entidades.Include(_ => _.Paciente)
+                            .Include(_ => _.StatusConsulta)
+                            .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
+                            .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
+                            .GroupBy(_ => _.Paciente.Sexo)
+                            .Select(_ => Tuple.Create(_.Key, _.Count()))
+                            .ToList();
+        }
+
+        public IList<Tuple<int, int>> ObterTotalConsultasPorIdadePaciente(DateTime dataInicio, DateTime dataFim)
+        {
+            return Entidades.Include(_ => _.Paciente)
+                            .Include(_ => _.StatusConsulta)
+                            .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
+                            .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
+                            .OrderBy(_ => DateTime.Now.Year - _.Paciente.DataNascimento.Year)
+                            .GroupBy(_ => DateTime.Now.Year - _.Paciente.DataNascimento.Year)
+                            .Select(_ => Tuple.Create(_.Key, _.Count()))
+                            .ToList();
+        }
     }
 }

@@ -21,14 +21,16 @@
 </div>
 
 @using Newtonsoft.Json;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 
 @code {
     [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     [Inject] private IJSRuntime JSRuntime { get; set; }
     [Inject] private ApplicationState ApplicationState { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -41,11 +43,23 @@
             if (authenticationState.User.Identity.IsAuthenticated)
             {
                 var claim = authenticationState.User.Claims.FirstOrDefault(_ => _.Type == "Data");
-                var perfilViewModel = JsonConvert.DeserializeObject<PerfilViewModel>(claim.Value);
-                ApplicationState.Perfil = perfilViewModel;
+                var usuarioLogado = JsonConvert.DeserializeObject<UsuarioLogado>(claim.Value);
+                ApplicationState.UsuarioLogado = usuarioLogado;
+
+                if (usuarioLogado.CargoId == CargosConst.Administrador || usuarioLogado.CargoId == CargosConst.Medico)
+                    NavigationManager.NavigateTo("/");
+
+                if (usuarioLogado.CargoId == CargosConst.Recepcionista)
+                    NavigationManager.NavigateTo("calendario-de-consultas");
+
+                if (usuarioLogado.CargoId == CargosConst.Laboratorio)
+                    NavigationManager.NavigateTo("realiza-exames");
             }
             else
-                ApplicationState.Perfil = new PerfilViewModel();
+            {
+                ApplicationState.UsuarioLogado = new UsuarioLogado();
+                NavigationManager.NavigateTo("login");
+            }
 
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
         }

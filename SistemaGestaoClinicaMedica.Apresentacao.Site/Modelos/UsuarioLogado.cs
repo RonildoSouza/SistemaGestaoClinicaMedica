@@ -1,9 +1,9 @@
 ﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using System;
 
-namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
+namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
 {
-    public class PerfilViewModel
+    public class UsuarioLogado
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }

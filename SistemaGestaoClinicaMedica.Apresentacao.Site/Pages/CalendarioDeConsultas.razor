@@ -121,7 +121,7 @@
     </Body>
 </ModalComponent>
 
-<!-- Modal de Detalhes e Desmarcação de Consulta-->
+<!-- Modal de Detalhes, Reagentamento e Desmarcação de Consulta-->
 <ModalComponent Id="modalDesmarcarConsulta" Title="Detalhes da Consulta">
     <Body>
         <p><strong>Código:</strong> @_consultaEvento.Codigo</p>
@@ -155,8 +155,6 @@
         }
     </Body>
     <Footer>
-        <button type="button" class="btn" data-dismiss="modal">Fechar</button>
-
         @if (_consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
         {
             <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="ReAgendarConsultaAsync">Reagendar</button>
@@ -166,6 +164,8 @@
         {
             <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
         }
+
+        <button type="button" class="btn" data-dismiss="modal">Fechar</button>
     </Footer>
 </ModalComponent>
 
