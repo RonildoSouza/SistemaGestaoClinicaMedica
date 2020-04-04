@@ -14,4 +14,34 @@
     <Compile Remove="Entidades\EntidadeBase.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Documentos\Templates\AtestadoAptidaoFisicaTemplate.txt" />
+    <None Remove="Documentos\Templates\AtestadoComparecimentoTemplate.txt" />
+    <None Remove="Documentos\Templates\AtestadoMedicoTemplate.txt" />
+    <None Remove="Documentos\Templates\ConsultaTemplate.txt" />
+    <None Remove="Documentos\Templates\ExameTemplate.txt" />
+    <None Remove="Documentos\Templates\ReceitaTemplate.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Documentos\Templates\AtestadoAptidaoFisicaTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\AtestadoComparecimentoTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\AtestadoMedicoTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\ConsultaTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\ExameTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\ReceitaTemplate.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

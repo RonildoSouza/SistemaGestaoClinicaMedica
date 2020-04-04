@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Providers;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+using SistemaGestaoClinicaMedica.Dominio.Documentos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
 using System;
 using System.Globalization;
@@ -41,8 +42,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
                 BaseAddress = uri,
             });
 
-            services.RegistrarTudoPorAssembly(GetType().Assembly, "Servico");
-            services.RegistrarTudoPorAssembly(GetType().Assembly, "Documento");
+            services.RegistrarTudoPorAssembly(typeof(IServicoBase<,>).Assembly, "Servico");
+            services.RegistrarTudoPorAssembly(typeof(IConstroiDocumento).Assembly, "Documento");
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
             services.AddAutoMapper(typeof(DTOParaViewModel), typeof(ViewModelParaDTO));

@@ -1,4 +1,4 @@
-﻿namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos.Modelo
+﻿namespace SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo
 {
     public sealed class ReceitaTemplate
     {

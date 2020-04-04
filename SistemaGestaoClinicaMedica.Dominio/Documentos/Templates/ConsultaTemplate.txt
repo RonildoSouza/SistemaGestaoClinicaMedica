@@ -1,0 +1,36 @@
+                                                         HISTÓRICO CLINICO
+
+Tratamento médico atual? [ ] SIM [ ] NÃO
+    Medicamentos em uso:
+
+Alguma tipo de alérgia? [ ] SIM [ ] NÃO
+    Quais:
+
+Hipertensão ou problemas cardíacos? [ ] SIM [ ] NÃO
+    Quais:
+
+Distúrbio circulatório? [ ] SIM [ ] NÃO
+    Qual:
+
+Distúrbio renal? [ ] SIM [ ] NÃO
+    Qual:
+
+Distúrbio hormonal? [ ] SIM [ ] NÃO
+    Qual:
+
+Distúrbio gastro-intestinal? [ ] SIM [ ] NÃO
+    Qual:
+
+Epilepsia/Convulsões? [ ] SIM [ ] NÃO
+    Frequência:
+
+Diabetes? [ ] SIM [ ] NÃO
+    Tipo:
+
+Algum tipo de doença? [ ] SIM [ ] NÃO
+    Quais:
+
+
+
+                                                   MAIS DETALHES DA CONSULTA
+                                                

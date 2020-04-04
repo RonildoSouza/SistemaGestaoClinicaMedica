@@ -1,4 +1,7 @@
-﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+﻿using Microsoft.AspNetCore.Components;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
+using SistemaGestaoClinicaMedica.Dominio.Documentos;
+using SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using System.Threading.Tasks;
 
@@ -10,6 +13,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private string _especialidadeNome;
         private string _medicoNome;
         private string _dataHora;
+
+        [Inject] private IConstroiDocumento ConstroiDocumento { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -25,6 +30,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _dto.EspecialidadeId = consultaLocalStorage.Especialidade.Id;
             _dto.MedicoId = consultaLocalStorage.Medico.Id;
             _dto.StatusConsultaId = StatusConsultaConst.Agendada;
+            _dto.Observacao = ConstroiDocumento.ConstroiTemplate<ConsultaTemplate>();
 
             await base.OnParametersSetAsync();
         }

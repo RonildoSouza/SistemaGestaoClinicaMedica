@@ -20,7 +20,7 @@
             return;
 
         var content = element.value
-            .replace(/\n/gi, '<br />')
+            .replace(/\n/gi, '<br>')
             .replace(/\s/gi, '&nbsp;')
             .replace(/\t/gi, '&nbsp;');
 

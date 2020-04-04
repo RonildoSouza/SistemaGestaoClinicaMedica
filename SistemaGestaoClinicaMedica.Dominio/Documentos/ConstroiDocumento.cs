@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos
+namespace SistemaGestaoClinicaMedica.Dominio.Documentos
 {
     public class ConstroiDocumento : IConstroiDocumento
     {
@@ -19,7 +19,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos
             using StreamReader reader = new StreamReader(stream);
             var textoDoTemplate = reader.ReadToEnd();
 
-            var properties = modelo.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+            var properties = modelo.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var prop in properties)
             {
@@ -33,5 +33,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos
 
             return textoDoTemplate;
         }
+
+        public string ConstroiTemplate<T>() => ConstroiTemplate(Activator.CreateInstance<T>());
     }
 }

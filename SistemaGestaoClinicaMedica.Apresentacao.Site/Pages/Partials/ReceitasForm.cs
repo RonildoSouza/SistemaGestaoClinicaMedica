@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos.Modelo;
+using SistemaGestaoClinicaMedica.Dominio.Documentos;
+using SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;

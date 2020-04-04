@@ -1,0 +1,10 @@
+                                        {TipoAtestadoNome}
+
+Atesto para os devidos fins que o(a) Sr(a). {PacienteNome}, inscrito(a) no CPF sob o nº {PacienteCPF}, foi por mim examinado(a) e apresenta plenas condições de saúde e aptidão física.
+
+
+{Localidade}
+
+                       ___________________________________________________
+                                           {MedicoNome}
+                                       CRM {MedicoCRM}

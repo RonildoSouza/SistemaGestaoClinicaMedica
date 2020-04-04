@@ -1,0 +1,10 @@
+                                        {TipoAtestadoNome}
+
+Atesto para os devidos fins, a pedido, que o(a) Sr(a). {PacienteNome}, inscrito(a) no CPF sob o nº {PacienteCPF}, paciente sob meus cuidados, foi atendido(a) no dia {DataAtual} às {HoraAtual}, tendo sido acompanhada pelo Sr(a).________________________________________________, inscrito(a) no CPF sob o nº _____._____._____-____.
+
+
+{Localidade}
+
+                       ___________________________________________________
+                                           {MedicoNome}
+                                       CRM {MedicoCRM}

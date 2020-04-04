@@ -11,12 +11,13 @@
 <FormComponent Item="_dto" OnValidSubmit="Salvar"  SubmitButtonText="Salvar e Imprimir Atestado">
     <div class="form-group col-md-12">
         <label for="tipo-atestado">Tipo de Atestado</label>
-        <InputSelect @bind-Value="context.TipoDeAtestado.Id" class="form-control" id="tipo-atestado">
+        <select @onchange="SelecionaTipoDeAtestadoAsync" class="form-control" id="tipo-atestado">
+            <option value=""></option>
             @foreach (var tipo in _tiposDeAtestados)
             {
                 <option value="@tipo.Id">@tipo.Nome</option>
             }
-        </InputSelect>
+        </select>
     </div>
     <div class="form-group col-md-12">
         <label for="atestado-observacao">Observação</label>

@@ -3,7 +3,7 @@ NOME DO PACIENTE: {PacienteNome}                                                
 NOME DA MÃE DO PACIENTE: {PacienteNomeMae}                                                  SEXO DO PACIENTE: {PacienteSexo}
 NOME DO MÉDICO: {MedicoNome}    -   CRM: {MedicoCRM}
 
-                                                                RECEITA
+                                             RECEITA
 
 {Medicamentos}
 
@@ -11,5 +11,5 @@ NOME DO MÉDICO: {MedicoNome}    -   CRM: {MedicoCRM}
 
 
 
-                            ______________________________________________________________________
-                                                                {MedicoNome}
+                      __________________________________________________
+                                           {MedicoNome}

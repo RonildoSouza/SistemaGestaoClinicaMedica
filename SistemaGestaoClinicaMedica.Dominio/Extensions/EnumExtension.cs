@@ -29,6 +29,11 @@ namespace SistemaGestaoClinicaMedica.Dominio.Extensions
             return status.StringParaEnum<EStatusExame>();
         }
 
+        public static ETipoDeAtestado StringParaTipoDeAtestado(this string status)
+        {
+            return status.StringParaEnum<ETipoDeAtestado>();
+        }
+
         private static T StringParaEnum<T>(this string str) where T : struct, Enum
         {
             if (!Enum.TryParse(str, out T e))
