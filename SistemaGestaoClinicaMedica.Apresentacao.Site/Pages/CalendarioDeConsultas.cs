@@ -159,7 +159,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (_medicoLocalStorage == null)
             {
                 ToastService.ShowInfo("Falta informar o Médico!");
-                await JSRuntime.ScrollTo();
+                await JSRuntime.ScrollToAsync();
                 return;
             }
 
@@ -298,7 +298,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (_pacienteLocalStorage.Id == Guid.Empty || _especialidadeLocalStorage == null)
             {
                 ToastService.ShowInfo("Falta informar o Paciente e/ou Especialidade");
-                await JSRuntime.ScrollTo();
+                await JSRuntime.ScrollToAsync();
                 return;
             }
 

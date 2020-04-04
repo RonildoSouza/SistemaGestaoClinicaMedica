@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Documentos.Modelo;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
@@ -46,17 +48,28 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup", "#medicamentos", dotNetReference, nameof(SelecionaMedicamento));
         }
 
+        protected async override Task<bool> Salvar(EditContext editContext)
+        {
+            var result = await base.Salvar(editContext);
+            if (result)
+                await JSRuntime.PrintContentAsync("receita-observacao");
+
+            return result;
+        }
+
         private void ConstroiObservacao()
         {
             var medicamentosStringBuilder = new StringBuilder();
 
             for (int i = 0; i < _medicamentosSelecionados.Count; i++)
-                medicamentosStringBuilder.AppendLine($"{i + 1}) {_medicamentosSelecionados[i]}\n\t- ");
+                medicamentosStringBuilder.AppendLine($"{i + 1}) {_medicamentosSelecionados[i]}\n    - ");
 
             var receitaTemplate = new ReceitaTemplate(
                 Consulta.Codigo,
                 Consulta.Paciente.Nome,
                 Consulta.Paciente.DataNascimento.ToShortDateString(),
+                Consulta.Paciente.NomeDaMae,
+                Consulta.Paciente.Sexo,
                 Consulta.Medico.Nome,
                 Consulta.Medico.CRM,
                 medicamentosStringBuilder.ToString());
@@ -72,7 +85,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
                 return;
 
             if (_dto.Id != Guid.Empty && _dto.ReceitaMedicamentos.Any())
-                _medicamentosSelecionados = _dto.ReceitaMedicamentos.Select(_ => _.Medicamento.NomeFabrica).ToList();
+                _medicamentosSelecionados = _dto.ReceitaMedicamentos.Select(_ => _.Medicamento?.NomeFabrica).ToList();
 
             if (_dto.ReceitaMedicamentos.Any(_ => _.MedicamentoId == medicamentoId))
             {

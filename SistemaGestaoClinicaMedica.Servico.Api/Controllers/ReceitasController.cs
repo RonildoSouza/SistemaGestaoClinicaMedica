@@ -17,14 +17,6 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _receitaServicoAplicacao = receitaServicoAplicacao;
         }
 
-        //[Authorize("Bearer", Roles = "Administrador, Medico")]
-        //[HttpGet]
-        //public IActionResult Get()
-        //{
-        //    var saidaDTOs = _receitaServicoAplicacao.ObterTudo();
-        //    return Ok(saidaDTOs);
-        //}
-
         [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet, Route("por-consulta/{consultaId}")]
         public IActionResult GetPorConsulta(Guid consultaId)

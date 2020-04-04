@@ -127,6 +127,10 @@ app {
     display: none;
 }
 
+textarea {
+    height: 400px !important;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

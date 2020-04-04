@@ -14,10 +14,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            await JSRuntime.ShowTabFromUrlId();
+            await JSRuntime.ShowTabFromUrlIdAsync();
         }
 
-        protected override Task Salvar(EditContext editContext)
+        protected override Task<bool> Salvar(EditContext editContext)
         {
             if (_dto.StatusConsultaId == StatusConsultaConst.Agendada)
                 _dto.StatusConsultaId = StatusConsultaConst.Concluida;

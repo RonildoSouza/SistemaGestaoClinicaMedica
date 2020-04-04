@@ -19,36 +19,57 @@
     </div>
 </HeaderComponent>
 
-<div class="card">
-    <div class="card-body">
-        @if (_carregando)
-        {
+@if (_carregando)
+{
+    <div class="card">
+        <div class="card-body">
             <div class="d-flex justify-content-center">
                 <div class="spinner-border" role="status"></div>
             </div>
-        }
-        else
-        {
-            <div class="row">
-                <div class="form-group col-md-12">
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="form-group col-md-12">
+            <div class="card">
+                <div class="card-body">
                     <canvas id="total-consultas-por-sexo-paciente"></canvas>
                 </div>
-                <div class="form-group col-md-12">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="card">
+                <div class="card-body">
                     <canvas id="total-consulta-por-especialidades"></canvas>
                 </div>
-                <div class="form-group col-md-12">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="card">
+                <div class="card-body">
                     <canvas id="total-exames-por-tipo"></canvas>
                 </div>
-                <div class="form-group col-md-12">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="card">
+                <div class="card-body">
                     <canvas id="total-consultas-por-mes"></canvas>
                 </div>
-                <div class="form-group col-md-12">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="card">
+                <div class="card-body">
                     <canvas id="total-consultas-por-idade-paciente"></canvas>
                 </div>
             </div>
-        }
+        </div>
     </div>
-</div>
+}
+
 
 @code{
     private static DateTime _dataInicio = DateTime.Now.AddMonths(-3);

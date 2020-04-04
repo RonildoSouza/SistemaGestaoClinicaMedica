@@ -3,9 +3,9 @@
 @inherits FormBase<IReceitasServico, ReceitaDTO, Guid>
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
-<HeaderComponent Title="Cadastro de Receita" BackRoute="@AposSalvarRetonarPara" />
+<HeaderComponent Title="Cadastro de Receita" />
 
-<FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar Receita">
+<FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar e Imprimir Receita">
     <div class="form-group col-md-12">
         <label for="medicamentos">Medicamentos</label>
         <SelectWithSearch Id="medicamentos"
@@ -17,7 +17,7 @@
         </SelectWithSearch>
     </div>
     <div class="form-group col-md-12">
-        <label for="observacao">Observação</label>
-        <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="observacao" />
+        <label for="receita-observacao">Observação</label>
+        <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="receita-observacao" />
     </div>
 </FormComponent>

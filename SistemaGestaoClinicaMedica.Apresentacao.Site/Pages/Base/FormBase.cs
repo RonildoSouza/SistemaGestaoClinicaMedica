@@ -30,10 +30,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 _dto = await HttpServico.GetAsync(Id);
         }
 
-        protected virtual async Task Salvar(EditContext editContext)
+        protected virtual async Task<bool> Salvar(EditContext editContext)
         {
             if (!editContext.Validate())
-                return;
+                return false;
 
             HttpResponseMessage httpResponse;
 
@@ -45,9 +45,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (httpResponse.IsSuccessStatusCode)
                 ToastService.ShowSuccess("Registro salvo com sucesso");
             else
+            {
                 ToastService.ShowError("Falha ao tentar salvar o registro!");
+                return false;
+            }
 
             NavigationManager.NavigateTo(AposSalvarRetonarPara);
+            return true;
         }
     }
 }

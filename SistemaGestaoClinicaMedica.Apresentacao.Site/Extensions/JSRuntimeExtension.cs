@@ -5,7 +5,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
 {
     public static class JSRuntimeExtension
     {
-        public async static Task ScrollTo(this IJSRuntime jsRuntime, int xPos = 0, int yPos = 0)
+        public async static Task ScrollToAsync(this IJSRuntime jsRuntime, int xPos = 0, int yPos = 0)
         {
             var options = new
             {
@@ -17,14 +17,19 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
             await jsRuntime.InvokeVoidAsync($"scrollTo", options);
         }
 
-        public async static Task ShowTabFromUrlId(this IJSRuntime jsRuntime)
+        public async static Task ShowTabFromUrlIdAsync(this IJSRuntime jsRuntime)
         {
             await jsRuntime.InvokeVoidAsync("jsRuntimeExtensionJsInterop.showTabFromUrlId");
         }
 
-        public async static Task ForceReload(this IJSRuntime jsRuntime)
+        public async static Task ForceReloadAsync(this IJSRuntime jsRuntime)
         {
             await jsRuntime.InvokeVoidAsync("location.reload");
+        }
+
+        public async static Task PrintContentAsync(this IJSRuntime jsRuntime, string elementId)
+        {
+            await jsRuntime.InvokeVoidAsync("jsRuntimeExtensionJsInterop.printContent", elementId);
         }
     }
 }

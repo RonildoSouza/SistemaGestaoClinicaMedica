@@ -5,7 +5,6 @@ using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
@@ -30,19 +29,20 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             }
         }
 
-        protected async override Task Salvar(EditContext editContext)
+        protected async override Task<bool> Salvar(EditContext editContext)
         {
             if (string.IsNullOrEmpty(_dto.LinkResultadoExame))
             {
                 ToastService.ShowWarning("Não foi realizado o envio do resultados!");
-                return;
+                return false;
             }
 
             _dto.LaboratorioRealizouExameId = ApplicationState.UsuarioLogado.Id;
             _dto.StatusExame.Id = StatusExameConst.Concluido;
 
             await HttpServico.PutAsync(_dto.Id, _dto);
-            await JSRuntime.ForceReload();
+            await JSRuntime.ForceReloadAsync();
+            return true;
         }
     }
 }
