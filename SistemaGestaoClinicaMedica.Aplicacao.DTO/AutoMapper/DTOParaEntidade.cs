@@ -27,7 +27,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
 
             CreateMap<MedicamentoDTO, Medicamento>().ConvertUsing<MedicamentoDTOParaMedicamento>();
 
-            CreateMap<PacienteDTO, Paciente>();
+            CreateMap<PacienteDTO, Paciente>()
+                .ForMember(dest => dest.CPF, opt => opt.MapFrom(src => src.CPF.Replace(".", string.Empty).Replace("-", string.Empty)));
 
             CreateMap<ConsultaDTO, Consulta>().ConvertUsing<ConsultaDTOParaConsulta>();
 

@@ -1,8 +1,9 @@
 CÓDIGO DA CONSULTA: {ConsultaCodigo}
 NOME DO PACIENTE: {PacienteNome}                                                            DATA DE NASCIMENTO: {PacienteDataNascimento}
+NOME DA MÃE DO PACIENTE: {PacienteNomeMae}                                                  SEXO DO PACIENTE: {PacienteSexo}
 NOME DO MÉDICO: {MedicoNome}    -   CRM: {MedicoCRM}
 
-                                                        RECEITA
+                                                                RECEITA
 
 {Medicamentos}
 
@@ -10,47 +11,5 @@ NOME DO MÉDICO: {MedicoNome}    -   CRM: {MedicoCRM}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             ______________________________________________________________________
-                                                        {MedicoNome}
+                                                                {MedicoNome}

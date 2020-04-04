@@ -8,9 +8,14 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         public Guid Id { get; set; }
         public string Codigo { get; set; }
         [Required]
+        public string CPF { get; set; }
+        [Required]
         public string Nome { get; set; }
         [Required]
         public DateTime DataNascimento { get; set; }
+        public string NomeDaMae { get; set; }
+        [Required]
+        public string Sexo { get; set; }
         [Required]
         public string Telefone { get; set; }
         [Required]

@@ -14,12 +14,27 @@
         <InputText @bind-Value="context.Nome" class="form-control" id="nome" />
     </div>
     <div class="form-group col-md-3">
+        <label for="sexo">Sexo</label>
+        <InputSelect @bind-Value="context.Sexo" class="form-control" id="sexo">
+            <option value="Feminino">Feminino</option>
+            <option value="Masculino">Masculino</option>
+        </InputSelect>
+    </div>
+    <div class="form-group col-md-3">
         <label for="data-nascimento">Data de Nascimento</label>
         <InputDate @bind-Value="context.DataNascimento" class="form-control" id="data-nascimento" />
     </div>
     <div class="form-group col-md-3">
+        <label for="cpf">CPF</label>
+        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" data-inputmask="'mask': '999.999.999-99'" />
+    </div>
+    <div class="form-group col-md-3">
         <label for="telefone">Telefone</label>
-        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" />
+        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" data-inputmask="'mask': '(99) 9999[9]-9999'" />
+    </div>
+    <div class="form-group col-md-6">
+        <label for="nome-mae">Nome da Mãe</label>
+        <InputText @bind-Value="context.NomeDaMae" class="form-control" id="nome-mae" />
     </div>
     <div class="form-group col-md-4">
         <label for="bairro">Bairro</label>
