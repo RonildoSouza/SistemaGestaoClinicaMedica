@@ -49,5 +49,18 @@
 
             return cpf.EndsWith(digito);
         }
+
+        public static string FormataCPF(this string cpfSemPontos)
+        {
+            var cpfComPontos = cpfSemPontos.Trim();
+            if (cpfComPontos.Length == 11)
+            {
+                cpfComPontos = cpfComPontos.Insert(9, "-");
+                cpfComPontos = cpfComPontos.Insert(6, ".");
+                cpfComPontos = cpfComPontos.Insert(3, ".");
+            }
+
+            return cpfComPontos;
+        }
     }
 }

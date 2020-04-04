@@ -1,15 +1,19 @@
-                                             RECEITA
+                                     SOLICITAÇÃO DE EXAME
 
 Código da Consulta: {ConsultaCodigo}
 
 Nome do Paciente: {PacienteNome}
 Data de Nascimento do Paciente: {PacienteDataNascimento}
 Sexo do Paciente: {PacienteSexo}
-Nome da Mãe do Paciente: {PacienteNomeMae}
+Data da Solicitação do Exame: {DataAtual}
 
-                                MEDICAMENTOS RECEITADOS
+                                     EXAME SOLICITADO
 
-{Medicamentos}
+   ► {TipoDeExameNome}
+
+
+
+                        MAIS DETALHES DA SOLICITAÇÃO DE EXAME
 
 
 

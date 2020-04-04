@@ -8,15 +8,12 @@
 
     public enum ETipoDeAtestado
     {
-        AtestadoDeObito,
         AtestadoPorDoenca,
         AtestadoParaRepousoGestante,
         AtestadoPorAcidenteDeTrabalho,
-        AtestadoParaFinsDeInterdicao,
         AtestadoDeAptidaoFisica,
         AtestadoDeSanidadeFisicaMental,
         AtestadoParaAmamentação,
         AtestadoDeComparecimento,
-        AtestadoParaInternacoes,
     }
 }

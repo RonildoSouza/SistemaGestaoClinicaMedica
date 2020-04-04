@@ -5,6 +5,7 @@ Atesto para os devidos fins que o(a) Sr(a). {PacienteNome}, inscrito(a) no CPF s
 
 {Localidade}
 
-                       ___________________________________________________
+
+             ___________________________________________
                                            {MedicoNome}
                                        CRM {MedicoCRM}

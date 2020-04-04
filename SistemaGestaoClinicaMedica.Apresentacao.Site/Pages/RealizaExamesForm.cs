@@ -27,6 +27,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 var uri = await HttpServico.UploadResultado(_dto.Id, file.Data, file.Name);
                 _dto.LinkResultadoExame = uri.AbsoluteUri;
             }
+
+            ToastService.ShowSuccess($"Resultado do exame de código {_dto.Codigo} foi enviado!");
         }
 
         protected async override Task<bool> Salvar(EditContext editContext)

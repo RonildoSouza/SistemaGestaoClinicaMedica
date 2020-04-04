@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SistemaGestaoClinicaMedica.Dominio.Extensions;
+using System;
 
 namespace SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo
 {
@@ -10,7 +11,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo
         {
             TipoAtestadoNome = tipoAtestadoNome.ToUpper();
             PacienteNome = pacienteNome.ToUpper();
-            PacienteCPF = pacienteCPF;
+            PacienteCPF = pacienteCPF.FormataCPF();
             MedicoNome = medicoNome.ToUpper();
             MedicoCRM = medicoCRM.ToUpper();
         }

@@ -15,7 +15,7 @@
             <option value=""></option>
             @foreach (var tipo in _tiposDeAtestados)
             {
-                <option value="@tipo.Id">@tipo.Nome</option>
+                <option value="@tipo.Id" selected="@(_dto.TipoDeAtestado.Id == tipo.Id)">@tipo.Nome</option>
             }
         </select>
     </div>

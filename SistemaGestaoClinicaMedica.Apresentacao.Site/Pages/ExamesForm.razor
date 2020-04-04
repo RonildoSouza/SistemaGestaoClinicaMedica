@@ -11,13 +11,13 @@
 <FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar e Imprimir Exame">
     <div class="form-group col-md-12">
         <label for="tipo-exame">Tipo de Exame</label>
-        <InputSelect @bind-Value="_tipoDeExameId" class="form-control" id="tipo-exame" required>
+        <select @onchange="SelecionaTipoDeExameAsync" class="form-control" id="tipo-exame" required>
             <option value=""></option>
             @foreach (var tipo in _tiposDeExames)
             {
-                <option value="@tipo.Id.ToString()">@tipo.Nome</option>
+                <option value="@tipo.Id.ToString()" selected="@(_tipoDeExameId == context.TipoDeExame.Id.ToString())">@tipo.Nome</option>
             }
-        </InputSelect>
+        </select>
     </div>
     <div class="form-group col-md-12">
         <label for="exame-observacao">Observação</label>
