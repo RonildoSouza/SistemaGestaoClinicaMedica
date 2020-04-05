@@ -15,23 +15,32 @@
 
 <FormComponent Item="_dto"
                OnValidSubmit="Salvar"
-               SubmitButtonText="Concluir Exame"
-               SubmitButtonVisibled="@(_dto.StatusExame.Id != StatusExameConst.Concluido)">
+               SubmitButtonVisibled="false"
+               Loading="_carregando">
+    <div class="form-group col-md-12">
+        @if (_dto.StatusExame.Id == StatusExameConst.Concluido || (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && string.IsNullOrEmpty(_dto.LinkResultadoExame)))
+        {
+            <div class="alert alert-info" role="alert" style="width:100%">
+                Este exame está <strong>@context.StatusExame.Nome</strong>, por <strong>@_dto.LaboratorioRealizouExame.Nome</strong>!
+            </div>
+        }
 
-    @if (_dto.StatusExame.Id != StatusExameConst.Concluido && _dto.Id != Guid.Empty && string.IsNullOrEmpty(_dto.LinkResultadoExame))
-    {
-        <div class="form-group col-md-12">
-            <label for="resultado-exame">Enviar Resultado do Exame</label>
-            <InputFile OnChange="EnviarResultadoAsync" class="form-control-file" id="resultado-exame" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx"/>
-        </div>
-    }
+        @if (_dto.StatusExame.Id == StatusExameConst.Pendente && _dto.Id != Guid.Empty)
+        {
+            <button type="submit" id="analise-laboratorial" class="btn btn-lg btn-block btn-warning">Informar que a análise laboratorial foi iniciada</button>
+        }
 
-    @if (_dto.StatusExame.Id == StatusExameConst.Concluido || _dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial)
-    {
-        <div class="alert alert-info" role="alert" style="width:100%">
-            Este exame está <strong>@context.StatusExame.Nome</strong>!
-        </div>
-    }
+        @if (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && _dto.Id != Guid.Empty && string.IsNullOrEmpty(_dto.LinkResultadoExame))
+        {
+            <label for="resultado-exame" class="btn btn-lg btn-block btn-dark">Anexar e enviar o resultado do exame</label>
+            <InputFile OnChange="EnviarResultadoAsync" class="form-control-file" id="resultado-exame" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" style="display: none;" />
+        }
+
+        @if (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && !string.IsNullOrEmpty(_dto.LinkResultadoExame))
+        {
+            <button type="submit" id="concluir-exame" class="btn btn-lg btn-block btn-success">Prosseguir com a concluisão do exame</button>
+        }
+    </div>
 
     <div class="form-group col-md-12">
         <label for="tipo-exame">Tipo de Exame</label>
