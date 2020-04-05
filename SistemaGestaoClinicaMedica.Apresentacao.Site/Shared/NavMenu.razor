@@ -1,13 +1,21 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
     <div class="row">
-        <div class="col-md-12">
-            <a class="navbar-brand" href="">Clínica Médica</a>
-            <button class="btn btn-danger float-md-right" @onclick="Logout">DSL</button>
+        <div class="form-group col-md-12">
+            <button class="btn btn-danger float-right" @onclick="Logout">
+                <span class="oi oi-account-logout" aria-hidden="true"></span> Deslogar
+            </button>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="usuario-nome">
+                Bem vindo, <NavLink href="@_usuarioLogado.Id" class="btn btn-link"> @_usuarioLogado.Nome</NavLink>
+            </label>
+        </div>
+        <div class="form-group col-md-12">
+            <button class="navbar-toggler float-right" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
     </div>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
@@ -75,15 +83,29 @@
 </div>
 
 @using Blazored.LocalStorage;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 
 @code {
     private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private UsuarioLogado _usuarioLogado = new UsuarioLogado();
 
     [Inject] private ILoginServico LoginServico { get; set; }
     [Inject] private ILocalStorageService LocalStorageService { get; set; }
     [Inject] private NavigationManager NavigationManager { get; set; }
+    [Inject] private ApplicationState ApplicationState { get; set; }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _usuarioLogado = ApplicationState.UsuarioLogado;
+            StateHasChanged();
+        }
+
+        return Task.CompletedTask;
+    }
 
     private void ToggleNavMenu()
     {

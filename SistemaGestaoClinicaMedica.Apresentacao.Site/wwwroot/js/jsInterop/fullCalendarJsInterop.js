@@ -10,6 +10,7 @@
                 center: 'title'
             },
             plugins: ['dayGrid', 'list', 'interaction'],
+            eventLimit: true,
             events: fullCalendarEvents,
             eventClick: function (info) {
                 var consultaEvento = {
@@ -31,6 +32,11 @@
             eventTimeFormat: {
                 hour: '2-digit',
                 minute: '2-digit'
+            },
+            views: {
+                dayGridMonth: {
+                    eventLimit: 3
+                }
             },
             customButtons: {
                 customMonthButton: {

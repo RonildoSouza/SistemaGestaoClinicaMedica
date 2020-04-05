@@ -50,7 +50,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                    .Where(_ => _.Medicos.Any(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataDaConsulta.DayOfWeek)))
                                    .Where(_ => _.Medicos.Any(_ => _.Ativo) && _.Medicos.Any(_ => _.Medico.Usuario.Ativo))
                                    .SelectMany(_ => _.Medicos);
-            var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada }, medicoId);
+            var consultas = _consultaServico.ObterTudoComFiltros(dataDaConsulta, dataDaConsulta.AddMinutes(1439), null, new[] { EStatusConsulta.Agendada, EStatusConsulta.Reagendada }, medicoId);
 
             if (medicoId.HasValue && medicoId != Guid.Empty)
                 medicos = medicos.Where(_ => _.MedicoId == medicoId.GetValueOrDefault() || _.Medico.Usuario.Id == medicoId.GetValueOrDefault());
