@@ -25,7 +25,7 @@ app {
 }
 
 .top-row {
-    height: 10rem;
+    height: 8rem;
     display: flex;
     color: white;
     align-items: center;
@@ -37,10 +37,6 @@ app {
         vertical-align: text-top !important;
         top: 0px !important;
     }
-
-label.usuario-nome {
-    margin-top: 2rem;
-}
 
 .main {
     flex: 1;
@@ -63,8 +59,6 @@ label.usuario-nome {
 }
 
 .sidebar {
-    /*background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/
-    /*background-image: linear-gradient(180deg, #3949AB 0%, #009688 70%);*/
     background-color: #009688;
 }
 
@@ -170,7 +164,7 @@ textarea {
 
 @media (max-width: 767.98px) {
     .top-row {
-        height: 13rem;
+        height: 12rem;
     }
         .main .top-row:not(.auth) {
         display: none;

@@ -1,4 +1,6 @@
-﻿namespace SistemaGestaoClinicaMedica.Dominio.Extensions
+﻿using System;
+
+namespace SistemaGestaoClinicaMedica.Dominio.Extensions
 {
     public static class StringExtension
     {
@@ -69,6 +71,11 @@
                 cpf = cpf.Replace(".", string.Empty).Replace("-", string.Empty);
 
             return cpf;
+        }
+
+        public static string ParaCodigoExame(this Guid id)
+        {
+            return id.ToString().Substring(0, 8).ToUpper();
         }
     }
 }

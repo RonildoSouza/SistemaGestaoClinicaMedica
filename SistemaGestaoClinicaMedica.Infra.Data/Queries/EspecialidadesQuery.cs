@@ -99,8 +99,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 
         private void RemoveHorariosIndisponiveis(ref List<TimeSpan> horariosDisponiveis, IEnumerable<HorarioDeTrabalho> horarios, IList<Consulta> consultas)
         {
-            var horariosUnicosInicioIntervalo = horarios.GroupBy(_ => _.InicioIntervalo).Select(_ => _.Key);
-            var horariosUnicosFimIntervalo = horarios.GroupBy(_ => _.FimIntervalo).Select(_ => _.Key);
+            var horariosUnicosInicioIntervalo = horarios.ToLookup(_ => _.InicioIntervalo).Select(_ => _.Key);
+            var horariosUnicosFimIntervalo = horarios.ToLookup(_ => _.FimIntervalo).Select(_ => _.Key);
 
             foreach (var horarioDisp in horariosDisponiveis.GetRange(0, horariosDisponiveis.Count()))
             {

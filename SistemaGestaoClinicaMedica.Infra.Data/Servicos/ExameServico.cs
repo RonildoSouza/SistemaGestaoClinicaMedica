@@ -24,8 +24,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return Entidades.Include(_ => _.TipoDeExame)
                             .Include(_ => _.StatusExame)
                             .Include(_ => _.LaboratorioRealizouExame)
-                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                             .Include(_ => _.Consulta)
+                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
+                            .Include($"{nameof(Exame.Consulta)}.{nameof(Consulta.Medico)}")
+                            .Include($"{nameof(Exame.Consulta)}.{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                             .FirstOrDefault(_ => _.Id == id);
         }
 
@@ -34,8 +36,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return Entidades.Include(_ => _.TipoDeExame)
                             .Include(_ => _.StatusExame)
                             .Include(_ => _.LaboratorioRealizouExame)
-                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                             .Include(_ => _.Consulta)
+                            .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                             .AsQueryable();
         }
 

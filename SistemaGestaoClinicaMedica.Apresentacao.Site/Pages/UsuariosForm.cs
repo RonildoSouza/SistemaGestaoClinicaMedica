@@ -10,6 +10,7 @@ using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class UsuariosForm
     {
+        private List<CargoDTO> _cargos = new List<CargoDTO>();
+        private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
+        private UsuarioViewModel _usuarioViewModel = new UsuarioViewModel();
+        private string _cargoIdLocalStorage;
+        private UsuarioLogado _usuarioLogado = new UsuarioLogado();
+        private string _senhaEdicao;
+
         [Parameter] public Guid Id { get; set; }
 
         [Inject] private IMapper Mapper { get; set; }
@@ -33,16 +41,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject] private IRecepcionistasServico RecepcionistasServico { get; set; }
         [Inject] private ILaboratoriosServico LaboratoriosServico { get; set; }
         [Inject] private IMedicosServico MedicosServico { get; set; }
-
-        private List<CargoDTO> _cargos = new List<CargoDTO>();
-        private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
-        private UsuarioViewModel _usuarioViewModel = new UsuarioViewModel();
-        private string _cargoIdLocalStorage;
+        [Inject] private ApplicationState ApplicationState { get; set; }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-
             var dotNetReference = DotNetObjectReference.Create(this);
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup", "#especialidades", dotNetReference, nameof(SelecionaEspecialidade));
         }
@@ -52,7 +55,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _cargos = await CargosServico.GetAsync();
             _especialidades = await EspecialidadesServico.GetAsync();
 
-            _cargoIdLocalStorage = await LocalStorage.ObterUsuarioCargoIdLocalStorageAsync();
+            _cargoIdLocalStorage = await LocalStorage.ObterUsuarioCargoIdEdicaoLocalStorageAsync();
+
+            _usuarioLogado = ApplicationState.UsuarioLogado;
+            if (string.IsNullOrEmpty(_cargoIdLocalStorage) && _usuarioLogado.EMedico)
+                _cargoIdLocalStorage = _usuarioLogado.CargoId;
 
             switch (_cargoIdLocalStorage)
             {
@@ -73,12 +80,18 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     _usuarioViewModel = Mapper.Map<UsuarioViewModel>(medico);
                     break;
             }
+
+            if (_usuarioViewModel.Id != Guid.Empty)
+                _senhaEdicao = _usuarioViewModel.Senha;
         }
 
         protected async Task Salvar(EditContext editContext)
         {
             if (!editContext.Validate())
                 return;
+
+            if (_senhaEdicao != _usuarioViewModel.Senha)
+                _usuarioViewModel.Senha = Encryption64.Encrypt(_usuarioViewModel.Senha);
 
             switch (_usuarioViewModel.CargoId)
             {
@@ -103,7 +116,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     }
 
                     var horariosSelecionados = _usuarioViewModel.HorariosDeTrabalho.Where(_ => _.Selecionado);
-
                     if (!horariosSelecionados.Any())
                     {
                         ToastService.ShowWarning("Deve ser selecionado ao menos um horário de trabalho!");
@@ -135,7 +147,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             else
                 ToastService.ShowError("Falha ao tentar salvar o registro!");
 
-            NavigationManager.NavigateTo("usuarios");
+            if (_usuarioLogado.EMedico)
+            {
+                ApplicationState.UsuarioLogado.Nome = (dto as MedicoDTO).Nome;
+                NavigationManager.NavigateTo("/");
+            }
+            else
+                NavigationManager.NavigateTo("usuarios");
         }
 
         [JSInvokable]

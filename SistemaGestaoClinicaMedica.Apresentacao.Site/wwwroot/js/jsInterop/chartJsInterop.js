@@ -61,6 +61,9 @@
                         scaleLabel: {
                             display: true,
                             labelString: 'Total de Consultas'
+                        },
+                        ticks: {
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -100,6 +103,9 @@
                         scaleLabel: {
                             display: true,
                             labelString: 'Total de Consultas'
+                        },
+                        ticks: {
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -154,6 +160,9 @@
                         scaleLabel: {
                             display: true,
                             labelString: 'Total de Consultas'
+                        },
+                        ticks: {
+                            beginAtZero: true
                         }
                     }]
                 }
@@ -208,6 +217,9 @@
                         scaleLabel: {
                             display: true,
                             labelString: 'Total de Consultas'
+                        },
+                        ticks: {
+                            beginAtZero: true
                         }
                     }]
                 }

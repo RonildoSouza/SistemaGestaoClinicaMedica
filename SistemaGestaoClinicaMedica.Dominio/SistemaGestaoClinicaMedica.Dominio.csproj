@@ -15,31 +15,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Documentos\Templates\AtestadoAptidaoFisicaTemplate.txt" />
-    <None Remove="Documentos\Templates\AtestadoComparecimentoTemplate.txt" />
-    <None Remove="Documentos\Templates\AtestadoMedicoTemplate.txt" />
-    <None Remove="Documentos\Templates\ConsultaTemplate.txt" />
-    <None Remove="Documentos\Templates\ExameTemplate.txt" />
-    <None Remove="Documentos\Templates\ReceitaTemplate.txt" />
+    <None Remove="Documentos\Templates\AtestadoAptidaoFisicaTemplate.rns" />
+    <None Remove="Documentos\Templates\AtestadoComparecimentoTemplate.rns" />
+    <None Remove="Documentos\Templates\AtestadoMedicoTemplate.rns" />
+    <None Remove="Documentos\Templates\ConsultaTemplate.rns" />
+    <None Remove="Documentos\Templates\EmailTemplate.rns" />
+    <None Remove="Documentos\Templates\ExameTemplate.rns" />
+    <None Remove="Documentos\Templates\ReceitaTemplate.rns" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Documentos\Templates\AtestadoAptidaoFisicaTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\AtestadoAptidaoFisicaTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Documentos\Templates\AtestadoComparecimentoTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\AtestadoComparecimentoTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Documentos\Templates\AtestadoMedicoTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\AtestadoMedicoTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Documentos\Templates\ConsultaTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\ConsultaTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Documentos\Templates\ExameTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\ExameTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Documentos\Templates\ReceitaTemplate.txt">
+    <EmbeddedResource Include="Documentos\Templates\EmailTemplate.rns">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Documentos\Templates\ReceitaTemplate.rns">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

@@ -15,7 +15,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
 
         public Consulta ObterComFiltros(Guid id, bool comExames, bool comAtestados)
         {
-            var dbset = Entidades.Include(_ => _.Paciente)
+            var consultas = Entidades.Include(_ => _.Paciente)
                                  .Include(_ => _.StatusConsulta)
                                  .Include(_ => _.Medico)
                                  .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
@@ -25,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                  .AsQueryable();
 
             if (comExames)
-                dbset = dbset.Include(_ => _.Exames)
+                consultas = consultas.Include(_ => _.Exames)
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.TipoDeExame)}")
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.StatusExame)}")
                              .Include($"{nameof(Consulta.Exames)}.{nameof(Exame.LaboratorioRealizouExame)}")
@@ -33,11 +33,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                              .AsQueryable();
 
             if (comAtestados)
-                dbset = dbset.Include(_ => _.Atestados)
+                consultas = consultas.Include(_ => _.Atestados)
                              .Include($"{nameof(Consulta.Atestados)}.{nameof(Atestado.TipoDeAtestado)}")
                              .AsQueryable();
 
-            return dbset.FirstOrDefault(_ => _.Id == id);
+            return consultas.FirstOrDefault(_ => _.Id == id);
         }
 
         public IList<Consulta> ObterTudoComFiltros(DateTime dataInicio, DateTime dataFim, string busca, IEnumerable<EStatusConsulta> status, Guid? medicoId = null)
@@ -92,7 +92,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
                             .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
                             .OrderBy(_ => _.Especialidade.Nome)
-                            .GroupBy(_ => _.Especialidade.Nome)
+                            .ToLookup(_ => _.Especialidade.Nome)
                             .Select(_ => Tuple.Create(_.Key, _.Count()))
                             .ToList();
         }
@@ -104,7 +104,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
                             .OrderBy(_ => _.Data.Month).ThenBy(_ => _.Data.Year)
                             .ToList()
-                            .GroupBy(_ => _.Data.ToString("MMM-yyyy"))
+                            .ToLookup(_ => _.Data.ToString("MMM-yyyy"))
                             .Select(_ => Tuple.Create(_.Key, _.Count()))
                             .ToList();
         }
@@ -115,7 +115,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .Include(_ => _.StatusConsulta)
                             .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
                             .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
-                            .GroupBy(_ => _.Paciente.Sexo)
+                            .ToLookup(_ => _.Paciente.Sexo)
                             .Select(_ => Tuple.Create(_.Key, _.Count()))
                             .ToList();
         }
@@ -127,7 +127,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
                             .Where(_ => _.StatusConsulta.Id != EStatusConsulta.Cancelada)
                             .OrderBy(_ => DateTime.Now.Year - _.Paciente.DataNascimento.Year)
-                            .GroupBy(_ => DateTime.Now.Year - _.Paciente.DataNascimento.Year)
+                            .ToLookup(_ => DateTime.Now.Year - _.Paciente.DataNascimento.Year)
                             .Select(_ => Tuple.Create(_.Key, _.Count()))
                             .ToList();
         }

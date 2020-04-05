@@ -20,12 +20,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
             return consultaLocalStorage;
         }
 
-        public async static Task CriaUsuarioCargoIdLocalStorageAsync(this ILocalStorageService localStorage, string cargoId)
+        public async static Task CriaUsuarioCargoIdEdicaoLocalStorageAsync(this ILocalStorageService localStorage, string cargoId)
         {
             await localStorage.SetItemAsync(nameof(UsuariosForm), cargoId);
         }
 
-        public async static Task<string> ObterUsuarioCargoIdLocalStorageAsync(this ILocalStorageService localStorage)
+        public async static Task<string> ObterUsuarioCargoIdEdicaoLocalStorageAsync(this ILocalStorageService localStorage)
         {
             var cargoId = await localStorage.GetItemAsync<string>(nameof(UsuariosForm));
             await localStorage.RemoveItemAsync(nameof(UsuariosForm));

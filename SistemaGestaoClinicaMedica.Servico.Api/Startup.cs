@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Modelos;
+using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Mail;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC;
 using SistemaGestaoClinicaMedica.Infra.Data;
 using System;
@@ -35,6 +36,12 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
 
             var jwtConfigurationSection = Configuration.GetSection(nameof(JwtAutenticacaoConfig));
             var azureStorageConfigurationSection = Configuration.GetSection(nameof(AzureStorageConfig));
+
+            services.AddEnviaEmail(
+                "clinica@email.com", 
+                "Sistema de Gestão de Clínica Médica",
+                "mail-dev.brazilsouth.azurecontainer.io",
+                25);
 
             #region Injeção de Dependência
             IoC.Registrar(services);

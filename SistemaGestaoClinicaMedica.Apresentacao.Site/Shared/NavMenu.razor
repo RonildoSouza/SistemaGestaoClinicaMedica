@@ -1,14 +1,26 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Blazored.LocalStorage;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
+<div class="top-row pl-4 navbar navbar-dark">
     <div class="row">
         <div class="form-group col-md-12">
-            <button class="btn btn-danger float-right" @onclick="Logout">
+            <img src="https://gestaoclinicamedica.blob.core.windows.net/container-base/logo/logo.png" class="float-left" style="width: 50px;">
+            <button class="btn btn-link float-right" @onclick="Logout">
                 <span class="oi oi-account-logout" aria-hidden="true"></span> Deslogar
             </button>
         </div>
         <div class="form-group col-md-12">
-            <label class="usuario-nome">
-                Bem vindo, <NavLink href="@_usuarioLogado.Id" class="btn btn-link"> @_usuarioLogado.Nome</NavLink>
-            </label>
+            @if (_usuarioLogado.EMedico)
+            {
+                <label>
+                    Bem vindo,<a href="usuarios/@_usuarioLogado.Id" class="btn btn-link"> @_usuarioLogado.Nome</a>
+                </label>
+            }
+            else
+            {
+                <label>Bem vindo, @_usuarioLogado.Nome</label>
+            }
         </div>
         <div class="form-group col-md-12">
             <button class="navbar-toggler float-right" @onclick="ToggleNavMenu">
@@ -82,10 +94,6 @@
     </ul>
 </div>
 
-@using Blazored.LocalStorage;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
-
 @code {
     private bool collapseNavMenu = true;
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -98,11 +106,8 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            _usuarioLogado = ApplicationState.UsuarioLogado;
-            StateHasChanged();
-        }
+        _usuarioLogado = ApplicationState.UsuarioLogado;
+        StateHasChanged();
 
         return Task.CompletedTask;
     }

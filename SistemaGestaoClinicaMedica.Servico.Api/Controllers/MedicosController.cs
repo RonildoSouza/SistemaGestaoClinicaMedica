@@ -53,7 +53,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Created($"/{saidaDTO.Id}", saidaDTO);
         }
 
-        [Authorize("Bearer", Roles = "Administrador")]
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpPut, Route("{id}")]
         public IActionResult Put([FromRoute]Guid id, [FromBody]MedicoDTO entradaDTO)
         {

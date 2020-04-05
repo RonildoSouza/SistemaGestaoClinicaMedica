@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
+using SistemaGestaoClinicaMedica.Dominio.Documentos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Autenticacao;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Storage;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
@@ -28,6 +29,8 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC
             services.AddAutoMapper(typeof(DTOParaEntidade), typeof(EntidadeParaDTO));
 
             services.AddScoped(typeof(IAzureStorage), typeof(AzureStorage));
+
+            services.RegistrarTudoPorAssembly(typeof(IConstroiDocumento).Assembly, "Documento");
         }
     }
 }

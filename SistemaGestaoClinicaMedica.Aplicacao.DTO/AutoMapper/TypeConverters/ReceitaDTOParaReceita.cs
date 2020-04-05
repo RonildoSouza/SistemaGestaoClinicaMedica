@@ -34,7 +34,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters
                 {
                     Id = recMed.Id,
                     Medicamento = medicamento,
-                    Ativo = medicamento.Ativo
+                    Ativo = recMed.Ativo
                 };
             }
         }

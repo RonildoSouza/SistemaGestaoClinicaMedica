@@ -40,7 +40,7 @@
 @code{
     private async Task EditarUsuario(string cargoId, Guid id)
     {
-        await LocalStorage.CriaUsuarioCargoIdLocalStorageAsync(cargoId);
+        await LocalStorage.CriaUsuarioCargoIdEdicaoLocalStorageAsync(cargoId);
         NavigationManager.NavigateTo($"usuarios/{id}");
     }
 }

@@ -69,7 +69,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return Entidades.Include(_ => _.TipoDeExame)
                             .Where(_ => _.CriadoEm.Date >= dataInicio.Date && _.CriadoEm.Date <= dataFim.Date)
                             .OrderBy(_ => _.TipoDeExame.Nome)
-                            .GroupBy(_ => _.TipoDeExame.Nome)
+                            .ToLookup(_ => _.TipoDeExame.Nome)
                             .Select(_ => Tuple.Create(_.Key, _.Count()))
                             .ToList();
         }

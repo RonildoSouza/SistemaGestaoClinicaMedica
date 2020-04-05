@@ -30,5 +30,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public string AtualizadoPor { get; set; }
 
         public bool ESuperUsuario() => Id == Guid.Parse("7270550F-6B18-41E2-9814-7DE97B8D966A");
+
+        public static string SenhaAleatoria() =>  Guid.NewGuid().ToString("d").Substring(1, 7);
     }
 }

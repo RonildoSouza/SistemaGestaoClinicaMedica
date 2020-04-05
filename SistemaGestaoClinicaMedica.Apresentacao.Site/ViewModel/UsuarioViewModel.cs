@@ -28,7 +28,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
         [Required]
         public string Email { get; set; }
         public string Telefone { get; set; }
-        [Required]
         public string Senha { get; set; }
         [Required]
         public string CargoId { get; set; }

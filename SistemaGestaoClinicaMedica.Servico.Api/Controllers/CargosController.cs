@@ -15,7 +15,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _cargoServicoAplicacao = cargoServicoAplicacao;
         }
 
-        [Authorize("Bearer", Roles = "Administrador")]
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet]
         public IActionResult Get()
         {

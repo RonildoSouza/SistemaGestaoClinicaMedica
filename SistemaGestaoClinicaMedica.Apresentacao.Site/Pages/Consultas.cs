@@ -43,7 +43,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         {
             Guid? medicoId = null;
 
-            if (ApplicationState.UsuarioLogado.CargoId == CargosConst.Medico)
+            if (ApplicationState.UsuarioLogado.EMedico)
                 medicoId = ApplicationState.UsuarioLogado.Id;
 
             dtos = await HttpServico.GetTudoComFiltrosAsync(_dataInicio, _dataFim, _busca, _statusConsultaSelecionado, medicoId);

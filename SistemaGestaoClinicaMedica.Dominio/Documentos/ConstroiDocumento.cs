@@ -10,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Documentos
         public string ConstroiTemplate<T>(T modelo)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = assembly.GetManifestResourceNames().SingleOrDefault(str => str.EndsWith($"{modelo.GetType().Name}.txt"));
+            var resourceName = assembly.GetManifestResourceNames().SingleOrDefault(str => str.EndsWith($"{modelo.GetType().Name}.rns"));
 
             if (string.IsNullOrEmpty(resourceName))
                 return string.Empty;

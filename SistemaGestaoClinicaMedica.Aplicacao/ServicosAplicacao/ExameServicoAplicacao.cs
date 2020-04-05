@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+using SistemaGestaoClinicaMedica.Aplicacao.Interfaces.Email;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
 using SistemaGestaoClinicaMedica.Dominio.Extensions;
 using SistemaGestaoClinicaMedica.Dominio.Servicos;
@@ -14,11 +15,17 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
     {
         private readonly IExameServico _exameServico;
         private readonly IAzureStorage _azureStorage;
+        private readonly IEmailResultadoEnviadoServicoAplicacao _emailResultadoEnviadoServicoAplicacao;
 
-        public ExameServicoAplicacao(IMapper mapper, IExameServico exameServico, IAzureStorage azureStorage) : base(mapper, exameServico)
+        public ExameServicoAplicacao(
+            IMapper mapper,
+            IExameServico exameServico,
+            IAzureStorage azureStorage,
+            IEmailResultadoEnviadoServicoAplicacao emailResultadoEnviadoServicoAplicacao) : base(mapper, exameServico)
         {
             _exameServico = exameServico;
             _azureStorage = azureStorage;
+            _emailResultadoEnviadoServicoAplicacao = emailResultadoEnviadoServicoAplicacao;
         }
 
         public void AlterarStatus(Guid id, StatusExameDTO statusExame)
@@ -67,6 +74,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             {
                 var exame = _exameServico.Obter(id);
                 exame.LinkResultadoExame = uri.AbsoluteUri;
+
+                _emailResultadoEnviadoServicoAplicacao.Enviar(
+                    exame.Consulta.Medico.Usuario.Email,
+                    exame.Consulta.Medico.Usuario.Nome,
+                    exame.Id.ParaCodigoExame());
+
                 _exameServico.Salvar(exame);
             }
 
