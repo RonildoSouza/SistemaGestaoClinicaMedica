@@ -3,6 +3,7 @@
 @attribute [Authorize(Roles = "Administrador, Recepcionista")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
+@using SistemaGestaoClinicaMedica.Dominio.Extensions;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IPacientesServico, PacienteDTO, Guid>
 
@@ -26,11 +27,11 @@
     </div>
     <div class="form-group col-md-3">
         <label for="cpf">CPF</label>
-        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" data-inputmask="'mask': '999.999.999-99'" />
+        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" minlength="11" maxlength="14"/>
     </div>
     <div class="form-group col-md-3">
         <label for="telefone">Telefone</label>
-        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" data-inputmask="'mask': '(99) 9999[9]-9999'" />
+        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" />
     </div>
     <div class="form-group col-md-6">
         <label for="nome-mae">Nome da Mãe</label>
@@ -80,4 +81,25 @@
 
 @code {
     protected override string AposSalvarRetonarPara => "pacientes";
+
+    protected override async Task<bool> Salvar(EditContext editContext)
+    {
+        if (_dto.CPF.ValidaCPF())
+        {
+            var paciente = await HttpServico.GetPorCodigoOuCPFAsync(_dto.CPF.RemoceFormatacaoCPF());
+
+            if (paciente != null && _dto.Id == Guid.Empty)
+            {
+                ToastService.ShowInfo("Já existe um paciente com este CPF!");
+                return false;
+            }
+        }
+        else
+        {
+            ToastService.ShowInfo("O CPF informado é inválido!");
+            return false;
+        }
+
+        return await base.Salvar(editContext);
+    }
 }

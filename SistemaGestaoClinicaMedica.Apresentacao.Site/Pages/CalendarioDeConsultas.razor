@@ -15,13 +15,15 @@
     <div class="row @(_carregando ? "display-none" : "")" id="agendar-consulta">
         @if (_agendarConsulta)
         {
-            <div class="form-group col-md-6 offset-md-6">
-                <div class="input-group mb-3">
-                    <input @bind-value="_pacienteCodigo" type="text" class="form-control" placeholder="Informe o código do paciente" aria-label="Informe o código do paciente" aria-describedby="paciente-codigo" minlength="4">
-                    <div class="input-group-append">
-                        <button @onclick="BuscaPacienteAsync" class="btn btn-outline-secondary" type="button" id="paciente-codigo">Buscar</button>
+            <div class="col-md-6 offset-md-6">
+                <form class="form-group">
+                    <div class="input-group mb-3">
+                        <input @bind-value="_pacienteCodigoOuCPF" type="text" class="form-control" placeholder="Informe o código ou CPF do paciente" aria-label="Informe o código ou CPF do paciente" aria-describedby="paciente-codigo" minlength="4" maxlength="14">
+                        <div class="input-group-append">
+                            <button @onclick="BuscaPacienteAsync" class="btn btn-outline-secondary" type="button" id="paciente-codigo">Buscar</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="form-group col-md-12">
                 <label for="paciente-nome">Nome do Paciente</label>

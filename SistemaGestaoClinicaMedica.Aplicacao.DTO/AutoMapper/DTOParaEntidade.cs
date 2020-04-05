@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper.TypeConverters;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Dominio.Extensions;
 using System;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
@@ -28,7 +29,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
             CreateMap<MedicamentoDTO, Medicamento>().ConvertUsing<MedicamentoDTOParaMedicamento>();
 
             CreateMap<PacienteDTO, Paciente>()
-                .ForMember(dest => dest.CPF, opt => opt.MapFrom(src => src.CPF.Replace(".", string.Empty).Replace("-", string.Empty)));
+                .ForMember(dest => dest.CPF, opt => opt.MapFrom(src => src.CPF.RemoceFormatacaoCPF()));
 
             CreateMap<ConsultaDTO, Consulta>().ConvertUsing<ConsultaDTOParaConsulta>();
 

@@ -8,7 +8,7 @@
 
         public static bool ToLowerEquals(this string str, string busca) => str.ToLower().Equals(busca.ToLower());
 
-        public static bool ValidaCpf(this string cpf)
+        public static bool ValidaCPF(this string cpf)
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
             int[] multiplicador2 = new int[10] { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -61,6 +61,14 @@
             }
 
             return cpfComPontos;
+        }
+
+        public static string RemoceFormatacaoCPF(this string cpf)
+        {
+            if (cpf.Contains(".") || cpf.Contains("-"))
+                cpf = cpf.Replace(".", string.Empty).Replace("-", string.Empty);
+
+            return cpf;
         }
     }
 }

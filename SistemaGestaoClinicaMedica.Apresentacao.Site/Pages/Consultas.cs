@@ -10,33 +10,27 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 {
     public partial class Consultas
     {
+        private DateTime _dataInicio;
+        private DateTime _dataFim;
+        private List<StatusConsultaDTO> _statusConsulta = new List<StatusConsultaDTO>();
         private string _statusConsultaSelecionado = StatusConsultaConst.Agendada;
         private string _busca;
 
-        [Inject] private IConsultasServico ConsultasServico { get; set; }
         [Inject] private IStatusConsultasServico StatusConsultaServico { get; set; }
-
-        private DateTime DataInicio { get; set; }
-        private DateTime DataFim { get; set; }
-        private List<StatusConsultaDTO> StatusConsulta { get; set; } = new List<StatusConsultaDTO>();
-        //private List<MedicoDTO> Medicos { get; set; }
+        [Inject] private ApplicationState ApplicationState { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
-            DataInicio = DateTime.Today;
-            DataFim = DataInicio.AddMonths(1);
-            StatusConsulta = await StatusConsultaServico.GetAsync();
+            _dataInicio = DateTime.Today;
+            _dataFim = _dataInicio.AddMonths(1);
+            _statusConsulta = await StatusConsultaServico.GetAsync();
 
             await base.OnInitializedAsync();
         }
 
         private void SelecionaStatusConsulta(ChangeEventArgs args)
         {
-            var statusSelecionado = args.Value.ToString();
-            if (string.IsNullOrEmpty(statusSelecionado))
-                return;
-
-            _statusConsultaSelecionado = statusSelecionado;
+            _statusConsultaSelecionado = args.Value.ToString();
         }
 
         private async Task BuscarAsync(string busca)
@@ -47,7 +41,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         protected async override Task CarregaDadosDaTabela()
         {
-            dtos = await HttpServico.GetTudoComFiltrosAsync(DataInicio, DataFim, _busca, _statusConsultaSelecionado);
+            Guid? medicoId = null;
+
+            if (ApplicationState.UsuarioLogado.CargoId == CargosConst.Medico)
+                medicoId = ApplicationState.UsuarioLogado.Id;
+
+            dtos = await HttpServico.GetTudoComFiltrosAsync(_dataInicio, _dataFim, _busca, _statusConsultaSelecionado, medicoId);
             StateHasChanged();
         }
     }

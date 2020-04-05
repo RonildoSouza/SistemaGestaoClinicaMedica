@@ -36,7 +36,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .ToList();
         }
 
-        public IList<Exame> ObterTudoComFiltro(string busca)
+        public IList<Exame> ObterTudoComFiltro(string busca, IEnumerable<EStatusExame> status, Guid? medicoId = null)
         {
             var exames = Entidades.Include(_ => _.TipoDeExame)
                                   .Include(_ => _.StatusExame)
@@ -45,16 +45,23 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                   .Include($"{nameof(Exame.LaboratorioRealizouExame)}.{nameof(Laboratorio.Usuario)}")
                                   .Include($"{nameof(Exame.Consulta)}.{nameof(Consulta.Paciente)}");
 
-            if (string.IsNullOrEmpty(busca))
-                return exames.OrderByDescending(_ => _.CriadoEm).Take(30).ToList();
+            if (status != null && status.Any())
+                exames = exames.Where(_ => status.Contains(_.StatusExame.Id));
 
-            return exames.ToList()
+            if (medicoId.HasValue && medicoId != Guid.Empty)
+                exames = exames.Include($"{nameof(Exame.Consulta)}.{nameof(Consulta.Medico)}")
+                               .Include($"{nameof(Exame.Consulta)}.{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
+                               .Where(_ => _.Consulta.Medico.Id == medicoId || _.Consulta.Medico.Usuario.Id == medicoId);
+
+            if (!string.IsNullOrEmpty(busca))
+                exames = exames.ToList()
                          .Where(_ => _.Id.ToString().ToLowerStartsWith(busca)
                                   || _.Consulta.Id.ToString().ToLowerStartsWith(busca)
                                   || _.Consulta.Paciente.Id.ToString().ToLowerStartsWith(busca))
                          .OrderByDescending(_ => _.CriadoEm)
-                         .Take(30)
-                         .ToList();
+                         .AsQueryable();
+
+            return exames.Take(30).ToList();
         }
 
         public IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim)

@@ -8,6 +8,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         public Guid Id { get; set; }
         public string Codigo { get; set; }
         [Required]
+        [MinLength(11), MaxLength(14)]
         public string CPF { get; set; }
         [Required]
         public string Nome { get; set; }

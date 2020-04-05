@@ -20,7 +20,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private EspecialidadeLocalStorage _especialidadeLocalStorage;
         private MedicoLocalStorage _medicoLocalStorage;
         private static DateTime _fullCalendarCurrentStartDate;
-        private string _pacienteCodigo;
+        private string _pacienteCodigoOuCPF;
         private List<EspecialidadeDTO> _especialidades;
         private List<MedicoDTO> _medicos = new List<MedicoDTO>();
         private bool _agendarConsulta;
@@ -76,7 +76,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     MedicoId = _.Medico.Id,
                     MedicoNome = $"{_.Medico.Nome} - CRM {_.Medico.CRM}",
                     StatusId = _.StatusConsulta.Id,
-                    StatusNome = _.StatusConsulta.Nome,                    
+                    StatusNome = _.StatusConsulta.Nome,
                 },
                 BackgroundColor = _.StatusConsultaId == "AguardandoRetorno" ? "#6c757d" : "#ffc107",
                 TextColor = _.StatusConsultaId == "AguardandoRetorno" ? "#fff" : "#212529",
@@ -98,13 +98,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         private async Task BuscaPacienteAsync()
         {
-            if (string.IsNullOrEmpty(_pacienteCodigo) || _pacienteCodigo.Length < 4)
+            if (string.IsNullOrEmpty(_pacienteCodigoOuCPF) || _pacienteCodigoOuCPF.Length < 4)
             {
-                ToastService.ShowInfo($"O código {_pacienteCodigo} de paciente é inválido!");
+                ToastService.ShowInfo($"O código ou CPF {_pacienteCodigoOuCPF} do paciente é inválido!");
                 return;
             }
 
-            var paciente = await PacientesServico.GetPorCodigoAsync(_pacienteCodigo);
+            var paciente = await PacientesServico.GetPorCodigoOuCPFAsync(_pacienteCodigoOuCPF);
             if (paciente == null)
             {
                 ToastService.ShowInfo("Nenhum paciente encontrado!");
@@ -226,7 +226,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private void Cancelar()
         {
             _agendarConsulta = !_agendarConsulta;
-            _pacienteCodigo = string.Empty;
+            _pacienteCodigoOuCPF = string.Empty;
             _pacienteLocalStorage = new PacienteLocalStorage();
 
             StateHasChanged();

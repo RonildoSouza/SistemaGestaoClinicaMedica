@@ -6,6 +6,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 {
     public interface IPacientesServico : IServicoBase<PacienteDTO, Guid>
     {
-        Task<PacienteDTO> GetPorCodigoAsync(string pacienteCodigo);
+        Task<PacienteDTO> GetPorCodigoOuCPFAsync(string codigoOuCpf);
     }
 }

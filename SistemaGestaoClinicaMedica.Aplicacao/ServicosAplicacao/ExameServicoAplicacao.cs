@@ -6,6 +6,7 @@ using SistemaGestaoClinicaMedica.Dominio.Servicos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Storage;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
 {
@@ -37,9 +38,18 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             return _exameServico.ObterTotalExames(dataInicio, dataFim);
         }
 
-        public IList<ExameDTO> ObterTudoComFiltro(string busca)
+        public IList<ExameDTO> ObterTudoComFiltro(string busca, string status, Guid? medicoId = null)
         {
-            var entidades = _exameServico.ObterTudoComFiltro(busca);
+            List<Exame> entidades;
+
+            if (!string.IsNullOrEmpty(status))
+            {
+                var listaEStatusExame = status.StringParaListaDeStatusExame();
+                entidades = _exameServico.ObterTudoComFiltro(busca, listaEStatusExame, medicoId).ToList();
+            }
+            else
+                entidades = _exameServico.ObterTudoComFiltro(busca, null, medicoId).ToList();
+
             return _mapper.Map<List<ExameDTO>>(entidades);
         }
 

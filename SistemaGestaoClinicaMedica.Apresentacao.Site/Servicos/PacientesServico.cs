@@ -8,9 +8,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     {
         public PacientesServico(ApplicationState applicationState) : base(applicationState) { }
 
-        public async Task<PacienteDTO> GetPorCodigoAsync(string pacienteCodigo)
+        public async Task<PacienteDTO> GetPorCodigoOuCPFAsync(string codigoOuCpf)
         {
-            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-codigo/{pacienteCodigo}");
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-codigo-ou-cpf/{codigoOuCpf}");
             return JsonToDTO<PacienteDTO>(response);
         }
     }

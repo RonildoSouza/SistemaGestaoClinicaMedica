@@ -58,9 +58,9 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             return _examesQuery.ObterTudoPorConsultaId(consultaId);
         }
 
-        public IList<Exame> ObterTudoComFiltro(string busca)
+        public IList<Exame> ObterTudoComFiltro(string busca, IEnumerable<EStatusExame> status, Guid? medicoId = null)
         {
-            return _examesQuery.ObterTudoComFiltro(busca);
+            return _examesQuery.ObterTudoComFiltro(busca, status, medicoId);
         }
 
         public IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim)

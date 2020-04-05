@@ -11,9 +11,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
-        public Paciente ObterPorCodigo(string pacienteCodigo)
+        public Paciente ObterPorCodigoOuCPF(string codigoOuCpf)
         {
-            return Entidades.ToList().FirstOrDefault(_ => _.Id.ToString().ToLowerStartsWith(pacienteCodigo));
+            return Entidades.Where(_ => _.Ativo)
+                            .ToList()
+                            .FirstOrDefault(_ => _.CPF.Equals(codigoOuCpf) || _.Id.ToString().ToLowerStartsWith(codigoOuCpf));
         }
 
         public IList<Paciente> ObterTudoComFiltros(string busca, bool ativo)
@@ -23,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                                   .ToList();
 
             if (!string.IsNullOrEmpty(busca))
-                pacientes = pacientes.Where(_ => _.Nome.ToLowerContains(busca) || _.Id.ToString().ToLowerStartsWith(busca)).ToList();
+                pacientes = pacientes.Where(_ => _.Nome.ToLowerContains(busca) || _.CPF.Equals(busca) || _.Id.ToString().ToLowerStartsWith(busca)).ToList();
 
             return pacientes;
         }

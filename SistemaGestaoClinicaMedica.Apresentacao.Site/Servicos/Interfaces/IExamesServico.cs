@@ -14,7 +14,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         Task<Uri> UploadResultado(Guid id, Stream stream, string arquivoNome);
         Task<HttpResponseMessage> PutAlterarStatusAsync(Guid id, string statusExameId);
         Task<List<ExameDTO>> GetPorConsultaAsync(Guid consultaId);
-        Task<List<ExameDTO>> GetTudoComFiltrosAsync(string busca);
+        Task<List<ExameDTO>> GetTudoComFiltrosAsync(string busca, string status, Guid? medicoId);
         Task<ChartJSDataset> GetTotalExamesAsync(DateTime dataInicio, DateTime dataFim);
     }
 }

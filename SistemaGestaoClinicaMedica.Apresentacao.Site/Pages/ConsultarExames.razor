@@ -6,11 +6,24 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IExamesServico, ExameDTO, Guid>
 
-<HeaderComponent Title="Consultar Exames" 
-                 SearchVisibled="true"
-                 SearchWithButton="true"
+<HeaderComponent Title="Consultar Exames"
+                 SearchText="Filtrar"
                  SearchPlaceholder="Informe o código do exame, consulta ou paciente"
-                 OnSearch="BuscarAsync"/>
+                 SearchVisibled="true"
+                 OnSearch="BuscarAsync">
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label for="status">Status</label>
+            <select @onchange="SelecionaStatusExame" class="form-control" id="status">
+                <option value=""></option>
+                @foreach (var status in _statusExame)
+                {
+                    <option value="@status.Id" selected="@(status.Id == StatusExameConst.Pendente)">@status.Nome</option>
+                }
+            </select>
+        </div>
+    </div>
+</HeaderComponent>
 
 <TableComponent Items="dtos?.OrderByDescending(_ => _.CriadoEm).Take(20).ToList()">
     <TableHeader>
@@ -47,8 +60,38 @@
 </TableComponent>
 
 @code{
+    private List<StatusExameDTO> _statusExame = new List<StatusExameDTO>();
+    private string _statusExameSelecionado = StatusExameConst.Pendente;
+    private string _busca;
+
+    [Inject] IStatusExamesServico StatusExamesServico { get; set; }
+    [Inject] private ApplicationState ApplicationState { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        _statusExame = await StatusExamesServico.GetAsync();
+        await base.OnInitializedAsync();
+    }
+
     private async Task BuscarAsync(string busca)
     {
-        dtos = await HttpServico.GetTudoComFiltrosAsync(busca);
+        _busca = busca;
+        await CarregaDadosDaTabela();
+    }
+
+    private void SelecionaStatusExame(ChangeEventArgs args)
+    {
+        _statusExameSelecionado = args.Value.ToString();
+    }
+
+    protected async override Task CarregaDadosDaTabela()
+    {
+        Guid? medicoId = null;
+
+        if (ApplicationState.UsuarioLogado.CargoId == CargosConst.Medico)
+            medicoId = ApplicationState.UsuarioLogado.Id;
+
+        dtos = await HttpServico.GetTudoComFiltrosAsync(_busca, _statusExameSelecionado, medicoId);
+        StateHasChanged();
     }
 }

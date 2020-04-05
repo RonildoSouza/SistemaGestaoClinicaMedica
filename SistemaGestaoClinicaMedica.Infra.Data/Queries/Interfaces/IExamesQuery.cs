@@ -8,7 +8,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
     {
         Exame ObterPorCodigo(string codigo);
         IList<Exame> ObterTudoPorConsultaId(Guid consultaId);
-        IList<Exame> ObterTudoComFiltro(string busca);
+        IList<Exame> ObterTudoComFiltro(string busca, IEnumerable<EStatusExame> status, Guid? medicoId = null);
         IList<Tuple<string, int>> ObterTotalExames(DateTime dataInicio, DateTime dataFim);
     }
 }

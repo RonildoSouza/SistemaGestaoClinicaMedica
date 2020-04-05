@@ -19,6 +19,19 @@ namespace SistemaGestaoClinicaMedica.Dominio.Extensions
                 yield return sts.StringParaStatusConsulta();
         }
 
+        /// <summary>
+        /// Converte string com id de status de consulta separados por pipe |, para valores do enum <see cref="EStatusExame"/>
+        /// </summary>
+        public static IEnumerable<EStatusExame> StringParaListaDeStatusExame(this string status)
+        {
+            if (string.IsNullOrEmpty(status))
+                yield break;
+
+            var listaStatus = status.Split('|');
+            foreach (var sts in listaStatus)
+                yield return sts.StringParaStatusExame();
+        }
+
         public static EStatusConsulta StringParaStatusConsulta(this string status)
         {
             return status.StringParaEnum<EStatusConsulta>();

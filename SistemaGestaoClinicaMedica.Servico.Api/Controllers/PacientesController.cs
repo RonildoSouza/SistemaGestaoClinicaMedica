@@ -34,10 +34,10 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet, Route("por-codigo/{pacienteCodigo}")]
-        public IActionResult GetPorCodigo(string pacienteCodigo)
+        [HttpGet, Route("por-codigo-ou-cpf/{codigoOuCpf}")]
+        public IActionResult GetPorCodigoOuCPF(string codigoOuCpf)
         {
-            var saidaDTO = _pacienteServicoAplicacao.ObterPorCodigo(pacienteCodigo);
+            var saidaDTO = _pacienteServicoAplicacao.ObterPorCodigoOuCPF(codigoOuCpf);
             return Ok(saidaDTO);
         }
 

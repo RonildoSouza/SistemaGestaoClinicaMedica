@@ -16,9 +16,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _pacienteServico = pacienteServico;
         }
 
-        public PacienteDTO ObterPorCodigo(string pacienteCodigo)
+        public PacienteDTO ObterPorCodigoOuCPF(string codigoOuCpf)
         {
-            var entidades = _pacienteServico.ObterPorCodigo(pacienteCodigo);
+            var entidades = _pacienteServico.ObterPorCodigoOuCPF(codigoOuCpf);
             return _mapper.Map<PacienteDTO>(entidades);
         }
 

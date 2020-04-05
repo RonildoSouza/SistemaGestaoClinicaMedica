@@ -20,9 +20,9 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 
         [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet]
-        public IActionResult Get(string busca)
+        public IActionResult Get(string busca, string status, Guid? medicoId)
         {
-            var saidaDTOs = _exameServicoAplicacao.ObterTudoComFiltro(busca);
+            var saidaDTOs = _exameServicoAplicacao.ObterTudoComFiltro(busca, status, medicoId);
             return Ok(saidaDTOs);
         }
 
