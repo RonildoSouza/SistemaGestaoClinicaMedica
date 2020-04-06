@@ -1,0 +1,63 @@
+﻿@using System.Web;
+@using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos;
+
+<AuthorizeView>
+    <NotAuthorized>
+        <div class="card" style="width: 30rem;position: relative;margin: auto;margin-top: 10rem;">
+            <div class="card-body">
+                @if (_carregando)
+                {
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status" style="width: 3rem; height: 3rem;"></div>
+                    </div>
+                }
+                else
+                {
+                    <h5 class="card-title">Logar no sistema</h5>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (_tentouLogar)
+                            {
+                                <div class="alert alert-info" role="alert">
+                                    Verifique se o email e senha estão corretos!
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" @bind-value="_email" class="form-control" id="email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="senha">Senha</label>
+                                <input type="password" @bind-value="_senha" class="form-control" id="senha" />
+                            </div>
+
+                            <a class="btn btn-primary btn-lg" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    private string _email;
+    private string _senha;
+    private bool _carregando;
+    private static bool _tentouLogar;
+
+    private string Encode(string param)
+    {
+        return HttpUtility.UrlEncode(param);
+    }
+
+    private void Login()
+    {
+        _carregando = true;
+        StateHasChanged();
+
+        _tentouLogar = true;
+    }
+}

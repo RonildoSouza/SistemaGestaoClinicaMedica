@@ -1,5 +1,10 @@
 ﻿@page "/"
 @namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
+
+@using Newtonsoft.Json;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
@@ -24,8 +29,26 @@
     <link href="_content/Blazored.Toast/blazored-toast.css" rel="stylesheet" />
 </head>
 <body>
+    @{
+        var initApplicationState = new InitApplicationState();
+
+        if (HttpContext.User.Identity.IsAuthenticated)
+        {
+            HttpContext.Request.Cookies.TryGetValue("token", out string token);
+            var claim = HttpContext.User.Claims.FirstOrDefault(_ => _.Type == "Data");
+            var usuarioLogado = JsonConvert.DeserializeObject<UsuarioLogado>(claim.Value);
+
+            initApplicationState = new InitApplicationState
+            {
+                Token = token,
+                UsuarioLogado = usuarioLogado,
+                EstaAutenticado = HttpContext.User.Identity.IsAuthenticated
+            };
+        }
+    }
+
     <app>
-        <component type="typeof(App)" render-mode="ServerPrerendered" />
+        <component type="typeof(App)" render-mode="ServerPrerendered" param-InitApplicationState="initApplicationState" />
     </app>
 
     <div id="blazor-error-ui">

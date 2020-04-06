@@ -35,7 +35,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.Apresentacao.Site", "SistemaGestaoClinicaMedica.Apresentacao.Site\SistemaGestaoClinicaMedica.Apresentacao.Site.csproj", "{15A20F13-9F8D-45A7-80C2-AB200761D725}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoClinicaMedica.Aplicacao.DTO", "SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj", "{38D93411-B974-42FD-8F9D-1A81758E93CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaGestaoClinicaMedica.Aplicacao.DTO", "SistemaGestaoClinicaMedica.Aplicacao.DTO\SistemaGestaoClinicaMedica.Aplicacao.DTO.csproj", "{38D93411-B974-42FD-8F9D-1A81758E93CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,6 +14,9 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos
 
         public static string Encrypt(string stringToEncrypt)
         {
+            if (string.IsNullOrEmpty(stringToEncrypt))
+                return string.Empty;
+
             using var memoryStream = new MemoryStream();
             using var cryptoStream = new CryptoStream(memoryStream, _desCryptoServiceProvider.CreateEncryptor(_key, _IV), CryptoStreamMode.Write);
             var inputByteArray = Encoding.UTF8.GetBytes(stringToEncrypt);

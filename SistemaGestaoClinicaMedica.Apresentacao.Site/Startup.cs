@@ -1,14 +1,14 @@
 using AutoMapper;
 using Blazored.LocalStorage;
 using Blazored.Toast;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.AutoMapper;
-using SistemaGestaoClinicaMedica.Apresentacao.Site.Providers;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using SistemaGestaoClinicaMedica.Dominio.Documentos;
 using SistemaGestaoClinicaMedica.Infra.CrossCutting.IoC.Extensions;
@@ -37,20 +37,33 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             var apiUrlBase = Configuration.GetValue<string>("ApiUrlBase");
             Uri.TryCreate(apiUrlBase, UriKind.Absolute, out Uri uri);
 
-            services.AddSingleton(new HttpClient
-            {
-                BaseAddress = uri,
-            });
-
             services.RegistrarTudoPorAssembly(typeof(IServicoBase<,>).Assembly, "Servico");
             services.RegistrarTudoPorAssembly(typeof(IConstroiDocumento).Assembly, "Documento");
             services.AddBlazoredLocalStorage();
             services.AddBlazoredToast();
             services.AddAutoMapper(typeof(DTOParaViewModel), typeof(ViewModelParaDTO));
+            services.AddAuthenticationCore();
 
-            services.AddSingleton<ApplicationState>();
-            services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
-            services.AddAuthorizationCore();
+            services.AddSingleton(new HttpClient
+            {
+                BaseAddress = uri,
+            });
+
+            services.AddHttpClient("", cfg =>
+            {
+                cfg.BaseAddress = uri;
+            });
+
+            services.AddScoped<ApplicationState>();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +90,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

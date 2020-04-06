@@ -16,11 +16,12 @@
                         WarningClass="alert alert-warning"
                         ErrorClass="alert alert-danger" />
 
+        <LoginControl />
+
         @Body
     </div>
 </div>
 
-@using Newtonsoft.Json;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
@@ -42,9 +43,7 @@
 
             if (authenticationState.User.Identity.IsAuthenticated)
             {
-                var claim = authenticationState.User.Claims.FirstOrDefault(_ => _.Type == "Data");
-                var usuarioLogado = JsonConvert.DeserializeObject<UsuarioLogado>(claim.Value);
-                ApplicationState.UsuarioLogado = usuarioLogado;
+                var usuarioLogado = ApplicationState.UsuarioLogado;
 
                 if (usuarioLogado.CargoId == CargosConst.Administrador || usuarioLogado.CargoId == CargosConst.Medico)
                     NavigationManager.NavigateTo("/");
@@ -63,7 +62,5 @@
 
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
         }
-
-        await JSRuntime.InvokeVoidAsync("inputMaskJsInterop.startup");
     }
 }
