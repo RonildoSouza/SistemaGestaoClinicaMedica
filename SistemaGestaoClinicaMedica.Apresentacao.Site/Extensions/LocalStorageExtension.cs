@@ -15,7 +15,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
         public async static Task<ConsultaLocalStorage> ObterConsultaLocalStorageAsync(this ILocalStorageService localStorage)
         {
             var consultaLocalStorage = await localStorage.GetItemAsync<ConsultaLocalStorage>(nameof(ConsultaLocalStorage));
-            await localStorage.RemoveItemAsync(nameof(ConsultaLocalStorage));
+
+            if (consultaLocalStorage != null)
+                await localStorage.RemoveItemAsync(nameof(ConsultaLocalStorage));
 
             return consultaLocalStorage;
         }
@@ -28,7 +30,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
         public async static Task<string> ObterUsuarioCargoIdEdicaoLocalStorageAsync(this ILocalStorageService localStorage)
         {
             var cargoId = await localStorage.GetItemAsync<string>(nameof(UsuariosForm));
-            await localStorage.RemoveItemAsync(nameof(UsuariosForm));
+
+            if (cargoId != null)
+                await localStorage.RemoveItemAsync(nameof(UsuariosForm));
 
             return cargoId;
         }

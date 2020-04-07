@@ -19,7 +19,7 @@ else
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="row">
-                @if (!_usuarioViewModel.ESuperUsuario || _usuarioLogado.EMedico)
+                @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador)
                 {
                     <div class="form-group col-md-12">
                         <label for="ativo">Ativo? </label>
@@ -32,13 +32,13 @@ else
                 </div>
                 <div class="form-group col-md-6">
                     <label for="email">Email</label>
-                    @if (!_usuarioViewModel.ESuperUsuario || _usuarioLogado.EMedico)
+                    @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador)
                     {
-                        <input value="@_usuarioViewModel.Email" class="form-control" id="email" disabled />
+                        <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" />
                     }
                     else
                     {
-                        <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" />
+                        <input value="@_usuarioViewModel.Email" class="form-control" id="email" disabled />
                     }
                 </div>
                 <div class="form-group col-md-8">
@@ -62,7 +62,7 @@ else
                         </InputSelect>
                     }
                 </div>
-                @if (!_usuarioViewModel.ESuperUsuario && !_usuarioLogado.EMedico && _usuarioViewModel.Id != Guid.Empty)
+                @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador && _usuarioViewModel.Id != Guid.Empty)
                 {
                     <div class="form-group col-md-12">
                         <label for="senha">Senha</label>

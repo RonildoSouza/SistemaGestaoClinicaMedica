@@ -23,7 +23,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
                 .ForMember(dest => dest.Telefone, opt => opt.MapFrom(src => src.Usuario.Telefone))
                 .ForMember(dest => dest.Senha, opt => opt.MapFrom(src => src.Usuario.Senha))
                 .ForMember(dest => dest.Cargo, opt => opt.MapFrom(src => src.Usuario.Cargo))
-                .ForMember(dest => dest.Ativo, opt => opt.MapFrom(src => src.Usuario.Ativo));
+                .ForMember(dest => dest.Ativo, opt => opt.MapFrom(src => src.Usuario.Ativo))
+                .ForMember(dest => dest.ESuperUsuario, opt => opt.MapFrom(src => src.Usuario.ESuperUsuario()));
 
             CreateMap<Medico, MedicoDTO>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Usuario.Id))
