@@ -17,7 +17,7 @@
     <RowTemplate>
         <td>@context.TipoDeAtestado.Nome</td>
         <td>
-            @if(Consulta.StatusConsultaId == StatusConsultaConst.Concluida || Consulta.StatusConsultaId == StatusConsultaConst.Cancelada)
+            @if(Consulta.StatusConsultaId != StatusConsultaConst.Concluida && Consulta.StatusConsultaId != StatusConsultaConst.Cancelada)
             {
                 <a href="consultas/@context.ConsultaId/atestados/{@context.Id}" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>
                 <ConfirmDialogComponent Id="@context.Id.ToString()"

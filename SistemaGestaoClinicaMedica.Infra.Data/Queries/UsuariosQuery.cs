@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaGestaoClinicaMedica.Dominio.Entidades;
+using SistemaGestaoClinicaMedica.Dominio.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,12 +18,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .FirstOrDefault(_ => _.Email.ToLower() == email.ToLower() && _.Senha == senha && _.Ativo);
         }
 
-        public IList<Usuario> ObterTudoComFiltros(bool ativo = true)
+        public IList<Usuario> ObterTudoComFiltros(string busca, bool ativo = true)
         {
-            return Entidades.Include(_ => _.Cargo)
+            var usuarios = Entidades.Include(_ => _.Cargo)
                             .Where(_ => _.Ativo == ativo)
                             .OrderBy(_ => _.Nome)
                             .ToList();
+
+            if (!string.IsNullOrEmpty(busca))
+                usuarios = usuarios.Where(_ => _.Nome.ToLowerContains(busca)
+                                            || _.Email.ToLowerContains(busca)).ToList();
+
+            return usuarios;
         }
     }
 }

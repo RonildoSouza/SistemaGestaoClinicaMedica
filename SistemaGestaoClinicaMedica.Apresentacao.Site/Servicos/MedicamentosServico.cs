@@ -14,5 +14,11 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-nome/{nome}");
             return JsonToDTO<List<MedicamentoDTO>>(response);
         }
+
+        public async Task<List<MedicamentoDTO>> GetTudoComFiltrosAsync(string busca, bool ativo = true)
+        {
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/?busca={busca}&ativo={ativo}");
+            return JsonToDTO<List<MedicamentoDTO>>(response);
+        }
     }
 }

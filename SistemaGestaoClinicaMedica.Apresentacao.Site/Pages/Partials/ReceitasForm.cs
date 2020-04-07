@@ -32,7 +32,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
 
         protected async override Task OnParametersSetAsync()
         {
-            Medicamentos = await MedicamentosServico.GetPorNomeAsync("a");
+            Medicamentos = await MedicamentosServico.GetTudoComFiltrosAsync(null);
             _dto.ConsultaId = Consulta.Id;
 
             if (Consulta.Receita != null && Consulta.Receita.Id != Guid.Empty)

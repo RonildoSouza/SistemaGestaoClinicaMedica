@@ -5,14 +5,29 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IPacientesServico, PacienteDTO, Guid>
 
-<HeaderComponent Title="Pacientes" NewRoute="pacientes/novo" />
+<HeaderComponent Title="Pacientes"
+                 NewRoute="pacientes/novo"
+                 SearchPlaceholder="Informe o nome ou email do usuário"
+                 SearchWithButton="true"
+                 SearchVisibled="true"
+                 OnSearch="BuscarAsync">
+    <div class="row">
+        <div class="form-group col-md-6 offset-md-6">
+            <label for="ativo">Ativo</label>
+            <select class="form-control" id="ativo" @onchange="SelecionaAtivoAsync">
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            </select>
+        </div>
+    </div>
+</HeaderComponent>
 
-<TableComponent Items="dtos">
+<TableComponent Items="dtos?.Take(50).ToList()">
     <TableHeader>
         <th>Código</th>
         <th>Nome</th>
         <th>Telefone</th>
-        <th>Ações</th>
+        <th></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
@@ -29,3 +44,20 @@
         </td>
     </RowTemplate>
 </TableComponent>
+
+@code{
+    private bool _ativo;
+
+    private async Task BuscarAsync(string busca)
+    {
+        dtos = await HttpServico.GetTudoComFiltrosAsync(busca, _ativo);
+        StateHasChanged();
+    }
+
+    private async Task SelecionaAtivoAsync(ChangeEventArgs args)
+    {
+        _ativo = args.Value.ToString().Equals("Sim");
+        dtos = await HttpServico.GetTudoComFiltrosAsync(null, _ativo);
+        StateHasChanged();
+    }
+}

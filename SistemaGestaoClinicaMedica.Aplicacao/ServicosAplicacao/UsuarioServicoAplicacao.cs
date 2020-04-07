@@ -16,9 +16,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _usuarioServico = usuarioServico;
         }
 
-        public IList<UsuarioDTO> ObterTudo(bool ativo)
+        public IList<UsuarioDTO> ObterTudo(string busca, bool ativo)
         {
-            var entidades = _usuarioServico.ObterTudoComFiltros(ativo);
+            var entidades = _usuarioServico.ObterTudoComFiltros(busca, ativo);
             return _mapper.Map<List<UsuarioDTO>>(entidades);
         }
     }

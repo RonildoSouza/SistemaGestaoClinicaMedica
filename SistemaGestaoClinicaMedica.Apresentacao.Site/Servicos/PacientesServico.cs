@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
@@ -12,6 +13,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         {
             var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-codigo-ou-cpf/{codigoOuCpf}");
             return JsonToDTO<PacienteDTO>(response);
+        }
+
+        public async Task<List<PacienteDTO>> GetTudoComFiltrosAsync(string busca, bool ativo = true)
+        {
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/?busca={busca}&ativo={ativo}");
+            return JsonToDTO<List<PacienteDTO>>(response);
         }
     }
 }

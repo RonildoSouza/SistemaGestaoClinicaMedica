@@ -5,14 +5,19 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits TableBase<IMedicamentosServico, MedicamentoDTO, Guid>
 
-<HeaderComponent Title="Medicamentos" NewRoute="medicamentos/novo" />
+<HeaderComponent Title="Medicamentos"
+                 NewRoute="medicamentos/novo"
+                 SearchPlaceholder="Informe o nome, tarja ou nome do fabricante do medicamento"
+                 SearchWithButton="true"
+                 SearchVisibled="true"
+                 OnSearch="BuscarAsync" />
 
-<TableComponent Items="dtos">
+<TableComponent Items="dtos?.Take(50).ToList()">
     <TableHeader>
         <th>Nome</th>
         <th>Tarja</th>
         <th>Fabricante</th>
-        <th>Ações</th>
+        <th></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Nome</td>
@@ -29,3 +34,11 @@
         </td>
     </RowTemplate>
 </TableComponent>
+
+@code{
+    private async Task BuscarAsync(string busca)
+    {
+        dtos = await HttpServico.GetTudoComFiltrosAsync(busca);
+        StateHasChanged();
+    }
+}

@@ -78,8 +78,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     StatusId = _.StatusConsulta.Id,
                     StatusNome = _.StatusConsulta.Nome,
                 },
-                BackgroundColor = _.StatusConsultaId == "AguardandoRetorno" ? "#6c757d" : "#ffc107",
-                TextColor = _.StatusConsultaId == "AguardandoRetorno" ? "#fff" : "#212529",
+                BackgroundColor = ObterEventoCor(_.StatusConsultaId).Item1,
+                TextColor = ObterEventoCor(_.StatusConsultaId).Item2,
             });
 
             _carregando = false;
@@ -235,7 +235,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private async Task CalendarReRenderAsync()
         {
             var dataInicio = _fullCalendarCurrentStartDate;
-            var dataFim = _fullCalendarCurrentStartDate.AddMonths(3);
+            var dataFim = _fullCalendarCurrentStartDate.AddMonths(2);
 
             await CalendarRenderAsync(dataInicio, dataFim, gotoDate: dataInicio);
         }
@@ -284,6 +284,17 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             }
 
             await CalendarRenderAsync(consulta.Data, consulta.Data, _busca, "listWeek", consulta.Data);
+        }
+
+        private Tuple<string, string> ObterEventoCor(string statusConsultaId)
+        {
+            if (statusConsultaId == StatusConsultaConst.AguardandoRetorno)
+                return Tuple.Create("#6c757d", "#fff");
+
+            if (statusConsultaId == StatusConsultaConst.Agendada)
+                return Tuple.Create("#ffc107", "#212529");
+
+            return Tuple.Create("#BF360C", "#fff");
         }
 
         [JSInvokable]

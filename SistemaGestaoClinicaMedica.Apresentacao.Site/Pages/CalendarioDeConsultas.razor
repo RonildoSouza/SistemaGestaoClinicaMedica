@@ -162,7 +162,7 @@
             <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="ReAgendarConsultaAsync">Reagendar</button>
         }
 
-        @if (_consultaEvento.StatusId == StatusConsultaConst.Agendada || _consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno)
+        @if (_consultaEvento.StatusId == StatusConsultaConst.Agendada || _consultaEvento.StatusId == StatusConsultaConst.AguardandoRetorno || _consultaEvento.StatusId == StatusConsultaConst.Reagendada)
         {
             <label for="confirmDialogComponent" class="btn btn-danger" onclick="$('#modalDesmarcarConsulta').modal('hide');">Desmarcar Consulta</label>
         }

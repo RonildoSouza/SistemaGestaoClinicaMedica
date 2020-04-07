@@ -22,7 +22,6 @@
     </div>
 </div>
 
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 
@@ -41,20 +40,7 @@
         {
             var authenticationState = await AuthenticationStateTask;
 
-            if (authenticationState.User.Identity.IsAuthenticated)
-            {
-                var usuarioLogado = ApplicationState.UsuarioLogado;
-
-                if (usuarioLogado.CargoId == CargosConst.Administrador || usuarioLogado.CargoId == CargosConst.Medico)
-                    NavigationManager.NavigateTo("/");
-
-                if (usuarioLogado.CargoId == CargosConst.Recepcionista)
-                    NavigationManager.NavigateTo("calendario-de-consultas");
-
-                if (usuarioLogado.CargoId == CargosConst.Laboratorio)
-                    NavigationManager.NavigateTo("realiza-exames");
-            }
-            else
+            if (!authenticationState.User.Identity.IsAuthenticated)
             {
                 ApplicationState.UsuarioLogado = new UsuarioLogado();
                 NavigationManager.NavigateTo("login");

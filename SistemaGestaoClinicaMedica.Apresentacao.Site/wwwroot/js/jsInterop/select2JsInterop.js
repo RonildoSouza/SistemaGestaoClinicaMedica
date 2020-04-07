@@ -10,7 +10,6 @@
         if (dotNetObject !== undefined) {
             $(selectId).unbind("select2:select");
             $(selectId).unbind("select2:unselect");
-            $('body').unbind("keyup");
 
             $(selectId).on("select2:select", function (e) {
                 invokeDotNetMethod(dotNetMethodName, e.params.data);
@@ -18,14 +17,6 @@
 
             $(selectId).on("select2:unselect", function (e) {
                 invokeDotNetMethod(dotNetMethodName, e.params.data);
-            });
-
-            $('body').on('keyup', '.select2-search__field', function (e) {
-                console.log(e);
-
-                if (e.target.value !== undefined && e.target.value.lenght >= 3) {
-                    return;
-                }
             });
         }
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO.Login;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,14 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 CorrigeClaimType(ref claims);
 
                 HttpContext.Response.Cookies.Append("token", loginSaida.Token);
+
+                var cargoId = claims.FirstOrDefault(_ => _.Type == ClaimTypes.Role)?.Value;
+
+                if (cargoId == CargosConst.Recepcionista)
+                    returnUrl += "calendario-de-consultas";
+
+                if (cargoId == CargosConst.Laboratorio)
+                    returnUrl += "realiza-exames";
 
                 await HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,

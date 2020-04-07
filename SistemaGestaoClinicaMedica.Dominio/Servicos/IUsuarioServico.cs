@@ -7,6 +7,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     public interface IUsuarioServico : IServicoBase<Guid, Usuario>
     {
         Usuario Autorizar(string email, string senha);
-        IList<Usuario> ObterTudoComFiltros(bool ativo);
+        IList<Usuario> ObterTudoComFiltros(string busca, bool ativo);
     }
 }
