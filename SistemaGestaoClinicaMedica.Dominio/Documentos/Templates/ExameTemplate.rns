@@ -22,5 +22,5 @@ Data da Solicitação do Exame: {DataAtual}
 
 
              ___________________________________________
-                                           {MedicoNome}
+                                 {MedicoNome}
                                        CRM {MedicoCRM}

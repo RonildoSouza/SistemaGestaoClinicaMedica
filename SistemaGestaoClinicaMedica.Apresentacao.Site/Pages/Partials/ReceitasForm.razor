@@ -1,23 +1,30 @@
 ﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
 @inherits FormBase<IReceitasServico, ReceitaDTO, Guid>
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
-<HeaderComponent Title="Cadastro de Receita" />
+<HeaderComponent CardMoreClass="remove-card-border-top">
+    <label for="salvar-imprimir-receita" class="btn btn-success float-right">@(!_desabilitaBotoes ? "Salvar e " : "")Imprimir Receita</label>
+</HeaderComponent>
 
-<FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar e Imprimir Receita">
+<FormComponent Item="_dto" 
+               OnValidSubmit="Salvar" 
+               SubmitButtonId="salvar-imprimir-receita"
+               SubmitButtonStyle="display:none;">
     <div class="form-group col-md-12">
         <label for="medicamentos">Medicamentos</label>
         <SelectWithSearch Id="medicamentos"
                           Placeholder="Adicione os medicamentos à receita"
                           Items="Medicamentos"
                           IsMultiple="true"
+                          Disabled="_desabilitaBotoes"
                           Context="ctx">
             <option value="@ctx.Id.ToString()" selected="@(_dto.ReceitaMedicamentos.Any(_ => _.MedicamentoId == ctx.Id && _.Ativo))">@ctx.NomeFabrica</option>
         </SelectWithSearch>
     </div>
     <div class="form-group col-md-12">
         <label for="receita-observacao">Observação</label>
-        <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="receita-observacao" />
+        <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="receita-observacao" disabled="@_desabilitaBotoes"/>
     </div>
 </FormComponent>

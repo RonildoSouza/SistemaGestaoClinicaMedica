@@ -43,7 +43,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 var loginSaida = await _loginServico.LoginAsync(_loginEntradaDTO);
 
                 if (loginSaida == null)
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect($"{returnUrl}");
 
                 var jwtToken = new JwtSecurityToken(loginSaida.Token);
 

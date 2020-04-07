@@ -1,4 +1,4 @@
-﻿<div class="card">
+﻿<div class="card @CardMoreClass">
     @if (!string.IsNullOrEmpty(Title))
     {
         <div class="card-header">
@@ -64,6 +64,8 @@
     [Parameter] public string Title { get; set; }
     [Parameter] public string BackRoute { get; set; }
     [Parameter] public string NewRoute { get; set; }
+    [Parameter] public string MoreClassNewRoute { get; set; }
+    [Parameter] public string CardMoreClass { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     [Parameter] public bool SearchVisibled { get; set; }
     [Parameter] public bool SearchWithButton { get; set; }

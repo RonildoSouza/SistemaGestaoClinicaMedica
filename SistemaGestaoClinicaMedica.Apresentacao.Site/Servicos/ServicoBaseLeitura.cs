@@ -14,13 +14,13 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             ApplicationState = applicationState;
         }
 
-        public async Task<TDTO> GetAsync(TId id)
+        public virtual async Task<TDTO> GetAsync(TId id)
         {
             var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/{id}");
             return JsonToDTO<TDTO>(response);
         }
 
-        public async Task<List<TDTO>> GetAsync()
+        public virtual async Task<List<TDTO>> GetAsync()
         {
             var response = await ApplicationState.HttpClient.GetStringAsync(ApiEndPoint);
             return JsonToDTO<List<TDTO>>(response);

@@ -2,12 +2,22 @@
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @inherits FormBase<IConsultasServico, ConsultaDTO, Guid>
 
-<HeaderComponent Title="Realizando Consulta" BackRoute="@AposSalvarRetonarPara" />
+<HeaderComponent Title="@($"Consulta de Código {_dto.Codigo}")" BackRoute="@AposSalvarRetonarPara">
+    @if(_podeConcluirConsulta)
+    {
+        <label for="concluir-consulta" class="btn btn-success float-right">Finalizar a Consulta</label>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            Você não pode finalizar a consulta pois o seu status é : <strong>@_dto.StatusConsulta?.Nome</strong>!
+        </div>
+    }
+</HeaderComponent>
 
 <!-- TABS -->
 <ul class="nav nav-tabs" role="tablist">
@@ -26,7 +36,12 @@
 </ul>
 <div class="tab-content">
     <div class="tab-pane fade show active" id="detalhes-consulta" role="tabpanel" aria-labelledby="detalhes-consulta-tab">
-        <FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Concluir Consulta">
+        <FormComponent Item="_dto" 
+                       OnValidSubmit="Salvar" 
+                       SubmitButtonId="concluir-consulta"
+                       SubmitButtonStyle="display:none;"
+                       SubmitButtonVisibled="_podeConcluirConsulta"
+                       CardMoreClass="remove-card-border-top">
             <div class="form-group col-md-12">
                 <label for="paciente">Paciente</label>
                 <input type="text" value="@context.Paciente?.Nome" class="form-control" id="paciente" disabled />
@@ -49,15 +64,15 @@
             </div>
             <div class="form-group col-md-12">
                 <label for="observacoes">Observações</label>
-                <InputTextArea @bind-Value="context.Observacao" class="form-control" id="observacoes" />
+                <InputTextArea @bind-Value="context.Observacao" class="form-control" id="observacoes" disabled="@(!_podeConcluirConsulta)"/>
             </div>
         </FormComponent>
     </div>
     <div class="tab-pane fade" id="atestados" role="tabpanel" aria-labelledby="atestados-tab">
-        <Atestados ConsultaId="@_dto.Id" />
+        <Atestados Consulta="@_dto" />
     </div>
     <div class="tab-pane fade" id="exames" role="tabpanel" aria-labelledby="exames-tab">
-        <Exames ConsultaId="@_dto.Id" />
+        <Exames Consulta="@_dto" />
     </div>
     <div class="tab-pane fade" id="receita" role="tabpanel" aria-labelledby="receita-tab">
         <ReceitasForm Consulta="@_dto" />

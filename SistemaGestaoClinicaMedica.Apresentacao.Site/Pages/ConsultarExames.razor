@@ -32,7 +32,7 @@
         <th>Status</th>
         <th>Laboratório Realizou o Exame</th>
         <th>Criado Em</th>
-        <th>Ações</th>
+        <th></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
@@ -41,16 +41,6 @@
         <td>@context.LaboratorioRealizouExame?.Nome</td>
         <td>@context.CriadoEm.ToShortDateString()</td>
         <td>
-            @if (context.StatusExame.Id == StatusExameConst.Pendente && context.CriadoEm.Date == DateTime.Now.Date)
-            {
-                <ConfirmDialogComponent Id="@context.Id.ToString()"
-                                        Message="@($"Deseja prosseguir com a exclusão do exame de {context.TipoDeExame.Nome}?")"
-                                        ActionButtonText="Excluir"
-                                        OnActionButton="@(e => Deletar(e, context.Id))">
-                    <span class="oi oi-trash text-danger" aria-hidden="true"></span>
-                </ConfirmDialogComponent>
-            }
-
             @if (context.StatusExame.Id == StatusExameConst.Concluido)
             {
                 <a href="@context.LinkResultadoExame" target="_blank" class="btn"><span class="oi oi-document" aria-hidden="true"></span></a>

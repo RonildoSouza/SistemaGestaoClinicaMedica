@@ -1,6 +1,6 @@
 ﻿@typeparam TItem
 
-<div class="card">
+<div class="card @CardMoreClass">
     <div class="card-body">
         @if (Loading)
         {
@@ -21,7 +21,7 @@
 
                         @if (SubmitButtonVisibled)
                         {
-                            <button type="submit" class="btn btn-success">@SubmitButtonText</button>
+                            <button type="submit" class="btn btn-success" id="@SubmitButtonId" style="@SubmitButtonStyle">@SubmitButtonText</button>
                         }
                     </div>
                 </div>
@@ -37,5 +37,8 @@
     [Parameter] public EventCallback<EditContext> OnValidSubmit { get; set; }
     [Parameter] public string SubmitButtonText { get; set; } = "Salvar";
     [Parameter] public bool SubmitButtonVisibled { get; set; } = true;
+    [Parameter] public string SubmitButtonId { get; set; }
+    [Parameter] public string SubmitButtonStyle { get; set; }
     [Parameter] public bool Loading { get; set; }
+    [Parameter] public string CardMoreClass { get; set; }
 }

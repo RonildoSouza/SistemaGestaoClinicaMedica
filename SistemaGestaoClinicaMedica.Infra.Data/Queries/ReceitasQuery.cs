@@ -16,6 +16,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             var receita = Entidades.Include(_ => _.Consulta)
                                    .Include(_ => _.Medicamentos)
                                    .Include($"{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
+                                   .Include($"{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}.{nameof(Medicamento.Fabricante)}")
                                    .FirstOrDefault(_ => _.Consulta.Id == consultaId);
 
             return receita;

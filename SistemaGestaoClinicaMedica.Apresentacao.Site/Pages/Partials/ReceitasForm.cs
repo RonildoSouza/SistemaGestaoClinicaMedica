@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
-using SistemaGestaoClinicaMedica.Dominio.Documentos;
-using SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo;
+using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+using SistemaGestaoClinicaMedica.Dominio.Documentos;
+using SistemaGestaoClinicaMedica.Dominio.Documentos.Modelo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
     public partial class ReceitasForm
     {
         private List<string> _medicamentosSelecionados = new List<string>();
+        private bool _desabilitaBotoes;
 
         [Parameter] public ConsultaDTO Consulta { get; set; }
 
@@ -38,6 +40,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
                 Id = Consulta.Receita.Id;
                 _dto = Consulta.Receita;
             }
+
+            _desabilitaBotoes = Consulta.StatusConsultaId == StatusConsultaConst.Concluida || Consulta.StatusConsultaId == StatusConsultaConst.Cancelada;
         }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
@@ -50,9 +54,27 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
 
         protected async override Task<bool> Salvar(EditContext editContext)
         {
-            var result = await base.Salvar(editContext);
+            if (!_desabilitaBotoes && !_dto.ReceitaMedicamentos.Any(_ => _.Ativo))
+            {
+                ToastService.ShowInfo("Você precisa selecionar adicionar um ou mais medicamentos!");
+                return false;
+            }
+
+            var result = true;
+
+            if (!_desabilitaBotoes)
+                result = await base.Salvar(editContext);
+
             if (result)
+            {
+                if (string.IsNullOrEmpty(_dto?.Observacao?.Trim()))
+                {
+                    ToastService.ShowInfo("Não existe nenhuma informação para ser impressa!");
+                    return false;
+                }
+
                 await JSRuntime.PrintContentAsync("receita-observacao");
+            }
 
             return result;
         }
@@ -60,6 +82,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
         private void ConstroiObservacao()
         {
             var medicamentosStringBuilder = new StringBuilder();
+            _medicamentosSelecionados = _medicamentosSelecionados.OrderBy(_ => _).ToList();
 
             for (int i = 0; i < _medicamentosSelecionados.Count; i++)
                 medicamentosStringBuilder.AppendLine($"{i + 1}) {_medicamentosSelecionados[i]}\n    - ");
@@ -97,11 +120,17 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages.Partials
                     _medicamentosSelecionados.Remove(select2.Text);
                 }
                 else
+                {
                     _dto.ReceitaMedicamentos[index].Ativo = !_dto.ReceitaMedicamentos[index].Ativo;
+                    var medicamentoInativo = _dto.ReceitaMedicamentos.Where(_ => !_.Ativo).Select(_ => _.Medicamento?.NomeFabrica).ToList();
+
+                    foreach (var item in medicamentoInativo)
+                        _medicamentosSelecionados.Remove(item);
+                }
             }
             else
             {
-                _dto.ReceitaMedicamentos.Add(new ReceitaMedicamentoDTO { MedicamentoId = medicamentoId });
+                _dto.ReceitaMedicamentos.Add(new ReceitaMedicamentoDTO { MedicamentoId = medicamentoId, Ativo = true });
                 _medicamentosSelecionados.Add(select2.Text);
             }
 

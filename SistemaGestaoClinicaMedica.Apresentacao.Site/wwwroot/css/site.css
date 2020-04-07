@@ -4,13 +4,21 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-a, .btn-link {
+a {
+    color: #1861ac;
+}
+
+    a.btn-link {
+        color: white !important;
+    }
+
+.btn-link:hover {
     color: white;
 }
 
-    .btn-link:hover {
-        color: white;
-    }
+.remove-card-border-top {
+    border-top: 0px solid !important;
+}
 
 .btn-primary {
     color: #fff;
@@ -53,10 +61,10 @@ app {
             margin-left: 1.5rem;
         }
 
-.main .top-row a:first-child {
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+        .main .top-row a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 .sidebar {
     background-color: #009688;
@@ -155,18 +163,19 @@ textarea {
     z-index: 1000;
 }
 
-#blazor-error-ui .dismiss {
-    cursor: pointer;
-    position: absolute;
-    right: 0.75rem;
-    top: 0.5rem;
-}
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
 
 @media (max-width: 767.98px) {
     .top-row {
         height: 12rem;
     }
-        .main .top-row:not(.auth) {
+
+    .main .top-row:not(.auth) {
         display: none;
     }
 

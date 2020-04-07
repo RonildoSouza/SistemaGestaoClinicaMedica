@@ -1,17 +1,20 @@
 ﻿@using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
+
 @inherits TableBase<IExamesServico, ExameDTO, Guid>
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
-<HeaderComponent NewRoute="@($"consultas/{ConsultaId}/exames/novo")" />
+<HeaderComponent NewRoute="@($"consultas/{Consulta.Id}/exames/novo")"  
+                 MoreClassNewRoute="@_classDisabled"
+                 CardMoreClass="remove-card-border-top"/>
 
 <TableComponent Items="dtos">
     <TableHeader>
         <th>Codigo</th>
         <th>Tipo de Exame</th>
         <th>Status</th>
-        <th>Ações</th>
+        <th></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
@@ -38,10 +41,22 @@
 </TableComponent>
 
 @code {
-    [Parameter] public Guid ConsultaId { get; set; }
+    private string _classDisabled;
+
+    [Parameter] public ConsultaDTO Consulta { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        _classDisabled = Consulta.StatusConsultaId == StatusConsultaConst.Concluida 
+                            || Consulta.StatusConsultaId == StatusConsultaConst.Cancelada
+                            ? "disabled" 
+                            : string.Empty;
+    }
 
     protected async override Task CarregaDadosDaTabela()
     {
-        dtos = await HttpServico.GetPorConsultaAsync(ConsultaId);
+        dtos = await HttpServico.GetPorConsultaAsync(Consulta.Id);
     }
 }

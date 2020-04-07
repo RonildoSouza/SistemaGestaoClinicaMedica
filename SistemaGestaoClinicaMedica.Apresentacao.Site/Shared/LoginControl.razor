@@ -1,9 +1,11 @@
 ﻿@using System.Web;
+@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos;
 
 <AuthorizeView>
     <NotAuthorized>
-        <div class="card" style="width: 30rem;position: relative;margin: auto;margin-top: 10rem;">
+        <h1 class="text-center">Sistema de Gestão de Clinica Médica</h1>
+        <div class="card" style="width: 30rem;position: relative;margin: auto;margin-top: 6rem;">
             <div class="card-body">
                 @if (_carregando)
                 {
@@ -13,7 +15,7 @@
                 }
                 else
                 {
-                    <h5 class="card-title">Logar no sistema</h5>
+                    <h4 class="card-title text-center">Logar no sistema</h4>
 
                     <div class="row">
                         <div class="col-md-12">
@@ -33,7 +35,7 @@
                                 <input type="password" @bind-value="_senha" class="form-control" id="senha" />
                             </div>
 
-                            <a class="btn btn-primary btn-lg" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
+                            <a class="btn btn-primary btn-lg btn-block" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
                         </div>
                     </div>
                 }
@@ -46,7 +48,17 @@
     private string _email;
     private string _senha;
     private bool _carregando;
-    private static bool _tentouLogar;
+    private bool _tentouLogar;
+
+    [Parameter] public bool TL { get; set; }
+
+    [Inject] private ApplicationState ApplicationState { get; set; }
+
+    protected async override Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        _tentouLogar = TL;
+    }
 
     private string Encode(string param)
     {

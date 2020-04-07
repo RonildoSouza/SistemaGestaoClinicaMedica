@@ -21,6 +21,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                  .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                                  .Include(_ => _.Receita)
                                  .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
+                                 .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}.{nameof(Medicamento.Fabricante)}")
                                  .Include(_ => _.Especialidade)
                                  .AsQueryable();
 
@@ -81,6 +82,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                             .Include(_ => _.Receita)
                             .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
+                            .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}.{nameof(Medicamento.Fabricante)}")
                             .ToList()
                             .FirstOrDefault(_ => _.Id.ToString().ToLowerStartsWith(codigo));
         }
