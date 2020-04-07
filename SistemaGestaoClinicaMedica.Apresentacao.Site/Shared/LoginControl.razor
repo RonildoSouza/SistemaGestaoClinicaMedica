@@ -19,13 +19,6 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            @if (_tentouLogar)
-                            {
-                                <div class="alert alert-info" role="alert">
-                                    Verifique se o email e senha estão corretos!
-                                </div>
-                            }
-
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" @bind-value="_email" class="form-control" id="email" />
@@ -35,7 +28,7 @@
                                 <input type="password" @bind-value="_senha" class="form-control" id="senha" />
                             </div>
 
-                            <a class="btn btn-primary btn-lg btn-block" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
+                            <a id="link-submit" class="btn btn-primary btn-lg btn-block" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
                         </div>
                     </div>
                 }
@@ -48,16 +41,14 @@
     private string _email;
     private string _senha;
     private bool _carregando;
-    private bool _tentouLogar;
-
-    [Parameter] public bool TL { get; set; }
 
     [Inject] private ApplicationState ApplicationState { get; set; }
+    [Inject] private IJSRuntime JSRuntime { get; set; }
 
-    protected async override Task OnParametersSetAsync()
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        await base.OnParametersSetAsync();
-        _tentouLogar = TL;
+        if (firstRender)
+            await JSRuntime.InvokeVoidAsync("jsRuntimeExtensionJsInterop.onClickKeyupEnter", "link-submit");
     }
 
     private string Encode(string param)
@@ -69,7 +60,5 @@
     {
         _carregando = true;
         StateHasChanged();
-
-        _tentouLogar = true;
     }
 }

@@ -50,5 +50,15 @@
         childWindow.print();
         childWindow.document.close();
         childWindow.close();
+    },
+    onClickKeyupEnter: function (elementId) {
+        $(document).unbind('keyup');
+        $(document).on('keyup', function (event) {
+            if (event.which === 13) {
+                var element = document.getElementById(elementId);
+                if (element !== undefined || element !== null)
+                    element.click();
+            }
+        });
     }
 };
