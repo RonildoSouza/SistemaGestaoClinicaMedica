@@ -9,14 +9,14 @@ using SistemaGestaoClinicaMedica.Infra.Data;
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
     [DbContext(typeof(ContextoBancoDados))]
-    [Migration("20200328192408_RefatoracaoDeUsuario")]
-    partial class RefatoracaoDeUsuario
+    [Migration("20200407025931_BancoDeProducao")]
+    partial class BancoDeProducao
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2");
+                .HasAnnotation("ProductVersion", "3.1.3");
 
             modelBuilder.Entity("SistemaGestaoClinicaMedica.Dominio.Entidades.Administrador", b =>
                 {
@@ -235,19 +235,22 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("DiaDaSemana")
                         .HasColumnType("INTEGER");
 
                     b.Property<TimeSpan>("Fim")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("FimAlmoco")
+                    b.Property<TimeSpan>("FimIntervalo")
                         .HasColumnType("TEXT");
 
                     b.Property<TimeSpan>("Inicio")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("InicioAlmoco")
+                    b.Property<TimeSpan>("InicioIntervalo")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("MedicoId")
@@ -347,6 +350,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<Guid>("EspecialidadeId")
                         .HasColumnType("TEXT");
@@ -477,6 +485,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(true);
 
                     b.Property<Guid>("MedicamentoId")
                         .HasColumnType("TEXT");

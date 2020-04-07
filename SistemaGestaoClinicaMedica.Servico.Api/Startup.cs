@@ -36,12 +36,11 @@ namespace SistemaGestaoClinicaMedica.Servico.Api
 
             var jwtConfigurationSection = Configuration.GetSection(nameof(JwtAutenticacaoConfig));
             var azureStorageConfigurationSection = Configuration.GetSection(nameof(AzureStorageConfig));
+            var emailConfig = Configuration.GetSection(nameof(EmailConfig)).Get<EmailConfig>();
 
-            services.AddEnviaEmail(
-                "clinica@email.com", 
-                "Sistema de Gestão de Clínica Médica",
-                "mail-dev.brazilsouth.azurecontainer.io",
-                25);
+            #region Configuração de SMTP de email
+            services.AddEnviaEmail(emailConfig.RemetenteEmail, emailConfig.RemetenteNome, emailConfig.Smtp, emailConfig.PortaSmtp);
+            #endregion
 
             #region Injeção de Dependência
             IoC.Registrar(services);

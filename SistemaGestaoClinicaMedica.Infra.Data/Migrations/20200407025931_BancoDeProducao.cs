@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
 {
-    public partial class RefatoracaoDeUsuario : Migration
+    public partial class BancoDeProducao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -291,9 +291,10 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     DiaDaSemana = table.Column<int>(nullable: false),
                     Inicio = table.Column<TimeSpan>(nullable: false),
-                    InicioAlmoco = table.Column<TimeSpan>(nullable: false),
-                    FimAlmoco = table.Column<TimeSpan>(nullable: false),
+                    InicioIntervalo = table.Column<TimeSpan>(nullable: false),
+                    FimIntervalo = table.Column<TimeSpan>(nullable: false),
                     Fim = table.Column<TimeSpan>(nullable: false),
+                    Ativo = table.Column<bool>(nullable: false),
                     MedicoId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -313,7 +314,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     MedicoId = table.Column<Guid>(nullable: false),
-                    EspecialidadeId = table.Column<Guid>(nullable: false)
+                    EspecialidadeId = table.Column<Guid>(nullable: false),
+                    Ativo = table.Column<bool>(nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -436,7 +438,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ReceitaId = table.Column<Guid>(nullable: false),
-                    MedicamentoId = table.Column<Guid>(nullable: false)
+                    MedicamentoId = table.Column<Guid>(nullable: false),
+                    Ativo = table.Column<bool>(nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
