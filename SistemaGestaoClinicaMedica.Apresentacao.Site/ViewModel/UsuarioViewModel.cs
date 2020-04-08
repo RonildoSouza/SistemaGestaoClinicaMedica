@@ -36,7 +36,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.ViewModel
 
         public bool DaClinica { get; set; }
 
-        [Required]
         public string CRM { get; set; }
         public List<MedicoEspecialidadeViewModel> Especialidades { get; set; }
         public List<HorarioDeTrabalhoViewModel> HorariosDeTrabalho { get; set; }
