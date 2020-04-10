@@ -25,8 +25,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             _loginServico = loginServico;
         }
 
-        public string ReturnUrl { get; set; }
-
         public async Task<IActionResult> OnGetAsync([FromQuery]string email, [FromQuery]string senha)
         {
             string returnUrl = Url.Content("~/");
@@ -44,7 +42,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 var loginSaida = await _loginServico.LoginAsync(_loginEntradaDTO);
 
                 if (loginSaida == null)
-                    return LocalRedirect($"{returnUrl}");
+                    return LocalRedirect(returnUrl);
 
                 var jwtToken = new JwtSecurityToken(loginSaida.Token);
 

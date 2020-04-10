@@ -1,5 +1,4 @@
 ﻿@using System.Web;
-@using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
 @using SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos;
 
 <AuthorizeView>
@@ -18,6 +17,13 @@
                     <h4 class="card-title text-center">Logar no sistema</h4>
 
                     <div class="row">
+                        @if (_tentouLogar)
+                        {
+                            <div class="alert alert-info col-md-12" role="alert">
+                                Email ou senha incorretos, verifique!
+                            </div>
+                        }
+
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="email">Email</label>
@@ -41,9 +47,10 @@
     private string _email;
     private string _senha;
     private bool _carregando;
+    private bool _tentouLogar;
 
-    [Inject] private ApplicationState ApplicationState { get; set; }
     [Inject] private IJSRuntime JSRuntime { get; set; }
+    [Inject] private Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor { get; set; }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
