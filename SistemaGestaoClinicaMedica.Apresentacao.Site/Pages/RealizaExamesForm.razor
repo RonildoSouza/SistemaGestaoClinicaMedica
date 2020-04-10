@@ -38,14 +38,17 @@
                 {
                     <span class="spinner-border" role="status"></span>
                 }
-                Anexar e enviar o resultado do exame
+                else
+                {
+                    @("Anexar e enviar o resultado do exame")
+                }
             </label>
             <InputFile OnChange="EnviarResultadoAsync" class="form-control-file" id="resultado-exame" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" style="display: none;" />
         }
 
         @if (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && !string.IsNullOrEmpty(_dto.LinkResultadoExame))
         {
-            <button type="submit" id="concluir-exame" class="btn btn-lg btn-block btn-success">Prosseguir com a concluisão do exame</button>
+            <button type="submit" id="concluir-exame" class="btn btn-lg btn-block btn-success">Prosseguir com a conclusão do exame</button>
         }
     </div>
 

@@ -8,7 +8,10 @@
 
 <HeaderComponent Title="Cadastro de Exame" BackRoute="@AposSalvarRetonarPara" />
 
-<FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar e Imprimir Exame">
+<FormComponent Item="_dto" 
+               OnValidSubmit="Salvar" 
+               SubmitButtonText="Salvar e Imprimir Exame"
+               SubmitIcon="oi-print">
     <div class="form-group col-md-12">
         <label for="tipo-exame">Tipo de Exame <span style="color:red;">*</span></label>
         <select @onchange="SelecionaTipoDeExameAsync" class="form-control" id="tipo-exame" required>

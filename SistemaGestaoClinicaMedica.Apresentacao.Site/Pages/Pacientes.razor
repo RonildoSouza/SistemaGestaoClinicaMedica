@@ -8,17 +8,15 @@
 <HeaderComponent Title="Pacientes"
                  NewRoute="pacientes/novo"
                  SearchPlaceholder="Informe o nome ou email do usuário"
-                 SearchWithButton="true"
                  SearchVisibled="true"
+                 SearchColMd="8"
                  OnSearch="BuscarAsync">
-    <div class="row">
-        <div class="form-group col-md-6 offset-md-6">
-            <label for="ativo">Ativo</label>
-            <select class="form-control" id="ativo" @onchange="SelecionaAtivoAsync">
-                <option value="Sim">Sim</option>
-                <option value="Não">Não</option>
-            </select>
-        </div>
+    <div class="form-group col-md-4">
+        <label for="ativo">Ativo</label>
+        <select class="form-control" id="ativo" @onchange="SelecionaAtivo">
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
     </div>
 </HeaderComponent>
 
@@ -59,10 +57,8 @@
         StateHasChanged();
     }
 
-    private async Task SelecionaAtivoAsync(ChangeEventArgs args)
+    private void SelecionaAtivo(ChangeEventArgs args)
     {
         _ativo = args.Value.ToString().Equals("Sim");
-        dtos = await HttpServico.GetTudoComFiltrosAsync(null, _ativo);
-        StateHasChanged();
     }
 }

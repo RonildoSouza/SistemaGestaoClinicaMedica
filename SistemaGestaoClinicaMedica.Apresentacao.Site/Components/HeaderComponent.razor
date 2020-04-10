@@ -6,53 +6,70 @@
         </div>
     }
 
-    @if (!string.IsNullOrEmpty(BackRoute) || ChildContent != null || !string.IsNullOrEmpty(NewRoute) || SearchVisibled)
+    @if (!string.IsNullOrEmpty(BackRoute) || ChildContent != null || !string.IsNullOrEmpty(NewRoute) || SearchVisibled || OutSideRow != null || AnotherRow != null)
     {
         <div class="card-body">
-            @if (!string.IsNullOrEmpty(BackRoute))
-            {
-                <NavLink class="btn float-left" href="@BackRoute">
-                    <span class="oi oi-chevron-left" aria-hidden="true"></span> Voltar
-                </NavLink>
-            }
+            @OutSideRow
 
-            @if (ChildContent != null)
-            {
-                @ChildContent
-            }
+            @AnotherRow
 
-            @if (SearchVisibled)
-            {
-                <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (!string.IsNullOrEmpty(BackRoute))
+                    {
+                        <NavLink class="btn float-left" href="@BackRoute">
+                            <span class="oi oi-chevron-left" aria-hidden="true"></span> Voltar
+                        </NavLink>
+                    }
+
+                    @if (!string.IsNullOrEmpty(NewRoute))
+                    {
+                        <NavLink class="btn btn-primary float-right" href="@NewRoute">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Adicionar
+                        </NavLink>
+                    }
+                </div>
+
+                @if (!string.IsNullOrEmpty(NewRoute))
+                {
+                    <hr style="width:100%;"/>
+                }
+
+                @if (ChildContent != null)
+                {
+                    @ChildContent
+                }
+
+                @if (SearchVisibled)
+                {
                     @if (!SearchWithButton)
                     {
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-@SearchColMd">
+                            <label for="pesquisar">Pesquisa</label>
                             <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" minlength="@SearchMinLenght">
                         </div>
                         <div class="col-md-12">
-                            <button class="btn btn-primary float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">@SearchText</button>
+                            <button class="btn btn-warning float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">
+                                <span class="oi oi-magnifying-glass" aria-hidden="true"></span> @SearchText
+                            </button>
                         </div>
                     }
                     else
                     {
-                        <div class="col-md-12">
+                        <div class="col-md-@SearchColMd">
+                            <label for="pesquisar">Pesquisa</label>
                             <div class="input-group mb-3">
                                 <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="search-code" minlength="@SearchMinLenght">
                                 <div class="input-group-append">
-                                    <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-outline-secondary" type="button" id="search-code">@SearchText</button>
+                                    <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-warning" type="button" id="search-code">
+                                        <span class="oi oi-magnifying-glass" aria-hidden="true"></span> @SearchText
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     }
-                </div>
-            }
-
-            @if (!string.IsNullOrEmpty(NewRoute))
-            {
-                <NavLink class="btn btn-primary float-right" href="@NewRoute">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Novo
-                </NavLink>
-            }
+                }
+            </div>
         </div>
     }
 </div>
@@ -67,10 +84,13 @@
     [Parameter] public string MoreClassNewRoute { get; set; }
     [Parameter] public string CardMoreClass { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public RenderFragment OutSideRow { get; set; }
+    [Parameter] public RenderFragment AnotherRow { get; set; }
     [Parameter] public bool SearchVisibled { get; set; }
     [Parameter] public bool SearchWithButton { get; set; }
     [Parameter] public string SearchText { get; set; } = "Buscar";
     [Parameter] public string SearchPlaceholder { get; set; }
     [Parameter] public int SearchMinLenght { get; set; } = 500;
+    [Parameter] public int SearchColMd { get; set; } = 12;
     [Parameter] public EventCallback<string> OnSearch { get; set; }
 }

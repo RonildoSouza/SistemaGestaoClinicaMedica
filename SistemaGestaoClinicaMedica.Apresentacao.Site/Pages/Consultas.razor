@@ -8,29 +8,26 @@
 @inherits TableBase<IConsultasServico, ConsultaDTO, Guid>
 
 <HeaderComponent Title="Consultas"
-                 SearchText="Filtrar"
                  SearchPlaceholder="Informe o código da consulta, nome ou código do paciente"
                  SearchVisibled="true"
                  OnSearch="@BuscarAsync">
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label for="data-inicio">Data Inicio</label>
-            <input type="date" @bind-value="_dataInicio" class="form-control" id="data-incio" />
-        </div>
-        <div class="form-group col-md-4">
-            <label for="data-fim">Data Fim</label>
-            <input type="date" @bind-value="_dataFim" class="form-control" id="data-fim" />
-        </div>
-        <div class="form-group col-md-4">
-            <label for="status">Status</label>
-            <select @onchange="SelecionaStatusConsulta" class="form-control" id="status">
-                <option value=""></option>
-                @foreach (var status in _statusConsulta)
-                {
-                    <option value="@status.Id" selected="@(status.Id == StatusConsultaConst.Agendada)">@status.Nome</option>
-                }
-            </select>
-        </div>
+    <div class="form-group col-md-4">
+        <label for="data-inicio">Data Inicio</label>
+        <input type="date" @bind-value="_dataInicio" class="form-control" id="data-incio" />
+    </div>
+    <div class="form-group col-md-4">
+        <label for="data-fim">Data Fim</label>
+        <input type="date" @bind-value="_dataFim" class="form-control" id="data-fim" />
+    </div>
+    <div class="form-group col-md-4">
+        <label for="status">Status</label>
+        <select @onchange="SelecionaStatusConsulta" class="form-control" id="status">
+            <option value=""></option>
+            @foreach (var status in _statusConsulta)
+            {
+                <option value="@status.Id" selected="@(status.Id == StatusConsultaConst.Agendada)">@status.Nome</option>
+            }
+        </select>
     </div>
 </HeaderComponent>
 
