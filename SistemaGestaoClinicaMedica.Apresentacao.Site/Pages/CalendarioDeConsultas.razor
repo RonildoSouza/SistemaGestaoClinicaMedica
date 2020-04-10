@@ -139,12 +139,21 @@
 
             <div class="row">
                 <div class="form-group col-md-6">
-                    <label for="data-reagendamento">Data Reagendamento</label>
+                    <label for="data-reagendamento">Data Reagendamento <span style="color:red;">*</span></label>
                     <input type="date" @onchange="AlteraDataReagendamento" class="form-control" id="data-reagendamento" min="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
                 </div>
 
+                @if(_alterouDataReagendamento && !_horariosDisponiveis.Any())
+                {
+                    <div class="form-group col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            Não existem horários disponíveis para a data selecionada!
+                        </div>
+                    </div>
+                }
+
                 <div class="form-group col-md-6">
-                    <label for="horarios-reagendamento">Horário Reagendamento</label>
+                    <label for="horarios-reagendamento">Horário Reagendamento <span style="color:red;">*</span></label>
                     <select class="form-control" id="horarios-reagendamento" @onchange="SelecionaHorarioReagendamento" disabled="@(!_horariosDisponiveis.Any())">
                         <option value="" selected disabled>Selecione o horário do reagendamento</option>
                         @foreach (var horario in _horariosDisponiveis)

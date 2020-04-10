@@ -7,7 +7,7 @@
 
 <HeaderComponent Title="Agendar Consulta" BackRoute="@AposSalvarRetonarPara" />
 
-<FormComponent Item="_dto" OnValidSubmit="Salvar">
+<FormComponent Item="_dto" OnValidSubmit="Salvar" RequiredLabelVisible="false">
     <div class="form-group col-md-12">
         <label for="paciente">Paciente</label>
         <input type="text" value="@_pacienteNome" class="form-control" id="paciente" disabled />

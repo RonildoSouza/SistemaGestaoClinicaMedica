@@ -34,6 +34,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
                             .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
         }
 
+        public Medico ObterPorCRM(string crm)
+        {
+            return _medicosQuery.ObterPorCRM(crm);
+        }
+
         public IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId)
         {
             return _medicosQuery.ObterTudoPorEspecialidade(especialidadeId);

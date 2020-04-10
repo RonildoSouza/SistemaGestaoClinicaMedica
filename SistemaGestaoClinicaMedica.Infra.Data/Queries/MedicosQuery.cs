@@ -12,6 +12,12 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
         {
         }
 
+        public Medico ObterPorCRM(string crm)
+        {
+            return Entidades.Include(_ => _.Usuario)
+                            .FirstOrDefault(_ => _.CRM.ToLower() == crm.ToLower());
+        }
+
         public IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId)
         {
             var medicos = Entidades.Include(_ => _.Usuario)

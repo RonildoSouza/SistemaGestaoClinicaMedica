@@ -1,17 +1,10 @@
 ﻿@page "/usuarios/novo"
 @page "/usuarios/{id:guid}"
-@attribute [Authorize(Roles = "Administrador, Medico")]
+@attribute [Authorize(Roles = "Administrador")]
 
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 
-@if(_usuarioLogado.EMedico)
-{
-    <HeaderComponent Title="Cadastro de Usuário" />
-}
-else
-{
-    <HeaderComponent Title="Cadastro de Usuário" BackRoute="usuarios" />
-}
+<HeaderComponent Title="Cadastro de Usuário" BackRoute="usuarios" />
 
 <div class="card">
     <div class="card-body">
@@ -19,34 +12,12 @@ else
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="row">
-                @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador)
-                {
-                    <div class="form-group col-md-12">
-                        <label for="ativo">Ativo? </label>
-                        <InputCheckbox @bind-Value="_usuarioViewModel.Ativo" id="ativo" />
-                    </div>
-                }
-                <div class="form-group col-md-6">
-                    <label for="nome">Nome</label>
-                    <InputText @bind-Value="_usuarioViewModel.Nome" class="form-control" id="nome" />
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="email">Email</label>
-                    @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador)
-                    {
-                        <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" />
-                    }
-                    else
-                    {
-                        <input value="@_usuarioViewModel.Email" class="form-control" id="email" disabled />
-                    }
-                </div>
-                <div class="form-group col-md-8">
-                    <label for="telefone">Telefone</label>
-                    <InputText @bind-Value="_usuarioViewModel.Telefone" class="form-control" id="telefone" />
+                <div class="form-group col-md-12">
+                    <label for="ativo">Ativo? </label>
+                    <InputCheckbox @bind-Value="_usuarioViewModel.Ativo" id="ativo" />
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="cargo">Cargo</label>
+                    <label for="cargo">Cargo <span style="color:red;">*</span></label>
                     @if (_usuarioViewModel.Id != Guid.Empty)
                     {
                         <input type="text" class="form-control" value="@_usuarioViewModel.CargoId" disabled />
@@ -62,15 +33,28 @@ else
                         </InputSelect>
                     }
                 </div>
-                @if (!_usuarioViewModel.ESuperUsuario && _usuarioLogado.EAdministrador && _usuarioViewModel.Id != Guid.Empty)
+                <div class="form-group col-md-8">
+                    <label for="nome">Nome <span style="color:red;">*</span></label>
+                    <InputText @bind-Value="_usuarioViewModel.Nome" class="form-control" id="nome" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="email">Email <span style="color:red;">*</span></label>
+                    <InputText @bind-Value="_usuarioViewModel.Email" class="form-control" id="email" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telefone">Telefone</label>
+                    <InputText @bind-Value="_usuarioViewModel.Telefone" class="form-control" id="telefone" />
+                </div>
+
+                @if (_usuarioViewModel.Id != Guid.Empty)
                 {
                     <div class="form-group col-md-12">
-                        <label for="senha">Senha</label>
-                        <InputText type="password" @bind-Value="_usuarioViewModel.Senha" class="form-control" id="senha" />
+                        <label for="senha">Senha <span style="color:red;">*</span></label>
+                        <InputText type="password" @bind-Value="_usuarioViewModel.Senha" class="form-control" id="senha" required />
                     </div>
                 }
 
-                <!-- Campos extras para Cargo de Laboratório -->
+                <!-- CAMPOS EXTRAS PARA CARGO DE LABORATÓRIO -->
                 @if (_usuarioViewModel.CargoId == CargosConst.Laboratorio)
                 {
                     <div class="form-group col-md-4">
@@ -79,15 +63,15 @@ else
                     </div>
                 }
 
-                <!-- Campos extras para Cargo de Médico -->
+                <!-- CAMPOS EXTRAS PARA CARGO DE MÉDICO -->
                 @if (_usuarioViewModel.CargoId == CargosConst.Medico)
                 {
                     <div class="form-group col-md-4">
-                        <label for="crm">CRM</label>
-                        <InputText @bind-Value="_usuarioViewModel.CRM" class="form-control" id="crm" required/>
+                        <label for="crm">CRM <span style="color:red;">*</span></label>
+                        <InputText @bind-Value="_usuarioViewModel.CRM" class="form-control" id="crm" required />
                     </div>
                     <div class="form-group col-md-8">
-                        <label for="especialidades">Especialidades</label>
+                        <label for="especialidades">Especialidades <span style="color:red;">*</span></label>
                         <SelectWithSearch Id="especialidades"
                                           Placeholder="Selecione as especialidade do médico"
                                           Items="_especialidades"
@@ -97,7 +81,8 @@ else
                         </SelectWithSearch>
                     </div>
                     <div class="form-group col-md-12">
-                        <h3 class="text-center">Horário de Trabalho do Médico</h3>
+                        <h3 class="text-center">Horário de Trabalho do Médico <span style="color:red;">*</span></h3>
+                        <small>• Para <strong>NÃO</strong> informar intervalo, deixe os horários de ínicio e fim de intervalo iguais.</small>
                         <div class="table-responsive-md">
                             <table class="table">
                                 <thead>
@@ -120,7 +105,7 @@ else
                                             <input type="time" class="form-control" @bind-value="@horario.Inicio" disabled="@(!horario.Selecionado)" step="1800" required />
                                         </td>
                                         <td>
-                                            <input type="time" class="form-control" @bind-value="@horario.InicioIntervalo" min="@horario.Inicio.ToString("HH:mm")" step="1800" disabled="@(!horario.Selecionado)" />
+                                            <input type="time" class="form-control" @bind-value="@horario.InicioIntervalo" step="1800" disabled="@(!horario.Selecionado)" />
                                         </td>
                                         <td>
                                             <input type="time" class="form-control" @bind-value="@horario.FimIntervalo" min="@horario.InicioIntervalo.ToString("HH:mm")" max="@horario.InicioIntervalo.AddHours(1).ToString("HH:mm")" step="1800" disabled="@(!horario.Selecionado)" />
@@ -135,10 +120,14 @@ else
                     </div>
                 }
 
+                <div class="col-md-12">
+                    <small>• Os campos com <span style="color:red;">*</span> (asterisco) são obrigatórios.</small>
+                </div>
+
                 <div class="d-flex justify-content-end col-md-12">
                     <button type="submit" class="btn btn-success">Salvar</button>
                 </div>
             </div>
-        </EditForm>
+        </EditForm>        
     </div>
 </div>

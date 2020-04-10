@@ -16,6 +16,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _usuarioServico = usuarioServico;
         }
 
+        public UsuarioDTO ObterPorEmail(string email)
+        {
+            var entidade = _usuarioServico.ObterPorEmail(email);
+            return _mapper.Map<UsuarioDTO>(entidade);
+        }
+
         public IList<UsuarioDTO> ObterTudo(string busca, bool ativo)
         {
             var entidades = _usuarioServico.ObterTudoComFiltros(busca, ativo);

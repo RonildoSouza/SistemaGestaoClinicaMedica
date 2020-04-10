@@ -18,10 +18,16 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                             .FirstOrDefault(_ => _.Email.ToLower() == email.ToLower() && _.Senha == senha && _.Ativo);
         }
 
+        public Usuario ObterPorEmail(string email)
+        {
+            return Entidades.FirstOrDefault(_ => _.Email.ToLower() == email.ToLower());
+        }
+
         public IList<Usuario> ObterTudoComFiltros(string busca, bool ativo = true)
         {
             var usuarios = Entidades.Include(_ => _.Cargo)
                             .Where(_ => _.Ativo == ativo)
+                            .Where(_ => _.Id != Usuario.SuperUsuarioId)
                             .OrderBy(_ => _.Nome)
                             .ToList();
 

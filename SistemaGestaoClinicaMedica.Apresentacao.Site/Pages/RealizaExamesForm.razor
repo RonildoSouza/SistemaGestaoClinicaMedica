@@ -16,12 +16,13 @@
 <FormComponent Item="_dto"
                OnValidSubmit="Salvar"
                SubmitButtonVisibled="false"
+               RequiredLabelVisible="false"
                Loading="_carregando">
     <div class="form-group col-md-12">
         @if (_dto.StatusExame.Id == StatusExameConst.Concluido || (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && string.IsNullOrEmpty(_dto.LinkResultadoExame)))
         {
             <div class="alert alert-info" role="alert" style="width:100%">
-                Este exame está <strong>@context.StatusExame.Nome</strong>, por <strong>@_dto.LaboratorioRealizouExame.Nome</strong>!
+                Este exame está <strong>@context.StatusExame.Nome</strong>, por <strong>@_dto.LaboratorioRealizouExame?.Nome</strong>!
             </div>
         }
 
@@ -32,7 +33,13 @@
 
         @if (_dto.StatusExame.Id == StatusExameConst.EmAnaliseLaboratorial && _dto.Id != Guid.Empty && string.IsNullOrEmpty(_dto.LinkResultadoExame))
         {
-            <label for="resultado-exame" class="btn btn-lg btn-block btn-dark">Anexar e enviar o resultado do exame</label>
+            <label for="resultado-exame" class="btn btn-lg btn-block btn-dark">
+                @if (_enviandoResultado)
+                {
+                    <span class="spinner-border" role="status"></span>
+                }
+                Anexar e enviar o resultado do exame
+            </label>
             <InputFile OnChange="EnviarResultadoAsync" class="form-control-file" id="resultado-exame" accept=".jpg, .jpeg, .png, .pdf, .doc, .docx" style="display: none;" />
         }
 

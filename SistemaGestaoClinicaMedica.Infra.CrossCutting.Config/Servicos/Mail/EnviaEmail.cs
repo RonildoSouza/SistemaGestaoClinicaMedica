@@ -5,9 +5,9 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Mail
 {
     public class EnviaEmail : IEnviaEmail
     {
-        private MailMessage _mailMessage;
-        private MailAddress _mailAddress;
-        private SmtpClient _smtpClient;
+        private readonly MailMessage _mailMessage;
+        private readonly MailAddress _mailAddress;
+        private readonly SmtpClient _smtpClient;
 
         public EnviaEmail(MailMessage mailMessage, MailAddress mailAddress, SmtpClient smtpClient)
         {
@@ -18,13 +18,17 @@ namespace SistemaGestaoClinicaMedica.Infra.CrossCutting.Config.Servicos.Mail
 
         public void Enviar(string destinatarioEmail, string assunto, string mensagem, bool mensagemEmHtml = true)
         {
-            _mailMessage.From = _mailAddress;
-            _mailMessage.To.Add(destinatarioEmail);
-            _mailMessage.IsBodyHtml = mensagemEmHtml;
-            _mailMessage.Subject = assunto;
-            _mailMessage.Body = mensagem;
+            try
+            {
+                _mailMessage.From = _mailAddress;
+                _mailMessage.To.Add(destinatarioEmail);
+                _mailMessage.IsBodyHtml = mensagemEmHtml;
+                _mailMessage.Subject = assunto;
+                _mailMessage.Body = mensagem;
 
-            _smtpClient.Send(_mailMessage);
+                _smtpClient.Send(_mailMessage);
+            }
+            catch { }
         }
     }
 

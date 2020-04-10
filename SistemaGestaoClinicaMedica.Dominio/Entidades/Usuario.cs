@@ -4,6 +4,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
 {
     public class Usuario : IEntidade<Guid>, IEntidadeAuditada
     {
+        public static Guid SuperUsuarioId => Guid.Parse("7270550F-6B18-41E2-9814-7DE97B8D966A");
         public Usuario() { }
 
         public Usuario(Guid id, string nome, string email, string telefone, string senha, Cargo cargo, bool ativo)
@@ -29,7 +30,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Entidades
         public DateTime? AtualizadoEm { get; set; }
         public string AtualizadoPor { get; set; }
 
-        public bool ESuperUsuario() => Id == Guid.Parse("7270550F-6B18-41E2-9814-7DE97B8D966A");
+        public bool ESuperUsuario() => Id == SuperUsuarioId;
 
         public static string SenhaAleatoria() =>  Guid.NewGuid().ToString("d").Substring(1, 7);
     }

@@ -18,8 +18,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao.Email
 
         public void Enviar(string usuarioEmail, string usuarioNome, string senha)
         {
-            var assunto = "Novo Cadastro";
-            var mensagem = $"Você acaba de ser cadastrado no Sistema de Gestão de Clinica Médica, para acessar utilize o email {usuarioEmail} e a senha {senha}.<br>" +
+            var assunto = "Acesso Liberado";
+            var mensagem = $"Você acaba de ser cadastrado no Sistema de Gestão de Clínica Médica, para acessar utilize o email <strong>{usuarioEmail}</strong> e a senha <strong>{senha}</strong>.<br>" +
                 $"Caso deseje alterar a senha, solicite ao administrador da clínica.";
 
             var mensagemHtml = _constroiDocumento.ConstroiTemplate(new EmailTemplate(

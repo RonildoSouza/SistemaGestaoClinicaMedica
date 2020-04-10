@@ -31,8 +31,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions
         {
             var cargoId = await localStorage.GetItemAsync<string>(nameof(UsuariosForm));
 
-            if (cargoId != null)
-                await localStorage.RemoveItemAsync(nameof(UsuariosForm));
+            //if (cargoId != null)
+            //    await localStorage.RemoveItemAsync(nameof(UsuariosForm));
 
             return cargoId;
         }

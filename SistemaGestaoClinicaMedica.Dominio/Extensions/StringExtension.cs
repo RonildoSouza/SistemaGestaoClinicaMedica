@@ -65,7 +65,7 @@ namespace SistemaGestaoClinicaMedica.Dominio.Extensions
             return cpfComPontos;
         }
 
-        public static string RemoceFormatacaoCPF(this string cpf)
+        public static string RemoveFormatacaoCPF(this string cpf)
         {
             if (cpf.Contains(".") || cpf.Contains("-"))
                 cpf = cpf.Replace(".", string.Empty).Replace("-", string.Empty);

@@ -31,6 +31,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
             ContextoBancoDados.SaveChanges();
         }
 
+        public Usuario ObterPorEmail(string email)
+        {
+            return _usuariosQuery.ObterPorEmail(email);
+        }
+
         public IList<Usuario> ObterTudoComFiltros(string busca, bool ativo)
         {
             return _usuariosQuery.ObterTudoComFiltros(busca, ativo);

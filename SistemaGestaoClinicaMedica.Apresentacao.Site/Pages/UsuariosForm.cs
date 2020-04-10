@@ -25,7 +25,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private List<EspecialidadeDTO> _especialidades = new List<EspecialidadeDTO>();
         private UsuarioViewModel _usuarioViewModel = new UsuarioViewModel();
         private string _cargoIdLocalStorage;
-        private UsuarioLogado _usuarioLogado = new UsuarioLogado();
         private string _senhaEdicao;
 
         [Parameter] public Guid Id { get; set; }
@@ -41,11 +40,38 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         [Inject] private IRecepcionistasServico RecepcionistasServico { get; set; }
         [Inject] private ILaboratoriosServico LaboratoriosServico { get; set; }
         [Inject] private IMedicosServico MedicosServico { get; set; }
-        [Inject] private ApplicationState ApplicationState { get; set; }
+        [Inject] private IUsuariosServico UsuariosServico { get; set; }
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
-            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender && Id != Guid.Empty)
+            {
+                _cargoIdLocalStorage = await LocalStorage.ObterUsuarioCargoIdEdicaoLocalStorageAsync();
+
+                switch (_cargoIdLocalStorage)
+                {
+                    case CargosConst.Administrador:
+                        var administrador = await AdministradoresServico.GetAsync(Id);
+                        _usuarioViewModel = Mapper.Map<UsuarioViewModel>(administrador);
+                        break;
+                    case CargosConst.Recepcionista:
+                        var recepcionista = await RecepcionistasServico.GetAsync(Id);
+                        _usuarioViewModel = Mapper.Map<UsuarioViewModel>(recepcionista);
+                        break;
+                    case CargosConst.Laboratorio:
+                        var laboratorio = await LaboratoriosServico.GetAsync(Id);
+                        _usuarioViewModel = Mapper.Map<UsuarioViewModel>(laboratorio);
+                        break;
+                    case CargosConst.Medico:
+                        var medico = await MedicosServico.GetAsync(Id);
+                        _usuarioViewModel = Mapper.Map<UsuarioViewModel>(medico);
+                        break;
+                }
+
+                _senhaEdicao = _usuarioViewModel.Senha;
+                StateHasChanged();
+            }
+
             var dotNetReference = DotNetObjectReference.Create(this);
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup", "#especialidades", dotNetReference, nameof(SelecionaEspecialidade));
         }
@@ -54,41 +80,19 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         {
             _cargos = await CargosServico.GetAsync();
             _especialidades = await EspecialidadesServico.GetAsync();
-
-            _cargoIdLocalStorage = await LocalStorage.ObterUsuarioCargoIdEdicaoLocalStorageAsync();
-
-            _usuarioLogado = ApplicationState.UsuarioLogado;
-            if (string.IsNullOrEmpty(_cargoIdLocalStorage) && _usuarioLogado.EMedico)
-                _cargoIdLocalStorage = _usuarioLogado.CargoId;
-
-            switch (_cargoIdLocalStorage)
-            {
-                case CargosConst.Administrador:
-                    var administrador = await AdministradoresServico.GetAsync(Id);
-                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(administrador);
-                    break;
-                case CargosConst.Recepcionista:
-                    var recepcionista = await RecepcionistasServico.GetAsync(Id);
-                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(recepcionista);
-                    break;
-                case CargosConst.Laboratorio:
-                    var laboratorio = await LaboratoriosServico.GetAsync(Id);
-                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(laboratorio);
-                    break;
-                case CargosConst.Medico:
-                    var medico = await MedicosServico.GetAsync(Id);
-                    _usuarioViewModel = Mapper.Map<UsuarioViewModel>(medico);
-                    break;
-            }
-
-            if (_usuarioViewModel.Id != Guid.Empty)
-                _senhaEdicao = _usuarioViewModel.Senha;
         }
 
         protected async Task Salvar(EditContext editContext)
         {
             if (!editContext.Validate())
                 return;
+
+            var usuarioExiste = await UsuariosServico.GetPorEmailAsync(_usuarioViewModel.Email);
+            if (_usuarioViewModel.Id == Guid.Empty && usuarioExiste != null)
+            {
+                ToastService.ShowInfo("Já existe um usuário cadastrado com este email!");
+                return;
+            }
 
             if (_senhaEdicao != _usuarioViewModel.Senha)
                 _usuarioViewModel.Senha = Encryption64.Encrypt(_usuarioViewModel.Senha);
@@ -109,16 +113,23 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                     await PostOrPutAsync(LaboratoriosServico, laboratorio);
                     break;
                 case CargosConst.Medico:
+                    var medicoExiste = await MedicosServico.GetPorCRMAsync(_usuarioViewModel.CRM);
+                    if (_usuarioViewModel.Id == Guid.Empty && medicoExiste != null)
+                    {
+                        ToastService.ShowInfo($"O médico {medicoExiste.Nome} já está cadastrado com o CRM {_usuarioViewModel.CRM}!");
+                        return;
+                    }
+
                     if (!_usuarioViewModel.Especialidades.Any())
                     {
-                        ToastService.ShowWarning("Deve ser selecionado ao menos uma especialidade!");
+                        ToastService.ShowInfo("Deve ser selecionado ao menos uma especialidade!");
                         return;
                     }
 
                     var horariosSelecionados = _usuarioViewModel.HorariosDeTrabalho.Where(_ => _.Selecionado);
                     if (!horariosSelecionados.Any())
                     {
-                        ToastService.ShowWarning("Deve ser selecionado ao menos um horário de trabalho!");
+                        ToastService.ShowInfo("Deve ser selecionado ao menos um horário de trabalho!");
                         return;
                     }
 
@@ -143,17 +154,12 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 httpResponse = await servico.PutAsync(dto.Id, dto);
 
             if (httpResponse.IsSuccessStatusCode)
-                ToastService.ShowSuccess("Registro salvo com sucesso");
-            else
-                ToastService.ShowError("Falha ao tentar salvar o registro!");
-
-            if (_usuarioLogado.EMedico)
             {
-                ApplicationState.UsuarioLogado.Nome = (dto as MedicoDTO).Nome;
-                NavigationManager.NavigateTo("/");
+                ToastService.ShowSuccess("Registro salvo com sucesso");
+                NavigationManager.NavigateTo("usuarios");
             }
             else
-                NavigationManager.NavigateTo("usuarios");
+                ToastService.ShowError("Falha ao tentar salvar o registro!");
         }
 
         [JSInvokable]

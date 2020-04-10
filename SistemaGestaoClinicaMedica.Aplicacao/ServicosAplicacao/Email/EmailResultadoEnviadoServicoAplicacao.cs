@@ -18,9 +18,9 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao.Email
 
         public void Enviar(string medicoEmail, string medicoNome, string exameCodigo)
         {
-            var assunto = "Resultado de Exame";
-            var mensagem = $"O resultado laboratorial do exame de código {exameCodigo} foi enviado!<br>" +
-                $"Acesse o menu \"Consultar Exames\" para baixar o arquivo";
+            var assunto = $"Resultado do Exame de Código {exameCodigo}";
+            var mensagem = $"O resultado laboratorial do exame de código <strong>{exameCodigo}</strong> foi enviado!<br>" +
+                $"Acesse o menu <strong>Consultar Exames</strong> no Sistema de Gestão de Clínica Médica, pesquise o exame utilizando o código e baixar o arquivo";
 
             var mensagemHtml = _constroiDocumento.ConstroiTemplate(new EmailTemplate(
                 assunto,

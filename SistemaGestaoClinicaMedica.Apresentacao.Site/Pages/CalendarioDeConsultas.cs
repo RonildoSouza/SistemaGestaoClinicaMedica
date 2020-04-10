@@ -30,6 +30,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private ConsultaEvento _consultaEvento = new ConsultaEvento();
         private bool _carregando;
         private string _busca;
+        private bool _alterouDataReagendamento;
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ILocalStorageService LocalStorage { get; set; }
@@ -254,6 +255,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             var especialidadeId = Guid.Parse(_consultaEvento.EspecialidadeId);
             var medicoId = Guid.Parse(_consultaEvento.MedicoId);
 
+            _alterouDataReagendamento = true;
             _dataDaConsulta = data;
             _horariosDisponiveis = await EspecialidadesServico.GetHorariosDisponiveisAsync(especialidadeId, _dataDaConsulta, medicoId);
             StateHasChanged();

@@ -41,7 +41,7 @@
                                             </style>
                                         </head>
                                     <body>`);
-        childWindow.document.write('<h3 style="text-align:center;">Sistema de Gestão de Clinica Médica</h3>');
+        childWindow.document.write('<h3 style="text-align:center;">Sistema de Gestão de Clínica Médica</h3>');
         childWindow.document.write('<hr />');
         childWindow.document.write('<p>');
         childWindow.document.write(content);

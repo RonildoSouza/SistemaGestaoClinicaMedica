@@ -11,44 +11,44 @@
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar">
     <div class="form-group col-md-6">
-        <label for="nome">Nome</label>
-        <InputText @bind-Value="context.Nome" class="form-control" id="nome" />
+        <label for="nome">Nome <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.Nome" class="form-control" id="nome" required/>
     </div>
     <div class="form-group col-md-3">
-        <label for="sexo">Sexo</label>
+        <label for="sexo">Sexo <span style="color:red;">*</span></label>
         <InputSelect @bind-Value="context.Sexo" class="form-control" id="sexo">
             <option value="Feminino">Feminino</option>
             <option value="Masculino">Masculino</option>
         </InputSelect>
     </div>
     <div class="form-group col-md-3">
-        <label for="data-nascimento">Data de Nascimento</label>
-        <InputDate @bind-Value="context.DataNascimento" class="form-control" id="data-nascimento" />
+        <label for="data-nascimento">Data de Nascimento <span style="color:red;">*</span></label>
+        <InputDate @bind-Value="context.DataNascimento" class="form-control" id="data-nascimento" required/>
     </div>
     <div class="form-group col-md-3">
-        <label for="cpf">CPF</label>
-        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" minlength="11" maxlength="14"/>
+        <label for="cpf">CPF <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" minlength="11" maxlength="14" required/>
     </div>
     <div class="form-group col-md-3">
-        <label for="telefone">Telefone</label>
-        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" />
+        <label for="telefone">Telefone <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" required/>
     </div>
     <div class="form-group col-md-6">
-        <label for="nome-mae">Nome da Mãe</label>
-        <InputText @bind-Value="context.NomeDaMae" class="form-control" id="nome-mae" />
+        <label for="nome-mae">Nome da Mãe <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.NomeDaMae" class="form-control" id="nome-mae" required/>
     </div>
     <div class="form-group col-md-4">
-        <label for="bairro">Bairro</label>
-        <InputText @bind-Value="context.Bairro" class="form-control" id="bairro" />
+        <label for="bairro">Bairro <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.Bairro" class="form-control" id="bairro" required/>
     </div>
     <div class="form-group col-md-5">
-        <label for="cidade">Cidade</label>
-        <InputText @bind-Value="context.Cidade" class="form-control" id="cidade" />
+        <label for="cidade">Cidade <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.Cidade" class="form-control" id="cidade" required/>
     </div>
     <div class="form-group col-md-3">
-        <label for="estado">Estado</label>
-        <InputSelect @bind-Value="context.Estado" class="form-control" id="estado">
-            <option value="" selected disabled>Selecione o estado...</option>
+        <label for="estado">Estado <span style="color:red;">*</span></label>
+        <InputSelect @bind-Value="context.Estado" class="form-control" id="estado" required>
+            <option value="" selected disabled>Selecione o estado</option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>
@@ -86,7 +86,7 @@
     {
         if (_dto.CPF.ValidaCPF())
         {
-            var paciente = await HttpServico.GetPorCodigoOuCPFAsync(_dto.CPF.RemoceFormatacaoCPF());
+            var paciente = await HttpServico.GetPorCodigoOuCPFAsync(_dto.CPF.RemoveFormatacaoCPF());
 
             if (paciente != null && _dto.Id == Guid.Empty)
             {

@@ -7,5 +7,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     public interface IMedicoServico : IServicoBase<Guid, Medico>
     {
         IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId);
+        Medico ObterPorCRM(string crm);
     }
 }

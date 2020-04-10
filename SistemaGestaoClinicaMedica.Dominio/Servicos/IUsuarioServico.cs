@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     {
         Usuario Autorizar(string email, string senha);
         IList<Usuario> ObterTudoComFiltros(string busca, bool ativo);
+        Usuario ObterPorEmail(string email);
     }
 }

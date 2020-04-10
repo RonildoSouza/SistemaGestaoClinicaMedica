@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     public interface IMedicosServico : IServicoBase<MedicoDTO, Guid>
     {
         Task<List<MedicoDTO>> GetPorEspecialidadeAsync(Guid especialidadeId);
+        Task<MedicoDTO> GetPorCRMAsync(string crm);
     }
 }

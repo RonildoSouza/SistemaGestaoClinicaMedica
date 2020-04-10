@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
+using System.Web;
 
 namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
@@ -22,6 +23,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         {
             var saidaDTOs = _usuarioServicoAplicacao.ObterTudo(busca, ativo);
             return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpGet, Route("por-email/{email}")]
+        public IActionResult GetPorEmail(string email)
+        {
+            var saidaDTO = _usuarioServicoAplicacao.ObterPorEmail(HttpUtility.UrlDecode(email));
+            return Ok(saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]

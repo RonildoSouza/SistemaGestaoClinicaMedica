@@ -42,11 +42,16 @@
 
             if (!authenticationState.User.Identity.IsAuthenticated)
             {
+                ApplicationState.Token = null;
                 ApplicationState.UsuarioLogado = new UsuarioLogado();
                 NavigationManager.NavigateTo("login");
+                return;
             }
 
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
         }
+
+        if (!firstRender && ApplicationState.TokenExpirou() && !NavigationManager.Uri.Contains("login"))
+            NavigationManager.NavigateTo("logout", true);
     }
 }

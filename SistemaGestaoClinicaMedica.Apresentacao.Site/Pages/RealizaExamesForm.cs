@@ -12,6 +12,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
     public partial class RealizaExamesForm
     {
         private bool _carregando;
+        private bool _enviandoResultado;
 
         [Inject] private IJSRuntime JSRuntime { get; set; }
         [Inject] private ApplicationState ApplicationState { get; set; }
@@ -30,6 +31,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         private async Task EnviarResultadoAsync(IFileListEntry[] files)
         {
+            _enviandoResultado = true;
+            StateHasChanged();
+
             foreach (var file in files)
             {
                 var uri = await HttpServico.UploadResultado(_dto.Id, file.Data, file.Name);
@@ -37,6 +41,9 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             }
 
             ToastService.ShowSuccess($"Resultado do exame de código {_dto.Codigo} foi enviado!");
+
+            _enviandoResultado = false;
+            StateHasChanged();
         }
 
         protected async override Task<bool> Salvar(EditContext editContext)

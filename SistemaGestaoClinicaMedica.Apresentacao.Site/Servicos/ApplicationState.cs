@@ -1,4 +1,6 @@
 ﻿using SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -18,7 +20,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
         public ApplicationState(HttpClient httpClient)
         {
             HttpClient = httpClient;
-
         }
 
         public HttpClient HttpClient { get; }
@@ -34,5 +35,14 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
             }
         }
         public UsuarioLogado UsuarioLogado { get; set; }
+
+        public bool TokenExpirou()
+        {
+            if (string.IsNullOrEmpty(Token))
+                return true;
+
+            var jwtToken = new JwtSecurityToken(Token);
+            return jwtToken.ValidTo <= DateTime.Now;
+        }
     }
 }

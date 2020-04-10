@@ -10,7 +10,7 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Mapeamentos
         {
             base.Configure(builder);
 
-            builder.Property(_ => _.Observacao).HasMaxLength(5000);
+            builder.Property(_ => _.Observacao).IsRequired().HasMaxLength(5000);
             builder.Property(_ => _.LinkResultadoExame).HasMaxLength(500);
 
             builder.HasOne(_ => _.TipoDeExame).WithMany().IsRequired();

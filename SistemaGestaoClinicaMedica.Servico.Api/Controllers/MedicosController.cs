@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao;
 using System;
+using System.Web;
 
 namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
 {
@@ -39,6 +40,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
         {
             var saidaDTOs = _medicoServicoAplicacao.ObterTudoPorEspecialidade(especialidadeId);
             return Ok(saidaDTOs);
+        }
+
+        [Authorize("Bearer", Roles = "Administrador")]
+        [HttpGet, Route("por-crm/{crm}")]
+        public IActionResult GetPorCRM(string crm)
+        {
+            var saidaDTO = _medicoServicoAplicacao.ObterPorCRM(HttpUtility.UrlDecode(crm));
+            return Ok(saidaDTO);
         }
 
         [Authorize("Bearer", Roles = "Administrador")]

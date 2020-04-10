@@ -7,5 +7,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
     {
         Usuario Autorizar(string email, string senha);
         IList<Usuario> ObterTudoComFiltros(string busca, bool ativo);
+        Usuario ObterPorEmail(string email);
     }
 }

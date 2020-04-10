@@ -10,7 +10,7 @@
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar" SubmitButtonText="Salvar e Imprimir Exame">
     <div class="form-group col-md-12">
-        <label for="tipo-exame">Tipo de Exame</label>
+        <label for="tipo-exame">Tipo de Exame <span style="color:red;">*</span></label>
         <select @onchange="SelecionaTipoDeExameAsync" class="form-control" id="tipo-exame" required>
             <option value=""></option>
             @foreach (var tipo in _tiposDeExames)
@@ -20,7 +20,7 @@
         </select>
     </div>
     <div class="form-group col-md-12">
-        <label for="exame-observacao">Observação</label>
+        <label for="exame-observacao">Observação <span style="color:red;">*</span></label>
         <InputTextArea @bind-Value="@_dto.Observacao" class="form-control" id="exame-observacao" />
     </div>
 </FormComponent>

@@ -63,7 +63,7 @@
                 <input type="text" value="@context.StatusConsulta?.Nome" class="form-control" id="data" disabled />
             </div>
             <div class="form-group col-md-12">
-                <label for="observacoes">Observações</label>
+                <label for="observacoes">Observações <span style="color:red;">*</span></label>
                 <InputTextArea @bind-Value="context.Observacao" class="form-control" id="observacoes" disabled="@(!_podeConcluirConsulta)"/>
             </div>
         </FormComponent>

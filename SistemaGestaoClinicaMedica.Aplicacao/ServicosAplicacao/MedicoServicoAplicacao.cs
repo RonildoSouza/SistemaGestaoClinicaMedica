@@ -20,6 +20,12 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _emailSenhaNovoUsuarioServicoAplicacao = emailSenhaNovoUsuarioServicoAplicacao;
         }
 
+        public MedicoDTO ObterPorCRM(string crm)
+        {
+            var entidade = _medicoServico.ObterPorCRM(crm);
+            return _mapper.Map<MedicoDTO>(entidade);
+        }
+
         public IList<MedicoDTO> ObterTudoPorEspecialidade(Guid especialidadeId)
         {
             var entidades = _medicoServico.ObterTudoPorEspecialidade(especialidadeId);

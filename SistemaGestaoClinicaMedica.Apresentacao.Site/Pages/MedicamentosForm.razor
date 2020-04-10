@@ -10,15 +10,15 @@
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar">
     <div class="form-group col-md-6">
-        <label for="nome">Nome</label>
-        <InputText @bind-Value="context.Nome" class="form-control" id="nome" />
+        <label for="nome">Nome <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.Nome" class="form-control" id="nome" required />
     </div>
     <div class="form-group col-md-6">
-        <label for="nome-fabrica">Nome de Fabrica</label>
-        <InputText @bind-Value="context.NomeFabrica" class="form-control" id="nome-fabrica" />
+        <label for="nome-fabrica">Nome de Fabrica <span style="color:red;">*</span></label>
+        <InputText @bind-Value="context.NomeFabrica" class="form-control" id="nome-fabrica" required />
     </div>
     <div class="form-group col-md-8">
-        <label for="nome-fabricante">Nome do Fabricante</label>
+        <label for="nome-fabricante">Nome do Fabricante <span style="color:red;">*</span></label>
         <input type="text" list="fabricantes" @bind-value="context.FabricanteNome" class="form-control" id="nome-fabricante" placeholder="Selecione o fabricante ou informe um novo">
         <datalist id="fabricantes">
             @foreach (var fabricante in Fabricantes)
@@ -28,11 +28,11 @@
         </datalist>
     </div>
     <div class="form-group col-md-4">
-        <label for="tarja">Tarja</label>
-        <InputSelect @bind-Value="context.Tarja" class="form-control" id="tarja">
-            <option value="">Selecione o tipo de tarja...</option>
-            <option value="Preta">Preta</option>
-            <option value="Vermelha">Vermelha</option>
+        <label for="tarja">Tarja <span style="color:red;">*</span></label>
+        <InputSelect @bind-Value="context.Tarja" class="form-control" id="tarja" required>
+            <option value="" selected disabled>Selecione a tarja</option>
+            <option value="Preta" style="color:white; background-color:black;">Preta</option>
+            <option value="Vermelha" style="color:white; background-color:red;">Vermelha</option>
             <option value="Livre">Venda Livre</option>
         </InputSelect>
     </div>
