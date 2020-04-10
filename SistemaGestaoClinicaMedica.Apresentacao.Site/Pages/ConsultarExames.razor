@@ -1,4 +1,4 @@
-﻿@page "/exames"
+﻿@page "/consultar-exames"
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
 @using SistemaGestaoClinicaMedica.Aplicacao.DTO;
@@ -7,21 +7,19 @@
 @inherits TableBase<IExamesServico, ExameDTO, Guid>
 
 <HeaderComponent Title="Consultar Exames"
-                 SearchText="Filtrar"
                  SearchPlaceholder="Informe o código do exame, consulta ou paciente"
                  SearchVisibled="true"
-                 OnSearch="BuscarAsync">
-    <div class="row">
-        <div class="form-group col-md-6 offset-md-6">
-            <label for="status">Status</label>
-            <select @onchange="SelecionaStatusExame" class="form-control" id="status">
-                <option value=""></option>
-                @foreach (var status in _statusExame)
-                {
-                    <option value="@status.Id" selected="@(status.Id == StatusExameConst.Pendente)">@status.Nome</option>
-                }
-            </select>
-        </div>
+                 SearchColMd="8"
+                 OnSearch="BuscarAsync">    
+    <div class="form-group col-md-4">
+        <label for="status">Status</label>
+        <select @onchange="SelecionaStatusExame" class="form-control" id="status">
+            <option value=""></option>
+            @foreach (var status in _statusExame)
+            {
+                <option value="@status.Id" selected="@(status.Id == StatusExameConst.Pendente)">@status.Nome</option>
+            }
+        </select>
     </div>
 </HeaderComponent>
 

@@ -7,6 +7,7 @@
             locale: 'pt-br',
             header: {
                 left: 'customMonthButton,customListButton',
+                right: 'prev,today,next',
                 center: 'title'
             },
             plugins: ['dayGrid', 'list', 'interaction'],
@@ -35,12 +36,12 @@
             },
             views: {
                 dayGridMonth: {
-                    eventLimit: 3
+                    eventLimit: 2
                 }
             },
             customButtons: {
                 customMonthButton: {
-                    text: 'Mês',
+                    text: 'Mensal',
                     click: function () {
                         $('#agendar-consulta').show();
                         $('#busca-consulta-calendario').hide();
@@ -50,7 +51,7 @@
                     }
                 },
                 customListButton: {
-                    text: 'Lista',
+                    text: 'Semanal',
                     click: function () {
                         $('#agendar-consulta').hide();
                         $('#busca-consulta-calendario').show();

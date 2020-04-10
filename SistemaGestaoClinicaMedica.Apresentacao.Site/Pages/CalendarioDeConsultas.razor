@@ -5,69 +5,76 @@
 @using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 
 <HeaderComponent Title="Calendário de Consultas">
-    @if (_carregando)
-    {
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status"></div>
-        </div>
-    }
-
-    <div class="row @(_carregando ? "display-none" : "")" id="agendar-consulta">
-        @if (_agendarConsulta)
+    <OutSideRow>
+        @if (_carregando)
         {
-            <div class="col-md-6 offset-md-6">
-                <form class="form-group">
-                    <div class="input-group mb-3">
-                        <input @bind-value="_pacienteCodigoOuCPF" type="text" class="form-control" placeholder="Informe o código ou CPF do paciente" aria-label="Informe o código ou CPF do paciente" aria-describedby="paciente-codigo" minlength="4" maxlength="14">
-                        <div class="input-group-append">
-                            <button @onclick="BuscaPacienteAsync" class="btn btn-outline-secondary" type="button" id="paciente-codigo">Buscar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="form-group col-md-12">
-                <label for="paciente-nome">Nome do Paciente</label>
-                <input @bind-value="_pacienteLocalStorage.Nome" type="text" class="form-control" id="paciente-nome" disabled>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="especialidade">Especialidade</label>
-                <select @onchange="SelecionaEspecialidadeAsync" placeholder="Selecione a especialidade" class="form-control" id="especialidade">
-                    <option value="" disabled selected hidden>Selecione a especialidade</option>
-                    @foreach (var especialidade in _especialidades)
-                    {
-                        <option value="@especialidade.Id">@especialidade.Nome</option>
-                    }
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="medico">Médico</label>
-                <select @onchange="SelecionaMedico" placeholder="Selecione o médico" class="form-control" id="medico">
-                    <option value="" disabled selected hidden>Selecione o médico</option>
-                    @foreach (var medico in _medicos)
-                    {
-                        <option value="@medico.Id">@medico.Nome</option>
-                    }
-                </select>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status"></div>
             </div>
         }
+    </OutSideRow>
+    <AnotherRow>
+        <div class="row @(_carregando ? "display-none" : "")" id="agendar-consulta">
+            @if (_agendarConsulta)
+            {
+                <div class="col-md-6 offset-md-6">
+                    <form class="form-group">
+                        <div class="input-group mb-3">
+                            <input @bind-value="_pacienteCodigoOuCPF" type="text" class="form-control" placeholder="Informe o código ou CPF do paciente" aria-label="Informe o código ou CPF do paciente" aria-describedby="paciente-codigo" minlength="4" maxlength="14">
+                            <div class="input-group-append">
+                                <button @onclick="BuscaPacienteAsync" class="btn btn-warning" type="button" id="paciente-codigo">
+                                    <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="paciente-nome">Nome do Paciente</label>
+                    <input @bind-value="_pacienteLocalStorage.Nome" type="text" class="form-control" id="paciente-nome" disabled>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="especialidade">Especialidade</label>
+                    <select @onchange="SelecionaEspecialidadeAsync" placeholder="Selecione a especialidade" class="form-control" id="especialidade">
+                        <option value="" disabled selected hidden>Selecione a especialidade</option>
+                        @foreach (var especialidade in _especialidades)
+                        {
+                            <option value="@especialidade.Id">@especialidade.Nome</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="medico">Médico</label>
+                    <select @onchange="SelecionaMedico" placeholder="Selecione o médico" class="form-control" id="medico">
+                        <option value="" disabled selected hidden>Selecione o médico</option>
+                        @foreach (var medico in _medicos)
+                        {
+                            <option value="@medico.Id">@medico.Nome</option>
+                        }
+                    </select>
+                </div>
+            }
 
-        <div class="form-group col-md-12">
-            <button @onclick="Cancelar" class="btn @(_agendarConsulta ? "" : "btn-primary") float-right" disabled="@(_especialidades == null)">
-                <span class="oi @(_agendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(_agendarConsulta ? "Cancelar" : "Agendar Consulta")
-            </button>
+            <div class="form-group col-md-12">
+                <button @onclick="Cancelar" class="btn @(_agendarConsulta ? "" : "btn-primary") float-right" disabled="@(_especialidades == null)">
+                    <span class="oi @(_agendarConsulta ? "oi-x" : "oi-plus")" aria-hidden="true"></span> @(_agendarConsulta ? "Cancelar" : "Agendar Consulta")
+                </button>
+            </div>
         </div>
-    </div>
 
-    <div class="row" id="busca-consulta-calendario" style="display:none;">
-        <div class="col-md-12">
-            <div class="input-group mb-3">
-                <input @bind-value="_busca" type="text" class="form-control" placeholder="Informe o código da consulta para realizar a busca" aria-describedby="busca-consulta" minlength="6">
-                <div class="input-group-append">
-                    <button @onclick="BuscarAsync" class="btn btn-outline-secondary" type="button" id="busca-consulta">Buscar</button>
+        <div class="row" id="busca-consulta-calendario" style="display:none;">
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input @bind-value="_busca" type="text" class="form-control" placeholder="Informe o código da consulta para realizar a busca" aria-describedby="busca-consulta" minlength="6">
+                    <div class="input-group-append">
+                        <button @onclick="BuscarAsync" class="btn btn-warning" type="button" id="busca-consulta">
+                            <span class="oi oi-magnifying-glass" aria-hidden="true"></span> Buscar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </AnotherRow>
 </HeaderComponent>
 
 <!-- Seção de Renderização do Calendário -->
@@ -85,36 +92,39 @@
                 ActionButtonClass="btn-success"
                 ActionButtonDisabled="@(!_horariosDisponiveis.Any() || _medicoLocalStorage == null)">
     <Body>
-        <table class="table table-borderless">
-            @{
-                var total = Math.Ceiling((double)_horariosDisponiveis.Count / 5);
-                total = (total > 0 && total < 1) ? 1 : total;
+        <div class="table-responsive-md">
+            <table class="table table-borderless">
+                @{
+                    var count = 4;
+                    var total = Math.Ceiling((double)_horariosDisponiveis.Count / count);
+                    total = (total > 0 && total < 1) ? 1 : total;
 
-                for (int i = 0; i < total; i++)
-                {
-                    <tr>
-                        @{
-                            var horarios = _horariosDisponiveis.Skip(i * 5).Take(5);
+                    for (int i = 0; i < total; i++)
+                    {
+                        <tr>
+                            @{
+                                var horarios = _horariosDisponiveis.Skip(i * count).Take(count);
 
-                            foreach (var horario in horarios)
-                            {
-                                <td>
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" class="custom-control-input" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => _horarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
-                                        <label for="@horario" class="custom-control-label">@horario.ToString("hh\\:mm")</label>
-                                    </div>
-                                </td>
+                                foreach (var horario in horarios)
+                                {
+                                    <td>
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" name="horarios-disponiveis" id="@horario" value="@horario.ToString("hh\\:mm")" @onchange="@(e => _horarioDaConsulta = TimeSpan.Parse(e.Value.ToString()))" />
+                                            <label for="@horario" class="custom-control-label">@horario.ToString("hh\\:mm")</label>
+                                        </div>
+                                    </td>
+                                }
                             }
-                        }
-                    </tr>
+                        </tr>
+                    }
                 }
-            }
 
-            @if (!_horariosDisponiveis.Any())
-            {
-                @("Nenhum horário disponível!")
-            }
-        </table>
+                @if (!_horariosDisponiveis.Any())
+                {
+                    @("Nenhum horário disponível!")
+                }
+            </table>
+        </div>
 
         @if (_horariosDisponiveis.Any() && _medicoLocalStorage == null)
         {
@@ -138,12 +148,7 @@
             <hr />
 
             <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="data-reagendamento">Data Reagendamento <span style="color:red;">*</span></label>
-                    <input type="date" @onchange="AlteraDataReagendamento" class="form-control" id="data-reagendamento" min="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
-                </div>
-
-                @if(_alterouDataReagendamento && !_horariosDisponiveis.Any())
+                @if (_alterouDataReagendamento && !_horariosDisponiveis.Any())
                 {
                     <div class="form-group col-md-12">
                         <div class="alert alert-info" role="alert">
@@ -153,9 +158,14 @@
                 }
 
                 <div class="form-group col-md-6">
+                    <label for="data-reagendamento">Data Reagendamento <span style="color:red;">*</span></label>
+                    <input type="date" @onchange="AlteraDataReagendamento" class="form-control" id="data-reagendamento" min="@(DateTime.Now.ToString("yyyy-MM-dd"))" />
+                </div>
+
+                <div class="form-group col-md-6">
                     <label for="horarios-reagendamento">Horário Reagendamento <span style="color:red;">*</span></label>
                     <select class="form-control" id="horarios-reagendamento" @onchange="SelecionaHorarioReagendamento" disabled="@(!_horariosDisponiveis.Any())">
-                        <option value="" selected disabled>Selecione o horário do reagendamento</option>
+                        <option value="" selected disabled>Selecione o horário</option>
                         @foreach (var horario in _horariosDisponiveis)
                         {
                             <option value="@horario">@horario.ToString("hh\\:mm")</option>

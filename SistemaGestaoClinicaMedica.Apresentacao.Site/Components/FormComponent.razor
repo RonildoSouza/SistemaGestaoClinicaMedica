@@ -28,7 +28,13 @@
 
                         @if (SubmitButtonVisibled)
                         {
-                            <button type="submit" class="btn btn-success" id="@SubmitButtonId" style="@SubmitButtonStyle">@SubmitButtonText</button>
+                            <button type="submit" class="btn btn-success" id="@SubmitButtonId" style="@SubmitButtonStyle">
+                                @if (!string.IsNullOrEmpty(SubmitIcon))
+                                {
+                                    <span class="oi @SubmitIcon" aria-hidden="true"></span> 
+                                }
+                                @SubmitButtonText
+                            </button>
                         }
                     </div>
                 </div>
@@ -46,6 +52,7 @@
     [Parameter] public bool SubmitButtonVisibled { get; set; } = true;
     [Parameter] public string SubmitButtonId { get; set; }
     [Parameter] public string SubmitButtonStyle { get; set; }
+    [Parameter] public string SubmitIcon { get; set; }
     [Parameter] public bool Loading { get; set; }
     [Parameter] public string CardMoreClass { get; set; }
     [Parameter] public bool RequiredLabelVisible { get; set; } = true;

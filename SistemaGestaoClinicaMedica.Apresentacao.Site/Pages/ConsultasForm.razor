@@ -7,16 +7,18 @@
 @inherits FormBase<IConsultasServico, ConsultaDTO, Guid>
 
 <HeaderComponent Title="@($"Consulta de Código {_dto.Codigo}")" BackRoute="@AposSalvarRetonarPara">
-    @if(_podeConcluirConsulta)
-    {
-        <label for="concluir-consulta" class="btn btn-success float-right">Finalizar a Consulta</label>
-    }
-    else
-    {
-        <div class="alert alert-info" role="alert">
-            Você não pode finalizar a consulta pois o seu status é : <strong>@_dto.StatusConsulta?.Nome</strong>!
-        </div>
-    }
+    <AnotherButton>
+        @if(_podeConcluirConsulta)
+        {
+            <label for="concluir-consulta" class="btn btn-success float-right">Finalizar a Consulta</label>
+        }
+        else
+        {
+            <div class="alert alert-info" role="alert">
+                Você não pode finalizar a consulta pois o seu status é : <strong>@_dto.StatusConsulta?.Nome</strong>!
+            </div>
+        }
+    </AnotherButton> 
 </HeaderComponent>
 
 <!-- TABS -->

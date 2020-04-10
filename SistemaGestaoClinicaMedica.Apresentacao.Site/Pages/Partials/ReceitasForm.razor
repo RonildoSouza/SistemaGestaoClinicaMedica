@@ -5,7 +5,11 @@
 @attribute [Authorize(Roles = "Administrador, Medico")]
 
 <HeaderComponent CardMoreClass="remove-card-border-top">
-    <label for="salvar-imprimir-receita" class="btn btn-success float-right">@(!_desabilitaBotoes ? "Salvar e " : "")Imprimir Receita</label>
+    <AnotherButton>
+        <label for="salvar-imprimir-receita" class="btn btn-success float-right">
+            <span class="oi oi-print" aria-hidden="true"></span> @(!_desabilitaBotoes ? "Salvar e " : "")Imprimir Receita
+        </label>
+    </AnotherButton>
 </HeaderComponent>
 
 <FormComponent Item="_dto" 

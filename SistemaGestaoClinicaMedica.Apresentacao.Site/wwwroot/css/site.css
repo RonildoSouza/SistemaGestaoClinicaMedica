@@ -151,6 +151,10 @@ textarea {
     height: 300px !important;
 }
 
+.fc-scroller.fc-day-grid-container {
+    height: 100% !important;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;

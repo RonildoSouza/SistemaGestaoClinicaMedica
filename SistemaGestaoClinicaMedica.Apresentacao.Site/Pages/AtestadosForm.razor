@@ -8,7 +8,10 @@
 
 <HeaderComponent Title="Cadastro de Atestado" BackRoute="@AposSalvarRetonarPara" />
 
-<FormComponent Item="_dto" OnValidSubmit="Salvar"  SubmitButtonText="Salvar e Imprimir Atestado">
+<FormComponent Item="_dto" 
+               OnValidSubmit="Salvar"  
+               SubmitButtonText="Salvar e Imprimir Atestado"
+               SubmitIcon="oi-print">
     <div class="form-group col-md-12">
         <label for="tipo-atestado">Tipo de Atestado <span style="color:red;">*</span></label>
         <select @onchange="SelecionaTipoDeAtestadoAsync" class="form-control" id="tipo-atestado">

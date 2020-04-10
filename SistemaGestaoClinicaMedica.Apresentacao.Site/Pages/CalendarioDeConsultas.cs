@@ -152,7 +152,8 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 CRM = medico.CRM
             };
 
-            await CalendarReRenderAsync();
+            if (_medicos.Count > 1)
+                await CalendarReRenderAsync();
         }
 
         private async Task AgendarConsultaAsync()
