@@ -12,7 +12,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
 
         public async Task<MedicoDTO> GetPorCRMAsync(string crm)
         {
-            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-crm/{HttpUtility.UrlEncode(crm)}");
+            var response = await ApplicationState.HttpClient.GetStringAsync($"{ApiEndPoint}/por-crm/{HttpUtility.UrlEncode(crm.Replace(@"/", "-").Replace(@"\", "-"))}");
             return JsonToDTO<MedicoDTO>(response);
         }
 
