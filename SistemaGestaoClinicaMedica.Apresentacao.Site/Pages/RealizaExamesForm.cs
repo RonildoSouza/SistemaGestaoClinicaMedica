@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using SistemaGestaoClinicaMedica.Aplicacao.DTO;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Constantes;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Extensions;
 using SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos;
@@ -19,10 +20,26 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
 
         private async Task BuscarAsync(string busca)
         {
+            if (string.IsNullOrEmpty(busca) || busca.Length < 8)
+            {
+                ToastService.ShowInfo($"O código {busca} do exame está inválido!");
+                return;
+            }
+
             _carregando = true;
             StateHasChanged();
 
             _dto = await HttpServico.GetPorCodigoAsync(busca);
+
+            if (_dto == null)
+            {
+                ToastService.ShowInfo($"Nenhum exame localizado com o código {busca}");
+                _dto = new ExameDTO();
+                _carregando = false;
+                StateHasChanged();
+                return;
+            }
+
             Id = _dto.Id;
 
             _carregando = false;

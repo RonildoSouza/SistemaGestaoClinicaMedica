@@ -46,7 +46,7 @@
                         $('#agendar-consulta').show();
                         $('#busca-consulta-calendario').hide();
 
-                        calendar.changeView('dayGridMonth');
+                        //calendar.changeView('dayGridMonth');
                         window.location.reload();
                     }
                 },

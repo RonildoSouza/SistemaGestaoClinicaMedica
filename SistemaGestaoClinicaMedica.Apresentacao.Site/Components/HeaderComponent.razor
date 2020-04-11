@@ -51,7 +51,7 @@
                             <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" minlength="@SearchMinLenght">
                         </div>
                         <div class="col-md-12">
-                            <button class="btn btn-warning float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))">
+                            <button class="btn btn-warning float-right" @onclick="(async e => await OnSearch.InvokeAsync(_search))" id="@SearchButtonId">
                                 <span class="oi oi-magnifying-glass" aria-hidden="true"></span> @SearchText
                             </button>
                         </div>
@@ -61,9 +61,9 @@
                         <div class="col-md-@SearchColMd">
                             <label for="pesquisar">Pesquisa</label>
                             <div class="input-group mb-3">
-                                <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="search-code" minlength="@SearchMinLenght">
+                                <input @bind-value="_search" type="text" class="form-control" placeholder="@SearchPlaceholder" aria-label="@SearchPlaceholder" aria-describedby="btn-search" minlength="@SearchMinLenght">
                                 <div class="input-group-append">
-                                    <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-warning" type="button" id="search-code">
+                                    <button @onclick="(async e => await OnSearch.InvokeAsync(_search))" class="btn btn-warning" id="@SearchButtonId">
                                         <span class="oi oi-magnifying-glass" aria-hidden="true"></span> @SearchText
                                     </button>
                                 </div>
@@ -95,5 +95,13 @@
     [Parameter] public string SearchPlaceholder { get; set; }
     [Parameter] public int SearchMinLenght { get; set; } = 500;
     [Parameter] public int SearchColMd { get; set; } = 12;
+    [Parameter] public string SearchButtonId { get; set; } = "btn-search";
     [Parameter] public EventCallback<string> OnSearch { get; set; }
+
+    [Inject] private IJSRuntime JSRuntime { get; set; }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("jsRuntimeExtensionJsInterop.onClickKeyupEnter", SearchButtonId);
+    }
 }

@@ -101,7 +101,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         {
             if (string.IsNullOrEmpty(_pacienteCodigoOuCPF) || _pacienteCodigoOuCPF.Length < 4)
             {
-                ToastService.ShowInfo($"O código ou CPF {_pacienteCodigoOuCPF} do paciente é inválido!");
+                ToastService.ShowInfo($"O código ou CPF {_pacienteCodigoOuCPF} do paciente está inválido!");
                 return;
             }
 
@@ -309,9 +309,23 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             if (!_agendarConsulta)
                 return;
 
-            if (_pacienteLocalStorage.Id == Guid.Empty || _especialidadeLocalStorage == null)
+            if (_pacienteLocalStorage.Id == Guid.Empty)
             {
-                ToastService.ShowInfo("Falta informar o Paciente e/ou Especialidade");
+                ToastService.ShowInfo("Falta informar o Paciente!");
+                await JSRuntime.ScrollToAsync();
+                return;
+            }
+
+            if (_especialidadeLocalStorage == null)
+            {
+                ToastService.ShowInfo("Falta selecionar a Especialidade!");
+                await JSRuntime.ScrollToAsync();
+                return;
+            }
+
+            if (_medicoLocalStorage == null)
+            {
+                ToastService.ShowInfo("Falta selecionar a Médico!");
                 await JSRuntime.ScrollToAsync();
                 return;
             }
