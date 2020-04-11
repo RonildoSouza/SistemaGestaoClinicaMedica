@@ -13,12 +13,14 @@
     <TableHeader>
         <th>Codigo</th>
         <th>Tipo de Exame</th>
+        <th>Laboratório</th>
         <th>Status</th>
         <th></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
         <td>@context.TipoDeExame.Nome</td>
+        <td>@context.LaboratorioRealizouExame?.Nome</td>
         <td>@context.StatusExame.Nome</td>
         <td>
             @if (context.StatusExame.Id == StatusExameConst.Pendente && context.CriadoEm.Date == DateTime.Now.Date)

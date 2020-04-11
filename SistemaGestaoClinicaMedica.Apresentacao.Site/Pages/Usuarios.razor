@@ -24,13 +24,15 @@
 <TableComponent Items="dtos">
     <TableHeader>
         <th>Nome</th>
+        <th>Email</th>
         <th>Cargo</th>
         <th>Telefone</th>
         <th>Ativo</th>
-        <th></th>
+        <th style="width: 120px;"></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Nome</td>
+        <td>@context.Email</td>
         <td>@context.Cargo.Nome</td>
         <td>@context.Telefone</td>
         <td>@(context.Ativo ? "Sim" : "Não")</td>

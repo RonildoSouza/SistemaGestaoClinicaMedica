@@ -27,6 +27,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         [Required]
         public string Estado { get; set; }
         public string Endereco => $"{Bairro}, {Cidade} - {Estado}";
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
     }
 }

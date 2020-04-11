@@ -7,7 +7,7 @@
 
 <HeaderComponent Title="Pacientes"
                  NewRoute="pacientes/novo"
-                 SearchPlaceholder="Informe o nome ou email do usuário"
+                 SearchPlaceholder="Informe o código, nome ou CPF do paciente"
                  SearchVisibled="true"
                  SearchColMd="8"
                  OnSearch="BuscarAsync">
@@ -24,12 +24,14 @@
     <TableHeader>
         <th>Código</th>
         <th>Nome</th>
+        <th>CPF</th>
         <th>Telefone</th>
-        <th></th>
+        <th style="width: 120px;"></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Codigo</td>
         <td>@context.Nome</td>
+        <td>@context.CPF</td>
         <td>@context.Telefone</td>
         <td>
             <a href="pacientes/@context.Id" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>

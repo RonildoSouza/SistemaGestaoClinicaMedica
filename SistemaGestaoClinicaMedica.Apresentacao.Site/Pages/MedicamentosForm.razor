@@ -9,12 +9,16 @@
 <HeaderComponent Title="Cadastro de Medicamento" BackRoute="@AposSalvarRetonarPara" />
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar">
+    <div class="form-group col-md-12">
+        <label for="ativo">Ativo? </label>
+        <InputCheckbox @bind-Value="context.Ativo" id="ativo" />
+    </div>
     <div class="form-group col-md-6">
         <label for="nome">Nome <span style="color:red;">*</span></label>
         <InputText @bind-Value="context.Nome" class="form-control" id="nome" required />
     </div>
     <div class="form-group col-md-6">
-        <label for="nome-fabrica">Nome de Fabrica <span style="color:red;">*</span></label>
+        <label for="nome-fabrica">Nome de Fábrica <span style="color:red;">*</span></label>
         <InputText @bind-Value="context.NomeFabrica" class="form-control" id="nome-fabrica" required />
     </div>
     <div class="form-group col-md-8">

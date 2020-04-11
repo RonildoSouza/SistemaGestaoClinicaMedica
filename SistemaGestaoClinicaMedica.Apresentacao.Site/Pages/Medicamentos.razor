@@ -8,21 +8,31 @@
 <HeaderComponent Title="Medicamentos"
                  NewRoute="medicamentos/novo"
                  SearchPlaceholder="Informe o nome, tarja ou nome do fabricante do medicamento"
-                 SearchWithButton="true"
                  SearchVisibled="true"
-                 OnSearch="BuscarAsync" />
+                 SearchColMd="8"
+                 OnSearch="BuscarAsync">
+     <div class="form-group col-md-4">
+        <label for="ativo">Ativo</label>
+        <select class="form-control" id="ativo" @onchange="SelecionaAtivo">
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+    </div>
+</HeaderComponent>
 
 <TableComponent Items="dtos?.Take(50).ToList()">
     <TableHeader>
         <th>Nome</th>
-        <th>Tarja</th>
+        <th>Nome de Fabrica</th>
         <th>Fabricante</th>
-        <th></th>
+        <th>Tarja</th>
+        <th style="width: 120px;"></th>
     </TableHeader>
     <RowTemplate>
         <td>@context.Nome</td>
-        <td>@context.Tarja</td>
+        <td>@context.NomeFabrica</td>
         <td>@context.FabricanteNome</td>
+        <td>@context.Tarja</td>
         <td>
             <a href="medicamentos/@context.Id" class="btn"><span class="oi oi-pencil" aria-hidden="true"></span></a>
             <ConfirmDialogComponent Id="@context.Id.ToString()"
@@ -36,9 +46,16 @@
 </TableComponent>
 
 @code{
+    private bool _ativo;
+
     private async Task BuscarAsync(string busca)
     {
-        dtos = await HttpServico.GetTudoComFiltrosAsync(busca);
+        dtos = await HttpServico.GetTudoComFiltrosAsync(busca, _ativo);
         StateHasChanged();
+    }
+
+    private void SelecionaAtivo(ChangeEventArgs args)
+    {
+        _ativo = args.Value.ToString().Equals("Sim");
     }
 }

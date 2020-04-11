@@ -31,7 +31,10 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
                 _token = value;
 
                 if (!string.IsNullOrEmpty(_token))
+                {
+                    HttpClient.DefaultRequestHeaders.Remove("Authorization");
                     HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                }
             }
         }
         public UsuarioLogado UsuarioLogado { get; set; }

@@ -10,9 +10,13 @@
 <HeaderComponent Title="Cadastro de Paciente" BackRoute="@AposSalvarRetonarPara" />
 
 <FormComponent Item="_dto" OnValidSubmit="Salvar">
+    <div class="form-group col-md-12">
+        <label for="ativo">Ativo? </label>
+        <InputCheckbox @bind-Value="context.Ativo" id="ativo" />
+    </div>
     <div class="form-group col-md-6">
         <label for="nome">Nome <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.Nome" class="form-control" id="nome" required/>
+        <InputText @bind-Value="context.Nome" class="form-control" id="nome" required />
     </div>
     <div class="form-group col-md-3">
         <label for="sexo">Sexo <span style="color:red;">*</span></label>
@@ -23,27 +27,27 @@
     </div>
     <div class="form-group col-md-3">
         <label for="data-nascimento">Data de Nascimento <span style="color:red;">*</span></label>
-        <InputDate @bind-Value="context.DataNascimento" class="form-control" id="data-nascimento" required/>
+        <InputDate @bind-Value="context.DataNascimento" class="form-control" id="data-nascimento" required />
     </div>
     <div class="form-group col-md-3">
         <label for="cpf">CPF <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" minlength="11" maxlength="14" required/>
+        <InputText @bind-Value="context.CPF" class="form-control" id="cpf" minlength="11" maxlength="14" required />
     </div>
     <div class="form-group col-md-3">
         <label for="telefone">Telefone <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" required/>
+        <InputText @bind-Value="context.Telefone" class="form-control" id="telefone" required />
     </div>
     <div class="form-group col-md-6">
         <label for="nome-mae">Nome da Mãe <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.NomeDaMae" class="form-control" id="nome-mae" required/>
+        <InputText @bind-Value="context.NomeDaMae" class="form-control" id="nome-mae" required />
     </div>
     <div class="form-group col-md-4">
         <label for="bairro">Bairro <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.Bairro" class="form-control" id="bairro" required/>
+        <InputText @bind-Value="context.Bairro" class="form-control" id="bairro" required />
     </div>
     <div class="form-group col-md-5">
         <label for="cidade">Cidade <span style="color:red;">*</span></label>
-        <InputText @bind-Value="context.Cidade" class="form-control" id="cidade" required/>
+        <InputText @bind-Value="context.Cidade" class="form-control" id="cidade" required />
     </div>
     <div class="form-group col-md-3">
         <label for="estado">Estado <span style="color:red;">*</span></label>
