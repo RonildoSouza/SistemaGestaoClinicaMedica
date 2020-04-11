@@ -51,7 +51,7 @@
             await JSRuntime.InvokeVoidAsync("select2JsInterop.startup");
         }
 
-        if (!firstRender && ApplicationState.TokenExpirou() && !NavigationManager.Uri.Contains("login"))
+        if (ApplicationState.TokenExpirou() && !NavigationManager.Uri.Contains("login"))
             NavigationManager.NavigateTo("logout", true);
     }
 }
