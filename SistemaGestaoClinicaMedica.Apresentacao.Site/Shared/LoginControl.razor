@@ -34,7 +34,7 @@
                                 <input type="password" @bind-value="_senha" class="form-control" id="senha" />
                             </div>
 
-                            <a id="link-submit" class="btn btn-primary btn-lg btn-block" href="/login?email=@Encode(_email)&senha=@Encode(Encryption64.Encrypt(_senha))" target="_top" @onclick="Login">Logar</a>
+                            <button id="link-submit" class="btn btn-primary btn-lg btn-block" @onclick="Login">Logar</button>
                         </div>
                     </div>
                 }
@@ -50,7 +50,7 @@
     private bool _tentouLogar;
 
     [Inject] private IJSRuntime JSRuntime { get; set; }
-    [Inject] private Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor { get; set; }
+    [Inject] private NavigationManager NavigationManager { get; set; }
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
@@ -67,5 +67,7 @@
     {
         _carregando = true;
         StateHasChanged();
+
+        NavigationManager.NavigateTo($"/login?email={Encode(_email)}&senha={Encode(Encryption64.Encrypt(_senha))}", true);
     }
 }
