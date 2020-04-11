@@ -10,7 +10,8 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.AutoMapper
         public EntidadeParaDTO()
         {
             CreateMap<Usuario, LoginAutenticacaoDTO>()
-                .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id));
+                .ForMember(dest => dest.CargoId, opt => opt.MapFrom(src => src.Cargo.Id))
+                .ForMember(dest => dest.ESuperUsuario, opt => opt.MapFrom(src => src.ESuperUsuario()));
 
             CreateMap<Usuario, UsuarioDTO>()
                 .ForMember(dest => dest.Senha, opt => opt.Ignore())

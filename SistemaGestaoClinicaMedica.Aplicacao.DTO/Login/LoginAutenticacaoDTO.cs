@@ -13,5 +13,6 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO.Login
         public string CargoId { get; set; }
         [Required]
         public string Email { get; set; }
+        public bool ESuperUsuario { get; set; }
     }
 }

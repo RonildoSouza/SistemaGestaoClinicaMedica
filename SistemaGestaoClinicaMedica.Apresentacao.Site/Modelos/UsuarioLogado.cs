@@ -11,5 +11,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Modelo
         public string Email { get; set; }
         public bool EAdministrador => CargoId == CargosConst.Administrador;
         public bool EMedico => CargoId == CargosConst.Medico;
+        public bool ESuperUsuario { get; set; }
     }
 }
