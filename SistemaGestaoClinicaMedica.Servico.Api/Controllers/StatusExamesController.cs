@@ -15,7 +15,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _statusExameServicoAplicacao = statusExameServicoAplicacao;
         }
 
-        [Authorize("Bearer", Roles = "Administrador, Medico, Laboratorio")]
+        [Authorize("Bearer")]
         [HttpGet]
         public IActionResult Get()
         {

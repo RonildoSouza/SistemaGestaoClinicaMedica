@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             _medicamentoServicoAplicacao = medicamentoServicoAplicacao;
         }
 
-        [Authorize("Bearer", Roles = "Administrador")]
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet]
         public IActionResult Get(string busca, bool ativo = true)
         {
@@ -25,7 +25,7 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTOs);
         }
 
-        [Authorize("Bearer", Roles = "Administrador")]
+        [Authorize("Bearer", Roles = "Administrador, Medico")]
         [HttpGet, Route("{id}")]
         public IActionResult GetPorId(Guid id)
         {

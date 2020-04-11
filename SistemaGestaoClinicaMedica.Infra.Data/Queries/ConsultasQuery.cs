@@ -56,7 +56,8 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
                                      .Include($"{nameof(Consulta.Medico)}.{nameof(Medico.Usuario)}")
                                      .Include(_ => _.Receita)
                                      .Include($"{nameof(Consulta.Receita)}.{nameof(Receita.Medicamentos)}.{nameof(ReceitaMedicamento.Medicamento)}")
-                                     .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date).ToList();
+                                     .Where(_ => _.Data.Date >= dataInicio.Date && _.Data.Date <= dataFim.Date)
+                                     .OrderBy(_ => _.Data).ToList();
 
             if (!string.IsNullOrEmpty(busca))
                 consultas = consultas.Where(_ => _.Medico.Usuario.Nome.ToLowerContains(busca)
