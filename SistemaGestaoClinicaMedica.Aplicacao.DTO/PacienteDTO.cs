@@ -17,7 +17,7 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.DTO
         [Required]
         public string NomeDaMae { get; set; }
         [Required]
-        public string Sexo { get; set; } = "Feminino";
+        public string Sexo { get; set; }
         [Required]
         public string Telefone { get; set; }
         [Required]

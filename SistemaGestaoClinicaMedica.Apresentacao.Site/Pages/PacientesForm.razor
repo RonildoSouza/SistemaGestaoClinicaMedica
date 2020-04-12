@@ -21,6 +21,7 @@
     <div class="form-group col-md-3">
         <label for="sexo">Sexo <span style="color:red;">*</span></label>
         <InputSelect @bind-Value="context.Sexo" class="form-control" id="sexo">
+            <option value="" selected disabled>Selecione o sexo do paciente</option>
             <option value="Feminino">Feminino</option>
             <option value="Masculino">Masculino</option>
         </InputSelect>
