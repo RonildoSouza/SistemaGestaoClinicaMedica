@@ -68,6 +68,6 @@
         _carregando = true;
         StateHasChanged();
 
-        NavigationManager.NavigateTo($"/login?email={Encode(_email)}&senha={Encode(Encryption64.Encrypt(_senha))}", true);
+        NavigationManager.NavigateTo($"/login?email={Encode(_email.Trim())}&senha={Encode(Encryption64.Encrypt(_senha))}", true);
     }
 }
