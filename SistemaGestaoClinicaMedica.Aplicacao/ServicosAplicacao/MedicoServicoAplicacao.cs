@@ -20,6 +20,11 @@ namespace SistemaGestaoClinicaMedica.Aplicacao.ServicosAplicacao
             _emailSenhaNovoUsuarioServicoAplicacao = emailSenhaNovoUsuarioServicoAplicacao;
         }
 
+        public IDictionary<DateTime, bool> ObterHorariosDeTrabalhoAtivosIntervaloDeData(Guid medicoId, DateTime dataInicio, DateTime dataFim)
+        {
+            return _medicoServico.ObterHorariosDeTrabalhoAtivosIntervaloDeData(medicoId, dataInicio, dataFim);
+        }
+
         public MedicoDTO ObterPorCRM(string crm)
         {
             var entidade = _medicoServico.ObterPorCRM(crm);

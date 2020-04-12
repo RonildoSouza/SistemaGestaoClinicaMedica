@@ -61,7 +61,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
             StateHasChanged();
 
             var consultas = await ConsultasServico.GetTudoComFiltrosAsync(dataInicio, dataFim, busca, "Agendada|AguardandoRetorno|Reagendada");
-            var datas = await EspecialidadesServico.GetObterDatasComHorariosDisponiveisAsync((_especialidadeLocalStorage?.Id).GetValueOrDefault(), dataInicio, dataFim, _medicoLocalStorage?.Id);
+            var datas = await MedicosServico.GetHorariosDeTrabalhoAtivosIntervaloDeDataAsync((_medicoLocalStorage?.Id).GetValueOrDefault(), dataInicio, dataFim);
 
             var fullCalendarEvent = consultas.Select(_ => new FullCalendarEvent
             {

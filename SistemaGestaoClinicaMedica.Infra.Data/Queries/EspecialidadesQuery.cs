@@ -64,31 +64,6 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             return horariosDisponiveis;
         }
 
-        public IDictionary<DateTime, bool> ObterDatasComHorariosDisponiveis(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId = null)
-        {
-            var dicionarioDatas = new Dictionary<DateTime, bool>();
-
-            if (especialidadeId == Guid.Empty)
-                return dicionarioDatas;
-
-            var medicoEspecialidade = Entidades.Include(_ => _.Medicos)
-                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
-                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
-                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
-                                               .Where(_ => _.Id == especialidadeId)
-                                               .SelectMany(_ => _.Medicos)
-                                               .Where(_ => _.MedicoId == medicoId.GetValueOrDefault() || _.Medico.Usuario.Id == medicoId.GetValueOrDefault());
-
-            while (dataInicio <= dataFim)
-            {
-                medicoEspecialidade = medicoEspecialidade.Where(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataInicio.DayOfWeek && _.Ativo));
-                dicionarioDatas.Add(dataInicio, medicoEspecialidade.Any());
-                dataInicio = dataInicio.AddDays(1);
-            }
-
-            return dicionarioDatas;
-        }
-
         private IEnumerable<TimeSpan> HorariosDisponiveis(IEnumerable<HorarioDeTrabalho> horarios)
         {
             if (!horarios.Any())

@@ -29,10 +29,5 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
         {
             return _especialidadesQuery.ObterTudoComFiltros(comMedicos);
         }
-
-        public IDictionary<DateTime, bool> ObterDatasComHorariosDisponiveis(Guid especialidadeId, DateTime dataInicio, DateTime dataFim, Guid? medicoId = null)
-        {
-            return _especialidadesQuery.ObterDatasComHorariosDisponiveis(especialidadeId, dataInicio, dataFim, medicoId);
-        }
     }
 }

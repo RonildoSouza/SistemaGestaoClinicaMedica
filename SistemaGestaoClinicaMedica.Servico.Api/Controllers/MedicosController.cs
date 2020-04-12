@@ -50,6 +50,14 @@ namespace SistemaGestaoClinicaMedica.Servico.Api.Controllers
             return Ok(saidaDTO);
         }
 
+        [Authorize("Bearer")]
+        [HttpGet, Route("{id}/horarios-trabalho-ativos-intervalo-data/{dataInicio}/{dataFim}")]
+        public IActionResult GetDatasComHorariosDisponiveis(Guid id, DateTime dataInicio, DateTime dataFim)
+        {
+            var saidaDTOs = _medicoServicoAplicacao.ObterHorariosDeTrabalhoAtivosIntervaloDeData(id, dataInicio, dataFim);
+            return Ok(saidaDTOs);
+        }
+
         [Authorize("Bearer", Roles = "Administrador")]
         [HttpPost]
         public IActionResult Post([FromBody]MedicoDTO entradaDTO)

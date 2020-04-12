@@ -8,5 +8,6 @@ namespace SistemaGestaoClinicaMedica.Dominio.Servicos
     {
         IList<Medico> ObterTudoPorEspecialidade(Guid especialidadeId);
         Medico ObterPorCRM(string crm);
+        IDictionary<DateTime, bool> ObterHorariosDeTrabalhoAtivosIntervaloDeData(Guid medicoId, DateTime dataInicio, DateTime dataFim);
     }
 }

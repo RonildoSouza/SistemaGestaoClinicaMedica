@@ -9,5 +9,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Servicos
     {
         Task<List<MedicoDTO>> GetPorEspecialidadeAsync(Guid especialidadeId);
         Task<MedicoDTO> GetPorCRMAsync(string crm);
+        Task<Dictionary<DateTime, bool>> GetHorariosDeTrabalhoAtivosIntervaloDeDataAsync(Guid medicoId, DateTime dataInicio, DateTime dataFim);
     }
 }

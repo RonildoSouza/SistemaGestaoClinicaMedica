@@ -34,6 +34,11 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Servicos
                             .SingleOrDefault(_ => _.Id == id || _.Usuario.Id == id);
         }
 
+        public IDictionary<DateTime, bool> ObterHorariosDeTrabalhoAtivosIntervaloDeData(Guid medicoId, DateTime dataInicio, DateTime dataFim)
+        {
+            return _medicosQuery.ObterHorariosDeTrabalhoAtivosIntervaloDeData(medicoId, dataInicio, dataFim);
+        }
+
         public Medico ObterPorCRM(string crm)
         {
             return _medicosQuery.ObterPorCRM(crm);
