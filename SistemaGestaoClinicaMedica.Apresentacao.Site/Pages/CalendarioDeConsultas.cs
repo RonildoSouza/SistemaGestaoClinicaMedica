@@ -234,7 +234,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
         private async Task CalendarReRenderAsync()
         {
             var dataInicio = _fullCalendarCurrentStartDate;
-            var dataFim = _fullCalendarCurrentStartDate.AddMonths(2);
+            var dataFim = _fullCalendarCurrentStartDate.AddMonths(6);
 
             await CalendarRenderAsync(dataInicio, dataFim, gotoDate: dataInicio);
         }
