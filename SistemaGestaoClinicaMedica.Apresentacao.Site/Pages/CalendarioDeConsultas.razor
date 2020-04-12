@@ -35,7 +35,7 @@
                 <div class="form-group col-md-6">
                     <label for="especialidade">Especialidade</label>
                     <select @onchange="SelecionaEspecialidadeAsync" placeholder="Selecione a especialidade" class="form-control" id="especialidade">
-                        <option value="" disabled selected hidden>Selecione a especialidade</option>
+                        <option value="" selected>Selecione a especialidade</option>
                         @foreach (var especialidade in _especialidades)
                         {
                             <option value="@especialidade.Id">@especialidade.Nome</option>
@@ -45,7 +45,7 @@
                 <div class="form-group col-md-6">
                     <label for="medico">Médico</label>
                     <select @onchange="SelecionaMedico" placeholder="Selecione o médico" class="form-control" id="medico">
-                        <option value="" disabled selected hidden>Selecione o médico</option>
+                        <option value="" selected>Selecione o médico</option>
                         @foreach (var medico in _medicos)
                         {
                             <option value="@medico.Id">@medico.Nome</option>

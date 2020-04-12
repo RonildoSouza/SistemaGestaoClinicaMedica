@@ -134,7 +134,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 Nome = especialidade.Nome
             };
 
-            await CalendarReRenderAsync();
+            //await CalendarReRenderAsync();
         }
 
         private async Task SelecionaMedico(ChangeEventArgs args)
@@ -152,7 +152,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 CRM = medico.CRM
             };
 
-            if (_medicos.Count > 1)
+            //if (_medicos.Count > 1)
                 await CalendarReRenderAsync();
         }
 

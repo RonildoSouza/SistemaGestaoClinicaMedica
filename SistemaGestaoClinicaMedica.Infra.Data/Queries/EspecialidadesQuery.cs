@@ -71,10 +71,18 @@ namespace SistemaGestaoClinicaMedica.Infra.Data.Queries
             if (especialidadeId == Guid.Empty)
                 return dicionarioDatas;
 
+            var medicoEspecialidade = Entidades.Include(_ => _.Medicos)
+                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}")
+                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.HorariosDeTrabalho)}")
+                                               .Include($"{nameof(Especialidade.Medicos)}.{nameof(MedicoEspecialidade.Medico)}.{nameof(Medico.Usuario)}")
+                                               .Where(_ => _.Id == especialidadeId)
+                                               .SelectMany(_ => _.Medicos)
+                                               .Where(_ => _.MedicoId == medicoId.GetValueOrDefault() || _.Medico.Usuario.Id == medicoId.GetValueOrDefault());
+
             while (dataInicio <= dataFim)
             {
-                var horarios = ObterHorariosDisponiveis(especialidadeId, dataInicio, medicoId);
-                dicionarioDatas.Add(dataInicio, horarios.Any());
+                medicoEspecialidade = medicoEspecialidade.Where(_ => _.Medico.HorariosDeTrabalho.Any(_ => _.DiaDaSemana == dataInicio.DayOfWeek && _.Ativo));
+                dicionarioDatas.Add(dataInicio, medicoEspecialidade.Any());
                 dataInicio = dataInicio.AddDays(1);
             }
 
