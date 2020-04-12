@@ -133,8 +133,6 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 Id = especialidadeId,
                 Nome = especialidade.Nome
             };
-
-            //await CalendarReRenderAsync();
         }
 
         private async Task SelecionaMedico(ChangeEventArgs args)
@@ -152,8 +150,7 @@ namespace SistemaGestaoClinicaMedica.Apresentacao.Site.Pages
                 CRM = medico.CRM
             };
 
-            //if (_medicos.Count > 1)
-                await CalendarReRenderAsync();
+            await CalendarReRenderAsync();
         }
 
         private async Task AgendarConsultaAsync()
