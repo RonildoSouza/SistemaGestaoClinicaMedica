@@ -6,6 +6,7 @@ o médico via e-mail quando o resultado dos exames forem enviados pelo laborató
 
 <figure>
   <img src="https://github.com/user-attachments/assets/58ba41e2-1899-40fc-be04-f17338e958b4" alt="Diagrama de Casos de Uso">
+  </br>
   <figcaption>Diagrama de Casos de Uso</figcaption>
 </figure>
 </br>
